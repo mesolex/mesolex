@@ -2,8 +2,13 @@
 import os
 import sys
 
+from mesolex.load_env import load_env
+
+
+load_env()
+
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mesolex.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mesolex.settings.base")
     try:
         from django.core.management import execute_from_command_line
     except ImportError:
