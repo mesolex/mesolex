@@ -32,6 +32,7 @@ class Command(BaseCommand):
                 ref = data['ref']['$']
             (lexical_entry, created, ) = (models.LexicalEntry.objects.update_or_create(
                 ref=ref,
+                headword=data['lx']['$'],
                 defaults={
                     'data': data,
                 }
