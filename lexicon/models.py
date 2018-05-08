@@ -9,6 +9,6 @@ class LexicalEntry(models.Model):
 
     def __str__(self):
         if 'lx' in self.data:
-            return self.data['lx']
+            return self.data['lx']['$']
         else:
             return self.ref or 'Word #%s' % (self.id)
