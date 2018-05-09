@@ -16,10 +16,13 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+import haystack.urls
+
 import lexicon.urls
 
 urlpatterns = [
     url(r'^api/', include('lexicon.api_urls'), name='api'),
     url(r'^admin/', admin.site.urls),
+    url(r'^search/', include(haystack.urls)),
     url('', include(lexicon.urls)),
 ]

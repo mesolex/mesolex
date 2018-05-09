@@ -14,3 +14,7 @@
 - src: https://github.com/caktus/tequila-django
   version: v0.9.11
   name: tequila-django
+
+- src: geerlingguy.solr
+  version: 4.1.0
+  name: solr

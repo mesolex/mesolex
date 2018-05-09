@@ -1,0 +1,43 @@
+{{ object.headword }}
+
+{{ object.nmorf }}
+
+{% for el in object.lx_cita_S %}
+{{ el }}
+{% endfor %}
+
+{% for el in object.raiz_S %}
+{{ el }}
+{% endfor %}
+
+{% for el in object.glosa_S %}
+{{ el }}
+{% endfor %}
+
+{% for el in object.nsem_S %}
+{{ el }}
+{% endfor %}
+
+{% for el in object.osten_S %}
+{{ el }}
+{% endfor %}
+
+{% for el in object.sigGroup_sig_S %}
+{{ el }}
+{% endfor %}
+
+{% for el in object.sigGroup_fr_nGroup_fr_e_S %}
+{{ el }}
+{% endfor %}
+
+{% for el in object.sigGroup_fr_nGroup_fr_n_S %}
+{{ el }}
+{% endfor %}
+
+{% for el in object.fr_nGroup_fr_e_S %}
+{{ el }}
+{% endfor %}
+
+{% for el in object.fr_nGroup_fr_n_S %}
+{{ el }}
+{% endfor %}
