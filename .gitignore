@@ -3,3 +3,5 @@
 .env
 db.*
 deployment/roles/
+node_modules/
+*/settings/local.py

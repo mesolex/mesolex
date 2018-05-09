@@ -1,0 +1,32 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <title>Mesolex</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block meta-description %}Mesolex Nahuatl Dictionary{% endblock %}">
+    <meta name="author" content="{% block meta-author %}The Mesolex Team{% endblock %}">
+    <meta name="keywords" content="{% block meta-keywords %}{% endblock %}">
+
+    <meta itemprop="name" content="{% block meta-name %}Mesolex{% endblock %}" />
+    <meta itemprop="description" content="{% block meta-description-itemprop %}Mesolex Nahuatl Dictionary{% endblock %}" />
+
+    <meta property="og:title" content="{% block og_title %}Mesolex{% endblock %}" />
+    <meta property="og:type" content="{% block og_type %}article{% endblock %}" />
+    <meta property="og:description" content="{% block og_description %}Mesolex Nahuatl Dictionary{% endblock %}" />
+    <meta property="og:site_name" content="Mesolex" />
+
+    <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}"/>
+</head>
+<body>
+    <h1>Mesolex</h1>
+    <p>Hello, world!</p>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+</body>
+</html>
