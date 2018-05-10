@@ -1,34 +1,67 @@
 {% extends 'base.html' %}
+{% load lexeme_tags %}
 
 
 {% block content %}
-    <h2>Search</h2>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Search</h2>
+        </div>
+    </div>
 
-    <form method="get" action=".">
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                    <input type="submit" value="Search">
-                </td>
-            </tr>
-        </table>
+    <div class="row">
+        <div class="col-xs-12">
+            <form method="get" action=".">
+                <table>
+                    {{ form.as_table }}
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>
+                            <input type="submit" value="Search">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
 
-        {% if query %}
+    {% if query %}
+    <div class="row">
+        <div class="col-xs-12">
             <h3>Results</h3>
+        </div>
+    </div>
 
-            {% for result in page.object_list %}
-                {{ result.object.text }}
-                <p>
-                    {{ result.object.headword }} ({{ result.object.ref }})
-                </p>
-                <p>
-                    {{ result.object.data }}
-                </p>
-            {% empty %}
-                <p>No results found.</p>
-            {% endfor %}
-        {% endif %}
-    </form>
+    <div class="row">
+        <div class="col-xs-12">
+            {% if page.object_list %}
+            <ul>
+                {% for result in page.object_list %}
+                <li>
+                    <h3>{{ result.object.headword }}</h3>
+
+                    <ol>
+                        {% for sig in result.object.data.sigGroup|ensure_list %}
+                            <li>
+                                <p class="sig">{{ sig.sig }}</p>
+
+                                {% for fr in sig.fr_nGroup|ensure_list %}
+                                <p class="fr">
+                                    {{ fr.fr_n }} <i>({{ fr.fr_e }})</i>
+                                </p>
+                                {% endfor %}
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>
+                No results found.
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
 {% endblock %}
