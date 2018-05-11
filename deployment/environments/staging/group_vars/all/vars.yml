@@ -1,2 +1,8 @@
 ---
 env_name: staging
+domain: mesolex.nmashton.work
+letsencrypt_domains:
+  - mesolex.nmashton.work
+
+cert_source: letsencrypt
+force_ssl: true
