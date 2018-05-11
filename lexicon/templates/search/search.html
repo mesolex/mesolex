@@ -4,58 +4,46 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
             <h2>Search</h2>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-xs-12">
-            <form method="get" action=".">
-                <table>
-                    {{ form.as_table }}
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>
-                            <input type="submit" value="Search">
-                        </td>
-                    </tr>
-                </table>
+            <form action="." method="get">
+                <div class="form-group">
+                    <label for="q">Search text</label>
+                    <input class="form-control" name="q" id="id_q" type="search" placeholder="Enter search text here ...">
+                </div>
+                <input type="submit" class="btn btn-primary" value="Search">
             </form>
         </div>
     </div>
 
     {% if query %}
-    <div class="row">
-        <div class="col-xs-12">
+    <div class="row py-4">
+        <div class="col-12">
             <h3>Results</h3>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-xs-12">
             {% if page.object_list %}
-            <ul>
-                {% for result in page.object_list %}
-                <li>
-                    <h3>{{ result.object.headword }}</h3>
-
-                    <ol>
+            {% for result in page.object_list %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ result.object.headword }}</h5>
+                    {% if result.object.data.raiz %}<h6 class="card-subtitle mb-2 text-muted">{% for raiz in result.object.data.raiz|ensure_list %}{{ raiz }} {% endfor %}</h6>{% endif %}
+                    <ul class="list-group list-group-flush">
                         {% for sig in result.object.data.sigGroup|ensure_list %}
-                            <li>
-                                <p class="sig">{{ sig.sig }}</p>
+                            <li class="list-group-item">
+                                <p class="card-text">{{ sig.sig }}</p>
 
                                 {% for fr in sig.fr_nGroup|ensure_list %}
-                                <p class="fr">
+                                <p class="card-text">
                                     {{ fr.fr_n }} <i>({{ fr.fr_e }})</i>
                                 </p>
                                 {% endfor %}
                             </li>
                         {% endfor %}
-                    </ol>
-                </li>
-                {% endfor %}
-            </ul>
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
             {% else %}
             <p>
                 No results found.
