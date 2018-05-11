@@ -1,4 +1,9 @@
-mesolex_web1 ansible_host=165.227.212.253
+mesolex_staging ansible_host=165.227.212.253
 
 [web]
-mesolex_web1
+mesolex_staging
+
+[db]
+mesolex_staging
+
+[worker]

@@ -1,4 +1,7 @@
 ---
 project_name: mesolex
 python_version: 3.6
-pg_version: 9.6
+pg_version: 9.5
+
+db_password: "{{ SECRET_DB_PASSWORD }}"
+app_minions: "{{ groups['web'] | union(groups['worker']) }}"

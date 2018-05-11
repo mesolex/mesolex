@@ -1,0 +1,5 @@
+---
+- hosts: db
+  become: yes
+  roles:
+  - tequila-postgresql
