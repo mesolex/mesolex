@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% load lexeme_tags %}
+{% load i18n %}
 
 {% block content %}
     <div class="row">
         <div class="col-12">
             <form action="." method="get">
                 <div class="form-group">
-                    <label for="q">Search text</label>
-                    <input class="form-control" name="q" id="id_q" type="search" placeholder="Enter search text here ...">
+                    <label for="q">{% trans "Search text" %}</label>
+                    <input class="form-control" name="q" id="id_q" type="search" placeholder="{% trans 'Enter search text here ...' %}">
                 </div>
-                <input type="submit" class="btn btn-primary" value="Search">
+                <input type="submit" class="btn btn-primary" value="{% trans 'Search' %}">
             </form>
         </div>
     </div>
@@ -60,7 +61,7 @@
                         {% else %}
                             <span class="page-link">
                         {% endif %}
-                        &laquo; Previous
+                        &laquo; {% trans 'Previous' %}
                         {% if page.has_previous %}
                             </a>
                         {% else %}
@@ -73,7 +74,7 @@
                         {% else %}
                             <span class="page-link">
                         {% endif %}
-                        Next &raquo;
+                        {% trans 'Next' %} &raquo;
                         {% if page.has_next %}
                             </a>
                         {% else %}
@@ -85,7 +86,7 @@
 
             {% else %}
             <p>
-                No results found.
+                {% trans 'No results found.' %}
             </p>
             {% endif %}
         </div>
