@@ -18,8 +18,8 @@
     {% if query %}
     <div class="row py-4">
         <div class="col-12">
-            {% if page.object_list %}
-            {% for result in page.object_list %}
+            {% if page_obj.object_list %}
+            {% for result in page_obj.object_list %}
             {% with data=result.object.data %}
             <div class="card mb-4">
                 <div class="card-header">
@@ -53,29 +53,29 @@
             {% endwith %}
             {% endfor %}
 
-            {% if page.has_previous or page.has_next %}
+            {% if page_obj.has_previous or page_obj.has_next %}
                 <ul class="pagination">
-                    <li class="page-item{% if not page.has_previous %} disabled{% endif %}">
-                        {% if page.has_previous %}
-                            <a class="page-link" href="?q={{ query }}&amp;page={{ page.previous_page_number }}">
+                    <li class="page-item{% if not page_obj.has_previous %} disabled{% endif %}">
+                        {% if page_obj.has_previous %}
+                            <a class="page-link" href="?q={{ query }}&amp;page={{ page_obj.previous_page_number }}">
                         {% else %}
                             <span class="page-link">
                         {% endif %}
                         &laquo; {% trans 'Previous' %}
-                        {% if page.has_previous %}
+                        {% if page_obj.has_previous %}
                             </a>
                         {% else %}
                             </span>
                         {% endif %}
                     </li>
-                    <li class="page-item{% if not page.has_next %} disabled{% endif %}">
-                        {% if page.has_next %}
-                            <a class="page-link" href="?q={{ query }}&amp;page={{ page.next_page_number }}">
+                    <li class="page-item{% if not page_obj.has_next %} disabled{% endif %}">
+                        {% if page_obj.has_next %}
+                            <a class="page-link" href="?q={{ query }}&amp;page={{ page_obj.next_page_number }}">
                         {% else %}
                             <span class="page-link">
                         {% endif %}
                         {% trans 'Next' %} &raquo;
-                        {% if page.has_next %}
+                        {% if page_obj.has_next %}
                             </a>
                         {% else %}
                             </span>

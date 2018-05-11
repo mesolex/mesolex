@@ -19,10 +19,15 @@ from django.contrib import admin
 import haystack.urls
 
 import lexicon.urls
+import lexicon.views
 
 urlpatterns = [
     url(r'^api/', include('lexicon.api_urls'), name='api'),
     url(r'^admin/', admin.site.urls),
-    url(r'^search/', include(haystack.urls)),
+    url(
+        r'^search/',
+        lexicon.views.LexiconSearchView.as_view(),
+        name='lexicon_search'
+    ),
     url('', include(lexicon.urls)),
 ]

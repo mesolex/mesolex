@@ -1,7 +1,13 @@
 from django.shortcuts import render
 
-# Create your views here.
+from haystack.generic_views import SearchView
+
+from .forms import LexiconSearchForm
 
 
 def home(request):
     return render(request, 'home.html', {})
+
+
+class LexiconSearchView(SearchView):
+    form_class = LexiconSearchForm
