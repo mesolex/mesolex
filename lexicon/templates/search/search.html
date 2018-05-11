@@ -3,20 +3,8 @@
 {% load i18n %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-12">
-            <form action="." method="get">
-                <div class="form-group">
-                    <label for="q">{% trans "Search text" %}</label>
-                    <input class="form-control" name="q" id="id_q" type="search" placeholder="{% trans 'Enter search text here ...' %}">
-                </div>
-                <input type="submit" class="btn btn-primary" value="{% trans 'Search' %}">
-            </form>
-        </div>
-    </div>
-
     {% if query %}
-    <div class="row py-4">
+    <div class="row">
         <div class="col-12">
             {% if page_obj.object_list %}
             {% for result in page_obj.object_list %}
