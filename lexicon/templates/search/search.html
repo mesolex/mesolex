@@ -1,12 +1,9 @@
 {% extends 'base.html' %}
 {% load lexeme_tags %}
 
-
 {% block content %}
     <div class="row">
         <div class="col-12">
-            <h2>Search</h2>
-
             <form action="." method="get">
                 <div class="form-group">
                     <label for="q">Search text</label>
@@ -20,30 +17,72 @@
     {% if query %}
     <div class="row py-4">
         <div class="col-12">
-            <h3>Results</h3>
-
             {% if page.object_list %}
             {% for result in page.object_list %}
+            {% with data=result.object.data %}
             <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        {{ result.object.headword }}
+                    </h5>
+                    <h6 class="text-muted font-weight-light">({{ data.catgrGroup.catgr }})</h6>
+                    {% if data.lx_alt %}
+                        <h6 class="card-subtitle text-muted font-weight-light">
+                            Alt. form{{ data.lx_alt|ensure_list|pluralize }}:
+                            {% for lx_alt in data.lx_alt|ensure_list %}
+                                {{ lx_alt }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </h6>
+                    {% endif %}
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">{{ result.object.headword }}</h5>
-                    {% if result.object.data.raiz %}<h6 class="card-subtitle mb-2 text-muted">{% for raiz in result.object.data.raiz|ensure_list %}{{ raiz }} {% endfor %}</h6>{% endif %}
-                    <ul class="list-group list-group-flush">
-                        {% for sig in result.object.data.sigGroup|ensure_list %}
-                            <li class="list-group-item">
-                                <p class="card-text">{{ sig.sig }}</p>
 
-                                {% for fr in sig.fr_nGroup|ensure_list %}
-                                <p class="card-text">
-                                    {{ fr.fr_n }} <i>({{ fr.fr_e }})</i>
-                                </p>
-                                {% endfor %}
-                            </li>
-                        {% endfor %}
-                    </ul>
+                    {% for sig in result.object.data.sigGroup|ensure_list %}
+                    <p class="card-text">{{ sig.sig }}</p>
+                        {% if sig.fr_nGroup %}
+                            {% for fr in sig.fr_nGroup|ensure_list %}
+                            <blockquote class="card-text example font-weight-light pl-4">
+                                {{ fr.fr_n }} <i>({{ fr.fr_e }})</i>
+                            </blockquote>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
+            {% endwith %}
             {% endfor %}
+
+            {% if page.has_previous or page.has_next %}
+                <ul class="pagination">
+                    <li class="page-item{% if not page.has_previous %} disabled{% endif %}">
+                        {% if page.has_previous %}
+                            <a class="page-link" href="?q={{ query }}&amp;page={{ page.previous_page_number }}">
+                        {% else %}
+                            <span class="page-link">
+                        {% endif %}
+                        &laquo; Previous
+                        {% if page.has_previous %}
+                            </a>
+                        {% else %}
+                            </span>
+                        {% endif %}
+                    </li>
+                    <li class="page-item{% if not page.has_next %} disabled{% endif %}">
+                        {% if page.has_next %}
+                            <a class="page-link" href="?q={{ query }}&amp;page={{ page.next_page_number }}">
+                        {% else %}
+                            <span class="page-link">
+                        {% endif %}
+                        Next &raquo;
+                        {% if page.has_next %}
+                            </a>
+                        {% else %}
+                            </span>
+                        {% endif %}
+                    </li>
+                </ul>
+            {% endif %}
+
             {% else %}
             <p>
                 No results found.
