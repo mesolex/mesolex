@@ -6,3 +6,5 @@ deployment/roles/
 node_modules/
 */settings/local.py
 solr*
+.vault_pass
+*.retry

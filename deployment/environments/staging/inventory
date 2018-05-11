@@ -1,0 +1,4 @@
+mesolex_web1 ansible_host=165.227.212.253
+
+[web]
+mesolex_web1

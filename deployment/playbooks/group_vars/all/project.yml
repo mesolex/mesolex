@@ -1,0 +1,4 @@
+---
+project_name: mesolex
+python_version: 3.6
+pg_version: 9.6
