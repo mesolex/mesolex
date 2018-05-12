@@ -1,7 +1,15 @@
 ---
 project_name: mesolex
-python_version: 3.6
+python_version: 3.5
 pg_version: 9.5
+
+secret_key: "{{ SECRET_KEY }}"
 
 db_password: "{{ SECRET_DB_PASSWORD }}"
 app_minions: "{{ groups['web'] | union(groups['worker']) }}"
+
+repo:
+  url: "{{ repo_url|default('git@github.com:nmashton/mesolex.git') }}"
+  branch: "{{ repo_branch|default('master') }}"
+
+github_deploy_key: "{{ SECRET_GITHUB_DEPLOY_KEY|default('') }}"

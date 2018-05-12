@@ -11,3 +11,8 @@ DATABASES['default']['PASSWORD'] = os.environ.get('DB_PASSWORD', '')
 ALLOWED_HOSTS = [os.environ['DOMAIN']] + [
     dn for dn in os.environ.get('ADDITIONAL_DOMAINS', '').split(',') if dn
 ]
+
+WEBSERVER_ROOT = '/var/www/mesolex/'
+PUBLIC_ROOT = os.path.join(WEBSERVER_ROOT, 'public')
+STATIC_ROOT = os.path.join(PUBLIC_ROOT, 'static')
+MEDIA_ROOT = os.path.join(PUBLIC_ROOT, 'media')

@@ -6,3 +6,8 @@ letsencrypt_domains:
 
 cert_source: letsencrypt
 force_ssl: true
+
+requirements_file: "{{ source_dir }}/requirements/base.txt"
+
+source_is_local: false
+gunicorn_num_workers: 1

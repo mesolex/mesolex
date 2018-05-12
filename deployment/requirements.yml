@@ -18,3 +18,7 @@
 - src: geerlingguy.solr
   version: 4.1.0
   name: solr
+
+- src: geerlingguy.nodejs
+  version: 4.2.0
+  name: nodejs

@@ -7,3 +7,4 @@ node_modules/
 solr*
 .vault_pass
 *.retry
+*.priv
