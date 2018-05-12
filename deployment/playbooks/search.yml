@@ -1,0 +1,6 @@
+---
+- hosts: search
+  become: yes
+  roles:
+  - java
+  - solr

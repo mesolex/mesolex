@@ -2,3 +2,4 @@
 - include: common.yml
 - include: db.yml
 - include: web.yml
+- include: search.yml
