@@ -3,13 +3,8 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 from .utils import (
-    plural_data,
+    get_list_safe,
 )
-
-
-def _safe_get_list(kv, key):
-    val = kv[key] if key in kv else []
-    return val if isinstance(val, list) else [val]
 
 
 class LexicalEntry(models.Model):
@@ -31,38 +26,38 @@ class LexicalEntry(models.Model):
 
     @property
     def lex_cita_S(self):
-        return plural_data(self.data, 'lx_cita')
+        return get_list_safe(self.data, 'lx_cita')
 
     @property
     def raiz_S(self):
-        return plural_data(self.data, 'raiz')
+        return get_list_safe(self.data, 'raiz')
 
     @property
     def glosa_S(self):
-        return plural_data(self.data, 'glosa')
+        return get_list_safe(self.data, 'glosa')
 
     @property
     def nsem_S(self):
-        return plural_data(self.data, 'nsem')
+        return get_list_safe(self.data, 'nsem')
 
     @property
     def osten_S(self):
-        return plural_data(self.data, 'osten')
+        return get_list_safe(self.data, 'osten')
 
     @property
     def sigGroup_sig_S(self):
-        sigGroup = _safe_get_list(self.data, 'sigGroup')
+        sigGroup = get_list_safe(self.data, 'sigGroup')
         return ([sig_obj['sig'] for sig_obj in sigGroup
                 if isinstance(sig_obj, dict) and 'sig' in sig_obj])
 
     def _prepare_fr_nGroup_el(self, data, key):
-        fr_nGroup = _safe_get_list(data, 'fr_nGroup')
+        fr_nGroup = get_list_safe(data, 'fr_nGroup')
         return ([fr_n_obj[key] for fr_n_obj in fr_nGroup
                 if isinstance(fr_n_obj, dict) and key in fr_n_obj])
 
     def _prepare_sigGroup_fr_nGroup_el(self, data, key):
         vals = []
-        sigGroup = _safe_get_list(data, 'sigGroup')
+        sigGroup = get_list_safe(data, 'sigGroup')
         for sig_obj in sigGroup:
             vals += self._prepare_fr_nGroup_el(sig_obj, key)
         return vals

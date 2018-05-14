@@ -1,10 +1,10 @@
-def plural_data(datum, key):
+def get_list_safe(kv, key):
     """
     Helper function to preprocess unreliably typed data from the JSON
     documents representing lexical entries.
 
-    Takes a dict-like object `datum` and returns a list of values
-    based on the value of `datum[key]`.
+    Takes a dict-like object `kv` and returns a list of values
+    based on the value of `kv[key]`.
 
     When some attribute of lexical entry data *can* be a list (or other
     collection), it becomes necessary to treat it as *always* being such
@@ -12,11 +12,5 @@ def plural_data(datum, key):
     the point of use by converting empty values to empty lists and
     singular values to one-item lists.
     """
-    if key in datum and datum[key]:
-        value = datum[key]
-        if isinstance(value, list):
-            return value
-        else:
-            return [value]
-    else:
-        return []
+    val = kv[key] if key in kv and kv[key] else []
+    return val if isinstance(val, list) else [val]

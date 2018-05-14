@@ -4,13 +4,13 @@ from .data.lexicalentry import TEST_DATA
 from lexicon import utils
 
 
-class PluralDataTestCase(TestCase):
+class GetListSafeTestCase(TestCase):
     def test_returns_empty_list_if_key_not_found(self):
         """
         If the key is not found, an empty list (and not None, etc)
         should be returned.
         """
-        should_be_empty_list = utils.plural_data(
+        should_be_empty_list = utils.get_list_safe(
             TEST_DATA['data'],
             'not found',
         )
@@ -22,7 +22,7 @@ class PluralDataTestCase(TestCase):
         If the value at the key is not a list (e.g. it's a string),
         a single-item list should be returned.
         """
-        should_be_one_item_list = utils.plural_data(
+        should_be_one_item_list = utils.get_list_safe(
             TEST_DATA['data'],
             'glosa',
         )
@@ -33,7 +33,7 @@ class PluralDataTestCase(TestCase):
         """
         If a list value is found at the key, it should be returned.
         """
-        should_be_two_item_list = utils.plural_data(
+        should_be_two_item_list = utils.get_list_safe(
             TEST_DATA['data'],
             'sigGroup',
         )
