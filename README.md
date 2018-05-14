@@ -1,5 +1,7 @@
 # mesolex
 
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
 mesolex is a smart dictionary for Nahuatl (and eventually other Indigenous
 languages of Mexico) built with a combination of the Django web application
 framework and finite-state morphological analysis.
@@ -134,3 +136,7 @@ with the set of Tequila Ansible roles created and maintained by developers
 at Caktus Group, which make deploying Django projects a snap.
 
 For details on provisioning and deployment, see `docs/provisioning_and_deployment.md`.
+
+## License
+
+[Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
