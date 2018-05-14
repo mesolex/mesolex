@@ -2,16 +2,9 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext as _
 
-
-def _plural_data(datum, key):
-    if key in datum:
-        value = datum[key]
-        if isinstance(value, list):
-            return value
-        else:
-            return [value]
-    else:
-        return []
+from .utils import (
+    plural_data,
+)
 
 
 def _safe_get_list(kv, key):
@@ -38,23 +31,23 @@ class LexicalEntry(models.Model):
 
     @property
     def lex_cita_S(self):
-        return _plural_data(self.data, 'lx_cita')
+        return plural_data(self.data, 'lx_cita')
 
     @property
     def raiz_S(self):
-        return _plural_data(self.data, 'raiz')
+        return plural_data(self.data, 'raiz')
 
     @property
     def glosa_S(self):
-        return _plural_data(self.data, 'glosa')
+        return plural_data(self.data, 'glosa')
 
     @property
     def nsem_S(self):
-        return _plural_data(self.data, 'nsem')
+        return plural_data(self.data, 'nsem')
 
     @property
     def osten_S(self):
-        return _plural_data(self.data, 'osten')
+        return plural_data(self.data, 'osten')
 
     @property
     def sigGroup_sig_S(self):
