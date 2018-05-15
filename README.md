@@ -10,6 +10,19 @@ framework and finite-state morphological analysis.
 rather than an existing one. It will be added before the first production
 release.*
 
+## Status of project
+
+**This doesn't work yet.** As of May 15, 2018, basic project architecture
+is set up to the point where it's possible to create an environment, load data,
+and do *simple* search of the text fields of lexical entries using an
+interface that isn't distractingly bad. Some docs have been added,
+as have a few tests. *Otherwise everything remains to be done.*
+The repo has been made public to invite collaboration as early as
+possible, but be warned!
+
+Work to be done before an initial release will be tracked through one
+of Github's productivity tools (*TODO:* choose one and add tickets, etc).
+
 ## Local setup for developers
 
 mesolex is a standard Django app built for easy local development and
