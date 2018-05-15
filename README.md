@@ -99,6 +99,16 @@ To run mesolex, just run the server as usual for a Django project:
 (mesolex)$ python manage.py runserver
 ```
 
+### Load some data
+
+In order to use the project, you will need an XML file containing
+a set of lexicon data. (*TODO:* make this available here or elsewhere!)
+It can be loaded with a Django management command:
+
+```
+(mesolex)$ python manage.py import_data Your-Data-File.xml
+```
+
 ### solr setup
 
 The only complicated part of setting up mesolex is getting it working
@@ -134,7 +144,7 @@ the solr schema:
 $ ./manage.py build_solr_schema > solr-7.3.0/server/solr/mesolex/conf/schema.xml
 ```
 
-Then rebuild the search index:
+Then rebuild the search index using your database's contents:
 
 ```
 $ ./manage.py rebuild_index
