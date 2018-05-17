@@ -9,7 +9,11 @@ from .utils import (
 
 class LexicalEntry(models.Model):
     ref = models.CharField(_("Unique ID"), max_length=64)
-    headword = models.CharField(_("Headword"), max_length=256)
+    headword = models.CharField(
+        _("Headword"),
+        max_length=256,
+        db_index=True,
+    )
     data = JSONField()
 
     def __str__(self):
