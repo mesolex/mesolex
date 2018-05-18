@@ -3,6 +3,11 @@
 {% load i18n %}
 
 {% block content %}
+    {# TODO: use this to construct dynamic filters #}
+    <div class="empty-formset-form" style="display: none;">
+        {{ formset.empty_form }}
+    </div>
+
     {% if query %}
     <div class="row">
         <div class="col-12">
