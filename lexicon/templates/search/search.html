@@ -9,12 +9,22 @@
     </div>
 
     <div class="test-formset-form">
-      <form action="/" method="post">
-          {% csrf_token %}
-          <table>
-              {{ formset }}
-          </table>
-      </form>
+        <form action="/" method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        {% for form in formset %}
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        {{ form.operator }}
+                        {{ form.filter_on }}
+                        {{ form.filter }}
+                    </div>
+                    {{ form.query_string }}
+                </div>
+            </div>
+        {% endfor %}
+        </form>
     </div>
 
     {% if query %}
