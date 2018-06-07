@@ -25,15 +25,20 @@ class LexiconSearchForm(ModelSearchForm):
 
 
 class LexicalSearchFilterForm(forms.Form):
-    query_string = forms.CharField()
+    query_string = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
     operator = forms.ChoiceField(
         choices=BOOLEAN_OPERATORS,
+        widget=forms.Select(attrs={'class': 'custom-select'})
     )
     filter = forms.ChoiceField(
         choices=FILTERS,
+        widget=forms.Select(attrs={'class': 'custom-select'})
     )
     filter_on = forms.ChoiceField(
         choices=FILTERABLE_FIELDS,
+        widget=forms.Select(attrs={'class': 'custom-select'})
     )
 
 
