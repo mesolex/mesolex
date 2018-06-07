@@ -8,16 +8,25 @@
         {{ formset.empty_form }}
     </div>
 
+    <div class="test-formset-form">
+      <form action="/" method="post">
+          {% csrf_token %}
+          <table>
+              {{ formset }}
+          </table>
+      </form>
+    </div>
+
     {% if query %}
     <div class="row">
         <div class="col-12">
-            {% if page_obj.object_list %}
-            {% for result in page_obj.object_list %}
-            {% with data=result.object.data %}
+            {% if lexical_entries %}
+            {% for lexical_entry in lexical_entries %}
+            {% with data=lexical_entry.data %}
             <div class="card mb-4">
                 <div class="card-header">
                     <h5 class="card-title mb-0">
-                        {{ result.object.headword }}
+                        {{ lexical_entry.headword }}
                     </h5>
                     <h6 class="text-muted font-weight-light">({{ data.catgrGroup.catgr }})</h6>
                     {% if data.lx_alt %}
@@ -31,7 +40,7 @@
                 </div>
                 <div class="card-body">
 
-                    {% for sig in result.object.data.sigGroup|ensure_list %}
+                    {% for sig in data.sigGroup|ensure_list %}
                     <p class="card-text">{{ sig.sig }}</p>
                         {% if sig.fr_nGroup %}
                             {% for fr in sig.fr_nGroup|ensure_list %}

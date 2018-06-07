@@ -8,6 +8,13 @@ BOOLEAN_OPERATORS = (
     ('||', 'OR'),
 )
 
+FILTERS = (
+    ('__istartswith', 'Begins with'),
+    ('__iendswith', 'Ends with'),
+    ('__icontains', 'Contains'),
+    ('__isexactly', 'Exactly equals'),
+)
+
 FILTERABLE_FIELDS = (
     ('headword', 'Headword'),
 )
@@ -21,6 +28,9 @@ class LexicalSearchFilterForm(forms.Form):
     query_string = forms.CharField()
     operator = forms.ChoiceField(
         choices=BOOLEAN_OPERATORS,
+    )
+    filter = forms.ChoiceField(
+        choices=FILTERS,
     )
     filter_on = forms.ChoiceField(
         choices=FILTERABLE_FIELDS,
