@@ -9,11 +9,18 @@ BOOLEAN_OPERATORS = (
 )
 
 FILTERS = (
-    ('__istartswith', 'Begins with'),
-    ('__iendswith', 'Ends with'),
-    ('__icontains', 'Contains'),
-    ('__isexactly', 'Exactly equals'),
+    ('begins_with', 'Begins with'),
+    ('ends_with', 'Ends with'),
+    ('contains', 'Contains'),
+    ('exactly_equals', 'Exactly equals'),
 )
+
+FILTERS_DICT = {
+    'begins_with': '__istartswith',
+    'ends_with': '__iendswith',
+    'contains': '__icontains',
+    'exactly_equals': '',
+}
 
 FILTERABLE_FIELDS = (
     ('headword', 'Headword'),
@@ -42,4 +49,4 @@ class LexicalSearchFilterForm(forms.Form):
     )
 
 
-LexicalSearchFilterFormset = forms.formset_factory(LexicalSearchFilterForm)
+LexicalSearchFilterFormset = forms.formset_factory(LexicalSearchFilterForm, extra=2)

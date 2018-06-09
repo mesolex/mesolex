@@ -2,14 +2,16 @@ from django.db.models import Q
 from django.shortcuts import render
 
 from .forms import (
-    LexicalSearchFilterFormset
+    FILTERS_DICT,
+    LexicalSearchFilterFormset,
 )
 from .models import LexicalEntry
 
 
 def _get_Q(form_data):
-    filter = form_data['filter'] if (form_data['filter'] != '__isexactly') else ''
-    return Q(**{'%s%s' % (form_data['filter_on'], filter): form_data['query_string']})
+    filter_str = form_data['filter']
+    filter_arg_val = FILTERS_DICT.get(filter_str, '')
+    return Q(**{'%s%s' % (form_data['filter_on'], filter_arg_val): form_data['query_string']})
 
 
 def lexicon_search_view(request, *args, **kwargs):
