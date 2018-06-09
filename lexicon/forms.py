@@ -49,4 +49,4 @@ class LexicalSearchFilterForm(forms.Form):
     )
 
 
-LexicalSearchFilterFormset = forms.formset_factory(LexicalSearchFilterForm, extra=2)
+LexicalSearchFilterFormset = forms.formset_factory(LexicalSearchFilterForm)

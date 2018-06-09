@@ -25,6 +25,10 @@
   "dependencies": {
     "bootstrap": "^4.1.1",
     "jquery": "^1.9.1",
-    "popper.js": "^1.14.3"
+    "lodash": "^4.17.10",
+    "popper.js": "^1.14.3",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "standard": "^11.0.1"
   }
 }

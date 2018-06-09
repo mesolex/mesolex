@@ -3,11 +3,6 @@
 {% load i18n %}
 
 {% block content %}
-    {# TODO: use this to construct dynamic filters #}
-    <div class="empty-formset-form" style="display: none;">
-        {{ formset.empty_form }}
-    </div>
-
     <div class="test-formset-form">
         <form action="/" method="post">
         {% csrf_token %}
@@ -26,7 +21,8 @@
         {% endfor %}
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit" class="btn btn-success">Search</button>
+            <button class="btn btn-primary float-right" id="add-filter">Add filter</button>
         </div>
         </form>
     </div>
