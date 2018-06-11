@@ -29,10 +29,15 @@ def lexicon_search_view(request, *args, **kwargs):
                     if not query:
                         query = form_q
                     else:
-                        if form.cleaned_data['operator'] == '&&':
+                        operator = form.cleaned_data['operator']
+                        if operator == 'and':
                             query &= form_q
-                        elif form.cleaned_data['operator'] == '||':
+                        elif operator == 'or':
                             query |= form_q
+                        elif operator == 'and_n':
+                            query &= (~form_q)
+                        elif operator == 'or-n':
+                            query |= (~form_q)
 
         if query:
             lexical_entries = LexicalEntry.objects.filter(query)

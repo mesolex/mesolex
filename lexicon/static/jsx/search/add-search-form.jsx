@@ -13,8 +13,10 @@ const SearchForm = ({ i, formsetData, errors, onChangeFieldFrom }) => (
           value={formsetData[`form-${i}-operator`]}
           onChange={onChangeFieldFrom(`form-${i}-operator`)}
         >
-          <option value='&amp;&amp;'>AND</option>
-          <option value='||'>OR</option>
+          <option value='and'>and</option>
+          <option value='or'>or</option>
+          <option value='and_n'>and not</option>
+          <option value='or_n'>or not</option>
         </select>
         <select
           name={`form-${i}-filter_on`}

@@ -6,8 +6,10 @@ from haystack.forms import ModelSearchForm
 
 
 BOOLEAN_OPERATORS = (
-    ('&&', 'AND'),
-    ('||', 'OR'),
+    ('and', 'and'),
+    ('or', 'or'),
+    ('and_n', 'and not'),
+    ('or_n', 'or not'),
 )
 
 FILTERS = (
