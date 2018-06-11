@@ -1,7 +1,8 @@
 import React from 'react'
+import classnames from 'classnames'
 import _ from 'lodash'
 
-const SearchForm = ({ i, formsetData, onChangeFieldFrom }) => (
+const SearchForm = ({ i, formsetData, errors, onChangeFieldFrom }) => (
   <div className='form-group'>
     <div className='input-group'>
       <div className='input-group-prepend'>
@@ -35,16 +36,29 @@ const SearchForm = ({ i, formsetData, onChangeFieldFrom }) => (
           <option value='ends_with'>Ends with</option>
           <option value='contains'>Contains</option>
           <option value='exactly_equals'>Exactly equals</option>
+          <option value='regex'>Regular expression</option>
         </select>
       </div>
       <input
         name={`form-${i}-query_string`}
-        className='form-control'
+        className={classnames(
+          'form-control',
+          {'is-invalid': (errors.query_string || []).length},
+        )}
         id={`id_form-${i}-query_string`}
         type='text'
         value={formsetData[`form-${i}-query_string`]}
         onChange={onChangeFieldFrom(`form-${i}-query_string`)}
       />
+      {
+        (errors.query_string || []).length ?
+          errors.query_string.map(error => (
+            <div className="invalid-feedback">
+              {error}
+            </div>
+          )) :
+          null
+      }
     </div>
   </div>
 )
@@ -94,6 +108,7 @@ export default class SearchFormSet extends React.Component {
           <SearchForm
             i={i}
             formsetData={this.state.formsetData}
+            errors={this.state.formsetErrors[i] || {}}
             onChangeFieldFrom={this.onChangeFieldFrom}
           />
         )) }

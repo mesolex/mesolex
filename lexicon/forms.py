@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 
 from haystack.forms import ModelSearchForm
@@ -13,6 +15,7 @@ FILTERS = (
     ('ends_with', 'Ends with'),
     ('contains', 'Contains'),
     ('exactly_equals', 'Exactly equals'),
+    ('regex', 'Regular expression'),
 )
 
 FILTERS_DICT = {
@@ -20,6 +23,7 @@ FILTERS_DICT = {
     'ends_with': '__iendswith',
     'contains': '__icontains',
     'exactly_equals': '',
+    'regex': '__iregex',
 }
 
 FILTERABLE_FIELDS = (
@@ -47,6 +51,15 @@ class LexicalSearchFilterForm(forms.Form):
         choices=FILTERABLE_FIELDS,
         widget=forms.Select(attrs={'class': 'custom-select'})
     )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if cleaned_data['filter'] == 'regex':
+            qs = cleaned_data['query_string']
+            try:
+                re.compile(qs)
+            except Exception:
+                self.add_error('query_string', forms.ValidationError('Invalid regular expression.'))
 
 
 LexicalSearchFilterFormset = forms.formset_factory(LexicalSearchFilterForm)
