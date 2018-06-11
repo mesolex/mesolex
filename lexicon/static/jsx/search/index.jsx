@@ -4,8 +4,6 @@ import ReactDOM from 'react-dom';
 
 import SearchFormSet from './add-search-form.jsx';
 
-console.log('hello, world!');
-
 ReactDOM.render(
   <SearchFormSet />,
   document.querySelector('#search-form'),

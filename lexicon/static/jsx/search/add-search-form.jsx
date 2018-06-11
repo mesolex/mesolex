@@ -32,10 +32,22 @@ export default class SearchFormSet extends React.Component {
     }
   }
 
+  onClickAddFilter = (e) => {
+    e.preventDefault()
+    this.setState(prevState => ({
+      count: prevState.count + 1
+    }))
+  }
+
   render () {
     return (
       <div>
         { _.times(this.state.count, i => <SearchForm i={i} />) }
+
+        <div className="form-group">
+            <button type="submit" className="btn btn-success">Search</button>
+            <button className="btn btn-primary float-right" id="add-filter" onClick={this.onClickAddFilter}>Add filter</button>
+        </div>
       </div>
     )
   }
