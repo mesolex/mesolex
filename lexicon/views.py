@@ -31,6 +31,7 @@ def lexicon_search_view(request, *args, **kwargs):
                             query &= form_q
                         elif form.cleaned_data['operator'] == '||':
                             query |= form_q
+
         if query:
             lexical_entries = LexicalEntry.objects.filter(query)
 

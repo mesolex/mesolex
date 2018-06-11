@@ -6,26 +6,25 @@
 {% block content %}
     <div class="test-formset-form">
         <form action="/" method="post">
-        {% csrf_token %}
-        {{ formset.management_form }}
-        <div id="search-form">
-          {% for form in formset %}
-              <div class="form-group">
-                  <div class="input-group">
-                      <div class="input-group-prepend">
-                          {{ form.operator }}
-                          {{ form.filter_on }}
-                          {{ form.filter }}
-                      </div>
-                      {{ form.query_string }}
-                  </div>
-              </div>
-          {% endfor %}
-          <div class="form-group">
-              <button type="submit" class="btn btn-success">Search</button>
-              <button class="btn btn-primary float-right" id="add-filter">Add filter</button>
+          <div id="search-form">
+            <!-- This will be replaced on page load. -->
+            {% for form in formset %}
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            {{ form.operator }}
+                            {{ form.filter_on }}
+                            {{ form.filter }}
+                        </div>
+                        {{ form.query_string }}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Search</button>
+                <button class="btn btn-primary float-right" id="add-filter">Add filter</button>
+            </div>
           </div>
-        </div>
         </form>
     </div>
 
@@ -107,6 +106,11 @@
     </div>
     {% endif %}
 {% endblock %}
+
+{% block js-init %}
+  {{ block.super }}
+  "csrfToken": "{{ csrf_token }}"
+{% endblock js-init %}
 
 {% block extra-js %}
 {{ block.super }}

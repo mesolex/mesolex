@@ -42,6 +42,12 @@ export default class SearchFormSet extends React.Component {
   render () {
     return (
       <div>
+        <input name="form-TOTAL_FORMS" value={this.state.count} id="id_form-TOTAL_FORMS" type="hidden" />
+        <input name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS" type="hidden" />
+        <input name="form-MIN_NUM_FORMS" value="0" id="id_form-MIN_NUM_FORMS" type="hidden" />
+        <input name="form-MAX_NUM_FORMS" value="1000" id="id_form-MAX_NUM_FORMS" type="hidden" />
+        <input name="csrfmiddlewaretoken" value={this.props.csrfToken} type="hidden" />
+
         { _.times(this.state.count, i => <SearchForm i={i} />) }
 
         <div className="form-group">

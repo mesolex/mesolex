@@ -4,7 +4,12 @@ import ReactDOM from 'react-dom';
 
 import SearchFormSet from './add-search-form.jsx';
 
-ReactDOM.render(
-  <SearchFormSet />,
-  document.querySelector('#search-form'),
-);
+
+window.onload = () => {
+  const jsInit = JSON.parse(document.getElementById('js-init').text);
+
+  ReactDOM.render(
+    <SearchFormSet csrfToken={jsInit.csrfToken} />,
+    document.querySelector('#search-form'),
+  );
+}
