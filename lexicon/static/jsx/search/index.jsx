@@ -6,10 +6,18 @@ import SearchFormSet from './add-search-form.jsx';
 
 
 window.onload = () => {
-  const jsInit = JSON.parse(document.getElementById('js-init').text);
+  const {
+    csrfToken,
+    formset_data,
+    formset_errors,
+  } = JSON.parse(document.getElementById('js-init').text);
 
   ReactDOM.render(
-    <SearchFormSet csrfToken={jsInit.csrfToken} />,
+    <SearchFormSet
+      formsetData={formset_data}
+      formsetErrors={formset_errors}
+      csrfToken={csrfToken}
+    />,
     document.querySelector('#search-form'),
   );
 }

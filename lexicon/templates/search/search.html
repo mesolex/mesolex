@@ -109,7 +109,9 @@
 
 {% block js-init %}
   {{ block.super }}
-  "csrfToken": "{{ csrf_token }}"
+  "csrfToken": "{{ csrf_token }}",
+  "formset_data": {{ formset_data|safe }},
+  "formset_errors": {{ formset_errors|safe }}
 {% endblock js-init %}
 
 {% block extra-js %}

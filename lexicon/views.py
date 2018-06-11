@@ -1,3 +1,5 @@
+import json
+
 from django.db.models import Q
 from django.shortcuts import render
 
@@ -39,9 +41,13 @@ def lexicon_search_view(request, *args, **kwargs):
             'lexical_entries': lexical_entries,
             'query': True,
             'formset': formset,
+            'formset_data': json.dumps(formset.data),
+            'formset_errors': json.dumps(formset.errors),
         })
 
     formset = LexicalSearchFilterFormset()
     return render(request, template_name, {
         'formset': formset,
+        'formset_data': json.dumps(formset.data),
+        'formset_errors': json.dumps(formset.errors),
     })
