@@ -2,9 +2,11 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import AddSearchForm from './add-search-form.jsx';
+import SearchFormSet from './add-search-form.jsx';
+
+console.log('hello, world!');
 
 ReactDOM.render(
-  <AddSearchForm />,
+  <SearchFormSet />,
   document.querySelector('#search-form'),
 );

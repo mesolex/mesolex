@@ -33,6 +33,10 @@ export default class SearchFormSet extends React.Component {
   }
 
   render () {
-    return _.times(SearchForm, this.state.count)
+    return (
+      <div>
+        { _.times(this.state.count, i => <SearchForm i={i} />) }
+      </div>
+    )
   }
 }
