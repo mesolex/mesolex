@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo \"Build step not configured yet\""
+    "build": "./node_modules/webpack-cli/bin/cli.js"
   },
   "repository": {
     "type": "git",
