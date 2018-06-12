@@ -4,4 +4,4 @@
   roles:
     - tequila-nginx
     - { role: tequila-django, is_web: true }
-    - nodejs
+    - tequila-nodejs
