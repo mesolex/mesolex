@@ -24,4 +24,7 @@ module.exports = {
     path: path.join(__dirname, 'mesolex/static/dist'),
     filename: '[name].bundle.js'
   },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
 }
