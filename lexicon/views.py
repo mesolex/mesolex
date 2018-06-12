@@ -26,17 +26,20 @@ def lexicon_search_view(request, *args, **kwargs):
             for form in formset.forms:
                 if form.is_valid():
                     form_q = _get_Q(form.cleaned_data)
+                    operator = form.cleaned_data['operator']
                     if not query:
-                        query = form_q
+                        if operator == 'and_n' or operator == 'or_n':
+                            query = ~form_q
+                        else:
+                            query = form_q
                     else:
-                        operator = form.cleaned_data['operator']
                         if operator == 'and':
                             query &= form_q
                         elif operator == 'or':
                             query |= form_q
                         elif operator == 'and_n':
                             query &= (~form_q)
-                        elif operator == 'or-n':
+                        elif operator == 'or_n':
                             query |= (~form_q)
 
         if query:
