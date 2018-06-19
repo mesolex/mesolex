@@ -1,6 +1,7 @@
 import re
 
 from django import forms
+from django.utils.translation import gettext as _
 
 from haystack.forms import ModelSearchForm
 
@@ -13,11 +14,11 @@ BOOLEAN_OPERATORS = (
 )
 
 FILTERS = (
-    ('begins_with', 'Begins with'),
-    ('ends_with', 'Ends with'),
-    ('contains', 'Contains'),
-    ('exactly_equals', 'Exactly equals'),
-    ('regex', 'Regular expression'),
+    ('begins_with', _('Begins with')),
+    ('ends_with', _('Ends with')),
+    ('contains', _('Contains')),
+    ('exactly_equals', _('Exactly equals')),
+    ('regex', _('Regular expression')),
 )
 
 FILTERS_DICT = {
@@ -29,8 +30,14 @@ FILTERS_DICT = {
 }
 
 FILTERABLE_FIELDS = (
-    ('headword', 'Headword'),
+    ('headword', _('Headword')),
+    ('gloss', _('Gloss')),
 )
+
+FILTERABLE_FIELDS_DICT = {
+    'headword': 'lx_cita',
+    'gloss': 'data__glosa',
+}
 
 
 class LexiconSearchForm(ModelSearchForm):

@@ -5,6 +5,7 @@ from django.shortcuts import render
 
 from .forms import (
     FILTERS_DICT,
+    FILTERABLE_FIELDS_DICT,
     LexicalSearchFilterFormset,
 )
 from .models import LexicalEntry
@@ -13,7 +14,9 @@ from .models import LexicalEntry
 def _get_Q(form_data):
     filter_str = form_data['filter']
     filter_arg_val = FILTERS_DICT.get(filter_str, '')
-    return Q(**{'%s%s' % (form_data['filter_on'], filter_arg_val): form_data['query_string']})
+    filter_on_str = form_data['filter_on']
+    filter_on_val = FILTERABLE_FIELDS_DICT.get(filter_on_str, 'headword')
+    return Q(**{'%s%s' % (filter_on_val, filter_arg_val): form_data['query_string']})
 
 
 def lexicon_search_view(request, *args, **kwargs):
