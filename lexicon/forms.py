@@ -31,12 +31,12 @@ FILTERS_DICT = {
 
 FILTERABLE_FIELDS = (
     ('headword', _('Headword')),
-    ('gloss', _('Gloss')),
+    ('citation_form', _('Citation Form')),
 )
 
 FILTERABLE_FIELDS_DICT = {
-    'headword': 'lx_cita',
-    'gloss': 'data__glosa',
+    'headword': 'headword',
+    'citation_form': 'lexcitationform__value',
 }
 
 

@@ -21,6 +21,8 @@ class Command(BaseCommand):
 
         updated_entries = 0
         added_entries = 0
+        updated_citations = 0
+        added_citations = 0
         errors = 0
         error_messages = []
 
@@ -39,6 +41,24 @@ class Command(BaseCommand):
                         'data': data,
                     }
                 ))
+
+                if 'lx_cita' in data:
+                    if isinstance(data['lx_cita'], list):
+                        lx_citas = data['lx_cita']
+                    else:
+                        lx_citas = [data['lx_cita']]
+
+                    for lx_cita in lx_citas:
+                        if isinstance(lx_cita, str):
+                            (lx_cita_instance, created, ) = (models.LexCitationForm.objects.update_or_create(
+                                entry=lexical_entry,
+                                value=lx_cita,
+                            ))
+
+                            if created:
+                                added_citations += 1
+                            else:
+                                updated_citations += 1
 
                 if created:
                     self.stdout.write('.', ending='')

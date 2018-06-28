@@ -31,7 +31,7 @@ const SearchForm = ({
           onChange={onChangeFieldFrom(`form-${i}-filter_on`)}
         >
           <option value="headword">Headword</option>
-          <option value="gloss">Gloss</option>
+          <option value="citation_form">Citation Form</option>
         </select>
         <select
           name={`form-${i}-filter`}
