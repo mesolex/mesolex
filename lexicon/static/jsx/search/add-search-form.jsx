@@ -1,12 +1,14 @@
 import React from 'react';
 import classnames from 'classnames';
 import _ from 'lodash';
+import Octicon from 'react-component-octicons';
 
 const SearchForm = ({
   i,
   formsetData,
   errors,
   onChangeFieldFrom,
+  removeFilter,
 }) => (
   <div className="form-group">
     <div className="input-group">
@@ -59,6 +61,19 @@ const SearchForm = ({
         onChange={onChangeFieldFrom(`form-${i}-query_string`)}
       />
       {
+        i > 0 ?
+          <div className="input-group-append">
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={removeFilter}
+            >
+              <Octicon name="x" />
+            </button>
+          </div> :
+          null
+      }
+      {
         (errors.query_string || []).length ?
           errors.query_string.map(error => (
             <div className="invalid-feedback">
@@ -101,6 +116,77 @@ export default class SearchFormSet extends React.Component {
     }));
   }
 
+  /*
+    To remove a filter, inspect the keys on the form data and write
+    a new state object by keeping key-value pairs whose key is "less than"
+    the index (or has no index), throwing out the key-value pair
+    corresponding to the index, and keeping decremented versions of
+    key-value pairs whose key contains an index higher than i.
+    Also decrement the "total forms" value.
+  */
+  removeFilter = i => () => {
+    const formsetData = _.reduce(
+      { ...this.state.formsetData },
+      (acc, value, key) => {
+        /*
+          If this key-value pair is the "total forms" stat,
+          decrement the value in the accumulator and move on.
+        */
+        if (key === 'form-TOTAL_FORMS') {
+          acc[key] = value - 1;
+          return acc;
+        }
+
+        /*
+          Otherwise, start trying to find and use the index
+          from the key.
+        */
+        const matchDigits = key.match(/\d+/g);
+        /*
+          No matches for digits => bail now, keeping the key-value pair.
+        */
+        if (!matchDigits) {
+          acc[key] = value;
+          return acc;
+        }
+        /*
+          Otherwise, grab the first match (hopefully the only match,
+          really!) and parse it.
+        */
+        const [keyIndex] = matchDigits;
+        const keyNum = parseInt(keyIndex, 10);
+
+        if (i === keyNum) {
+          /*
+            Is this the pair corresponding to the current index? If so,
+            toss it.
+          */
+          return acc;
+        } else if (i < keyNum) {
+          /*
+            Is this a pair whose key is "after" the current index?
+            Decrement the index in its key name and keep it.
+          */
+          acc[key.replace(/\d+/g, `${keyNum - 1}`)] = value;
+          return acc;
+        }
+
+        /*
+          Otherwise (i.e. if this is a pair whose hey is "before"
+          the current index), just keep it unchanged.
+        */
+        acc[key] = value;
+        return acc;
+      },
+      {},
+    );
+
+    this.setState(prevState => ({
+      ...prevState,
+      formsetData,
+    }));
+  }
+
   render() {
     const count = (parseInt(this.state.formsetData['form-TOTAL_FORMS'], 10) || 1);
     return (
@@ -117,6 +203,7 @@ export default class SearchFormSet extends React.Component {
             formsetData={this.state.formsetData}
             errors={this.state.formsetErrors[i] || {}}
             onChangeFieldFrom={this.onChangeFieldFrom}
+            removeFilter={this.removeFilter(i)}
           />
         )) }
 
