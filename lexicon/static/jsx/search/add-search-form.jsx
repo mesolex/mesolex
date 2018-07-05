@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import _ from 'lodash';
 import Octicon from 'react-component-octicons';
@@ -86,10 +87,24 @@ const SearchForm = ({
   </div>
 );
 
+SearchForm.propTypes = {
+  i: PropTypes.number.isRequired,
+  formsetData: PropTypes.shape.isRequired,
+  errors: PropTypes.shape.isRequired,
+  onChangeFieldFrom: PropTypes.func.isRequired,
+  removeFilter: PropTypes.func.isRequired,
+};
+
 export default class SearchFormSet extends React.Component {
+  static propTypes = {
+    formsetData: PropTypes.shape.isRequired,
+    formsetErrors: PropTypes.shape.isRequired,
+    csrfToken: PropTypes.string.isRequired,
+  }
+
   constructor(props) {
     super(props);
-    const { formsetData, formsetErrors } = props
+    const { formsetData, formsetErrors } = props;
     this.state = {
       formsetData,
       formsetErrors,
@@ -101,7 +116,9 @@ export default class SearchFormSet extends React.Component {
     this.setState(prevState => ({
       formsetData: {
         ...prevState.formsetData,
-        'form-TOTAL_FORMS': (parseInt(this.state.formsetData['form-TOTAL_FORMS'], 10) || 1) + 1
+        'form-TOTAL_FORMS': (
+          (parseInt(this.state.formsetData['form-TOTAL_FORMS'], 10) || 1) + 1
+        ),
       },
     }));
   }
