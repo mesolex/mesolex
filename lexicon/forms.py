@@ -30,13 +30,11 @@ FILTERS_DICT = {
 }
 
 FILTERABLE_FIELDS = (
-    ('headword', _('Headword')),
-    ('citation_form', _('Citation Form')),
+    ('headword', _('Headword')),\
 )
 
 FILTERABLE_FIELDS_DICT = {
     'headword': 'headword',
-    'citation_form': 'lexcitationform__value',
 }
 
 

@@ -42,23 +42,29 @@ class Command(BaseCommand):
                     }
                 ))
 
-                if 'lx_cita' in data:
-                    if isinstance(data['lx_cita'], list):
-                        lx_citas = data['lx_cita']
-                    else:
-                        lx_citas = [data['lx_cita']]
+                # # NOTE: the following is an example of how to process
+                # # possibly-multiple data contained in the blob, associating
+                # # it with a simple model that can be used to associate it
+                # # with a lexical entry. This code was written in a draft
+                # # that used a LexCitationForm model, subsequently removed.
 
-                    for lx_cita in lx_citas:
-                        if isinstance(lx_cita, str):
-                            (lx_cita_instance, created, ) = (models.LexCitationForm.objects.update_or_create(
-                                entry=lexical_entry,
-                                value=lx_cita,
-                            ))
-
-                            if created:
-                                added_citations += 1
-                            else:
-                                updated_citations += 1
+                # if 'lx_cita' in data:
+                #     if isinstance(data['lx_cita'], list):
+                #         lx_citas = data['lx_cita']
+                #     else:
+                #         lx_citas = [data['lx_cita']]
+                #
+                #     for lx_cita in lx_citas:
+                #         if isinstance(lx_cita, str):
+                #             (lx_cita_instance, created, ) = (models.LexCitationForm.objects.update_or_create(
+                #                 entry=lexical_entry,
+                #                 value=lx_cita,
+                #             ))
+                #
+                #             if created:
+                #                 added_citations += 1
+                #             else:
+                #                 updated_citations += 1
 
                 if created:
                     self.stdout.write('.', ending='')
