@@ -12,8 +12,12 @@
   name: tequila-nginx
 
 - src: https://github.com/caktus/tequila-django
-  version: v0.9.11
+  version: v0.9.13
   name: tequila-django
+
+- src: https://github.com/caktus/tequila-nodejs
+  version: v0.8.0
+  name: tequila-nodejs
 
 - src: geerlingguy.java
   version: 1.8.1
