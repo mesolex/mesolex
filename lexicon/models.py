@@ -81,3 +81,8 @@ class LexicalEntry(models.Model):
     @property
     def fr_nGroup_fr_n_S(self):
         return self._prepare_fr_nGroup_el(self.data, 'fr_n')
+
+
+class LexCitationForm(models.Model):
+    entry = models.ForeignKey(LexicalEntry)
+    value = models.CharField(max_length=128)

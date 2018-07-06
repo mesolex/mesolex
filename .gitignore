@@ -9,3 +9,4 @@ solr*/
 .vault_pass
 *.retry
 *.priv
+dist/

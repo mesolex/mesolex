@@ -4,5 +4,5 @@ from lexicon import views
 
 
 urlpatterns = [
-    url('', views.LexiconSearchView.as_view(), name='lexicon_search'),
+    url('', views.lexicon_search_view, name='lexicon_search'),
 ]

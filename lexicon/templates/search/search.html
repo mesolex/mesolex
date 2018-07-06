@@ -1,18 +1,43 @@
 {% extends 'base.html' %}
 {% load lexeme_tags %}
 {% load i18n %}
+{% load staticfiles %}
 
 {% block content %}
+    <div class="test-formset-form">
+        <form action="/" method="post">
+          <div id="search-form">
+            <!-- This will be replaced on page load. -->
+            {% for form in formset %}
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            {{ form.operator }}
+                            {{ form.filter_on }}
+                            {{ form.filter }}
+                        </div>
+                        {{ form.query_string }}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Search</button>
+                <button class="btn btn-primary float-right" id="add-filter">Add filter</button>
+            </div>
+          </div>
+        </form>
+    </div>
+
     {% if query %}
     <div class="row">
         <div class="col-12">
-            {% if page_obj.object_list %}
-            {% for result in page_obj.object_list %}
-            {% with data=result.object.data %}
+            {% if lexical_entries %}
+            {% for lexical_entry in lexical_entries %}
+            {% with data=lexical_entry.data %}
             <div class="card mb-4">
                 <div class="card-header">
                     <h5 class="card-title mb-0">
-                        {{ result.object.headword }}
+                        {{ lexical_entry.headword }}
                     </h5>
                     <h6 class="text-muted font-weight-light">({{ data.catgrGroup.catgr }})</h6>
                     {% if data.lx_alt %}
@@ -26,7 +51,7 @@
                 </div>
                 <div class="card-body">
 
-                    {% for sig in result.object.data.sigGroup|ensure_list %}
+                    {% for sig in data.sigGroup|ensure_list %}
                     <p class="card-text">{{ sig.sig }}</p>
                         {% if sig.fr_nGroup %}
                             {% for fr in sig.fr_nGroup|ensure_list %}
@@ -81,3 +106,15 @@
     </div>
     {% endif %}
 {% endblock %}
+
+{% block js-init %}
+  {{ block.super }}
+  "csrfToken": "{{ csrf_token }}",
+  "formset_data": {{ formset_data|safe }},
+  "formset_errors": {{ formset_errors|safe }}
+{% endblock js-init %}
+
+{% block extra-js %}
+{{ block.super }}
+<script src="{% static 'dist/search.bundle.js' %}"></script>
+{% endblock extra-js %}
