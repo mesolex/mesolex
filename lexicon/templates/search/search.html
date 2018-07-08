@@ -51,16 +51,20 @@
                 </div>
                 <div class="card-body">
 
-                    {% for sig in data.sigGroup|ensure_list %}
-                    <p class="card-text">{{ sig.sig }}</p>
-                        {% if sig.fr_nGroup %}
-                            {% for fr in sig.fr_nGroup|ensure_list %}
-                            <blockquote class="card-text example font-weight-light pl-4">
-                                {{ fr.fr_n }} <i>({{ fr.fr_e }})</i>
-                            </blockquote>
-                            {% endfor %}
-                        {% endif %}
-                    {% endfor %}
+                    <ol>
+                        {% for sig in data.sigGroup|ensure_list %}
+                        <li>
+                            <p class="card-text">{{ sig.sig }}</p>
+                            {% if sig.fr_nGroup %}
+                                {% for fr in sig.fr_nGroup|ensure_list %}
+                                <blockquote class="card-text example font-weight-light pl-4">
+                                    <p>{{ fr.fr_n }} <i>({{ fr.fr_e }})</i></p>
+                                </blockquote>
+                                {% endfor %}
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ol>
                 </div>
             </div>
             {% endwith %}
