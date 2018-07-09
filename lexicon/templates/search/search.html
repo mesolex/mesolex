@@ -3,9 +3,13 @@
 {% load i18n %}
 {% load staticfiles %}
 
+{% block extra-head %}
+<link rel="stylesheet" href="{% static 'dist/lexicon_scss.bundle.css' %}" />
+{% endblock extra-head %}
+
 {% block content %}
     <div class="test-formset-form">
-        <form action="/" method="post">
+        <form action="/" method="get">
           <div id="search-form">
             <!-- This will be replaced on page load. -->
             {% for form in formset %}
@@ -60,7 +64,7 @@
                             {% if sig.fr_nGroup %}
                                 {% for fr in sig.fr_nGroup|ensure_list %}
                                 <blockquote class="card-text example font-weight-light pl-4">
-                                    <p>{{ fr.fr_n }} <i>({{ fr.fr_e }})</i></p>
+                                    <p>{{ fr.fr_n|safe }} <i>({{ fr.fr_e|safe }})</i></p>
                                 </blockquote>
                                 {% endfor %}
                             {% endif %}
