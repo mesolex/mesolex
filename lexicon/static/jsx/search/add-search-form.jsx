@@ -98,7 +98,6 @@ export default class SearchFormSet extends React.Component {
   static propTypes = {
     formsetData: PropTypes.shape.isRequired,
     formsetErrors: PropTypes.shape.isRequired,
-    csrfToken: PropTypes.string.isRequired,
   }
 
   constructor(props) {
@@ -211,7 +210,6 @@ export default class SearchFormSet extends React.Component {
         <input name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS" type="hidden" />
         <input name="form-MIN_NUM_FORMS" value="0" id="id_form-MIN_NUM_FORMS" type="hidden" />
         <input name="form-MAX_NUM_FORMS" value="1000" id="id_form-MAX_NUM_FORMS" type="hidden" />
-        <input name="csrfmiddlewaretoken" value={this.props.csrfToken} type="hidden" />
 
         { _.times(count, i => (
           <SearchForm
