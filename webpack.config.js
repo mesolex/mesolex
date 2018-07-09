@@ -1,4 +1,5 @@
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   module: {
@@ -14,11 +15,33 @@ module.exports = {
             'stage-2'
           ]
         }
+      },
+      {
+        test: /\.(css|scss)$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true
+              }
+            },
+            'postcss-loader',
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true
+              }
+            }
+          ]
+        })
       }
     ]
   },
   entry: {
     search: path.join(__dirname, 'lexicon/static/jsx/search/index.jsx'),
+    lexicon_scss: path.join(__dirname, 'lexicon/static/scss/index.scss'),
   },
   output: {
     path: path.join(__dirname, 'mesolex/static/dist'),
@@ -27,4 +50,9 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+  plugins: [
+    new ExtractTextPlugin({
+      filename: '[name].bundle.css'
+    })
+  ],
 }

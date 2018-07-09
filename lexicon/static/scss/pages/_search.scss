@@ -1,0 +1,7 @@
+blockquote.card-text > p > *:not(i) {
+    font-style: italic;
+}
+
+blockquote.card-text > p > i > * {
+    font-style: normal;
+}

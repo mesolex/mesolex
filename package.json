@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/nmashton/mesolex#readme",
   "dependencies": {
+    "autoprefixer": "^8.6.5",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.4",
@@ -32,6 +33,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "bootstrap": "^4.1.1",
     "classnames": "^2.2.6",
+    "css-loader": "^1.0.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-airbnb-base": "^12.1.0",
@@ -41,11 +43,19 @@
     "eslint-plugin-react": "^7.9.1",
     "jquery": "^1.9.1",
     "lodash": "^4.17.10",
+    "node-sass": "^4.9.2",
     "popper.js": "^1.14.3",
+    "postcss-loader": "^2.1.5",
+    "prop-types": "^15.6.2",
     "react": "^16.4.0",
     "react-component-octicons": "^1.6.0",
     "react-dom": "^16.4.0",
+    "sass-loader": "^7.0.3",
+    "style-loader": "^0.21.0",
     "webpack": "^4.12.0",
     "webpack-cli": "^3.0.3"
+  },
+  "devDependencies": {
+    "extract-text-webpack-plugin": "^4.0.0-beta.0"
   }
 }
