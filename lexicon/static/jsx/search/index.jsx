@@ -16,7 +16,6 @@ window.onload = () => {
     <SearchFormSet
       formsetData={formsetData}
       formsetErrors={formsetErrors}
-      csrfToken={csrfToken}
     />,
     document.querySelector('#search-form'),
   );
