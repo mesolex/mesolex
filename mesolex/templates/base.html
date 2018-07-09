@@ -20,6 +20,8 @@
     <meta property="og:site_name" content="Mesolex" />
 
     <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}"/>
+    {% block extra-head %}
+    {% endblock extra-head %}
 </head>
 <body>
     {% include 'includes/header.html' %}

@@ -21,8 +21,8 @@ def _get_Q(form_data):
 
 def lexicon_search_view(request, *args, **kwargs):
     template_name = 'search/search.html'
-    if request.POST:
-        formset = LexicalSearchFilterFormset(request.POST)
+    if request.GET:
+        formset = LexicalSearchFilterFormset(request.GET)
         lexical_entries = None
         query = None
         if len(formset.forms) >= 1:
