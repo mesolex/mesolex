@@ -146,3 +146,9 @@ HAYSTACK_CONNECTIONS = {
         'URL': 'http://127.0.0.1:8983/solr/mesolex/',
     },
 }
+
+LANGUAGE_CODE = 'es'
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)

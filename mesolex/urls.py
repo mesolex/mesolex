@@ -24,5 +24,6 @@ import lexicon.views
 urlpatterns = [
     url(r'^api/', include('lexicon.api_urls'), name='api'),
     url(r'^admin/', admin.site.urls),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
     url('', include(lexicon.urls)),
 ]

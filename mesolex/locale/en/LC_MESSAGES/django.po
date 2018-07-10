@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-10 21:21+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: lexicon/forms.py:17
+msgid "Empieza con"
+msgstr "Begins with"
+
+#: lexicon/forms.py:18
+msgid "Termina con"
+msgstr "Ends with"
+
+#: lexicon/forms.py:19
+msgid "Incluye"
+msgstr "Contains"
+
+#: lexicon/forms.py:20
+msgid "Es exactamente igual a"
+msgstr "Equal to"
+
+#: lexicon/forms.py:21
+msgid "Expresión regular"
+msgstr "Regular expression"
+
+#: lexicon/forms.py:33 lexicon/models.py:13
+msgid "Entrada"
+msgstr "Headword"
+
+#: lexicon/forms.py:69
+msgid "Expresión regular no válida."
+msgstr "Invalid regular expression."
+
+#: lexicon/management/commands/import_data.py:11
+msgid "Lee una fuente de datos en XML y actualiza la base de datos."
+msgstr "Reads an XML data source file and updates the database."
+
+#: lexicon/models.py:11
+msgid "Identificación única"
+msgstr "Unique ID"
+
+#: lexicon/models.py:23
+msgid "Entrada léxica"
+msgstr "Lexical entry"
+
+#: lexicon/models.py:24
+msgid "Entradas léxicas"
+msgstr "Lexical entries"
+
+#: lexicon/templates/search/search.html:29
+msgid "Buscar"
+msgstr "Search"
+
+#: lexicon/templates/search/search.html:32
+msgid "Agrega filtro"
+msgstr "Add filter"
+
+#: lexicon/templates/search/search.html:91
+msgid "Anterior"
+msgstr "Previous"
+
+#: lexicon/templates/search/search.html:104
+msgid "Siguiente"
+msgstr "Next"
+
+#: lexicon/templates/search/search.html:116
+msgid "Resultado no encontrado."
+msgstr "No results found."
