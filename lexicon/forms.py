@@ -7,18 +7,18 @@ from haystack.forms import ModelSearchForm
 
 
 BOOLEAN_OPERATORS = (
-    ('and', 'and'),
-    ('or', 'or'),
-    ('and_n', 'and not'),
-    ('or_n', 'or not'),
+    ('and', 'y'),
+    ('or', 'o'),
+    ('and_n', 'y no'),
+    ('or_n', 'o no'),
 )
 
 FILTERS = (
-    ('begins_with', _('Begins with')),
-    ('ends_with', _('Ends with')),
-    ('contains', _('Contains')),
-    ('exactly_equals', _('Exactly equals')),
-    ('regex', _('Regular expression')),
+    ('begins_with', _('Empieza con')),
+    ('ends_with', _('Termina con')),
+    ('contains', _('Incluye')),
+    ('exactly_equals', _('Es exactamente igual a')),
+    ('regex', _('Expresión regular')),
 )
 
 FILTERS_DICT = {
@@ -30,7 +30,7 @@ FILTERS_DICT = {
 }
 
 FILTERABLE_FIELDS = (
-    ('headword', _('Headword')),\
+    ('headword', _('Entrada')),
 )
 
 FILTERABLE_FIELDS_DICT = {
@@ -66,7 +66,7 @@ class LexicalSearchFilterForm(forms.Form):
             try:
                 re.compile(qs)
             except Exception:
-                self.add_error('query_string', forms.ValidationError('Invalid regular expression.'))
+                self.add_error('query_string', forms.ValidationError(_('Expresión regular no válida.')))
 
 
 LexicalSearchFilterFormset = forms.formset_factory(LexicalSearchFilterForm)

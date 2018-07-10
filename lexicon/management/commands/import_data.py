@@ -8,7 +8,7 @@ from lexicon import models
 
 
 class Command(BaseCommand):
-    help = _("Reads an XML data source file and updates the database.")
+    help = _("Lee una fuente de datos en XML y actualiza la base de datos.")
 
     def add_arguments(self, parser):
         parser.add_argument('input', type=str)

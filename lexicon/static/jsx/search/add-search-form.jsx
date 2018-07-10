@@ -33,7 +33,7 @@ const SearchForm = ({
           value={formsetData[`form-${i}-filter_on`]}
           onChange={onChangeFieldFrom(`form-${i}-filter_on`)}
         >
-          <option value="headword">Headword</option>
+          <option value="headword">Entrada</option>
         </select>
         <select
           name={`form-${i}-filter`}
@@ -42,11 +42,11 @@ const SearchForm = ({
           value={formsetData[`form-${i}-filter`]}
           onChange={onChangeFieldFrom(`form-${i}-filter`)}
         >
-          <option value="begins_with">Begins with</option>
-          <option value="ends_with">Ends with</option>
-          <option value="contains">Contains</option>
-          <option value="exactly_equals">Exactly equals</option>
-          <option value="regex">Regular expression</option>
+          <option value="begins_with">Empieza con</option>
+          <option value="ends_with">Termina con</option>
+          <option value="contains">Contiene</option>
+          <option value="exactly_equals">Es exactamente igual a</option>
+          <option value="regex">Expresión regular</option>
         </select>
       </div>
       <input
@@ -222,8 +222,8 @@ export default class SearchFormSet extends React.Component {
         )) }
 
         <div className="form-group">
-          <button type="submit" className="btn btn-success">Search</button>
-          <button className="btn btn-primary float-right" id="add-filter" onClick={this.onClickAddFilter}>Add filter</button>
+          <button type="submit" className="btn btn-success">Buscar</button>
+          <button className="btn btn-primary float-right" id="add-filter" onClick={this.onClickAddFilter}>Agregar filtro</button>
         </div>
       </div>
     );

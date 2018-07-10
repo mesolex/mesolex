@@ -25,8 +25,12 @@
                 </div>
             {% endfor %}
             <div class="form-group">
-                <button type="submit" class="btn btn-success">Search</button>
-                <button class="btn btn-primary float-right" id="add-filter">Add filter</button>
+                <button type="submit" class="btn btn-success">
+                    {% trans 'Buscar' %}
+                </button>
+                <button class="btn btn-primary float-right" id="add-filter">
+                    {% trans 'Agrega filtro' %}
+                </button>
             </div>
           </div>
         </form>
@@ -84,7 +88,7 @@
                         {% else %}
                             <span class="page-link">
                         {% endif %}
-                        &laquo; {% trans 'Previous' %}
+                        &laquo; {% trans 'Anterior' %}
                         {% if page_obj.has_previous %}
                             </a>
                         {% else %}
@@ -97,7 +101,7 @@
                         {% else %}
                             <span class="page-link">
                         {% endif %}
-                        {% trans 'Next' %} &raquo;
+                        {% trans 'Siguiente' %} &raquo;
                         {% if page_obj.has_next %}
                             </a>
                         {% else %}
@@ -109,7 +113,7 @@
 
             {% else %}
             <p>
-                {% trans 'No results found.' %}
+                {% trans 'Resultado no encontrado.' %}
             </p>
             {% endif %}
         </div>

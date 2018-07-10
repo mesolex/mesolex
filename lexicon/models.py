@@ -8,9 +8,9 @@ from .utils import (
 
 
 class LexicalEntry(models.Model):
-    ref = models.CharField(_("Unique ID"), max_length=64)
+    ref = models.CharField(_("Identificación única"), max_length=64)
     headword = models.CharField(
-        _("Headword"),
+        _("Entrada"),
         max_length=256,
         db_index=True,
     )
@@ -20,8 +20,8 @@ class LexicalEntry(models.Model):
         return self.headword or self.ref or 'Word #%s' % (self.id)
 
     class Meta:
-        verbose_name = _('Lexical Entry')
-        verbose_name_plural = _('Lexical Entries')
+        verbose_name = _('Entrada léxica')
+        verbose_name_plural = _('Entradas léxicas')
         ordering = ('headword', )
 
     @property
