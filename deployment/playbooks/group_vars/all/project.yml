@@ -6,6 +6,11 @@ solr_version: "7.3.0"
 
 secret_key: "{{ SECRET_KEY }}"
 
+root_dir: "/var/www/{{ project_name }}"
+source_dir: "{{ root_dir }}/src"
+venv_dir: "{{ root_dir }}/env"
+project_user: "{{ project_name }}"
+
 db_password: "{{ SECRET_DB_PASSWORD }}"
 app_minions: "{{ groups['web'] | union(groups['worker']) }}"
 
