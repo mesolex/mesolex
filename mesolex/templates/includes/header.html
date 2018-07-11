@@ -16,7 +16,8 @@
                         aria-haspopup="true"
                         aria-expanded="false"
                     >
-                      {% trans 'Idioma' %}
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {{ LANGUAGE_CODE }}
                     </a>
                     <form
                         method="post"
@@ -25,7 +26,6 @@
                         aria-labelledby="language-dropdown"
                     >
                         {% csrf_token %}
-                        {% get_current_language as LANGUAGE_CODE %}
                         {% get_available_languages as LANGUAGES %}
                         {% get_language_info_list for LANGUAGES as languages %}
                         {% for language in languages %}

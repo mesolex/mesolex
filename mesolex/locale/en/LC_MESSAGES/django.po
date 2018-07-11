@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-11 10:12+0000\n"
+"POT-Creation-Date: 2018-07-11 12:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,16 +81,15 @@ msgstr "Next"
 msgid "Resultado no encontrado."
 msgstr "No results found."
 
-#: mesolex/settings/base.py:152
+#: mesolex/settings/base.py:155
 msgid "español"
 msgstr "Spanish"
 
-#: mesolex/settings/base.py:153
+#: mesolex/settings/base.py:156
 #, fuzzy
 #| msgid "inglés"
-msgid "inglés (EE.UU.)"
+msgid "inglés"
 msgstr "English"
 
-#: mesolex/templates/includes/header.html:19
-msgid "Idioma"
-msgstr "Language"
+#~ msgid "Idioma"
+#~ msgstr "Language"
