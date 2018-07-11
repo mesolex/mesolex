@@ -1,3 +1,4 @@
+/* global gettext */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
@@ -33,7 +34,7 @@ const SearchForm = ({
           value={formsetData[`form-${i}-filter_on`]}
           onChange={onChangeFieldFrom(`form-${i}-filter_on`)}
         >
-          <option value="headword">Entrada</option>
+          <option value="headword">{`${gettext('Entrada')}`}</option>
         </select>
         <select
           name={`form-${i}-filter`}
@@ -42,11 +43,11 @@ const SearchForm = ({
           value={formsetData[`form-${i}-filter`]}
           onChange={onChangeFieldFrom(`form-${i}-filter`)}
         >
-          <option value="begins_with">Empieza con</option>
-          <option value="ends_with">Termina con</option>
-          <option value="contains">Contiene</option>
-          <option value="exactly_equals">Es exactamente igual a</option>
-          <option value="regex">Expresión regular</option>
+          <option value="begins_with">{`${gettext('Empieza con')}`}</option>
+          <option value="ends_with">{`${gettext('Termina con')}`}</option>
+          <option value="contains">{`${gettext('Contiene')}`}</option>
+          <option value="exactly_equals">{`${gettext('Es exactamente igual a')}`}</option>
+          <option value="regex">{`${gettext('Expresión regular')}`}</option>
         </select>
       </div>
       <input
@@ -222,8 +223,8 @@ export default class SearchFormSet extends React.Component {
         )) }
 
         <div className="form-group">
-          <button type="submit" className="btn btn-success">Buscar</button>
-          <button className="btn btn-primary float-right" id="add-filter" onClick={this.onClickAddFilter}>Agregar filtro</button>
+          <button type="submit" className="btn btn-success">{`${gettext('Buscar')}`}</button>
+          <button className="btn btn-primary float-right" id="add-filter" onClick={this.onClickAddFilter}>{`${gettext('Agregar filtro')}`}</button>
         </div>
       </div>
     );
