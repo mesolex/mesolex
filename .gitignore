@@ -10,3 +10,4 @@ solr*/
 *.retry
 *.priv
 dist/
+*.mo
