@@ -1,0 +1,11 @@
+---
+- name: Localization
+  hosts: web
+  become: yes
+  tasks:
+    - name: Compile messages
+      django_manage:
+        command: compilemessages
+        app_path: "{{ source_dir }}"
+        virtualenv: "{{ venv_dir }}"
+      become_user: "{{ project_user }}"
