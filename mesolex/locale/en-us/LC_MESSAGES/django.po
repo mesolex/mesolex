@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-17 18:16+0000\n"
+"POT-Creation-Date: 2018-07-17 20:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,15 +74,19 @@ msgstr "Add filter"
 msgid "Resultados (página %(page)s de %(num_pages)s)"
 msgstr "Results (page %(page)s of %(num_pages)s)"
 
-#: lexicon/templates/search/search.html:96
+#: lexicon/templates/search/search.html:61
+msgid "Citación"
+msgstr "Citation"
+
+#: lexicon/templates/search/search.html:110
 msgid "Anterior"
 msgstr "Previous"
 
-#: lexicon/templates/search/search.html:109
+#: lexicon/templates/search/search.html:123
 msgid "Siguiente"
 msgstr "Next"
 
-#: lexicon/templates/search/search.html:121
+#: lexicon/templates/search/search.html:135
 msgid "Resultado no encontrado."
 msgstr "No results found."
 

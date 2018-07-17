@@ -50,8 +50,15 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <span class="h5">{{ lexical_entry.headword }}</span>
+
                     {% if lexical_entry.data.lx_alt %}
                     ({% for alt in lexical_entry.data.lx_alt|ensure_list %}{{ alt }}{% if not forloop.last %}, {% endif %}{% endfor %})
+                    {% endif %}
+
+                    &nbsp;|&nbsp;
+
+                    {% if lexical_entry.data.lx_cita %}
+                    {% trans 'Citación' %}: {% for cita in lexical_entry.data.lx_cita|ensure_list %}{{ cita }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
                     {% comment %}
                     <h5 class="card-title mb-0">
