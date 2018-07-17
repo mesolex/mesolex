@@ -70,14 +70,19 @@
                     <i>{% trans 'Campo semántico' %}:</i> {% for sem in lexical_entry.data.sem|ensure_list %}{{ sem }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
-                    {% if lexical_entry.data.raiz %}
-                    &nbsp;|&nbsp;
-                    <strong>{% trans 'Etimología' %}:</strong> {% for raiz in lexical_entry.data.raiz|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
-                    {% endif %}
+                    {% if lexical_entry.data.raiz or lexical_entry.data.raiz2 %}
+                        &nbsp;|&nbsp;
+                        <strong>{% trans 'Etimología' %}:</strong>
 
-                    {% if lexical_entry.data.raiz2 %}
-                    &nbsp;|&nbsp;
-                    <i>{% trans 'Raíz compuesta' %}:</i> {% for raiz in lexical_entry.data.raiz2|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
+                        {% if lexical_entry.data.raiz %}
+                        <i>{% blocktrans count counter=lexical_entry.data.raiz|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>
+                        {% for raiz in lexical_entry.data.raiz|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
+                        {% endif %}
+
+                        {% if lexical_entry.data.raiz2 %}
+                        &nbsp;|&nbsp;
+                        <i>{% blocktrans count counter=lexical_entry.data.raiz2|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% for raiz in lexical_entry.data.raiz2|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
+                        {% endif %}
                     {% endif %}
                 </div>
                 <div class="card-body">
