@@ -75,13 +75,13 @@
                         <strong>{% trans 'Etimología' %}:</strong>
 
                         {% if lexical_entry.data.raiz %}
-                        <i>{% blocktrans count counter=lexical_entry.data.raiz|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>
+                        <i>{% blocktrans count counter=lexical_entry.data.raiz|ensure_list|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>
                         {% for raiz in lexical_entry.data.raiz|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
                         {% endif %}
 
                         {% if lexical_entry.data.raiz2 %}
                         &nbsp;|&nbsp;
-                        <i>{% blocktrans count counter=lexical_entry.data.raiz2|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% for raiz in lexical_entry.data.raiz2|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
+                        <i>{% blocktrans count counter=lexical_entry.data.raiz2|ensure_list|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% for raiz in lexical_entry.data.raiz2|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
                         {% endif %}
                     {% endif %}
                 </div>
