@@ -1,5 +1,6 @@
 import json
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.shortcuts import render
 
@@ -47,9 +48,18 @@ def lexicon_search_view(request, *args, **kwargs):
 
         if query:
             lexical_entries = LexicalEntry.valid_entries.filter(query)
+            paginator = Paginator(lexical_entries, 25)
+
+            page = request.GET.get('page', 1)
+            try:
+                display_entries = paginator.page(page)
+            except PageNotAnInteger:
+                display_entries = paginator.page(1)
+            except EmptyPage:
+                display_entries = paginator.num_pages
 
         return render(request, template_name, {
-            'lexical_entries': lexical_entries,
+            'lexical_entries': display_entries,
             'query': True,
             'formset': formset,
             'formset_data': json.dumps(formset.data),
