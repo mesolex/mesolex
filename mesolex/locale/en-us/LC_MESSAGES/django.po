@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-17 20:28+0000\n"
+"POT-Creation-Date: 2018-07-17 20:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -82,15 +82,23 @@ msgstr "Citation"
 msgid "Glosa"
 msgstr "Gloss"
 
-#: lexicon/templates/search/search.html:115
+#: lexicon/templates/search/search.html:71
+msgid "Categoría gramatical"
+msgstr "Grammatical category"
+
+#: lexicon/templates/search/search.html:71
+msgid "Inflexión"
+msgstr "Inflection"
+
+#: lexicon/templates/search/search.html:121
 msgid "Anterior"
 msgstr "Previous"
 
-#: lexicon/templates/search/search.html:128
+#: lexicon/templates/search/search.html:134
 msgid "Siguiente"
 msgstr "Next"
 
-#: lexicon/templates/search/search.html:140
+#: lexicon/templates/search/search.html:146
 msgid "Resultado no encontrado."
 msgstr "No results found."
 
