@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-11 12:09+0000\n"
+"POT-Creation-Date: 2018-07-17 18:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgstr "Equal to"
 msgid "Expresión regular"
 msgstr "Regular expression"
 
-#: lexicon/forms.py:33 lexicon/models.py:13
+#: lexicon/forms.py:33 lexicon/models.py:20
 msgid "Entrada"
 msgstr "Headword"
 
@@ -49,15 +49,15 @@ msgstr "Invalid regular expression."
 msgid "Lee una fuente de datos en XML y actualiza la base de datos."
 msgstr "Reads an XML data source file and updates the database."
 
-#: lexicon/models.py:11
+#: lexicon/models.py:18
 msgid "Identificación única"
 msgstr "Unique ID"
 
-#: lexicon/models.py:23
+#: lexicon/models.py:32
 msgid "Entrada léxica"
 msgstr "Lexical entry"
 
-#: lexicon/models.py:24
+#: lexicon/models.py:33
 msgid "Entradas léxicas"
 msgstr "Lexical entries"
 
@@ -69,15 +69,20 @@ msgstr "Search"
 msgid "Agrega filtro"
 msgstr "Add filter"
 
-#: lexicon/templates/search/search.html:91
+#: lexicon/templates/search/search.html:45
+#, python-format
+msgid "Resultados (página %(page)s de %(num_pages)s)"
+msgstr "Results (page %(page)s of %(num_pages)s)"
+
+#: lexicon/templates/search/search.html:96
 msgid "Anterior"
 msgstr "Previous"
 
-#: lexicon/templates/search/search.html:104
+#: lexicon/templates/search/search.html:109
 msgid "Siguiente"
 msgstr "Next"
 
-#: lexicon/templates/search/search.html:116
+#: lexicon/templates/search/search.html:121
 msgid "Resultado no encontrado."
 msgstr "No results found."
 

@@ -55,11 +55,15 @@ def lexicon_search_view(request, *args, **kwargs):
                 display_entries = paginator.page(page)
             except PageNotAnInteger:
                 display_entries = paginator.page(1)
+                page = 1
             except EmptyPage:
-                display_entries = paginator.num_pages
+                display_entries = paginator.page(paginator.num_pages)
+                page = paginator.num_pages
 
         return render(request, template_name, {
             'lexical_entries': display_entries,
+            'num_pages': paginator.num_pages,
+            'page': page,
             'query': True,
             'formset': formset,
             'formset_data': json.dumps(formset.data),
