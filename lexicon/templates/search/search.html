@@ -51,37 +51,37 @@
                 <div class="card-header card-header--search">
                     <span class="h5">{{ lexical_entry.headword }}</span>
 
-                    {% if lexical_entry.data.lx_alt %}
-                    ({% for alt in lexical_entry.data.lx_alt|ensure_list %}{{ alt }}{% if not forloop.last %}, {% endif %}{% endfor %})
+                    {% if data.lx_alt %}
+                    ({% for alt in data.lx_alt|ensure_list %}{{ alt }}{% if not forloop.last %}, {% endif %}{% endfor %})
                     {% endif %}
 
-                    {% if lexical_entry.data.lx_cita %}
+                    {% if data.lx_cita %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Citación' %}:</i> {% for cita in lexical_entry.data.lx_cita|ensure_list %}{{ cita }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.data.glosa %}, <i>{% trans 'Glosa' %}:</i> {% for glosa in lexical_entry.data.glosa|ensure_list %}{{ glosa }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Citación' %}:</i> {% for cita in data.lx_cita|ensure_list %}{{ cita }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if data.glosa %}, <i>{% trans 'Glosa' %}:</i> {% for glosa in data.glosa|ensure_list %}{{ glosa }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
-                    {% if lexical_entry.data.catgrGroup %}
+                    {% if data.catgrGroup %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Categoría gramatical' %}:</i> {% for catgr in lexical_entry.data.catgrGroup|ensure_list %}{{ catgr.catgr }}{% if catgr.inflGroup %}; <i>{% trans 'Inflexión' %}:</i> {{ catgr.inflGroup.infl }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Categoría gramatical' %}:</i> {% for catgr in data.catgrGroup|ensure_list %}{{ catgr.catgr }}{% if catgr.inflGroup %}; <i>{% trans 'Inflexión' %}:</i> {{ catgr.inflGroup.infl }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
-                    {% if lexical_entry.data.sem %}
+                    {% if data.sem %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Campo semántico' %}:</i> {% for sem in lexical_entry.data.sem|ensure_list %}{{ sem }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Campo semántico' %}:</i> {% for sem in data.sem|ensure_list %}{{ sem }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
-                    {% if lexical_entry.data.raiz or lexical_entry.data.raiz2 %}
+                    {% if data.raiz or data.raiz2 %}
                         &nbsp;|&nbsp;
                         <strong>{% trans 'Etimología' %}:</strong>
 
-                        {% if lexical_entry.data.raiz %}
-                        <i>{% blocktrans count counter=lexical_entry.data.raiz|ensure_list|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>
-                        {% for raiz in lexical_entry.data.raiz|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
+                        {% if data.raiz %}
+                        <i>{% blocktrans count counter=data.raiz|ensure_list|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>
+                        {% for raiz in data.raiz|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
                         {% endif %}
 
-                        {% if lexical_entry.data.raiz2 %}
+                        {% if data.raiz2 %}
                         &nbsp;|&nbsp;
-                        <i>{% blocktrans count counter=lexical_entry.data.raiz2|ensure_list|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% for raiz in lexical_entry.data.raiz2|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
+                        <i>{% blocktrans count counter=data.raiz2|ensure_list|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% for raiz in data.raiz2|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
                         {% endif %}
                     {% endif %}
                 </div>
@@ -104,6 +104,28 @@
                         {% endfor %}
                     </ol>
                 </div>
+
+                {% if data.nsem or data.nmorf or data.ngram %}
+                <div class="card-footer">
+                    {% if data.nsem %}
+                    <p class="notes nsem">
+                        <strong>{% trans 'Notas semánticas' %}:</strong> {{ data.nsem|safe }}
+                    </p>
+                    {% endif %}
+
+                    {% if data.nmorf %}
+                    <p class="notes nmorf">
+                        <strong>{% trans 'Notas morfológicas' %}:</strong> {{ data.nmorf|safe }}
+                    </p>
+                    {% endif %}
+
+                    {% if data.ngram %}
+                    <p class="notes ngram">
+                        <strong>{% trans 'Notas gramaticales' %}:</strong> {{ data.ngram|safe }}
+                    </p>
+                    {% endif %}
+                </div>
+                {% endif %}
             </div>
             {% endwith %}
             {% endfor %}

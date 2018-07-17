@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-17 20:59+0000\n"
+"POT-Creation-Date: 2018-07-17 21:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,16 +83,8 @@ msgid "Glosa"
 msgstr "Gloss"
 
 #: lexicon/templates/search/search.html:65
-msgid "Categoría gramatical"
-msgstr "Grammatical category"
-
-#: lexicon/templates/search/search.html:65
 msgid "Inflexión"
 msgstr "Inflection"
-
-#: lexicon/templates/search/search.html:70
-msgid "Campo semántico"
-msgstr "Semantic field"
 
 #: lexicon/templates/search/search.html:75
 msgid "Etimología"
@@ -112,15 +104,33 @@ msgid_plural "Raízes compuestas"
 msgstr[0] "Composite root"
 msgstr[1] "Composite roots"
 
-#: lexicon/templates/search/search.html:119
+#: lexicon/templates/search/search.html:112
+msgid "Campo semántico"
+msgstr "Semantic field"
+
+msgid "Notas semánticas"
+msgstr "Semantic notes"
+
+#: lexicon/templates/search/search.html:118
+msgid "Notas morfológicas"
+msgstr "Morphological notes"
+
+#: lexicon/templates/search/search.html:124
+msgid "Categoría gramatical"
+msgstr "Grammatical category"
+
+msgid "Notas gramaticales"
+msgstr "Grammatical notes"
+
+#: lexicon/templates/search/search.html:141
 msgid "Anterior"
 msgstr "Previous"
 
-#: lexicon/templates/search/search.html:132
+#: lexicon/templates/search/search.html:154
 msgid "Siguiente"
 msgstr "Next"
 
-#: lexicon/templates/search/search.html:144
+#: lexicon/templates/search/search.html:166
 msgid "Resultado no encontrado."
 msgstr "No results found."
 
