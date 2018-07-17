@@ -60,6 +60,11 @@
                     {% if lexical_entry.data.lx_cita %}
                     {% trans 'Citación' %}: {% for cita in lexical_entry.data.lx_cita|ensure_list %}{{ cita }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
+
+                    {% if lexical_entry.data.glosa %}
+                    , {% trans 'Glosa' %}: {% for glosa in lexical_entry.data.glosa|ensure_list %}{{ glosa }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    {% endif %}
+
                     {% comment %}
                     <h5 class="card-title mb-0">
                         {{ lexical_entry.headword }}
