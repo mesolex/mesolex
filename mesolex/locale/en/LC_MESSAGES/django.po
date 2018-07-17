@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-17 20:41+0000\n"
+"POT-Creation-Date: 2018-07-17 20:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,15 +98,19 @@ msgstr "Semantic field"
 msgid "Etimología"
 msgstr "Etymology"
 
-#: lexicon/templates/search/search.html:125
+#: lexicon/templates/search/search.html:80
+msgid "Raíz compuesta"
+msgstr "Composite root"
+
+#: lexicon/templates/search/search.html:130
 msgid "Anterior"
 msgstr "Previous"
 
-#: lexicon/templates/search/search.html:138
+#: lexicon/templates/search/search.html:143
 msgid "Siguiente"
 msgstr "Next"
 
-#: lexicon/templates/search/search.html:150
+#: lexicon/templates/search/search.html:155
 msgid "Resultado no encontrado."
 msgstr "No results found."
 

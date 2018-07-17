@@ -72,7 +72,12 @@
 
                     {% if lexical_entry.data.raiz %}
                     &nbsp;|&nbsp;
-                    <strong>{% trans 'Etimología' %}</strong>: {% for raiz in lexical_entry.data.raiz|ensure_list %}{{ raiz }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <strong>{% trans 'Etimología' %}</strong>: {% for raiz in lexical_entry.data.raiz|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
+                    {% endif %}
+
+                    {% if lexical_entry.data.raiz2 %}
+                    &nbsp;|&nbsp;
+                    {% trans 'Raíz compuesta' %}: {% for raiz in lexical_entry.data.raiz2|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
                     {% endif %}
 
                     {% comment %}
