@@ -46,7 +46,7 @@ def lexicon_search_view(request, *args, **kwargs):
                             query |= (~form_q)
 
         if query:
-            lexical_entries = LexicalEntry.objects.filter(query)
+            lexical_entries = LexicalEntry.valid_entries.filter(query)
 
         return render(request, template_name, {
             'lexical_entries': lexical_entries,
