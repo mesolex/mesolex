@@ -65,6 +65,12 @@
                     , {% trans 'Glosa' %}: {% for glosa in lexical_entry.data.glosa|ensure_list %}{{ glosa }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
+                    &nbsp;|&nbsp;
+
+                    {% if lexical_entry.data.catgrGroup %}
+                    {% trans 'Categoría gramatical' %}: {% for catgr in lexical_entry.data.catgrGroup|ensure_list %}{{ catgr.catgr }}{% if catgr.inflGroup %}; {% trans 'Inflexión' %}: {{ catgr.inflGroup.infl }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    {% endif %}
+
                     {% comment %}
                     <h5 class="card-title mb-0">
                         {{ lexical_entry.headword }}
