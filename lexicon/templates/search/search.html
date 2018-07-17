@@ -48,7 +48,7 @@
             {% for lexical_entry in lexical_entries %}
             {% with data=lexical_entry.data %}
             <div class="card mb-4">
-                <div class="card-header">
+                <div class="card-header card-header--search">
                     <span class="h5">{{ lexical_entry.headword }}</span>
 
                     {% if lexical_entry.data.lx_alt %}
@@ -57,27 +57,27 @@
 
                     {% if lexical_entry.data.lx_cita %}
                     &nbsp;|&nbsp;
-                    {% trans 'Citación' %}: {% for cita in lexical_entry.data.lx_cita|ensure_list %}{{ cita }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.data.glosa %}, {% trans 'Glosa' %}: {% for glosa in lexical_entry.data.glosa|ensure_list %}{{ glosa }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Citación' %}:</i> {% for cita in lexical_entry.data.lx_cita|ensure_list %}{{ cita }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.data.glosa %}, <i>{% trans 'Glosa' %}:</i> {% for glosa in lexical_entry.data.glosa|ensure_list %}{{ glosa }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
                     {% if lexical_entry.data.catgrGroup %}
                     &nbsp;|&nbsp;
-                    {% trans 'Categoría gramatical' %}: {% for catgr in lexical_entry.data.catgrGroup|ensure_list %}{{ catgr.catgr }}{% if catgr.inflGroup %}; {% trans 'Inflexión' %}: {{ catgr.inflGroup.infl }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Categoría gramatical' %}:</i> {% for catgr in lexical_entry.data.catgrGroup|ensure_list %}{{ catgr.catgr }}{% if catgr.inflGroup %}; <i>{% trans 'Inflexión' %}:</i> {{ catgr.inflGroup.infl }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
                     {% if lexical_entry.data.sem %}
                     &nbsp;|&nbsp;
-                    {% trans 'Campo semántico' %}: {% for sem in lexical_entry.data.sem|ensure_list %}{{ sem }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Campo semántico' %}:</i> {% for sem in lexical_entry.data.sem|ensure_list %}{{ sem }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
                     {% if lexical_entry.data.raiz %}
                     &nbsp;|&nbsp;
-                    <strong>{% trans 'Etimología' %}</strong>: {% for raiz in lexical_entry.data.raiz|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
+                    <strong>{% trans 'Etimología' %}:</strong> {% for raiz in lexical_entry.data.raiz|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
                     {% endif %}
 
                     {% if lexical_entry.data.raiz2 %}
                     &nbsp;|&nbsp;
-                    {% trans 'Raíz compuesta' %}: {% for raiz in lexical_entry.data.raiz2|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
+                    <i>{% trans 'Raíz compuesta' %}:</i> {% for raiz in lexical_entry.data.raiz2|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
                     {% endif %}
 
                     {% comment %}
