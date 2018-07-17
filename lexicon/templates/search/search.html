@@ -49,6 +49,11 @@
             {% with data=lexical_entry.data %}
             <div class="card mb-4">
                 <div class="card-header">
+                    <span class="h5">{{ lexical_entry.headword }}</span>
+                    {% if lexical_entry.data.lx_alt %}
+                    ({% for alt in lexical_entry.data.lx_alt|ensure_list %}{{ alt }}{% if not forloop.last %}, {% endif %}{% endfor %})
+                    {% endif %}
+                    {% comment %}
                     <h5 class="card-title mb-0">
                         {{ lexical_entry.headword }}
                     </h5>
@@ -61,6 +66,7 @@
                             {% endfor %}
                         </h6>
                     {% endif %}
+                    {% endcomment %}
                 </div>
                 <div class="card-body">
 
