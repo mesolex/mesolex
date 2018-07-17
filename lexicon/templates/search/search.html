@@ -55,20 +55,19 @@
                     ({% for alt in lexical_entry.data.lx_alt|ensure_list %}{{ alt }}{% if not forloop.last %}, {% endif %}{% endfor %})
                     {% endif %}
 
-                    &nbsp;|&nbsp;
-
                     {% if lexical_entry.data.lx_cita %}
-                    {% trans 'Citación' %}: {% for cita in lexical_entry.data.lx_cita|ensure_list %}{{ cita }}{% if not forloop.last %}, {% endif %}{% endfor %}
-                    {% endif %}
-
-                    {% if lexical_entry.data.glosa %}
-                    , {% trans 'Glosa' %}: {% for glosa in lexical_entry.data.glosa|ensure_list %}{{ glosa }}{% if not forloop.last %}, {% endif %}{% endfor %}
-                    {% endif %}
-
                     &nbsp;|&nbsp;
+                    {% trans 'Citación' %}: {% for cita in lexical_entry.data.lx_cita|ensure_list %}{{ cita }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.data.glosa %}, {% trans 'Glosa' %}: {% for glosa in lexical_entry.data.glosa|ensure_list %}{{ glosa }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    {% endif %}
 
                     {% if lexical_entry.data.catgrGroup %}
+                    &nbsp;|&nbsp;
                     {% trans 'Categoría gramatical' %}: {% for catgr in lexical_entry.data.catgrGroup|ensure_list %}{{ catgr.catgr }}{% if catgr.inflGroup %}; {% trans 'Inflexión' %}: {{ catgr.inflGroup.infl }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    {% endif %}
+
+                    {% if lexical_entry.data.sem %}
+                    &nbsp;|&nbsp;
+                    {% trans 'Campo semántico' %}: {% for glosa in lexical_entry.data.sem|ensure_list %}{{ glosa }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
                     {% comment %}
