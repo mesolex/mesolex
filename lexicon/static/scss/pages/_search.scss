@@ -3,10 +3,21 @@
     text-indent: -1.25rem;
 }
 
-.card-text > p > *:not(i) {
+.card-text > p > *:not(i),
+p.notes > *:not(i,strong) {
     font-style: italic;
 }
 
-.card-text > p > i > * {
+.card-text > p > i > *,
+p.notes > i > * {
     font-style: normal;
+}
+
+p.notes {
+    padding-left: 1.25rem;
+    text-indent: -1.25rem;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
