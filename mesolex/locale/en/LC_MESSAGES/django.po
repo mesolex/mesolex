@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-17 20:38+0000\n"
+"POT-Creation-Date: 2018-07-17 20:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,35 +74,39 @@ msgstr "Add filter"
 msgid "Resultados (página %(page)s de %(num_pages)s)"
 msgstr "Results (page %(page)s of %(num_pages)s)"
 
-#: lexicon/templates/search/search.html:61
+#: lexicon/templates/search/search.html:60
 msgid "Citación"
 msgstr "Citation"
 
-#: lexicon/templates/search/search.html:65
+#: lexicon/templates/search/search.html:60
 msgid "Glosa"
 msgstr "Gloss"
 
-#: lexicon/templates/search/search.html:71
+#: lexicon/templates/search/search.html:65
 msgid "Categoría gramatical"
 msgstr "Grammatical category"
 
-#: lexicon/templates/search/search.html:71
+#: lexicon/templates/search/search.html:65
 msgid "Inflexión"
 msgstr "Inflection"
 
-#: lexicon/templates/search/search.html:77
+#: lexicon/templates/search/search.html:70
 msgid "Campo semántico"
 msgstr "Semantic field"
 
-#: lexicon/templates/search/search.html:127
+#: lexicon/templates/search/search.html:75
+msgid "Etimología"
+msgstr "Etymology"
+
+#: lexicon/templates/search/search.html:125
 msgid "Anterior"
 msgstr "Previous"
 
-#: lexicon/templates/search/search.html:140
+#: lexicon/templates/search/search.html:138
 msgid "Siguiente"
 msgstr "Next"
 
-#: lexicon/templates/search/search.html:152
+#: lexicon/templates/search/search.html:150
 msgid "Resultado no encontrado."
 msgstr "No results found."
 

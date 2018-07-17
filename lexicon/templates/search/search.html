@@ -67,7 +67,12 @@
 
                     {% if lexical_entry.data.sem %}
                     &nbsp;|&nbsp;
-                    {% trans 'Campo semántico' %}: {% for glosa in lexical_entry.data.sem|ensure_list %}{{ glosa }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    {% trans 'Campo semántico' %}: {% for sem in lexical_entry.data.sem|ensure_list %}{{ sem }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    {% endif %}
+
+                    {% if lexical_entry.data.raiz %}
+                    &nbsp;|&nbsp;
+                    <strong>{% trans 'Etimología' %}</strong>: {% for raiz in lexical_entry.data.raiz|ensure_list %}{{ raiz }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
                     {% comment %}
