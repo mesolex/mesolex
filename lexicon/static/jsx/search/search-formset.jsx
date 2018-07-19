@@ -87,7 +87,7 @@ export default class SearchFormSet extends React.Component {
       formsetIndexedDatasets: {
         ...this.state.formsetIndexedDatasets,
         [uniqueId]: {
-          ...this.state[uniqueId],
+          ...this.state.formsetIndexedDatasets[uniqueId],
           [field]: e.target.value,
         },
       },
