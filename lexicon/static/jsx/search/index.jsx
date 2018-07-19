@@ -2,12 +2,11 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import SearchFormSet from './add-search-form';
+import SearchFormSet from './search-formset';
 
 
 window.onload = () => {
   const {
-    csrfToken,
     formset_data: formsetData,
     formset_errors: formsetErrors,
   } = JSON.parse(document.getElementById('js-init').text);
