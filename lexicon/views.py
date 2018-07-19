@@ -25,7 +25,11 @@ def lexicon_search_view(request, *args, **kwargs):
     if request.GET:
         formset = LexicalSearchFilterFormset(request.GET)
         lexical_entries = None
+        display_entries = None
         query = None
+        paginator = None
+        page = 1
+
         if len(formset.forms) >= 1:
             for form in formset.forms:
                 if form.is_valid():
@@ -55,14 +59,13 @@ def lexicon_search_view(request, *args, **kwargs):
                 display_entries = paginator.page(page)
             except PageNotAnInteger:
                 display_entries = paginator.page(1)
-                page = 1
             except EmptyPage:
                 display_entries = paginator.page(paginator.num_pages)
                 page = paginator.num_pages
 
         return render(request, template_name, {
             'lexical_entries': display_entries,
-            'num_pages': paginator.num_pages,
+            'num_pages': paginator.num_pages if paginator else 0,
             'page': page,
             'query': True,
             'formset': formset,
