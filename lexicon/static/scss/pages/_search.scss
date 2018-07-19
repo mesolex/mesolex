@@ -3,6 +3,16 @@
     text-indent: -1.25rem;
 }
 
+.search-results-list {
+  padding-left: 1.25rem;
+}
+
+.example {
+  @include media-breakpoint-up(sm) {
+    padding-left: 1.25rem;
+  }
+}
+
 .card-text > p > *:not(i),
 p.notes > *:not(i,strong) {
     font-style: italic;

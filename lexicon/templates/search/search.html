@@ -87,8 +87,7 @@
                     {% endif %}
                 </div>
                 <div class="card-body">
-
-                    <ol>
+                    <ol class="search-results-list">
                         {% for sig in data.sigGroup|ensure_list %}
                         <li>
                             <div class="card-text">
@@ -96,7 +95,7 @@
                             </div>
                             {% if sig.fr_nGroup %}
                                 {% for fr in sig.fr_nGroup|ensure_list %}
-                                <blockquote class="card-text example font-weight-light pl-4">
+                                <blockquote class="card-text example font-weight-light">
                                     <p>{{ fr.fr_n|safe }} <i>({{ fr.fr_e|safe }})</i></p>
                                 </blockquote>
                                 {% endfor %}
