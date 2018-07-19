@@ -21,3 +21,30 @@ p.notes {
         margin-bottom: 0;
     }
 }
+
+.search-form__filters-label {
+    cursor: pointer;
+}
+
+.search-form__select {
+    @include media-breakpoint-down(sm) {
+        flex-basis: 100% !important;
+
+        &:first-child {
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+            border-top-right-radius: 0.25rem !important;
+        }
+
+        &:last-child {
+            border-top-left-radius: 0 !important;
+            border-top-right-radius: 0 !important;
+            border-bottom-left-radius: 0.25rem !important;
+        }
+
+        & + & {
+            border-top: none !important;
+            margin-left: 0 !important;
+        }
+    }
+}
