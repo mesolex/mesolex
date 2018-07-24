@@ -33,7 +33,7 @@ const humanReadableFilters = ({
     exactly_equals: gettext('es exactamente igual a'),
     regex: gettext('coincide con expresión regular'),
   };
-  return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${gettext('entrada')} ${filterDict[filter]}${ vln ? ` (${gettext('NLV')})` : ''}`;
+  return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${gettext('entrada')} ${filterDict[filter]}${ vln ? ` (${gettext('NCV')})` : ''}`;
 };
 
 const SearchForm = ({
@@ -158,7 +158,7 @@ const SearchForm = ({
           onChange={onChangeFieldFrom('vln', 'checked')}
         />
         <label htmlFor={`id_form-${i}-vln`} className="form-check-label">
-          {gettext('Neutraliza la longitud de la vocal')}
+          {gettext('Neutralizar cantidad vocálica')}
         </label>
       </div>
     </div>
