@@ -12,6 +12,7 @@ const humanReadableFilters = ({
   operator,
   // filterOn,
   filter,
+  vln,
 }) => {
   const initOpDict = {
     and: '',
@@ -32,7 +33,7 @@ const humanReadableFilters = ({
     exactly_equals: gettext('es exactamente igual a'),
     regex: gettext('coincide con expresión regular'),
   };
-  return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${gettext('entrada')} ${filterDict[filter]}`;
+  return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${gettext('entrada')} ${filterDict[filter]}${ vln ? ` (${gettext('NLV')})` : ''}`;
 };
 
 const SearchForm = ({
@@ -53,6 +54,7 @@ const SearchForm = ({
         operator: dataset.operator || 'and',
         filterOn: dataset.filter_on || 'headword',
         filter: dataset.filter || 'begins_with',
+        vln: (dataset.filter !== 'regex') && dataset.vln,
       }) }
     </label>
     <div className="input-group">

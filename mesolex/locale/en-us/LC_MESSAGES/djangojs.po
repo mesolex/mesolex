@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-24 21:18+0000\n"
+"POT-Creation-Date: 2018-07-24 22:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,70 +17,74 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lexicon/static/jsx/search/search-form.jsx:18
-#: lexicon/static/jsx/search/search-form.jsx:20
-#: lexicon/static/jsx/search/search-form.jsx:122
+#: lexicon/static/jsx/search/search-form.jsx:19
+#: lexicon/static/jsx/search/search-form.jsx:21
+#: lexicon/static/jsx/search/search-form.jsx:124
 msgid "no"
 msgstr "does not"
 
-#: lexicon/static/jsx/search/search-form.jsx:23
-#: lexicon/static/jsx/search/search-form.jsx:120
+#: lexicon/static/jsx/search/search-form.jsx:24
+#: lexicon/static/jsx/search/search-form.jsx:122
 msgid "y"
 msgstr "and"
 
-#: lexicon/static/jsx/search/search-form.jsx:24
-#: lexicon/static/jsx/search/search-form.jsx:121
+#: lexicon/static/jsx/search/search-form.jsx:25
+#: lexicon/static/jsx/search/search-form.jsx:123
 msgid "o"
 msgstr "or"
 
-#: lexicon/static/jsx/search/search-form.jsx:25
-#: lexicon/static/jsx/search/search-form.jsx:122
+#: lexicon/static/jsx/search/search-form.jsx:26
+#: lexicon/static/jsx/search/search-form.jsx:124
 msgid "y no"
 msgstr "and not"
 
-#: lexicon/static/jsx/search/search-form.jsx:26
-#: lexicon/static/jsx/search/search-form.jsx:123
+#: lexicon/static/jsx/search/search-form.jsx:27
+#: lexicon/static/jsx/search/search-form.jsx:125
 msgid "o no"
 msgstr "or not"
 
-#: lexicon/static/jsx/search/search-form.jsx:29
-#: lexicon/static/jsx/search/search-form.jsx:141
+#: lexicon/static/jsx/search/search-form.jsx:30
+#: lexicon/static/jsx/search/search-form.jsx:143
 msgid "empieza con"
 msgstr "begins with"
 
-#: lexicon/static/jsx/search/search-form.jsx:30
-#: lexicon/static/jsx/search/search-form.jsx:142
+#: lexicon/static/jsx/search/search-form.jsx:31
+#: lexicon/static/jsx/search/search-form.jsx:144
 msgid "termina con"
 msgstr "ends with"
 
-#: lexicon/static/jsx/search/search-form.jsx:31
-#: lexicon/static/jsx/search/search-form.jsx:143
+#: lexicon/static/jsx/search/search-form.jsx:32
+#: lexicon/static/jsx/search/search-form.jsx:145
 msgid "contiene"
 msgstr "contains"
 
-#: lexicon/static/jsx/search/search-form.jsx:32
-#: lexicon/static/jsx/search/search-form.jsx:144
+#: lexicon/static/jsx/search/search-form.jsx:33
+#: lexicon/static/jsx/search/search-form.jsx:146
 msgid "es exactamente igual a"
 msgstr "exactly equals"
 
-#: lexicon/static/jsx/search/search-form.jsx:33
+#: lexicon/static/jsx/search/search-form.jsx:34
 msgid "coincide con expresión regular"
 msgstr "matches regular expression"
 
-#: lexicon/static/jsx/search/search-form.jsx:35
-#: lexicon/static/jsx/search/search-form.jsx:132
+#: lexicon/static/jsx/search/search-form.jsx:36
+#: lexicon/static/jsx/search/search-form.jsx:134
 msgid "entrada"
 msgstr "headword"
 
-#: lexicon/static/jsx/search/search-form.jsx:120
+#: lexicon/static/jsx/search/search-form.jsx:36
+msgid "NLV"
+msgstr "VLN"
+
+#: lexicon/static/jsx/search/search-form.jsx:122
 msgid "si"
 msgstr "does"
 
-#: lexicon/static/jsx/search/search-form.jsx:145
+#: lexicon/static/jsx/search/search-form.jsx:147
 msgid "expresión regular"
 msgstr "regular expression"
 
-#: lexicon/static/jsx/search/search-form.jsx:158
+#: lexicon/static/jsx/search/search-form.jsx:161
 msgid "Neutraliza la longitud de la vocal"
 msgstr "Neutralize vowel length"
 
