@@ -109,40 +109,55 @@ const SearchForm = ({
       id={`form-${i}-filters-collapse`}
       aria-labelledby={`form-${i}-filters-link`}
     >
-      <select
-        name={`form-${i}-operator`}
-        className="custom-select search-form__select"
-        id={`id_form-${i}-operator`}
-        value={dataset.operator}
-        onChange={onChangeFieldFrom('operator')}
-      >
-        <option value="and">{i === 0 ? gettext('si') : gettext('y')}</option>
-        {i === 0 ? null : <option value="or">{`${gettext('o')}`}</option>}
-        <option value="and_n">{i === 0 ? gettext('no') : gettext('y no')}</option>
-        {i === 0 ? null : <option value="or_n">{`${gettext('o no')}`}</option>}
-      </select>
-      <select
-        name={`form-${i}-filter_on`}
-        className="custom-select search-form__select"
-        id={`id_form-${i}-filter_on`}
-        value={dataset.filter_on}
-        onChange={onChangeFieldFrom('filter_on')}
-      >
-        <option value="headword">{`${gettext('entrada')}`}</option>
-      </select>
-      <select
-        name={`form-${i}-filter`}
-        className="custom-select search-form__select"
-        id={`id_form-${i}-filter`}
-        value={dataset.filter}
-        onChange={onChangeFieldFrom('filter')}
-      >
-        <option value="begins_with">{`${gettext('empieza con')}`}</option>
-        <option value="ends_with">{`${gettext('termina con')}`}</option>
-        <option value="contains">{`${gettext('contiene')}`}</option>
-        <option value="exactly_equals">{`${gettext('es exactamente igual a')}`}</option>
-        <option value="regex">{`${gettext('expresión regular')}`}</option>
-      </select>
+      <div className="input-group">
+        <select
+          name={`form-${i}-operator`}
+          className="custom-select search-form__select"
+          id={`id_form-${i}-operator`}
+          value={dataset.operator}
+          onChange={onChangeFieldFrom('operator')}
+        >
+          <option value="and">{i === 0 ? gettext('si') : gettext('y')}</option>
+          {i === 0 ? null : <option value="or">{`${gettext('o')}`}</option>}
+          <option value="and_n">{i === 0 ? gettext('no') : gettext('y no')}</option>
+          {i === 0 ? null : <option value="or_n">{`${gettext('o no')}`}</option>}
+        </select>
+        <select
+          name={`form-${i}-filter_on`}
+          className="custom-select search-form__select"
+          id={`id_form-${i}-filter_on`}
+          value={dataset.filter_on}
+          onChange={onChangeFieldFrom('filter_on')}
+        >
+          <option value="headword">{`${gettext('entrada')}`}</option>
+        </select>
+        <select
+          name={`form-${i}-filter`}
+          className="custom-select search-form__select"
+          id={`id_form-${i}-filter`}
+          value={dataset.filter}
+          onChange={onChangeFieldFrom('filter')}
+        >
+          <option value="begins_with">{`${gettext('empieza con')}`}</option>
+          <option value="ends_with">{`${gettext('termina con')}`}</option>
+          <option value="contains">{`${gettext('contiene')}`}</option>
+          <option value="exactly_equals">{`${gettext('es exactamente igual a')}`}</option>
+          <option value="regex">{`${gettext('expresión regular')}`}</option>
+        </select>
+      </div>
+      <div className="form-check">
+        <input
+          type="checkbox"
+          className="form-check-input"
+          id={`id_form-${i}-vln`}
+          name={`form-${i}-vln`}
+          checked={dataset.vln}
+          onChange={onChangeFieldFrom('vln', 'checked')}
+        />
+        <label htmlFor={`id_form-${i}-vln`} className="form-check-label">
+          {gettext('Neutraliza la longitud de la vocal')}
+        </label>
+      </div>
     </div>
   </div>
 );

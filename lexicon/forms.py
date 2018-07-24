@@ -58,6 +58,7 @@ class LexicalSearchFilterForm(forms.Form):
         choices=FILTERABLE_FIELDS,
         widget=forms.Select(attrs={'class': 'custom-select'})
     )
+    vln = forms.BooleanField(required=False)
 
     def clean(self):
         cleaned_data = super().clean()

@@ -54,6 +54,7 @@ export default class SearchFormSet extends React.Component {
             operator: formsetData[`form-${i}-operator`] || 'and',
             filter_on: formsetData[`form-${i}-filter_on`] || 'headword',
             filter: formsetData[`form-${i}-filter`] || 'begins_with',
+            vln: !!formsetData[`form-${i}-vln`],
           },
         }),
       ),
@@ -82,13 +83,13 @@ export default class SearchFormSet extends React.Component {
     };
   }
 
-  onChangeFieldFrom = uniqueId => field => (e) => {
+  onChangeFieldFrom = uniqueId => (field, eKey = 'value') => (e) => {
     this.setState({
       formsetIndexedDatasets: {
         ...this.state.formsetIndexedDatasets,
         [uniqueId]: {
           ...this.state.formsetIndexedDatasets[uniqueId],
-          [field]: e.target.value,
+          [field]: e.target[eKey],
         },
       },
     });
