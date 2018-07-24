@@ -10,14 +10,23 @@ from .forms import (
     LexicalSearchFilterFormset,
 )
 from .models import LexicalEntry
+from .utils import (
+    to_vln,
+)
 
 
 def _get_Q(form_data):
-    filter_str = form_data['filter']
-    filter_arg_val = FILTERS_DICT.get(filter_str, '')
+    if form_data['vln']:
+        (filter_arg_val, query_string, ) = to_vln(form_data['filter'], form_data['query_string'])
+    else:
+        filter_str = form_data['filter']
+        filter_arg_val = FILTERS_DICT.get(filter_str, '')
+        query_string = form_data['query_string']
+
     filter_on_str = form_data['filter_on']
     filter_on_val = FILTERABLE_FIELDS_DICT.get(filter_on_str, 'headword')
-    return Q(**{'%s%s' % (filter_on_val, filter_arg_val): form_data['query_string']})
+
+    return Q(**{'%s%s' % (filter_on_val, filter_arg_val): query_string})
 
 
 def lexicon_search_view(request, *args, **kwargs):
