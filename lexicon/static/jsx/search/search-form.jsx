@@ -145,13 +145,14 @@ const SearchForm = ({
           <option value="regex">{`${gettext('expresión regular')}`}</option>
         </select>
       </div>
-      <div className="form-check">
+      <div className="form-check mt-2">
         <input
           type="checkbox"
           className="form-check-input"
           id={`id_form-${i}-vln`}
           name={`form-${i}-vln`}
           checked={dataset.vln}
+          disabled={dataset.filter === 'regex'}
           onChange={onChangeFieldFrom('vln', 'checked')}
         />
         <label htmlFor={`id_form-${i}-vln`} className="form-check-label">
