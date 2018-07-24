@@ -16,10 +16,11 @@ from .utils import (
 
 
 def _get_Q(form_data):
+    filter_str = form_data['filter']
+
     if form_data['vln']:
-        (filter_arg_val, query_string, ) = to_vln(form_data['filter'], form_data['query_string'])
+        (filter_arg_val, query_string, ) = to_vln(filter_str, form_data['query_string'])
     else:
-        filter_str = form_data['filter']
         filter_arg_val = FILTERS_DICT.get(filter_str, '')
         query_string = form_data['query_string']
 
