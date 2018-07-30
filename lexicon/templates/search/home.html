@@ -1,0 +1,20 @@
+{% extends 'search/search.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block content %}
+<div class="jumbotron lexicon-jumbotron mt-2" style="background-image: url({% static 'img/ATC.jpg' %})">
+  <div class="lexicon-jumbotron__inner">
+    <h1 class="display-4">{% trans 'Bienvenido a Mesolex' %}</h1>
+    <p class="lead">
+      {% trans 'Diccionario Náhuat de la Sierra Nororiental de Puebla (por el momento en desarrollo)' %}
+    </p>
+  </div>
+</div>
+
+{{ block.super }}
+
+<p class="small mt-5">
+  {% trans 'Crédito: Ilustración por Inocencio Jiménez Chino' %}
+</p>
+{% endblock content %}

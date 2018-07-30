@@ -9,7 +9,7 @@
 
 {% block content %}
     <div class="test-formset-form">
-        <form action="/" method="get">
+        <form action="{% url 'lexicon_search' %}" method="get">
           <div id="search-form">
             <!-- This will be replaced on page load. -->
             {% for form in formset %}
