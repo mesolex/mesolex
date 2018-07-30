@@ -30,6 +30,16 @@ def _get_Q(form_data):
     return Q(**{'%s%s' % (filter_on_val, filter_arg_val): query_string})
 
 
+def lexicon_home(request, *args, **kwargs):
+    template_name = 'search/home.html'
+    formset = LexicalSearchFilterFormset()
+    return render(request, template_name, {
+        'formset': formset,
+        'formset_data': json.dumps({}),
+        'formset_errors': json.dumps({}),
+    })
+
+
 def lexicon_search_view(request, *args, **kwargs):
     template_name = 'search/search.html'
     if request.GET:
