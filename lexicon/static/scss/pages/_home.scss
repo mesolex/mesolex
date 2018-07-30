@@ -9,3 +9,9 @@
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 0.3rem;
 }
+
+.lexicon-jumbotron__headline {
+  @include media-breakpoint-down(sm) {
+    font-size: 2rem;
+  }
+}
