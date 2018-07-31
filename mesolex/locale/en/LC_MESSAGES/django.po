@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-30 20:35+0000\n"
+"POT-Creation-Date: 2018-07-31 11:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,12 +66,14 @@ msgid "Bienvenido a Mesolex"
 msgstr "Welcome to Mesolex"
 
 #: lexicon/templates/search/home.html:10
-msgid ""
-"Diccionario Náhuat de la Sierra Nororiental de Puebla (por el momento en "
-"desarrollo)"
-msgstr "Dictionary of the Nahuatl of the Sierra Nororiental de Puebla (presently in construction)"
+msgid "Recursos lexicosemánticos para lenguas mesoamericanas (en desarrollo)"
+msgstr "Lexicosemantic resources for Mesoamerican languages (under construction)"
 
-#: lexicon/templates/search/home.html:18
+#: lexicon/templates/search/home.html:16
+msgid "Náhuat de la Sierra Nororiental de Puebla: Diccionario"
+msgstr "Nahuatl of the Sierra Nororiental de Puebla: Dictionary"
+
+#: lexicon/templates/search/home.html:22
 msgid "Crédito: Ilustración por Inocencio Jiménez Chino"
 msgstr "Credit: Illustration by Inocencio Jiménez Chino"
 
