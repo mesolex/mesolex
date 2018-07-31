@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block content %}
-<div class="jumbotron lexicon-jumbotron mt-2" style="background-image: url({% static 'img/ATC.jpg' %})">
+<div class="jumbotron lexicon-jumbotron mt-2 mb-2" style="background-image: url({% static 'img/ATC.jpg' %})">
   <div class="lexicon-jumbotron__inner">
     <h1 class="display-4 lexicon-jumbotron__headline">{% trans 'Bienvenido a Mesolex' %}</h1>
     <p class="lead">
@@ -12,9 +12,9 @@
   </div>
 </div>
 
-{{ block.super }}
-
-<p class="small mt-5">
+<p class="small mt-2 text-right">
   {% trans 'Crédito: Ilustración por Inocencio Jiménez Chino' %}
 </p>
+
+{{ block.super }}
 {% endblock content %}
