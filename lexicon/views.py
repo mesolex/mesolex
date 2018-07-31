@@ -37,6 +37,7 @@ def lexicon_home(request, *args, **kwargs):
         'formset': formset,
         'formset_data': json.dumps({}),
         'formset_errors': json.dumps({}),
+        'form_captions': True,
     })
 
 

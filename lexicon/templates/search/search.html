@@ -8,6 +8,12 @@
 {% endblock extra-head %}
 
 {% block content %}
+    {% if form_captions %}
+        <h2 class="h6">
+          {% trans 'Náhuat de la Sierra Nororiental de Puebla: Diccionario' %}
+        </h2>
+    {% endif %}
+
     <div class="test-formset-form">
         <form action="{% url 'lexicon_search' %}" method="get">
           <div id="search-form">
