@@ -3,7 +3,15 @@
   background-repeat: no-repeat;
   background-color: rgb(200, 220, 220);
   background-position: center 0;
-  padding: 14rem 0 0 0;
+  padding: 18rem 0 0 0;
+
+  @include media-breakpoint-down(lg) {
+    padding-top: 16rem;
+  }
+
+  @include media-breakpoint-down(md) {
+    padding-top: 14rem;
+  }
 
   @include media-breakpoint-down(sm) {
     padding-top: 12rem;
