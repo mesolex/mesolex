@@ -1,5 +1,6 @@
 import re
 
+
 def get_list_safe(kv, key):
     """
     Helper function to preprocess unreliably typed data from the JSON

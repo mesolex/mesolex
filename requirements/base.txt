@@ -4,5 +4,3 @@ psycopg2-binary==2.7.4
 xmljson==0.1.9
 django-prettyjson==0.4.0
 djangorestframework==3.8.2
-django-haystack==2.8.1
-    pysolr==3.7.0

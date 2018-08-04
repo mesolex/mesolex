@@ -4,8 +4,6 @@
 deployment/roles/
 node_modules/
 */settings/local.py
-solr*.tgz
-solr*/
 .vault_pass
 *.retry
 *.priv

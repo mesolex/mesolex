@@ -37,7 +37,6 @@ INSTALLED_APPS = [
 
     'prettyjson',
     'rest_framework',
-    'haystack',
 
     'lexicon',
 ]
@@ -140,13 +139,6 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10,
-}
-
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        'URL': 'http://127.0.0.1:8983/solr/mesolex/',
-    },
 }
 
 LANGUAGE_CODE = 'es'

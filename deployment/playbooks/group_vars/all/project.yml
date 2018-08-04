@@ -2,7 +2,6 @@
 project_name: mesolex
 python_version: 3.5
 pg_version: 9.5
-solr_version: "7.3.0"
 
 secret_key: "{{ SECRET_KEY }}"
 
@@ -24,9 +23,3 @@ nodejs_version: "6.x"
 nodejs_install_npm_user: "{{ project_name }}"
 nodejs_package_json_path: "{{ source_dir }}"
 nodejs_config_unsafe_perm: true
-
-solr_create_user: false
-solr_user: "{{ project_name }}"
-solr_remove_cruft: true
-solr_cores:
-  - mesolex

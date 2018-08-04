@@ -21,8 +21,6 @@ class Command(BaseCommand):
 
         updated_entries = 0
         added_entries = 0
-        updated_citations = 0
-        added_citations = 0
         errors = 0
         error_messages = []
 
