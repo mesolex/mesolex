@@ -19,14 +19,6 @@
   version: v0.8.0
   name: tequila-nodejs
 
-- src: geerlingguy.java
-  version: 1.8.1
-  name: java
-
-- src: geerlingguy.solr
-  version: 4.1.0
-  name: solr
-
 - src: geerlingguy.nodejs
   version: 4.2.0
   name: nodejs

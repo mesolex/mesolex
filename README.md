@@ -109,49 +109,6 @@ It can be loaded with a Django management command:
 (mesolex)$ python manage.py import_data Your-Data-File.xml
 ```
 
-### solr setup
-
-The only complicated part of setting up mesolex is getting it working
-with Solr, the chosen search engine backend for the project. It is
-admittedly a pain, and if an easier backend can be found, the project
-may soon adopt this.
-
-To get started, install solr in your project root directory
-(make sure you have Java installed!):
-
-```
-$ curl -L -O http://apache.claz.org/lucene/solr/7.3.0/solr-7.3.0.tgz
-$ tar zxf solr-7.3.0.tgz
-```
-
-Create the `mesolex` search core, which is where mesolex's search
-data will live:
-
-```
-solr-7.3.0/bin/solr create_core -c mesolex
-```
-
-Now comes the difficult part. Recent versions of Solr have a way of
-handling the search engine schema which does not play nicely out of
-the box with django-haystack, mesolex's interface with the search backend.
-To get it working, you must edit `solr-7.3.0/server/solr/mesolex/conf/solrconfig.xml`.
-For details, consult the project's `docs/solr_config.md`.
-
-Once you've set up the `mesolex` configuration per those instrictions, build
-the solr schema:
-
-```
-$ ./manage.py build_solr_schema > solr-7.3.0/server/solr/mesolex/conf/schema.xml
-```
-
-Then rebuild the search index using your database's contents:
-
-```
-$ ./manage.py rebuild_index
-```
-
-You should now see searches returning data as you expect.
-
 ## Deployment
 
 For provisioning and deployment, this project uses Ansible in combination

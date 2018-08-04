@@ -3,8 +3,6 @@ import re
 from django import forms
 from django.utils.translation import gettext as _
 
-from haystack.forms import ModelSearchForm
-
 
 BOOLEAN_OPERATORS = (
     ('and', 'y'),
@@ -36,10 +34,6 @@ FILTERABLE_FIELDS = (
 FILTERABLE_FIELDS_DICT = {
     'headword': 'headword',
 }
-
-
-class LexiconSearchForm(ModelSearchForm):
-    q = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control mr-3'}))
 
 
 class LexicalSearchFilterForm(forms.Form):
