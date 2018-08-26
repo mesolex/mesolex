@@ -28,3 +28,160 @@ class LexicalEntry(models.Model):
         verbose_name = _('Entrada léxica')
         verbose_name_plural = _('Entradas léxicas')
         ordering = ('headword', )
+
+
+class LexicalEntryTEI(models.Model):
+    # <entry xml:id="{ref}">
+    _id = models.CharField(_("Identificación única"), max_length=64)
+
+    # <form type="lemma"><orth>
+    lemma = models.CharField(
+        _("Entrada"),
+        max_length=256,
+        db_index=True,
+    )
+
+    date = models.DateField(
+        blank=True,
+        null=True,
+    )
+
+    # includes:
+    # - rdp_int
+    # <xr mesolex:type="compound">
+    # <date mesolex:type="review">
+    # <ref type="corpus">
+    # <xr mesolex:type="{{ sem_dict.type }}">
+    misc_data = JSONField(
+        blank=True,
+        null=True,
+    )
+
+
+class AbstractSimpleStringValue(models.Model):
+    value = models.CharField(max_length=256, db_index=True)
+    entry = models.ForeignKey(
+        LexicalEntryTEI,
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.value
+
+
+class Geo(AbstractSimpleStringValue):
+    # <usg type="geo">
+    pass
+
+
+class Citation(AbstractSimpleStringValue):
+    # <form mesolex:type="citation" type="simple"><orth>
+    pass
+
+
+class Variant(AbstractSimpleStringValue):
+    # <form type="variant"><orth>
+    pass
+
+
+class Root(AbstractSimpleStringValue):
+    # <etym type="root">
+    pass
+
+
+class Gloss(AbstractSimpleStringValue):
+    # <gloss>
+    pass
+
+
+class Note(AbstractSimpleStringValue):
+    # <note>
+    # <note type="semantics">
+    # <note type="morphology">
+    value = models.TextField()
+    type = models.CharField(max_length=64)
+
+
+class Category(AbstractSimpleStringValue):
+    # <usg type="category">
+    pass
+
+
+class GrammarGroup(models.Model):
+    # <gramGrp>
+    entry = models.ForeignKey(
+        LexicalEntryTEI,
+        on_delete=models.CASCADE,
+    )
+
+    # <pos>
+    part_of_speech = models.CharField(max_length=256)
+
+    # <iType>
+    inflectional_type = models.CharField(max_length=256)
+
+    # includes plural class, affix collocations
+    misc_data = JSONField()
+
+
+class AbstractGrammarCategoryString(models.Model):
+    language = models.CharField(max_length=64)
+    value = models.CharField(max_length=256)
+    grammar_group = models.OneToOneField(
+        GrammarGroup,
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class PartOfSpeech(AbstractGrammarCategoryString):
+    pass
+
+
+class InflectionalType(AbstractGrammarCategoryString):
+    pass
+
+
+class Sense(models.Model):
+    # <sense>
+    entry = models.ForeignKey(
+        LexicalEntryTEI,
+        on_delete=models.CASCADE,
+    )
+
+    # <def xml:lang="es">
+    definition = models.CharField(max_length=256)
+
+    # <usg type="geo">
+    geo = models.CharField(max_length=64)
+
+
+class Example(models.Model):
+    sense = models.ForeignKey(
+        Sense,
+        on_delete=models.CASCADE,
+    )
+
+    # <usg type="geo">
+    geo = models.CharField(max_length=64)
+
+
+class Quote(models.Model):
+    example = models.ForeignKey(
+        Example,
+        on_delete=models.CASCADE,
+    )
+
+    # <quote xml:lang="{language}">{text}
+    language = models.CharField(max_length=64)
+    text = models.TextField()
+
+    # <ptr mesolex:type="au" cRef="{{ cit.au }}" />
+    # <ptr mesolex:type="son" cRef="{{ cit.son }}" />
+    # <ptr mesolex:type="fuente" cRef="{{ cit.fuente }}" />
+    pointers = JSONField()
