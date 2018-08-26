@@ -118,13 +118,22 @@ class GrammarGroup(models.Model):
     )
 
     # <pos>
-    part_of_speech = models.CharField(max_length=256)
+    part_of_speech = models.CharField(
+        max_length=256,
+        blank=True,
+    )
 
     # <iType>
-    inflectional_type = models.CharField(max_length=256)
+    inflectional_type = models.CharField(
+        max_length=256,
+        blank=True,
+    )
 
     # includes plural class, affix collocations
-    misc_data = JSONField()
+    misc_data = JSONField(
+        blank=True,
+        null=True,
+    )
 
 
 class AbstractGrammarCategoryString(models.Model):
@@ -155,10 +164,15 @@ class Sense(models.Model):
     )
 
     # <def xml:lang="es">
-    definition = models.CharField(max_length=256)
+    definition = models.TextField(
+        blank=True,
+    )
 
     # <usg type="geo">
-    geo = models.CharField(max_length=64)
+    geo = models.CharField(
+        max_length=64,
+        blank=True,
+    )
 
 
 class Example(models.Model):
@@ -168,7 +182,18 @@ class Example(models.Model):
     )
 
     # <usg type="geo">
-    geo = models.CharField(max_length=64)
+    geo = models.CharField(
+        max_length=64,
+        blank=True,
+    )
+
+    # <ptr mesolex:type="au" cRef="{{ cit.au }}" />
+    # <ptr mesolex:type="son" cRef="{{ cit.son }}" />
+    # <ptr mesolex:type="fuente" cRef="{{ cit.fuente }}" />
+    pointers = JSONField(
+        null=True,
+        blank=True,
+    )
 
 
 class Quote(models.Model):
@@ -178,10 +203,10 @@ class Quote(models.Model):
     )
 
     # <quote xml:lang="{language}">{text}
-    language = models.CharField(max_length=64)
-    text = models.TextField()
-
-    # <ptr mesolex:type="au" cRef="{{ cit.au }}" />
-    # <ptr mesolex:type="son" cRef="{{ cit.son }}" />
-    # <ptr mesolex:type="fuente" cRef="{{ cit.fuente }}" />
-    pointers = JSONField()
+    language = models.CharField(
+        max_length=64,
+        blank=True,
+    )
+    text = models.TextField(
+        blank=True,
+    )
