@@ -53,8 +53,8 @@ class Command(BaseCommand):
                     )
 
                 (lexical_entry, created, ) = (models.LexicalEntryTEI.objects.update_or_create(
-                    defaults=defaults,
                     **entry_kwargs,
+                    defaults=defaults,
                 ))
 
                 if 'lx_var' in data:
@@ -150,6 +150,76 @@ class Command(BaseCommand):
                             entry=lexical_entry,
                             value=nmorf,
                         )
+
+                if 'catgrGroup' in data:
+                    catgr_groups = data['catgrGroup'] if isinstance(data['catgrGroup'], list) else [data['catgrGroup']]
+                    models.GrammarGroup.objects.filter(
+                        entry=lexical_entry,
+                    ).delete()
+                    for catgr_group in catgr_groups:
+                        catgr_group_kwargs = {}
+                        misc_data = {}
+
+                        if 'catgr' in catgr_group:
+                            catgr_group_kwargs['part_of_speech'] = catgr_group['catgr']
+
+                        if 'inflGroup' in catgr_group:
+                            infl_group = catgr_group['inflGroup']
+                            if 'infl' in infl_group:
+                                catgr_group_kwargs['inflectional_type'] = infl_group['infl']
+
+                            if 'plural' in infl_group:
+                                misc_data['plural'] = infl_group['plural']
+
+                        if 'diag' in catgr_group:
+                            misc_data['diag'] = catgr_group['diag']
+
+                        models.GrammarGroup.objects.create(
+                            entry=lexical_entry,
+                            misc_data=misc_data,
+                            **catgr_group_kwargs,
+                        )
+
+                if 'sigGroup' in data:
+                    sig_groups = data['sigGroup'] if isinstance(data['sigGroup'], list) else [data['sigGroup']]
+                    models.Sense.objects.filter(
+                        entry=lexical_entry,
+                    ).delete()
+                    for sig_group in sig_groups:
+                        sig_group_kwargs = {}
+                        if 'sig' in sig_group:
+                            sig_group_kwargs['definition'] = sig_group['sig']
+                        if 'sig_var' in sig_group:
+                            sig_group_kwargs['geo'] = sig_group['sig_var']
+                        sense = models.Sense.objects.create(
+                            entry=lexical_entry,
+                            **sig_group_kwargs,
+                        )
+
+                        if 'fr_nGroup' in sig_group:
+                            fr_n_groups = sig_group['fr_nGroup'] if isinstance(sig_group['fr_nGroup'], list) else [sig_group['fr_nGroup']]
+                            for fr_n_group in fr_n_groups:
+                                example_kwargs = {}
+                                if 'fr_var' in fr_n_group:
+                                    example_kwargs['geo'] = fr_n_group['fr_var']
+                                example = models.Example.objects.create(
+                                    sense=sense,
+                                    **example_kwargs
+                                )
+
+                                if 'fr_n' in fr_n_group:
+                                    models.Quote.objects.create(
+                                        example=example,
+                                        language='azz',
+                                        text=fr_n_group['fr_n']
+                                    )
+
+                                if 'fr_e' in fr_n_group:
+                                    models.Quote.objects.create(
+                                        example=example,
+                                        language='es',
+                                        text=fr_n_group['fr_n']
+                                    )
 
                 if created:
                     self.stdout.write('.', ending='')
