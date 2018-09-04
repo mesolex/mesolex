@@ -209,7 +209,7 @@ class Command(BaseCommand):
                                 )
 
                                 if 'fr_n' in fr_n_group:
-                                    models.Quote.objects.create(
+                                    azz = models.Quote.objects.create(
                                         example=example,
                                         language='azz',
                                         text=fr_n_group['fr_n']
@@ -218,8 +218,9 @@ class Command(BaseCommand):
                                 if 'fr_e' in fr_n_group:
                                     models.Quote.objects.create(
                                         example=example,
+                                        translation_of=azz,
                                         language='es',
-                                        text=fr_n_group['fr_n']
+                                        text=fr_n_group['fr_e']
                                     )
 
                 if created:

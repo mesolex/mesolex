@@ -6,7 +6,7 @@ from django.utils.translation import gettext as _
 class ValidEntryManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().exclude(
-            data__sigGroup__isnull=True
+            sense__isnull=True
         )
 
 
@@ -31,6 +31,9 @@ class LexicalEntry(models.Model):
 
 
 class LexicalEntryTEI(models.Model):
+    objects = models.Manager()
+    valid_entries = ValidEntryManager()
+
     # <entry xml:id="{ref}">
     _id = models.CharField(_("Identificación única"), max_length=64)
 
@@ -56,6 +59,13 @@ class LexicalEntryTEI(models.Model):
         blank=True,
         null=True,
     )
+
+    @property
+    def senses(self):
+        return self.sense_set.order_by('order')
+
+    def __str__(self):
+        return self.lemma or self.ref or 'Word #%s' % (self.id)
 
 
 class AbstractSimpleStringValue(models.Model):
@@ -177,11 +187,21 @@ class Example(models.Model):
         blank=True,
     )
 
+    @property
+    def azz_quotes(self):
+        return self.quote_set.filter(language='azz')
+
 
 class Quote(models.Model):
     example = models.ForeignKey(
         Example,
         on_delete=models.CASCADE,
+    )
+    translation_of = models.ForeignKey(
+        'Quote',
+        on_delete=models.CASCADE,
+        null=True,
+        related_name='translations',
     )
 
     # <quote xml:lang="{language}">{text}

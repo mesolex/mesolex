@@ -56,54 +56,61 @@
             {% with data=lexical_entry.data %}
             <div class="card mb-4">
                 <div class="card-header card-header--search">
-                    <span class="h5">{{ lexical_entry.headword }}</span>
+                    <span class="h5">{{ lexical_entry.lemma }}</span>
 
-                    {% if data.lx_alt %}
-                    ({% for alt in data.lx_alt|ensure_list %}{{ alt }}{% if not forloop.last %}, {% endif %}{% endfor %})
+                    {% if lexical_entry.variant_set.exists %}
+                    ({% for variant in lexical_entry.variant_set.all %}{{ variant }}{% if not forloop.last %}, {% endif %}{% endfor %})
                     {% endif %}
 
-                    {% if data.lx_cita %}
+                    {% if lexical_entry.citation_set.exists %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Citación' %}:</i> {% for cita in data.lx_cita|ensure_list %}{{ cita }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if data.glosa %}, <i>{% trans 'Glosa' %}:</i> {% for glosa in data.glosa|ensure_list %}{{ glosa }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Citación' %}:</i> {% for citation in lexical_entry.citation_set.all %}{{ citation }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.gloss_set %}, <i>{% trans 'Glosa' %}:</i> {% for gloss in lexical_entry.gloss_set.all %}{{ gloss }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
-                    {% if data.catgrGroup %}
+                    {% if lexical_entry.grammargroup_set.exists %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Categoría gramatical' %}:</i> {% for catgr in data.catgrGroup|ensure_list %}{{ catgr.catgr }}{% if catgr.inflGroup %}; <i>{% trans 'Inflexión' %}:</i> {{ catgr.inflGroup.infl }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Categoría gramatical' %}:</i> {% for grammar_group in lexical_entry.grammargroup_set.all %}{{ grammar_group.part_of_speech }}{% if grammar_group.inflectional_type.exists %}; <i>{% trans 'Inflexión' %}:</i> {{ grammar_group.inflectional_type }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
+                    {% comment %}
                     {% if data.sem %}
                     &nbsp;|&nbsp;
                     <i>{% trans 'Campo semántico' %}:</i> {% for sem in data.sem|ensure_list %}{{ sem }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
+                    {% endcomment %}
 
-                    {% if data.raiz or data.raiz2 %}
+                    {# {% if data.raiz or data.raiz2 %} #}
+                    {% if lexical_entry.root_set.exists %}
                         &nbsp;|&nbsp;
                         <strong>{% trans 'Etimología' %}:</strong>
 
-                        {% if data.raiz %}
-                        <i>{% blocktrans count counter=data.raiz|ensure_list|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>
-                        {% for raiz in data.raiz|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
-                        {% endif %}
+                        {# {% if data.raiz %} #}
+                        <i>{% blocktrans count counter=lexical_entry.root_set|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>
+                        {% for root in lexical_entry.root_set.all %}{{ root }}{% if not forloop.last %}; {% endif %}{% endfor %}
+                        {# {% endif %} #}
 
+                        {% comment %}
                         {% if data.raiz2 %}
                         &nbsp;|&nbsp;
                         <i>{% blocktrans count counter=data.raiz2|ensure_list|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% for raiz in data.raiz2|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
                         {% endif %}
+                        {% endcomment %}
                     {% endif %}
                 </div>
                 <div class="card-body">
                     <ol class="search-results-list">
-                        {% for sig in data.sigGroup|ensure_list %}
+                        {% for sense in lexical_entry.senses %}
                         <li>
                             <div class="card-text">
-                                <p>{{ sig.sig|safe }}</p>
+                                <p>{{ sense.definition|safe }}</p>
                             </div>
-                            {% if sig.fr_nGroup %}
-                                {% for fr in sig.fr_nGroup|ensure_list %}
-                                <blockquote class="card-text example font-weight-light">
-                                    <p>{{ fr.fr_n|safe }} <i>({{ fr.fr_e|safe }})</i></p>
-                                </blockquote>
+                            {% if sense.example_set.exists %}
+                                {% for example in sense.example_set.all %}
+                                    {% for quote in example.azz_quotes %}
+                                        <blockquote class="card-text example font-weight-light">
+                                            <p>{{ quote.text|safe }} <i>({{ quote.translations.first.text|safe }})</i></p>
+                                        </blockquote>
+                                    {% endfor %}
                                 {% endfor %}
                             {% endif %}
                         </li>
@@ -111,9 +118,10 @@
                     </ol>
                 </div>
 
-                {% if data.nsem or data.nmorf or data.ngram %}
+                {% if lexical_entry.note_set.exists %}
+                {% comment %}
                 <div class="card-footer">
-                    {% if data.nsem %}
+                    {% if lexical_entry. %}
                     <p class="notes nsem">
                         <strong>{% trans 'Notas semánticas' %}:</strong> {{ data.nsem|safe }}
                     </p>
@@ -131,6 +139,7 @@
                     </p>
                     {% endif %}
                 </div>
+                {% endcomment %}
                 {% endif %}
             </div>
             {% endwith %}

@@ -52,7 +52,7 @@ const SearchForm = ({
       { humanReadableFilters({
         i,
         operator: dataset.operator || 'and',
-        filterOn: dataset.filter_on || 'headword',
+        filterOn: dataset.filter_on || 'lemma',
         filter: dataset.filter || 'begins_with',
         vln: (dataset.filter !== 'regex') && dataset.vln,
       }) }
@@ -131,7 +131,7 @@ const SearchForm = ({
           value={dataset.filter_on}
           onChange={onChangeFieldFrom('filter_on')}
         >
-          <option value="headword">{`${gettext('entrada')}`}</option>
+          <option value="lemma">{`${gettext('entrada')}`}</option>
         </select>
         <select
           name={`form-${i}-filter`}

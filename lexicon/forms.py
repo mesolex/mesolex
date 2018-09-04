@@ -28,11 +28,11 @@ FILTERS_DICT = {
 }
 
 FILTERABLE_FIELDS = (
-    ('headword', _('Entrada')),
+    ('lemma', _('Entrada')),
 )
 
 FILTERABLE_FIELDS_DICT = {
-    'headword': 'headword',
+    'lemma': 'lemma',
 }
 
 
