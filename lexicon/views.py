@@ -9,7 +9,7 @@ from .forms import (
     FILTERABLE_FIELDS_DICT,
     LexicalSearchFilterFormset,
 )
-from .models import LexicalEntry
+from .models import LexicalEntryTEI
 from .utils import (
     to_vln,
 )
@@ -25,7 +25,7 @@ def _get_Q(form_data):
         query_string = form_data['query_string']
 
     filter_on_str = form_data['filter_on']
-    filter_on_val = FILTERABLE_FIELDS_DICT.get(filter_on_str, 'headword')
+    filter_on_val = FILTERABLE_FIELDS_DICT.get(filter_on_str, 'lemma')
 
     return Q(**{'%s%s' % (filter_on_val, filter_arg_val): query_string})
 
@@ -72,7 +72,7 @@ def lexicon_search_view(request, *args, **kwargs):
                             query |= (~form_q)
 
         if query:
-            lexical_entries = LexicalEntry.valid_entries.filter(query)
+            lexical_entries = LexicalEntryTEI.valid_entries.filter(query)
             paginator = Paginator(lexical_entries, 25)
 
             page = request.GET.get('page', 1)
