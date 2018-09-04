@@ -185,7 +185,7 @@ class Command(BaseCommand):
                     models.Sense.objects.filter(
                         entry=lexical_entry,
                     ).delete()
-                    for sig_group in sig_groups:
+                    for i, sig_group in enumerate(sig_groups):
                         sig_group_kwargs = {}
                         if 'sig' in sig_group:
                             sig_group_kwargs['definition'] = sig_group['sig']
@@ -193,6 +193,7 @@ class Command(BaseCommand):
                             sig_group_kwargs['geo'] = sig_group['sig_var']
                         sense = models.Sense.objects.create(
                             entry=lexical_entry,
+                            order=i,
                             **sig_group_kwargs,
                         )
 

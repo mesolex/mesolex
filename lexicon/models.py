@@ -136,32 +136,14 @@ class GrammarGroup(models.Model):
     )
 
 
-class AbstractGrammarCategoryString(models.Model):
-    language = models.CharField(max_length=64)
-    value = models.CharField(max_length=256)
-    grammar_group = models.OneToOneField(
-        GrammarGroup,
-        on_delete=models.CASCADE,
-    )
-
-    class Meta:
-        abstract = True
-
-
-class PartOfSpeech(AbstractGrammarCategoryString):
-    pass
-
-
-class InflectionalType(AbstractGrammarCategoryString):
-    pass
-
-
 class Sense(models.Model):
     # <sense>
     entry = models.ForeignKey(
         LexicalEntryTEI,
         on_delete=models.CASCADE,
     )
+
+    order = models.PositiveIntegerField()
 
     # <def xml:lang="es">
     definition = models.TextField(
