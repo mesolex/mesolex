@@ -2,4 +2,11 @@
 - hosts: db
   become: yes
   roles:
-  - tequila-postgresql
+    - tequila-postgresql
+  post_tasks:
+    - name: enable fuzzystrmatch
+      become_user: postgres
+      become: yes
+      postgresql_ext:
+        name: fuzzystrmatch
+        db: "{{ db_name }}"
