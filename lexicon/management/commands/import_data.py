@@ -90,6 +90,17 @@ class Command(BaseCommand):
                             value=lx_alt,
                         )
 
+                if 'sem' in data:
+                    sems = data['sem'] if isinstance(data['sem'], list) else [data['sem']]
+                    models.Root.objects.filter(
+                        entry=lexical_entry,
+                    ).delete()
+                    for sem in sems:
+                        models.Category.objects.create(
+                            entry=lexical_entry,
+                            value=sem,
+                        )
+
                 if 'raiz' in data:
                     raizs = data['raiz'] if isinstance(data['raiz'], list) else [data['raiz']]
                     models.Root.objects.filter(
@@ -99,6 +110,19 @@ class Command(BaseCommand):
                         models.Root.objects.create(
                             entry=lexical_entry,
                             value=raiz,
+                        )
+
+                if 'raiz2' in data:
+                    raiz2s = data['raiz2'] if isinstance(data['raiz2'], list) else [data['raiz2']]
+                    models.Root.objects.filter(
+                        entry=lexical_entry,
+                        type='compound',
+                    ).delete()
+                    for raiz2 in raiz2s:
+                        models.Root.objects.create(
+                            entry=lexical_entry,
+                            value=raiz,
+                            type='compound',
                         )
 
                 if 'glosa' in data:
@@ -199,12 +223,13 @@ class Command(BaseCommand):
 
                         if 'fr_nGroup' in sig_group:
                             fr_n_groups = sig_group['fr_nGroup'] if isinstance(sig_group['fr_nGroup'], list) else [sig_group['fr_nGroup']]
-                            for fr_n_group in fr_n_groups:
+                            for j, fr_n_group in enumerate(fr_n_groups):
                                 example_kwargs = {}
                                 if 'fr_var' in fr_n_group:
                                     example_kwargs['geo'] = fr_n_group['fr_var']
                                 example = models.Example.objects.create(
                                     sense=sense,
+                                    order=j,
                                     **example_kwargs
                                 )
 

@@ -61,8 +61,28 @@ class LexicalEntryTEI(models.Model):
     )
 
     @property
+    def simple_roots(self):
+        return self.root_set.exclude(type='compound')
+
+    @property
+    def compound_roots(self):
+        return self.root_set.filter(type='compound')
+
+    @property
     def senses(self):
         return self.sense_set.order_by('order')
+
+    @property
+    def notes_semantics(self):
+        return self.note_set.filter(type='semantics')
+
+    @property
+    def notes_morphology(self):
+        return self.note_set.filter(type='morphology')
+
+    @property
+    def notes_general(self):
+        return self.note_set.filter(type='note')
 
     def __str__(self):
         return self.lemma or self.ref or 'Word #%s' % (self.id)
@@ -99,7 +119,10 @@ class Variant(AbstractSimpleStringValue):
 
 class Root(AbstractSimpleStringValue):
     # <etym type="root">
-    pass
+    type = models.CharField(
+        max_length=64,
+        blank=True,
+    )
 
 
 class Gloss(AbstractSimpleStringValue):
@@ -166,12 +189,18 @@ class Sense(models.Model):
         blank=True,
     )
 
+    @property
+    def examples(self):
+        return self.example_set.order_by('order')
+
 
 class Example(models.Model):
     sense = models.ForeignKey(
         Sense,
         on_delete=models.CASCADE,
     )
+
+    order = models.PositiveIntegerField()
 
     # <usg type="geo">
     geo = models.CharField(

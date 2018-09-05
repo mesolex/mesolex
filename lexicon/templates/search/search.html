@@ -69,32 +69,28 @@
 
                     {% if lexical_entry.grammargroup_set.exists %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Categoría gramatical' %}:</i> {% for grammar_group in lexical_entry.grammargroup_set.all %}{{ grammar_group.part_of_speech }}{% if grammar_group.inflectional_type.exists %}; <i>{% trans 'Inflexión' %}:</i> {{ grammar_group.inflectional_type }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Categoría gramatical' %}:</i> {% for grammar_group in lexical_entry.grammargroup_set.all %}{{ grammar_group.part_of_speech }}{% if grammar_group.inflectional_type %}; <i>{% trans 'Inflexión' %}:</i> {{ grammar_group.inflectional_type }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
-                    {% comment %}
-                    {% if data.sem %}
+                    {% if lexical_entry.category_set.exists %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Campo semántico' %}:</i> {% for sem in data.sem|ensure_list %}{{ sem }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Campo semántico' %}:</i> {% for category in lexical_entry.category_set.all %}{{ category }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
-                    {% endcomment %}
 
                     {# {% if data.raiz or data.raiz2 %} #}
-                    {% if lexical_entry.root_set.exists %}
+                    {% if lexical_entry.simple_roots or lexical_entry.compound_roots %}
                         &nbsp;|&nbsp;
                         <strong>{% trans 'Etimología' %}:</strong>
 
-                        {# {% if data.raiz %} #}
-                        <i>{% blocktrans count counter=lexical_entry.root_set|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>
-                        {% for root in lexical_entry.root_set.all %}{{ root }}{% if not forloop.last %}; {% endif %}{% endfor %}
-                        {# {% endif %} #}
-
-                        {% comment %}
-                        {% if data.raiz2 %}
-                        &nbsp;|&nbsp;
-                        <i>{% blocktrans count counter=data.raiz2|ensure_list|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% for raiz in data.raiz2|ensure_list %}{{ raiz }}{% if not forloop.last %}; {% endif %}{% endfor %}
+                        {% if lexical_entry.simple_roots %}
+                        <i>{% blocktrans count counter=lexical_entry.simple_roots|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>
+                        {% for root in lexical_entry.simple_roots %}{{ root }}{% if not forloop.last %}; {% endif %}{% endfor %}
                         {% endif %}
-                        {% endcomment %}
+
+                        {% if lexical_entry.compound_roots %}
+                        &nbsp;|&nbsp;
+                        <i>{% blocktrans count counter=lexical_entry.compound_roots|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% for root in lexical_entry.compound_roots %}{{ root }}{% if not forloop.last %}; {% endif %}{% endfor %}
+                        {% endif %}
                     {% endif %}
                 </div>
                 <div class="card-body">
@@ -104,8 +100,8 @@
                             <div class="card-text">
                                 <p>{{ sense.definition|safe }}</p>
                             </div>
-                            {% if sense.example_set.exists %}
-                                {% for example in sense.example_set.all %}
+                            {% if sense.examples %}
+                                {% for example in sense.examples %}
                                     {% for quote in example.azz_quotes %}
                                         <blockquote class="card-text example font-weight-light">
                                             <p>{{ quote.text|safe }} <i>({{ quote.translations.first.text|safe }})</i></p>
@@ -119,27 +115,25 @@
                 </div>
 
                 {% if lexical_entry.note_set.exists %}
-                {% comment %}
                 <div class="card-footer">
-                    {% if lexical_entry. %}
+                    {% for note in lexical_entry.notes_semantics %}
                     <p class="notes nsem">
-                        <strong>{% trans 'Notas semánticas' %}:</strong> {{ data.nsem|safe }}
+                        <strong>{% trans 'Notas semánticas' %}:</strong> {{ note.value|safe }}
                     </p>
-                    {% endif %}
+                    {% endfor %}
 
-                    {% if data.nmorf %}
+                    {% for note in lexical_entry.notes_morphology %}
                     <p class="notes nmorf">
-                        <strong>{% trans 'Notas morfológicas' %}:</strong> {{ data.nmorf|safe }}
+                        <strong>{% trans 'Notas morfológicas' %}:</strong> {{ note.value|safe }}
                     </p>
-                    {% endif %}
+                    {% endfor %}
 
-                    {% if data.ngram %}
+                    {% for note in lexical_entry.notes_general %}
                     <p class="notes ngram">
-                        <strong>{% trans 'Notas gramaticales' %}:</strong> {{ data.ngram|safe }}
+                        <strong>{% trans 'Notas gramaticales' %}:</strong> {{ note.value|safe }}
                     </p>
-                    {% endif %}
+                    {% endfor %}
                 </div>
-                {% endcomment %}
                 {% endif %}
             </div>
             {% endwith %}
