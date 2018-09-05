@@ -25,9 +25,14 @@ def _get_Q(form_data):
         query_string = form_data['query_string']
 
     filter_on_str = form_data['filter_on']
-    filter_on_val = FILTERABLE_FIELDS_DICT.get(filter_on_str, 'lemma')
+    filter_on_vals = FILTERABLE_FIELDS_DICT.get(filter_on_str, ('lemma', ))
 
-    return Q(**{'%s%s' % (filter_on_val, filter_arg_val): query_string})
+    query_expression = Q()
+
+    for filter_on_val in filter_on_vals:
+        query_expression |= Q(**{'%s%s' % (filter_on_val, filter_arg_val): query_string})
+
+    return query_expression
 
 
 def lexicon_home(request, *args, **kwargs):
