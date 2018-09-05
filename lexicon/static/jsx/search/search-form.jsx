@@ -4,13 +4,25 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Octicon from 'react-component-octicons';
 
+
+const humanReadableFilterOn = (filterOn) => {
+  switch (filterOn) {
+    case 'lemma':
+      return gettext('entrada');
+    case 'gloss':
+      return gettext('glosa');
+    default:
+      return gettext('entrada');
+  }
+};
+
 /*
   Helper to render the text displayed above the input row.
 */
 const humanReadableFilters = ({
   i,
   operator,
-  // filterOn,
+  filterOn,
   filter,
   vln,
 }) => {
@@ -33,7 +45,7 @@ const humanReadableFilters = ({
     exactly_equals: gettext('es exactamente igual a'),
     regex: gettext('coincide con expresión regular'),
   };
-  return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${gettext('entrada')} ${filterDict[filter]}${ vln ? ` (${gettext('NCV')})` : ''}`;
+  return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${humanReadableFilterOn(filterOn)} ${filterDict[filter]}${ vln ? ` (${gettext('NCV')})` : ''}`;
 };
 
 const SearchForm = ({
@@ -132,6 +144,7 @@ const SearchForm = ({
           onChange={onChangeFieldFrom('filter_on')}
         >
           <option value="lemma">{`${gettext('entrada')}`}</option>
+          <option value="gloss">{`${gettext('glosa')}`}</option>
         </select>
         <select
           name={`form-${i}-filter`}

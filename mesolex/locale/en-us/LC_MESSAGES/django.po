@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-31 11:52+0000\n"
+"POT-Creation-Date: 2018-09-05 22:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,49 +17,45 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lexicon/forms.py:17
+#: lexicon/forms.py:15
 msgid "Empieza con"
 msgstr "Begins with"
 
-#: lexicon/forms.py:18
+#: lexicon/forms.py:16
 msgid "Termina con"
 msgstr "Ends with"
 
-#: lexicon/forms.py:19
+#: lexicon/forms.py:17
 msgid "Incluye"
 msgstr "Contains"
 
-#: lexicon/forms.py:20
+#: lexicon/forms.py:18
 msgid "Es exactamente igual a"
 msgstr "Equal to"
 
-#: lexicon/forms.py:21
+#: lexicon/forms.py:19
 msgid "Expresión regular"
 msgstr "Regular expression"
 
-#: lexicon/forms.py:33 lexicon/models.py:20
+#: lexicon/forms.py:31 lexicon/models.py:22
 msgid "Entrada"
 msgstr "Headword"
 
-#: lexicon/forms.py:70
+#: lexicon/forms.py:32 lexicon/templates/search/search.html:67
+msgid "Glosa"
+msgstr "Gloss"
+
+#: lexicon/forms.py:66
 msgid "Expresión regular no válida."
 msgstr "Invalid regular expression."
 
-#: lexicon/management/commands/import_data.py:11
+#: lexicon/management/commands/import_data.py:12
 msgid "Lee una fuente de datos en XML y actualiza la base de datos."
 msgstr "Reads an XML data source file and updates the database."
 
 #: lexicon/models.py:18
 msgid "Identificación única"
 msgstr "Unique ID"
-
-#: lexicon/models.py:32
-msgid "Entrada léxica"
-msgstr "Lexical entry"
-
-#: lexicon/models.py:33
-msgid "Entradas léxicas"
-msgstr "Lexical entries"
 
 #: lexicon/templates/search/home.html:8
 msgid "Bienvenido a Mesolex"
@@ -70,57 +66,53 @@ msgid "Recursos lexicosemánticos para lenguas mesoamericanas (en desarrollo)"
 msgstr "Lexicosemantic resources for Mesoamerican languages (under construction)"
 
 #: lexicon/templates/search/home.html:16
-msgid "Náhuat de la Sierra Nororiental de Puebla: Diccionario"
-msgstr "Nahuatl of the Sierra Nororiental de Puebla: Dictionary"
-
-#: lexicon/templates/search/home.html:22
 msgid "Crédito: Ilustración por Inocencio Jiménez Chino"
 msgstr "Credit: Illustration by Inocencio Jiménez Chino"
 
-#: lexicon/templates/search/search.html:30
+#: lexicon/templates/search/search.html:13
+msgid "Náhuat de la Sierra Nororiental de Puebla: Diccionario"
+msgstr "Nahuatl of the Sierra Nororiental de Puebla: Dictionary"
+
+#: lexicon/templates/search/search.html:36
 msgid "Buscar"
 msgstr "Search"
 
-#: lexicon/templates/search/search.html:33
+#: lexicon/templates/search/search.html:39
 msgid "Agrega filtro"
 msgstr "Add filter"
 
-#: lexicon/templates/search/search.html:46
+#: lexicon/templates/search/search.html:52
 #, python-format
 msgid "Resultados (página %(page)s de %(num_pages)s)"
 msgstr "Results (page %(page)s of %(num_pages)s)"
 
-#: lexicon/templates/search/search.html:61
+#: lexicon/templates/search/search.html:67
 msgid "Citación"
 msgstr "Citation"
 
-#: lexicon/templates/search/search.html:61
-msgid "Glosa"
-msgstr "Gloss"
-
-#: lexicon/templates/search/search.html:66
+#: lexicon/templates/search/search.html:72
 msgid "Categoría gramatical"
 msgstr "Grammatical category"
 
-#: lexicon/templates/search/search.html:66
+#: lexicon/templates/search/search.html:72
 msgid "Inflexión"
 msgstr "Inflection"
 
-#: lexicon/templates/search/search.html:71
+#: lexicon/templates/search/search.html:77
 msgid "Campo semántico"
 msgstr "Semantic field"
 
-#: lexicon/templates/search/search.html:76
+#: lexicon/templates/search/search.html:83
 msgid "Etimología"
 msgstr "Etymology"
 
-#: lexicon/templates/search/search.html:79
+#: lexicon/templates/search/search.html:86
 msgid "Raíz"
 msgid_plural "Raízes"
 msgstr[0] "Root"
 msgstr[1] "Roots"
 
-#: lexicon/templates/search/search.html:85
+#: lexicon/templates/search/search.html:92
 #, fuzzy
 #| msgid "Raíz compuesta"
 msgid "Raíz compuesta"
@@ -128,35 +120,35 @@ msgid_plural "Raízes compuestas"
 msgstr[0] "Composite root"
 msgstr[1] "Composite roots"
 
-#: lexicon/templates/search/search.html:112
+#: lexicon/templates/search/search.html:121
 msgid "Notas semánticas"
 msgstr "Semantic notes"
 
-#: lexicon/templates/search/search.html:118
+#: lexicon/templates/search/search.html:127
 msgid "Notas morfológicas"
 msgstr "Morphological notes"
 
-#: lexicon/templates/search/search.html:124
+#: lexicon/templates/search/search.html:133
 msgid "Notas gramaticales"
 msgstr "Grammatical notes"
 
-#: lexicon/templates/search/search.html:141
+#: lexicon/templates/search/search.html:150
 msgid "Anterior"
 msgstr "Previous"
 
-#: lexicon/templates/search/search.html:154
+#: lexicon/templates/search/search.html:163
 msgid "Siguiente"
 msgstr "Next"
 
-#: lexicon/templates/search/search.html:166
+#: lexicon/templates/search/search.html:175
 msgid "Resultado no encontrado."
 msgstr "No results found."
 
-#: mesolex/settings/base.py:155
+#: mesolex/settings/base.py:147
 msgid "español"
 msgstr "Spanish"
 
-#: mesolex/settings/base.py:156
+#: mesolex/settings/base.py:148
 #, fuzzy
 #| msgid "inglés (EE.UU.)"
 msgid "inglés"
@@ -165,6 +157,12 @@ msgstr "English"
 #: mesolex/templates/includes/header.html:14
 msgid "Activar la navegación"
 msgstr "Toggle navigation"
+
+#~ msgid "Entrada léxica"
+#~ msgstr "Lexical entry"
+
+#~ msgid "Entradas léxicas"
+#~ msgstr "Lexical entries"
 
 #~ msgid "Idioma"
 #~ msgstr "Language"
