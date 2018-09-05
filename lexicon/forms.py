@@ -30,11 +30,13 @@ FILTERS_DICT = {
 FILTERABLE_FIELDS = (
     ('lemma', _('Entrada')),
     ('gloss', _('Glosa')),
+    ('root', _('Raiz')),
 )
 
 FILTERABLE_FIELDS_DICT = {
     'lemma': ('lemma', 'variant__value'),
     'gloss': ('gloss__value', ),
+    'root': ('root__value', ),
 }
 
 
