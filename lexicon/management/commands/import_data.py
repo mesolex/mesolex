@@ -52,7 +52,7 @@ class Command(BaseCommand):
                         data['dt'][0] if isinstance(data['dt'], list) else data['dt']
                     )
 
-                (lexical_entry, created, ) = models.LexicalEntryTEI.objects.update_or_create(
+                (lexical_entry, created, ) = models.LexicalEntry.objects.update_or_create(
                     **entry_kwargs,
                     defaults=defaults,
                 )

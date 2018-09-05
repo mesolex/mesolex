@@ -3,12 +3,6 @@ from rest_framework import serializers
 from . import models
 
 
-class LexicalEntrySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.LexicalEntry
-        fields = ('ref', 'headword', 'data', )
-
-
 class GeoSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Geo
@@ -117,7 +111,7 @@ class SenseSerializer(serializers.ModelSerializer):
         )
 
 
-class LexicalEntryTEISerializer(serializers.ModelSerializer):
+class LexicalEntrySerializer(serializers.ModelSerializer):
     # geo = serializers.PrimaryKeyRelatedField(
     #     source='geo_set',
     #     many=True,
@@ -165,7 +159,7 @@ class LexicalEntryTEISerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = models.LexicalEntryTEI
+        model = models.LexicalEntry
         fields = (
             '_id',
             'lemma',
