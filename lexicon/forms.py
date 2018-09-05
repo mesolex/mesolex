@@ -32,7 +32,7 @@ FILTERABLE_FIELDS = (
 )
 
 FILTERABLE_FIELDS_DICT = {
-    'lemma': 'lemma',
+    'lemma': ('lemma', 'variant__value'),
 }
 
 
