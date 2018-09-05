@@ -52,10 +52,10 @@ class Command(BaseCommand):
                         data['dt'][0] if isinstance(data['dt'], list) else data['dt']
                     )
 
-                (lexical_entry, created, ) = (models.LexicalEntryTEI.objects.update_or_create(
+                (lexical_entry, created, ) = models.LexicalEntryTEI.objects.update_or_create(
                     **entry_kwargs,
                     defaults=defaults,
-                ))
+                )
 
                 if 'lx_var' in data:
                     lx_vars = data['lx_var'] if isinstance(data['lx_var'], list) else [data['lx_var']]
@@ -176,7 +176,11 @@ class Command(BaseCommand):
                         )
 
                 if 'catgrGroup' in data:
-                    catgr_groups = data['catgrGroup'] if isinstance(data['catgrGroup'], list) else [data['catgrGroup']]
+                    catgr_groups = (
+                        data['catgrGroup']
+                        if isinstance(data['catgrGroup'], list)
+                        else [data['catgrGroup']]
+                    )
                     models.GrammarGroup.objects.filter(
                         entry=lexical_entry,
                     ).delete()
@@ -222,7 +226,11 @@ class Command(BaseCommand):
                         )
 
                         if 'fr_nGroup' in sig_group:
-                            fr_n_groups = sig_group['fr_nGroup'] if isinstance(sig_group['fr_nGroup'], list) else [sig_group['fr_nGroup']]
+                            fr_n_groups = (
+                                sig_group['fr_nGroup']
+                                if isinstance(sig_group['fr_nGroup'], list)
+                                else [sig_group['fr_nGroup']]
+                            )
                             for j, fr_n_group in enumerate(fr_n_groups):
                                 example_kwargs = {}
                                 if 'fr_var' in fr_n_group:
