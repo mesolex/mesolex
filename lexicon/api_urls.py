@@ -7,7 +7,6 @@ from . import api_views
 
 router = routers.DefaultRouter()
 router.register(r'lexicalentries', api_views.LexicalEntryViewSet)
-router.register(r'lexicalentries_tei', api_views.LexicalEntryTEIViewSet)
 
 
 urlpatterns = [

@@ -9,7 +9,7 @@ from .forms import (
     FILTERABLE_FIELDS_DICT,
     LexicalSearchFilterFormset,
 )
-from .models import LexicalEntryTEI
+from .models import LexicalEntry
 from .utils import (
     to_vln,
 )
@@ -72,7 +72,7 @@ def lexicon_search_view(request, *args, **kwargs):
                             query |= (~form_q)
 
         if query:
-            lexical_entries = LexicalEntryTEI.valid_entries.filter(query)
+            lexical_entries = LexicalEntry.valid_entries.filter(query)
             paginator = Paginator(lexical_entries, 25)
 
             page = request.GET.get('page', 1)

@@ -11,26 +11,6 @@ class ValidEntryManager(models.Manager):
 
 
 class LexicalEntry(models.Model):
-    ref = models.CharField(_("Identificación única"), max_length=64)
-    headword = models.CharField(
-        _("Entrada"),
-        max_length=256,
-        db_index=True,
-    )
-    data = JSONField()
-    objects = models.Manager()
-    valid_entries = ValidEntryManager()
-
-    def __str__(self):
-        return self.headword or self.ref or 'Word #%s' % (self.id)
-
-    class Meta:
-        verbose_name = _('Entrada léxica')
-        verbose_name_plural = _('Entradas léxicas')
-        ordering = ('headword', )
-
-
-class LexicalEntryTEI(models.Model):
     objects = models.Manager()
     valid_entries = ValidEntryManager()
 
@@ -91,7 +71,7 @@ class LexicalEntryTEI(models.Model):
 class AbstractSimpleStringValue(models.Model):
     value = models.CharField(max_length=256, db_index=True)
     entry = models.ForeignKey(
-        LexicalEntryTEI,
+        LexicalEntry,
         on_delete=models.CASCADE,
     )
 
@@ -146,7 +126,7 @@ class Category(AbstractSimpleStringValue):
 class GrammarGroup(models.Model):
     # <gramGrp>
     entry = models.ForeignKey(
-        LexicalEntryTEI,
+        LexicalEntry,
         on_delete=models.CASCADE,
     )
 
@@ -172,7 +152,7 @@ class GrammarGroup(models.Model):
 class Sense(models.Model):
     # <sense>
     entry = models.ForeignKey(
-        LexicalEntryTEI,
+        LexicalEntry,
         on_delete=models.CASCADE,
     )
 
