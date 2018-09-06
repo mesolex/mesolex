@@ -14,46 +14,13 @@ class ValidEntryManager(models.Manager):
             'gloss_set',
             'grammargroup_set',
             'category_set',
-            'note_set',
-        ).prefetch_related(Prefetch(
             'root_set',
-            queryset=Root.objects.filter(type__exact='compound'),
-            to_attr='root_compound',
-        )).prefetch_related(Prefetch(
-            'root_set',
-            queryset=Root.objects.exclude(type__exact='compound'),
-            to_attr='root_simple',
-        )).prefetch_related(Prefetch(
             'note_set',
-            queryset=Note.objects.filter(type__exact='morphology'),
-            to_attr='notes_morphology',
-        )).prefetch_related(Prefetch(
-            'note_set',
-            queryset=Note.objects.filter(type__exact='semantics'),
-            to_attr='notes_semantics',
-        )).prefetch_related(Prefetch(
-            'note_set',
-            queryset=Note.objects.filter(type__exact='note'),
-            to_attr='notes_general',
-        )).prefetch_related(Prefetch(
             'sense_set',
-            queryset=Sense.objects.order_by(
-                'order'
-            ).prefetch_related(Prefetch(
-                'example_set',
-                queryset=Example.objects.order_by(
-                    'order'
-                ).prefetch_related(Prefetch(
-                    'quote_set',
-                    queryset=Quote.objects.prefetch_related(
-                        'translations',
-                    ).filter(
-                        language__exact='azz'
-                    ),
-                    to_attr='azz_quotes',
-                ))
-            ))
-        ))
+            'sense_set__example_set',
+            'sense_set__example_set__quote_set',
+            'sense_set__example_set__quote_set__translations',
+        )
 
 
 class LexicalEntry(models.Model):
@@ -86,13 +53,29 @@ class LexicalEntry(models.Model):
         null=True,
     )
 
-    # @property
-    # def simple_roots(self):
-    #     return self.root_set.exclude(type='compound')
-    #
-    # @property
-    # def compound_roots(self):
-    #     return self.root_set.filter(type='compound')
+    @property
+    def simple_roots(self):
+        return [root for root in self.root_set.all() if root.type != 'compound']
+
+    @property
+    def compound_roots(self):
+        return [root for root in self.root_set.all() if root.type == 'compound']
+
+    @property
+    def notes_general(self):
+        return [note for note in self.note_set.all() if note.type == 'note']
+
+    @property
+    def notes_morphology(self):
+        return [note for note in self.note_set.all() if note.type == 'morphology']
+
+    @property
+    def notes_semantics(self):
+        return [note for note in self.note_set.all() if note.type == 'semantics']
+
+    @property
+    def senses(self):
+        return sorted(list(self.sense_set.all()), key=lambda x: x.order)
 
     def __str__(self):
         return self.lemma or self.ref or 'Word #%s' % (self.id)
@@ -199,6 +182,10 @@ class Sense(models.Model):
         blank=True,
     )
 
+    @property
+    def examples(self):
+        return sorted(list(self.example_set.all()), key=lambda x: x.order)
+
 
 class Example(models.Model):
     sense = models.ForeignKey(
@@ -221,6 +208,10 @@ class Example(models.Model):
         null=True,
         blank=True,
     )
+
+    @property
+    def azz_quotes(self):
+        return [quote for quote in self.quote_set.all() if quote.language == 'azz']
 
 
 class Quote(models.Model):
