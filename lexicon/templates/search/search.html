@@ -96,23 +96,21 @@
                 </div>
                 <div class="card-body">
                     <ol class="search-results-list">
-                        {% for sense in lexical_entry.sense_set.all %}
+                        {% for sense in lexical_entry.senses %}
                         <li>
                             <div class="card-text">
                                 <p>{{ sense.definition|safe }}</p>
                             </div>
-                            {% if sense.example_set.exists %}
-                                {% for example in sense.example_set.all %}
-                                    {% for quote in example.azz_quotes %}
-                                        <blockquote class="card-text example font-weight-light">
-                                            <p>
-                                                {{ quote.text|safe }}
-                                                <i>({{ quote.translations.first.text|safe }})</i>
-                                            </p>
-                                        </blockquote>
-                                    {% endfor %}
+                            {% for example in sense.examples %}
+                                {% for quote in example.azz_quotes %}
+                                    <blockquote class="card-text example font-weight-light">
+                                        <p>
+                                            {{ quote.text|safe }}
+                                            <i>({{ quote.translations.first.text|safe }})</i>
+                                        </p>
+                                    </blockquote>
                                 {% endfor %}
-                            {% endif %}
+                            {% endfor %}
                         </li>
                         {% endfor %}
                     </ol>
