@@ -78,33 +78,37 @@
                     {% endif %}
 
                     {# {% if data.raiz or data.raiz2 %} #}
-                    {% if lexical_entry.simple_roots or lexical_entry.compound_roots %}
+                    {% if lexical_entry.root_simple or lexical_entry.root_compound %}
                         &nbsp;|&nbsp;
                         <strong>{% trans 'Etimología' %}:</strong>
 
-                        {% if lexical_entry.simple_roots %}
-                        <i>{% blocktrans count counter=lexical_entry.simple_roots|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>
-                        {% for root in lexical_entry.simple_roots %}{{ root }}{% if not forloop.last %}; {% endif %}{% endfor %}
-                        {% endif %}
+                        {% for root in lexical_entry.root_simple %}
+                        {% if forloop.first %}
+                        <i>{% blocktrans count counter=lexical_entry.root_simple|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>{% endif %}
+                        {{ root }}{% if not forloop.last %}; {% endif %}
+                        {% endfor %}
 
-                        {% if lexical_entry.compound_roots %}
-                        &nbsp;|&nbsp;
-                        <i>{% blocktrans count counter=lexical_entry.compound_roots|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% for root in lexical_entry.compound_roots %}{{ root }}{% if not forloop.last %}; {% endif %}{% endfor %}
-                        {% endif %}
+                        {% for root in lexical_entry.root_compound %}
+                        {% if forloop.first %}&nbsp;|&nbsp;
+                        <i>{% blocktrans count counter=lexical_entry.root_compound|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% endif %}{{ root }}{% if not forloop.last %}; {% endif %}
+                        {% endfor %}
                     {% endif %}
                 </div>
                 <div class="card-body">
                     <ol class="search-results-list">
-                        {% for sense in lexical_entry.senses %}
+                        {% for sense in lexical_entry.sense_set.all %}
                         <li>
                             <div class="card-text">
                                 <p>{{ sense.definition|safe }}</p>
                             </div>
-                            {% if sense.examples %}
-                                {% for example in sense.examples %}
+                            {% if sense.example_set.exists %}
+                                {% for example in sense.example_set.all %}
                                     {% for quote in example.azz_quotes %}
                                         <blockquote class="card-text example font-weight-light">
-                                            <p>{{ quote.text|safe }} <i>({{ quote.translations.first.text|safe }})</i></p>
+                                            <p>
+                                                {{ quote.text|safe }}
+                                                <i>({{ quote.translations.first.text|safe }})</i>
+                                            </p>
                                         </blockquote>
                                     {% endfor %}
                                 {% endfor %}
