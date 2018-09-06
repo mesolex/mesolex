@@ -37,9 +37,13 @@ class ValidEntryManager(models.Manager):
             to_attr='notes_general',
         )).prefetch_related(Prefetch(
             'sense_set',
-            queryset=Sense.objects.prefetch_related(Prefetch(
+            queryset=Sense.objects.order_by(
+                'order'
+            ).prefetch_related(Prefetch(
                 'example_set',
-                queryset=Example.objects.prefetch_related(Prefetch(
+                queryset=Example.objects.order_by(
+                    'order'
+                ).prefetch_related(Prefetch(
                     'quote_set',
                     queryset=Quote.objects.prefetch_related(
                         'translations',
