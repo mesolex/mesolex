@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.db.models import Prefetch
 from django.utils.translation import gettext as _
 
 
@@ -7,7 +8,48 @@ class ValidEntryManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().exclude(
             sense__isnull=True
-        )
+        ).prefetch_related(
+            'variant_set',
+            'citation_set',
+            'gloss_set',
+            'grammargroup_set',
+            'category_set',
+            'note_set',
+        ).prefetch_related(Prefetch(
+            'root_set',
+            queryset=Root.objects.filter(type__exact='compound'),
+            to_attr='root_compound',
+        )).prefetch_related(Prefetch(
+            'root_set',
+            queryset=Root.objects.exclude(type__exact='compound'),
+            to_attr='root_simple',
+        )).prefetch_related(Prefetch(
+            'note_set',
+            queryset=Note.objects.filter(type__exact='morphology'),
+            to_attr='notes_morphology',
+        )).prefetch_related(Prefetch(
+            'note_set',
+            queryset=Note.objects.filter(type__exact='semantics'),
+            to_attr='notes_semantics',
+        )).prefetch_related(Prefetch(
+            'note_set',
+            queryset=Note.objects.filter(type__exact='note'),
+            to_attr='notes_general',
+        )).prefetch_related(Prefetch(
+            'sense_set',
+            queryset=Sense.objects.prefetch_related(Prefetch(
+                'example_set',
+                queryset=Example.objects.prefetch_related(Prefetch(
+                    'quote_set',
+                    queryset=Quote.objects.prefetch_related(
+                        'translations',
+                    ).filter(
+                        language__exact='azz'
+                    ),
+                    to_attr='azz_quotes',
+                ))
+            ))
+        ))
 
 
 class LexicalEntry(models.Model):
@@ -40,29 +82,13 @@ class LexicalEntry(models.Model):
         null=True,
     )
 
-    @property
-    def simple_roots(self):
-        return self.root_set.exclude(type='compound')
-
-    @property
-    def compound_roots(self):
-        return self.root_set.filter(type='compound')
-
-    @property
-    def senses(self):
-        return self.sense_set.order_by('order')
-
-    @property
-    def notes_semantics(self):
-        return self.note_set.filter(type='semantics')
-
-    @property
-    def notes_morphology(self):
-        return self.note_set.filter(type='morphology')
-
-    @property
-    def notes_general(self):
-        return self.note_set.filter(type='note')
+    # @property
+    # def simple_roots(self):
+    #     return self.root_set.exclude(type='compound')
+    #
+    # @property
+    # def compound_roots(self):
+    #     return self.root_set.filter(type='compound')
 
     def __str__(self):
         return self.lemma or self.ref or 'Word #%s' % (self.id)
@@ -169,10 +195,6 @@ class Sense(models.Model):
         blank=True,
     )
 
-    @property
-    def examples(self):
-        return self.example_set.order_by('order')
-
 
 class Example(models.Model):
     sense = models.ForeignKey(
@@ -195,10 +217,6 @@ class Example(models.Model):
         null=True,
         blank=True,
     )
-
-    @property
-    def azz_quotes(self):
-        return self.quote_set.filter(language='azz')
 
 
 class Quote(models.Model):
