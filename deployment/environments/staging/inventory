@@ -1,4 +1,4 @@
-mesolex_staging ansible_host=206.189.224.150
+mesolex_staging ansible_host=142.93.248.53
 
 [web]
 mesolex_staging
