@@ -1,6 +1,6 @@
 ---
 - src: https://github.com/caktus/tequila-common
-  version: v0.8.4
+  version: v0.8.8
   name: tequila-common
 
 - src: https://github.com/caktus/tequila-postgresql
