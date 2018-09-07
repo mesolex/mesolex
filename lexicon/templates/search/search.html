@@ -78,19 +78,19 @@
                     {% endif %}
 
                     {# {% if data.raiz or data.raiz2 %} #}
-                    {% if lexical_entry.root_simple or lexical_entry.root_compound %}
+                    {% if lexical_entry.simple_roots or lexical_entry.compound_roots %}
                         &nbsp;|&nbsp;
                         <strong>{% trans 'Etimología' %}:</strong>
 
-                        {% for root in lexical_entry.root_simple %}
+                        {% for root in lexical_entry.simple_roots %}
                         {% if forloop.first %}
-                        <i>{% blocktrans count counter=lexical_entry.root_simple|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>{% endif %}
+                        <i>{% blocktrans count counter=lexical_entry.simple_roots|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>{% endif %}
                         {{ root }}{% if not forloop.last %}; {% endif %}
                         {% endfor %}
 
-                        {% for root in lexical_entry.root_compound %}
+                        {% for root in lexical_entry.compound_roots %}
                         {% if forloop.first %}&nbsp;|&nbsp;
-                        <i>{% blocktrans count counter=lexical_entry.root_compound|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% endif %}{{ root }}{% if not forloop.last %}; {% endif %}
+                        <i>{% blocktrans count counter=lexical_entry.compound_roots|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% endif %}{{ root }}{% if not forloop.last %}; {% endif %}
                         {% endfor %}
                     {% endif %}
                 </div>
