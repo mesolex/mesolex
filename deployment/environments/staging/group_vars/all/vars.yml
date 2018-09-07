@@ -2,11 +2,10 @@
 env_name: staging
 repo_branch: develop
 domain: staging.mesolex.org
-additional_domains:
+redirect_domains:
   - mesolex.nmashton.work
 letsencrypt_domains:
   - staging.mesolex.org
-  - mesolex.nmashton.work
 
 cert_source: letsencrypt
 force_ssl: true
