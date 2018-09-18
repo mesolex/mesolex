@@ -117,7 +117,7 @@ class CitationMedia(models.Model):
     url = models.URLField()
     mime_type = models.CharField(
         max_length=64,
-        blank=True,
+        default='audio/mpeg',
     )
 
 
