@@ -1,6 +1,5 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
-from django.db.models import Prefetch
 from django.utils.translation import gettext as _
 
 
@@ -10,15 +9,12 @@ class ValidEntryManager(models.Manager):
             sense__isnull=True
         ).prefetch_related(
             'variant_set',
-            'citation_set',
+            'citation_set__citationmedia_set',
             'gloss_set',
             'grammargroup_set',
             'category_set',
             'root_set',
             'note_set',
-            'sense_set',
-            'sense_set__example_set',
-            'sense_set__example_set__quote_set',
             'sense_set__example_set__quote_set__translations',
         )
 
@@ -52,6 +48,13 @@ class LexicalEntry(models.Model):
         blank=True,
         null=True,
     )
+
+    @property
+    def citation_media(self):
+        return sum(
+            [[media for media in citation.citationmedia_set.all()] for citation in self.citation_set.all()],
+            [],
+        )
 
     @property
     def simple_roots(self):
@@ -103,6 +106,19 @@ class Geo(AbstractSimpleStringValue):
 class Citation(AbstractSimpleStringValue):
     # <form mesolex:type="citation" type="simple"><orth>
     pass
+
+
+class CitationMedia(models.Model):
+    # <form mesolex:type="citation" type="simple"><media mimeType={mime_type} url={url}>
+    form = models.ForeignKey(
+        Citation,
+        on_delete=models.CASCADE,
+    )
+    url = models.URLField()
+    mime_type = models.CharField(
+        max_length=64,
+        blank=True,
+    )
 
 
 class Variant(AbstractSimpleStringValue):

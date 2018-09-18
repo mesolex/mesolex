@@ -94,6 +94,17 @@
                         {% endfor %}
                     {% endif %}
                 </div>
+                {% for media in lexical_entry.citation_media %}
+                {% if forloop.first %}
+                    <div class="card-header card-header--audio">
+                {% endif %}
+                    <audio controls class="lexical-entry-audio">
+                        <source src="{{ media.url }}" type="{{ media.mime_type }}" />
+                    </audio>
+                {% if forloop.last %}
+                    </div>
+                {% endif %}
+                {% endfor %}
                 <div class="card-body">
                     <ol class="search-results-list">
                         {% for sense in lexical_entry.senses %}

@@ -11,10 +11,25 @@ class GeoSerializer(serializers.ModelSerializer):
         )
 
 
+class CitationMediaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.CitationMedia
+        fields = (
+            'url',
+            'mime_type',
+        )
+
+
 class CitationSerializer(serializers.ModelSerializer):
+    media = CitationMediaSerializer(
+        required=False,
+        many=True,
+    )
+
     class Meta:
         model = models.Citation
         fields = (
+            'media',
             'value',
         )
 
@@ -68,7 +83,6 @@ class GrammarGroupSerializer(serializers.ModelSerializer):
             'inflectional_type',
             'misc_data',
         )
-
 
 
 class QuoteSerializer(serializers.ModelSerializer):
