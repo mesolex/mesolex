@@ -1,8 +1,13 @@
 import 'babel-polyfill';
+import Plyr from 'plyr';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 import SearchFormSet from './search-formset';
+
+
+const AUDIO_PLAYER_SELECTOR = 'lexical-entry-audio';
 
 
 window.onload = () => {
@@ -18,4 +23,6 @@ window.onload = () => {
     />,
     document.querySelector('#search-form'),
   );
+
+  Plyr.setup(`.${AUDIO_PLAYER_SELECTOR}`);
 };

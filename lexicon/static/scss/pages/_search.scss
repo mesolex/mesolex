@@ -3,6 +3,16 @@
     text-indent: -1.25rem;
 }
 
+.card-header--audio {
+    padding: 0;
+    line-height: 0;
+}
+
+.lexical-entry-audio {
+    width: 100%;
+    visibility: hidden;
+}
+
 .search-results-list {
   padding-left: 1.25rem;
 }
