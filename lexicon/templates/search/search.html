@@ -49,7 +49,7 @@
             {% if lexical_entries %}
 
             <div class="h5 mb-4">
-                {% blocktrans %}Resultados (página {{ page }} de {{ num_pages }}){% endblocktrans %}
+                {% blocktrans %}{{ num_entries }} resultados (página {{ page }} de {{ num_pages }}){% endblocktrans %}
             </div>
 
             {% for lexical_entry in lexical_entries %}

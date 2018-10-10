@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-05 22:23+0000\n"
+"POT-Creation-Date: 2018-10-10 00:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgstr "Equal to"
 msgid "Expresión regular"
 msgstr "Regular expression"
 
-#: lexicon/forms.py:31 lexicon/models.py:22
+#: lexicon/forms.py:31 lexicon/models.py:31
 msgid "Entrada"
 msgstr "Headword"
 
@@ -45,7 +45,11 @@ msgstr "Headword"
 msgid "Glosa"
 msgstr "Gloss"
 
-#: lexicon/forms.py:66
+#: lexicon/forms.py:33
+msgid "Raiz"
+msgstr "Root"
+
+#: lexicon/forms.py:68
 msgid "Expresión regular no válida."
 msgstr "Invalid regular expression."
 
@@ -53,7 +57,7 @@ msgstr "Invalid regular expression."
 msgid "Lee una fuente de datos en XML y actualiza la base de datos."
 msgstr "Reads an XML data source file and updates the database."
 
-#: lexicon/models.py:18
+#: lexicon/models.py:27
 msgid "Identificación única"
 msgstr "Unique ID"
 
@@ -83,8 +87,8 @@ msgstr "Add filter"
 
 #: lexicon/templates/search/search.html:52
 #, python-format
-msgid "Resultados (página %(page)s de %(num_pages)s)"
-msgstr "Results (page %(page)s of %(num_pages)s)"
+msgid "%(num_entries)s resultados (página %(page)s de %(num_pages)s)"
+msgstr "%(num_entries)s results (page %(page)s of %(num_pages)s)"
 
 #: lexicon/templates/search/search.html:67
 msgid "Citación"
@@ -106,13 +110,13 @@ msgstr "Semantic field"
 msgid "Etimología"
 msgstr "Etymology"
 
-#: lexicon/templates/search/search.html:86
+#: lexicon/templates/search/search.html:87
 msgid "Raíz"
 msgid_plural "Raízes"
 msgstr[0] "Root"
 msgstr[1] "Roots"
 
-#: lexicon/templates/search/search.html:92
+#: lexicon/templates/search/search.html:93
 #, fuzzy
 #| msgid "Raíz compuesta"
 msgid "Raíz compuesta"
@@ -120,35 +124,35 @@ msgid_plural "Raízes compuestas"
 msgstr[0] "Composite root"
 msgstr[1] "Composite roots"
 
-#: lexicon/templates/search/search.html:121
+#: lexicon/templates/search/search.html:134
 msgid "Notas semánticas"
 msgstr "Semantic notes"
 
-#: lexicon/templates/search/search.html:127
+#: lexicon/templates/search/search.html:140
 msgid "Notas morfológicas"
 msgstr "Morphological notes"
 
-#: lexicon/templates/search/search.html:133
+#: lexicon/templates/search/search.html:146
 msgid "Notas gramaticales"
 msgstr "Grammatical notes"
 
-#: lexicon/templates/search/search.html:150
+#: lexicon/templates/search/search.html:163
 msgid "Anterior"
 msgstr "Previous"
 
-#: lexicon/templates/search/search.html:163
+#: lexicon/templates/search/search.html:176
 msgid "Siguiente"
 msgstr "Next"
 
-#: lexicon/templates/search/search.html:175
+#: lexicon/templates/search/search.html:188
 msgid "Resultado no encontrado."
 msgstr "No results found."
 
-#: mesolex/settings/base.py:147
+#: mesolex/settings/base.py:149
 msgid "español"
 msgstr "Spanish"
 
-#: mesolex/settings/base.py:148
+#: mesolex/settings/base.py:150
 #, fuzzy
 #| msgid "inglés (EE.UU.)"
 msgid "inglés"

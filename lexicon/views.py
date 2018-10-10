@@ -92,6 +92,7 @@ def lexicon_search_view(request, *args, **kwargs):
         return render(request, template_name, {
             'lexical_entries': display_entries,
             'num_pages': paginator.num_pages if paginator else 0,
+            'num_entries': lexical_entries.count(),
             'page': page,
             'query': True,
             'formset': formset,
