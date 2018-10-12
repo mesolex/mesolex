@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-05 22:31+0000\n"
+"POT-Creation-Date: 2018-10-12 17:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,84 +18,89 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: lexicon/static/jsx/search/search-form.jsx:11
-#: lexicon/static/jsx/search/search-form.jsx:17
-#: lexicon/static/jsx/search/search-form.jsx:148
+#: lexicon/static/jsx/search/search-form.jsx:19
+#: lexicon/static/jsx/search/search-form.jsx:150
 msgid "entrada"
 msgstr "headword"
 
 #: lexicon/static/jsx/search/search-form.jsx:13
-#: lexicon/static/jsx/search/search-form.jsx:149
+#: lexicon/static/jsx/search/search-form.jsx:151
 msgid "glosa"
 msgstr "gloss"
 
 #: lexicon/static/jsx/search/search-form.jsx:15
-#: lexicon/static/jsx/search/search-form.jsx:150
+#: lexicon/static/jsx/search/search-form.jsx:152
 msgid "raiz"
 msgstr "root"
 
-#: lexicon/static/jsx/search/search-form.jsx:33
+#: lexicon/static/jsx/search/search-form.jsx:17
+#: lexicon/static/jsx/search/search-form.jsx:153
+msgid "campo semántico"
+msgstr "semantic field"
+
 #: lexicon/static/jsx/search/search-form.jsx:35
-#: lexicon/static/jsx/search/search-form.jsx:138
+#: lexicon/static/jsx/search/search-form.jsx:37
+#: lexicon/static/jsx/search/search-form.jsx:140
 msgid "no"
 msgstr "does not"
 
-#: lexicon/static/jsx/search/search-form.jsx:38
-#: lexicon/static/jsx/search/search-form.jsx:136
+#: lexicon/static/jsx/search/search-form.jsx:40
+#: lexicon/static/jsx/search/search-form.jsx:138
 msgid "y"
 msgstr "and"
 
-#: lexicon/static/jsx/search/search-form.jsx:39
-#: lexicon/static/jsx/search/search-form.jsx:137
+#: lexicon/static/jsx/search/search-form.jsx:41
+#: lexicon/static/jsx/search/search-form.jsx:139
 msgid "o"
 msgstr "or"
 
-#: lexicon/static/jsx/search/search-form.jsx:40
-#: lexicon/static/jsx/search/search-form.jsx:138
+#: lexicon/static/jsx/search/search-form.jsx:42
+#: lexicon/static/jsx/search/search-form.jsx:140
 msgid "y no"
 msgstr "and not"
 
-#: lexicon/static/jsx/search/search-form.jsx:41
-#: lexicon/static/jsx/search/search-form.jsx:139
+#: lexicon/static/jsx/search/search-form.jsx:43
+#: lexicon/static/jsx/search/search-form.jsx:141
 msgid "o no"
 msgstr "or not"
 
-#: lexicon/static/jsx/search/search-form.jsx:44
-#: lexicon/static/jsx/search/search-form.jsx:159
+#: lexicon/static/jsx/search/search-form.jsx:46
+#: lexicon/static/jsx/search/search-form.jsx:162
 msgid "empieza con"
 msgstr "begins with"
 
-#: lexicon/static/jsx/search/search-form.jsx:45
-#: lexicon/static/jsx/search/search-form.jsx:160
+#: lexicon/static/jsx/search/search-form.jsx:47
+#: lexicon/static/jsx/search/search-form.jsx:163
 msgid "termina con"
 msgstr "ends with"
 
-#: lexicon/static/jsx/search/search-form.jsx:46
-#: lexicon/static/jsx/search/search-form.jsx:161
+#: lexicon/static/jsx/search/search-form.jsx:48
+#: lexicon/static/jsx/search/search-form.jsx:164
 msgid "contiene"
 msgstr "contains"
 
-#: lexicon/static/jsx/search/search-form.jsx:47
-#: lexicon/static/jsx/search/search-form.jsx:162
+#: lexicon/static/jsx/search/search-form.jsx:49
+#: lexicon/static/jsx/search/search-form.jsx:165
 msgid "es exactamente igual a"
 msgstr "exactly equals"
 
-#: lexicon/static/jsx/search/search-form.jsx:48
+#: lexicon/static/jsx/search/search-form.jsx:50
 msgid "coincide con expresión regular"
 msgstr "matches regular expression"
 
-#: lexicon/static/jsx/search/search-form.jsx:50
+#: lexicon/static/jsx/search/search-form.jsx:52
 msgid "NCV"
 msgstr "VLN"
 
-#: lexicon/static/jsx/search/search-form.jsx:136
+#: lexicon/static/jsx/search/search-form.jsx:138
 msgid "si"
 msgstr "does"
 
-#: lexicon/static/jsx/search/search-form.jsx:163
+#: lexicon/static/jsx/search/search-form.jsx:166
 msgid "expresión regular"
 msgstr "regular expression"
 
-#: lexicon/static/jsx/search/search-form.jsx:177
+#: lexicon/static/jsx/search/search-form.jsx:180
 msgid "Neutralizar cantidad vocálica"
 msgstr "Neutralize vowel length"
 

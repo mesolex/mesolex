@@ -38,3 +38,21 @@ def link_vnawa(text):
         ),
         text,
     )
+
+
+@register.filter()
+def link_raiz(raiz):
+    return '<a href="%s%s" class="raiz">%s</a>' % (
+        reverse('lexicon_search'),
+        _get_querystring(raiz, filter_on='root'),
+        raiz,
+    )
+
+
+@register.filter()
+def link_category(category):
+    return '<a href="%s%s" class="category">%s</a>' % (
+        reverse('lexicon_search'),
+        _get_querystring(category, filter_on='category'),
+        category,
+    )

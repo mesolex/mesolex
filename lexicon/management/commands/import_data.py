@@ -92,7 +92,7 @@ class Command(BaseCommand):
 
                 if 'sem' in data:
                     sems = data['sem'] if isinstance(data['sem'], list) else [data['sem']]
-                    models.Root.objects.filter(
+                    models.Category.objects.filter(
                         entry=lexical_entry,
                     ).delete()
                     for sem in sems:
