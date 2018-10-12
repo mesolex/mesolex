@@ -9,3 +9,4 @@ node_modules/
 *.priv
 dist/
 *.mo
+scratch_space/

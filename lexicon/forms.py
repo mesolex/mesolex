@@ -60,7 +60,7 @@ class LexicalSearchFilterForm(forms.Form):
 
     def clean(self):
         cleaned_data = super().clean()
-        if cleaned_data['filter'] == 'regex':
+        if 'filter' in cleaned_data and cleaned_data['filter'] == 'regex':
             qs = cleaned_data['query_string']
             try:
                 re.compile(qs)

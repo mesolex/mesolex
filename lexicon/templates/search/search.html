@@ -110,14 +110,14 @@
                         {% for sense in lexical_entry.senses %}
                         <li>
                             <div class="card-text">
-                                <p>{{ sense.definition|safe }}</p>
+                                <p>{{ sense.definition|link_vnawa|safe }}</p>
                             </div>
                             {% for example in sense.examples %}
                                 {% for quote in example.azz_quotes %}
                                     <blockquote class="card-text example font-weight-light">
                                         <p>
                                             {{ quote.text|safe }}
-                                            <i>({{ quote.translations.first.text|safe }})</i>
+                                            <i>({{ quote.translations.first.text|link_vnawa|safe }})</i>
                                         </p>
                                     </blockquote>
                                 {% endfor %}
@@ -131,19 +131,19 @@
                 <div class="card-footer">
                     {% for note in lexical_entry.notes_semantics %}
                     <p class="notes nsem">
-                        <strong>{% trans 'Notas semánticas' %}:</strong> {{ note.value|safe }}
+                        <strong>{% trans 'Notas semánticas' %}:</strong> {{ note.value|link_vnawa|safe }}
                     </p>
                     {% endfor %}
 
                     {% for note in lexical_entry.notes_morphology %}
                     <p class="notes nmorf">
-                        <strong>{% trans 'Notas morfológicas' %}:</strong> {{ note.value|safe }}
+                        <strong>{% trans 'Notas morfológicas' %}:</strong> {{ note.value|link_vnawa|safe }}
                     </p>
                     {% endfor %}
 
                     {% for note in lexical_entry.notes_general %}
                     <p class="notes ngram">
-                        <strong>{% trans 'Notas gramaticales' %}:</strong> {{ note.value|safe }}
+                        <strong>{% trans 'Notas gramaticales' %}:</strong> {{ note.value|link_vnawa|safe }}
                     </p>
                     {% endfor %}
                 </div>
