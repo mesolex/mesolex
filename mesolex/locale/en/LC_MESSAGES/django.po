@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-10 00:06+0000\n"
+"POT-Creation-Date: 2018-10-12 17:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgstr "Equal to"
 msgid "Expresión regular"
 msgstr "Regular expression"
 
-#: lexicon/forms.py:31 lexicon/models.py:31
+#: lexicon/forms.py:31 lexicon/models.py:31 scratch_space/tei_models.py:196
 msgid "Entrada"
 msgstr "Headword"
 
@@ -49,7 +49,11 @@ msgstr "Gloss"
 msgid "Raiz"
 msgstr "Root"
 
-#: lexicon/forms.py:68
+#: lexicon/forms.py:34 lexicon/templates/search/search.html:77
+msgid "Campo semántico"
+msgstr "Semantic field"
+
+#: lexicon/forms.py:70
 msgid "Expresión regular no válida."
 msgstr "Invalid regular expression."
 
@@ -57,7 +61,7 @@ msgstr "Invalid regular expression."
 msgid "Lee una fuente de datos en XML y actualiza la base de datos."
 msgstr "Reads an XML data source file and updates the database."
 
-#: lexicon/models.py:27
+#: lexicon/models.py:27 scratch_space/tei_models.py:194
 msgid "Identificación única"
 msgstr "Unique ID"
 
@@ -67,7 +71,8 @@ msgstr "Welcome to Mesolex"
 
 #: lexicon/templates/search/home.html:10
 msgid "Recursos lexicosemánticos para lenguas mesoamericanas (en desarrollo)"
-msgstr "Lexicosemantic resources for Mesoamerican languages (under construction)"
+msgstr ""
+"Lexicosemantic resources for Mesoamerican languages (under construction)"
 
 #: lexicon/templates/search/home.html:16
 msgid "Crédito: Ilustración por Inocencio Jiménez Chino"
@@ -101,10 +106,6 @@ msgstr "Grammatical category"
 #: lexicon/templates/search/search.html:72
 msgid "Inflexión"
 msgstr "Inflection"
-
-#: lexicon/templates/search/search.html:77
-msgid "Campo semántico"
-msgstr "Semantic field"
 
 #: lexicon/templates/search/search.html:83
 msgid "Etimología"
@@ -162,11 +163,13 @@ msgstr "English"
 msgid "Activar la navegación"
 msgstr "Toggle navigation"
 
-#~ msgid "Entrada léxica"
-#~ msgstr "Lexical entry"
+#: scratch_space/tei_models.py:208
+msgid "Entrada léxica"
+msgstr "Lexical entry"
 
-#~ msgid "Entradas léxicas"
-#~ msgstr "Lexical entries"
+#: scratch_space/tei_models.py:209
+msgid "Entradas léxicas"
+msgstr "Lexical entries"
 
 #~ msgid "Idioma"
 #~ msgstr "Language"

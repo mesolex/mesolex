@@ -74,7 +74,7 @@
 
                     {% if lexical_entry.category_set.exists %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Campo semántico' %}:</i> {% for category in lexical_entry.category_set.all %}{{ category }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Campo semántico' %}:</i> {% for category in lexical_entry.category_set.all %}{{ category|link_category|safe }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
                     {# {% if data.raiz or data.raiz2 %} #}
@@ -85,7 +85,7 @@
                         {% for root in lexical_entry.simple_roots %}
                         {% if forloop.first %}
                         <i>{% blocktrans count counter=lexical_entry.simple_roots|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>{% endif %}
-                        {{ root }}{% if not forloop.last %}; {% endif %}
+                        {{ root.value|link_raiz|safe }}{% if not forloop.last %}; {% endif %}
                         {% endfor %}
 
                         {% for root in lexical_entry.compound_roots %}

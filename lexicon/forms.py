@@ -31,12 +31,14 @@ FILTERABLE_FIELDS = (
     ('lemma', _('Entrada')),
     ('gloss', _('Glosa')),
     ('root', _('Raiz')),
+    ('category', _('Campo semántico')),
 )
 
 FILTERABLE_FIELDS_DICT = {
     'lemma': ('lemma', 'variant__value'),
     'gloss': ('gloss__value', ),
     'root': ('root__value', ),
+    'category': ('category__value', ),
 }
 
 

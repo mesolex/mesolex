@@ -13,6 +13,8 @@ const humanReadableFilterOn = (filterOn) => {
       return gettext('glosa');
     case 'root':
       return gettext('raiz');
+    case 'category':
+      return gettext('campo semántico');
     default:
       return gettext('entrada');
   }
@@ -148,6 +150,7 @@ const SearchForm = ({
           <option value="lemma">{`${gettext('entrada')}`}</option>
           <option value="gloss">{`${gettext('glosa')}`}</option>
           <option value="root">{`${gettext('raiz')}`}</option>
+          <option value="category">{`${gettext('campo semántico')}`}</option>
         </select>
         <select
           name={`form-${i}-filter`}
