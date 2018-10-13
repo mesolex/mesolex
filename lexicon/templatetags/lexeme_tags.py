@@ -2,6 +2,7 @@ import re
 
 from django import template
 from django.core.urlresolvers import reverse
+from django.utils.http import urlquote
 
 register = template.Library()
 
@@ -44,7 +45,7 @@ def link_vnawa(text):
 def link_raiz(raiz):
     return '<a href="%s%s" class="raiz">%s</a>' % (
         reverse('lexicon_search'),
-        _get_querystring(raiz, filter_on='root'),
+        _get_querystring(urlquote(raiz), filter_on='root'),
         raiz,
     )
 
@@ -53,6 +54,6 @@ def link_raiz(raiz):
 def link_category(category):
     return '<a href="%s%s" class="category">%s</a>' % (
         reverse('lexicon_search'),
-        _get_querystring(category, filter_on='category'),
+        _get_querystring(urlquote(category), filter_on='category'),
         category,
     )
