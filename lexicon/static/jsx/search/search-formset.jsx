@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import uuid4 from 'uuid/v4';
 
+import { isControlled } from '../util';
 import SearchForm from './search-form';
 
 
@@ -83,14 +84,44 @@ export default class SearchFormSet extends React.Component {
     };
   }
 
+  /*
+    Higher-order function to create "onChange" functions that
+    modify form data.
+
+    At the formset level, an expression like `onChangeFieldFrom(uniqueId)`
+    is another higher-order function that can be passed into
+    a child search form to allow it to produce onChange functions
+    associated with a particular form entry in the formset's
+    collection of form data objects.
+
+    The value of `onChangeFieldFrom(uniqueId)` will be used in
+    expressions like `onChangeFieldFrom(uniqueId)('field_name', 'foo')`
+    to produce an onChange listener that tells the formset to set
+    the value of the field `'field_name'` to the value of the event
+    target at `'foo'` on the form identified by `uniqueId`.
+
+    A further feature is that if the field-value pair found
+    is part of a "controlled vocabulary search" (i.e. if the user
+    chooses that value for that field, e.g. "part of speech" for
+    the lexical entry field to filter on, then there is only
+    a particular set of vocab items they can search on, so
+    only "is exactly equal to" is relevant), the `filter`
+    value will be automatically set to `'exactly_equals'.`
+  */
   onChangeFieldFrom = uniqueId => (field, eKey = 'value') => (e) => {
     this.setState({
       formsetIndexedDatasets: {
         ...this.state.formsetIndexedDatasets,
-        [uniqueId]: {
-          ...this.state.formsetIndexedDatasets[uniqueId],
-          [field]: e.target[eKey],
-        },
+        [uniqueId]: Object.assign(
+          {},
+          {
+            ...this.state.formsetIndexedDatasets[uniqueId],
+            [field]: e.target[eKey],
+          },
+          isControlled(field, e.target[eKey]) ? {
+            filter: 'exactly_equals',
+          } : {},
+        ),
       },
     });
   }
