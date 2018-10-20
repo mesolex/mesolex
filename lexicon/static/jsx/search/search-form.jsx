@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Octicon from 'react-component-octicons';
 
+import { isControlled } from '../util';
 
 const humanReadableFilterOn = (filterOn) => {
   switch (filterOn) {
@@ -151,6 +152,7 @@ const SearchForm = ({
           <option value="gloss">{`${gettext('glosa')}`}</option>
           <option value="root">{`${gettext('raiz')}`}</option>
           <option value="category">{`${gettext('campo semántico')}`}</option>
+          <option value="part_of_speech">{`${gettext('categoría gramatical')}`}</option>
         </select>
         <select
           name={`form-${i}-filter`}
@@ -158,6 +160,7 @@ const SearchForm = ({
           id={`id_form-${i}-filter`}
           value={dataset.filter}
           onChange={onChangeFieldFrom('filter')}
+          disabled={isControlled('filter_on', dataset.filter_on)}
         >
           <option value="begins_with">{`${gettext('empieza con')}`}</option>
           <option value="ends_with">{`${gettext('termina con')}`}</option>

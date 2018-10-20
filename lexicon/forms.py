@@ -39,6 +39,7 @@ FILTERABLE_FIELDS_DICT = {
     'gloss': ('gloss__value', ),
     'root': ('root__value', ),
     'category': ('category__value', ),
+    'part_of_speech': ('grammargroup_set__part_of_speech'),
 }
 
 
