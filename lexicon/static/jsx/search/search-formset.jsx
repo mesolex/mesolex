@@ -12,6 +12,7 @@ export default class SearchFormSet extends React.Component {
   static propTypes = {
     formsetData: PropTypes.shape.isRequired,
     formsetErrors: PropTypes.shape.isRequired,
+    languageConfiguration: PropTypes.shape.isRequired,
   }
 
   /*
@@ -173,6 +174,7 @@ export default class SearchFormSet extends React.Component {
               errors={this.state.formsetIndexedErrors[uniqueId]}
               onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
               removeFilter={this.removeFilter(uniqueId)}
+              languageConfiguration={this.props.languageConfiguration}
             />
           ))
         }

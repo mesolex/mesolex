@@ -1,5 +1,6 @@
 import json
 
+from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.shortcuts import render
@@ -43,6 +44,7 @@ def lexicon_home(request, *args, **kwargs):
         'formset_data': json.dumps({}),
         'formset_errors': json.dumps({}),
         'form_captions': True,
+        'language_configuration': json.dumps(settings.LANGUAGE_CONFIGURATION, ensure_ascii=False),
     })
 
 
@@ -98,6 +100,7 @@ def lexicon_search_view(request, *args, **kwargs):
             'formset': formset,
             'formset_data': json.dumps(formset.data),
             'formset_errors': json.dumps(formset.errors),
+            'language_configuration': json.dumps(settings.LANGUAGE_CONFIGURATION, ensure_ascii=False),
         })
 
     formset = LexicalSearchFilterFormset()
@@ -105,4 +108,5 @@ def lexicon_search_view(request, *args, **kwargs):
         'formset': formset,
         'formset_data': json.dumps(formset.data),
         'formset_errors': json.dumps(formset.errors),
+        'language_configuration': json.dumps(settings.LANGUAGE_CONFIGURATION, ensure_ascii=False),
     })

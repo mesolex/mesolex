@@ -16,6 +16,8 @@ const humanReadableFilterOn = (filterOn) => {
       return gettext('raiz');
     case 'category':
       return gettext('campo semántico');
+    case 'part_of_speech':
+      return gettext('categoría gramatical');
     default:
       return gettext('entrada');
   }
@@ -53,12 +55,93 @@ const humanReadableFilters = ({
   return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${humanReadableFilterOn(filterOn)} ${filterDict[filter]}${ vln ? ` (${gettext('NCV')})` : ''}`;
 };
 
+/*
+  Helper component to generate the special selector used for a controlled
+  vocabulary item.
+
+  NOTE: this is basically a stub implementation awaiting more
+  parameterization by other types of controlled value.
+*/
+const ControlledVocabInput = ({
+  name,
+  className,
+  id,
+  value,
+  onChange,
+  languageConfiguration,
+}) => (
+  <select
+    name={name}
+    className={className}
+    id={id}
+    value={value}
+    onChange={onChange}
+  >
+    {
+      languageConfiguration.azz.parts_of_speech.map(pos => (
+        <option value={pos} key={pos}>{`${gettext(pos)}`}</option>
+      ))
+    }
+  </select>
+);
+
+ControlledVocabInput.propTypes = {
+  name: PropTypes.string.isRequired,
+  className: PropTypes.shape.isRequired,
+  id: PropTypes.number.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  languageConfiguration: PropTypes.shape.isRequired,
+};
+
+/*
+  Helper component describing the selector for the "filter" type (starts with,
+  exactly equals, etc).
+
+  If the chosen "filter on" field is a controlled-vocab item (e.g. grammatical
+  category), the user should have no choice: this can only be "exactly_equals".
+  The prop "controlled" determines what gets rendered here, removing
+  irrelevant options, as well as determining the value of the input.
+*/
+const FilterSelector = ({
+  name,
+  className,
+  id,
+  value,
+  onChange,
+  controlled,
+}) => (
+  <select
+    name={name}
+    className={className}
+    id={id}
+    value={controlled ? 'exactly_equals' : value}
+    onChange={onChange}
+  >
+    {controlled ? null : <option value="begins_with">{`${gettext('empieza con')}`}</option>}
+    {controlled ? null : <option value="ends_with">{`${gettext('termina con')}`}</option>}
+    {controlled ? null : <option value="contains">{`${gettext('contiene')}`}</option>}
+    <option value="exactly_equals">{`${gettext('es exactamente igual a')}`}</option>
+    {controlled ? null : <option value="regex">{`${gettext('expresión regular')}`}</option>}
+  </select>
+);
+
+FilterSelector.propTypes = {
+  name: PropTypes.string.isRequired,
+  className: PropTypes.shape.isRequired,
+  id: PropTypes.number.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  controlled: PropTypes.bool.isRequired,
+};
+
 const SearchForm = ({
   i,
   dataset,
   errors,
   onChangeFieldFrom,
   removeFilter,
+  languageConfiguration,
 }) => (
   <div className="form-group">
     <label
@@ -89,17 +172,34 @@ const SearchForm = ({
           <Octicon name="gear" />
         </a>
       </div>
-      <input
-        name={`form-${i}-query_string`}
-        className={classnames(
-          'form-control',
-          { 'is-invalid': (errors.query_string || []).length },
-        )}
-        id={`id_form-${i}-query_string`}
-        type="text"
-        value={dataset.query_string}
-        onChange={onChangeFieldFrom('query_string')}
-      />
+      {
+        isControlled('filter_on', dataset.filter_on)
+        ?
+          <ControlledVocabInput
+            name={`form-${i}-query_string`}
+            className={classnames(
+              'custom-select',
+              'search-form__select',
+              { 'is-invalid': (errors.query_string || []).length },
+            )}
+            id={`id_form-${i}-query_string`}
+            value={dataset.query_string}
+            onChange={onChangeFieldFrom('query_string')}
+            languageConfiguration={languageConfiguration}
+          />
+        :
+          <input
+            name={`form-${i}-query_string`}
+            className={classnames(
+              'form-control',
+              { 'is-invalid': (errors.query_string || []).length },
+            )}
+            id={`id_form-${i}-query_string`}
+            type="text"
+            value={dataset.query_string}
+            onChange={onChangeFieldFrom('query_string')}
+          />
+      }
       {
         i > 0 ?
           <div className="input-group-append">
@@ -154,20 +254,15 @@ const SearchForm = ({
           <option value="category">{`${gettext('campo semántico')}`}</option>
           <option value="part_of_speech">{`${gettext('categoría gramatical')}`}</option>
         </select>
-        <select
+
+        <FilterSelector
           name={`form-${i}-filter`}
           className="custom-select search-form__select"
           id={`id_form-${i}-filter`}
           value={dataset.filter}
           onChange={onChangeFieldFrom('filter')}
-          disabled={isControlled('filter_on', dataset.filter_on)}
-        >
-          <option value="begins_with">{`${gettext('empieza con')}`}</option>
-          <option value="ends_with">{`${gettext('termina con')}`}</option>
-          <option value="contains">{`${gettext('contiene')}`}</option>
-          <option value="exactly_equals">{`${gettext('es exactamente igual a')}`}</option>
-          <option value="regex">{`${gettext('expresión regular')}`}</option>
-        </select>
+          controlled={isControlled('filter_on', dataset.filter_on)}
+        />
       </div>
       <div className="form-check mt-2">
         <input
@@ -193,6 +288,7 @@ SearchForm.propTypes = {
   errors: PropTypes.shape.isRequired,
   onChangeFieldFrom: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired,
+  languageConfiguration: PropTypes.shape.isRequired,
 };
 
 export default SearchForm;

@@ -14,12 +14,14 @@ window.onload = () => {
   const {
     formset_data: formsetData,
     formset_errors: formsetErrors,
+    language_configuration: languageConfiguration,
   } = JSON.parse(document.getElementById('js-init').text);
 
   ReactDOM.render(
     <SearchFormSet
       formsetData={formsetData}
       formsetErrors={formsetErrors}
+      languageConfiguration={languageConfiguration}
     />,
     document.querySelector('#search-form'),
   );
