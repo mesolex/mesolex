@@ -270,20 +270,26 @@ const SearchForm = ({
           controlled={isControlled('filter_on', dataset.filter_on)}
         />
       </div>
-      <div className="form-check mt-2">
-        <input
-          type="checkbox"
-          className="form-check-input"
-          id={`id_form-${i}-vln`}
-          name={`form-${i}-vln`}
-          checked={dataset.vln}
-          disabled={dataset.filter === 'regex'}
-          onChange={onChangeFieldFrom('vln', 'checked')}
-        />
-        <label htmlFor={`id_form-${i}-vln`} className="form-check-label">
-          {gettext('Neutralizar cantidad vocálica')}
-        </label>
-      </div>
+      {
+        isControlled('filter_on', dataset.filter_on)
+        ? null
+        : (
+          <div className="form-check mt-2">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id={`id_form-${i}-vln`}
+              name={`form-${i}-vln`}
+              checked={dataset.vln}
+              disabled={dataset.filter === 'regex'}
+              onChange={onChangeFieldFrom('vln', 'checked')}
+            />
+            <label htmlFor={`id_form-${i}-vln`} className="form-check-label">
+              {gettext('Neutralizar cantidad vocálica')}
+            </label>
+          </div>
+        )
+      }
     </div>
   </div>
 );
