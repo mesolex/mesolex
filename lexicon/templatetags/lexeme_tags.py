@@ -57,3 +57,12 @@ def link_category(category):
         _get_querystring(urlquote(category), filter_on='category'),
         category,
     )
+
+
+@register.filter()
+def link_part_of_speech(pos):
+    return '<a href="%s%s" class="pos">%s</a>' % (
+        reverse('lexicon_search'),
+        _get_querystring(urlquote(pos), filter_on='part_of_speech'),
+        pos,
+    )
