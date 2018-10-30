@@ -4,140 +4,14 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Octicon from 'react-component-octicons';
 
-import { isControlled } from '../util';
+import ControlledVocabInput from './controlled-vocab-input';
+import FilterSelector from './filter-selector';
 
-const humanReadableFilterOn = (filterOn) => {
-  switch (filterOn) {
-    case 'lemma':
-      return gettext('entrada');
-    case 'gloss':
-      return gettext('glosa');
-    case 'root':
-      return gettext('raiz');
-    case 'category':
-      return gettext('campo semántico');
-    case 'part_of_speech':
-      return gettext('categoría gramatical');
-    case 'inflectional_type':
-      return gettext('inflexión');
-    default:
-      return gettext('entrada');
-  }
-};
+import {
+  isControlled,
+  humanReadableFilters,
+} from '../util';
 
-/*
-  Helper to render the text displayed above the input row.
-*/
-const humanReadableFilters = ({
-  i,
-  operator,
-  filterOn,
-  filter,
-  vln,
-}) => {
-  const initOpDict = {
-    and: '',
-    and_n: `${gettext('no')}:`,
-    or: '',
-    or_n: `${gettext('no')}:`,
-  };
-  const opDict = {
-    and: `${gettext('y')}:`,
-    or: `${gettext('o')}:`,
-    and_n: `${gettext('y no')}:`,
-    or_n: `${gettext('o no')}:`,
-  };
-  const filterDict = {
-    begins_with: gettext('empieza con'),
-    ends_with: gettext('termina con'),
-    contains: gettext('contiene'),
-    exactly_equals: gettext('es exactamente igual a'),
-    regex: gettext('coincide con expresión regular'),
-  };
-  return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${humanReadableFilterOn(filterOn)} ${filterDict[filter]}${ vln ? ` (${gettext('NCV')})` : ''}`;
-};
-
-/*
-  Helper component to generate the special selector used for a controlled
-  vocabulary item.
-
-  NOTE: this is basically a stub implementation awaiting more
-  parameterization by other types of controlled value.
-*/
-const ControlledVocabInput = ({
-  name,
-  className,
-  id,
-  value,
-  onChange,
-  vocab,
-  languageConfiguration,
-}) => (
-  <select
-    name={name}
-    className={className}
-    id={id}
-    value={value}
-    onChange={onChange}
-  >
-    {
-      languageConfiguration.azz[vocab].map(([pos, readable]) => (
-        <option value={pos} key={pos}>{`${gettext(readable)}`}</option>
-      ))
-    }
-  </select>
-);
-
-ControlledVocabInput.propTypes = {
-  name: PropTypes.string.isRequired,
-  className: PropTypes.shape.isRequired,
-  id: PropTypes.number.isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  vocab: PropTypes.string.isRequired,
-  languageConfiguration: PropTypes.shape.isRequired,
-};
-
-/*
-  Helper component describing the selector for the "filter" type (starts with,
-  exactly equals, etc).
-
-  If the chosen "filter on" field is a controlled-vocab item (e.g. grammatical
-  category), the user should have no choice: this can only be "exactly_equals".
-  The prop "controlled" determines what gets rendered here, removing
-  irrelevant options, as well as determining the value of the input.
-*/
-const FilterSelector = ({
-  name,
-  className,
-  id,
-  value,
-  onChange,
-  controlled,
-}) => (
-  <select
-    name={name}
-    className={className}
-    id={id}
-    value={controlled ? 'exactly_equals' : value}
-    onChange={onChange}
-  >
-    {controlled ? null : <option value="begins_with">{`${gettext('empieza con')}`}</option>}
-    {controlled ? null : <option value="ends_with">{`${gettext('termina con')}`}</option>}
-    {controlled ? null : <option value="contains">{`${gettext('contiene')}`}</option>}
-    <option value="exactly_equals">{`${gettext('es exactamente igual a')}`}</option>
-    {controlled ? null : <option value="regex">{`${gettext('expresión regular')}`}</option>}
-  </select>
-);
-
-FilterSelector.propTypes = {
-  name: PropTypes.string.isRequired,
-  className: PropTypes.shape.isRequired,
-  id: PropTypes.number.isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  controlled: PropTypes.bool.isRequired,
-};
 
 const SearchForm = ({
   i,
