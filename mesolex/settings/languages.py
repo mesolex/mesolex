@@ -2,7 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 
 LANGUAGE_CONFIGURATION = {
     'azz': {
-        'parts_of_speech': [
+        'part_of_speech': [
             (
                 "Adj",
                 _("Adjetivo"),
@@ -128,7 +128,7 @@ LANGUAGE_CONFIGURATION = {
                 _("Vocativo"),
             ),
         ],
-        'inflectional_types': [
+        'inflectional_type': [
             (
                 "Clase 1",
                 _("Verbo clase 1 (kwa)"),

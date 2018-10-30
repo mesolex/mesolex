@@ -18,6 +18,8 @@ const humanReadableFilterOn = (filterOn) => {
       return gettext('campo semántico');
     case 'part_of_speech':
       return gettext('categoría gramatical');
+    case 'inflectional_type':
+      return gettext('inflexión');
     default:
       return gettext('entrada');
   }
@@ -68,6 +70,7 @@ const ControlledVocabInput = ({
   id,
   value,
   onChange,
+  vocab,
   languageConfiguration,
 }) => (
   <select
@@ -78,7 +81,7 @@ const ControlledVocabInput = ({
     onChange={onChange}
   >
     {
-      languageConfiguration.azz.parts_of_speech.map(([pos, readable]) => (
+      languageConfiguration.azz[vocab].map(([pos, readable]) => (
         <option value={pos} key={pos}>{`${gettext(readable)}`}</option>
       ))
     }
@@ -91,6 +94,7 @@ ControlledVocabInput.propTypes = {
   id: PropTypes.number.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  vocab: PropTypes.string.isRequired,
   languageConfiguration: PropTypes.shape.isRequired,
 };
 
@@ -185,6 +189,7 @@ const SearchForm = ({
             id={`id_form-${i}-query_string`}
             value={dataset.query_string}
             onChange={onChangeFieldFrom('query_string')}
+            vocab={dataset.filter_on}
             languageConfiguration={languageConfiguration}
           />
         :
@@ -253,6 +258,7 @@ const SearchForm = ({
           <option value="root">{`${gettext('raiz')}`}</option>
           <option value="category">{`${gettext('campo semántico')}`}</option>
           <option value="part_of_speech">{`${gettext('categoría gramatical')}`}</option>
+          <option value="inflectional_type">{`${gettext('inflexión')}`}</option>
         </select>
 
         <FilterSelector
