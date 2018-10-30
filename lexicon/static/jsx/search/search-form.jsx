@@ -56,8 +56,8 @@ const SearchForm = ({
           <ControlledVocabInput
             name={`form-${i}-query_string`}
             className={classnames(
+              'form-control',
               'custom-select',
-              'search-form__select',
               { 'is-invalid': (errors.query_string || []).length },
             )}
             id={`id_form-${i}-query_string`}
