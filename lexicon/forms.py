@@ -32,6 +32,7 @@ FILTERABLE_FIELDS = (
     ('gloss', _('Glosa')),
     ('root', _('Raiz')),
     ('category', _('Campo semántico')),
+    ('part_of_speech', _('Categoría gramatical')),
 )
 
 FILTERABLE_FIELDS_DICT = {
@@ -39,7 +40,7 @@ FILTERABLE_FIELDS_DICT = {
     'gloss': ('gloss__value', ),
     'root': ('root__value', ),
     'category': ('category__value', ),
-    'part_of_speech': ('grammargroup_set__part_of_speech'),
+    'part_of_speech': ('grammargroup__part_of_speech', ),
 }
 
 

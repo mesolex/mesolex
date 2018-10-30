@@ -197,7 +197,8 @@
   {{ block.super }}
   "csrfToken": "{{ csrf_token }}",
   "formset_data": {{ formset_data|safe }},
-  "formset_errors": {{ formset_errors|safe }}
+  "formset_errors": {{ formset_errors|safe }},
+  "language_configuration": {{ language_configuration|safe }}
 {% endblock js-init %}
 
 {% block extra-js %}
