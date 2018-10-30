@@ -13,6 +13,7 @@ from .forms import (
 from .models import LexicalEntry
 from .utils import (
     to_vln,
+    ForceProxyEncoder,
 )
 
 
@@ -44,7 +45,11 @@ def lexicon_home(request, *args, **kwargs):
         'formset_data': json.dumps({}),
         'formset_errors': json.dumps({}),
         'form_captions': True,
-        'language_configuration': json.dumps(settings.LANGUAGE_CONFIGURATION, ensure_ascii=False),
+        'language_configuration': json.dumps(
+            settings.LANGUAGE_CONFIGURATION,
+            ensure_ascii=False,
+            cls=ForceProxyEncoder,
+        ),
     })
 
 
@@ -100,7 +105,11 @@ def lexicon_search_view(request, *args, **kwargs):
             'formset': formset,
             'formset_data': json.dumps(formset.data),
             'formset_errors': json.dumps(formset.errors),
-            'language_configuration': json.dumps(settings.LANGUAGE_CONFIGURATION, ensure_ascii=False),
+            'language_configuration': json.dumps(
+                settings.LANGUAGE_CONFIGURATION,
+                ensure_ascii=False,
+                cls=ForceProxyEncoder,
+            ),
         })
 
     formset = LexicalSearchFilterFormset()
@@ -108,5 +117,9 @@ def lexicon_search_view(request, *args, **kwargs):
         'formset': formset,
         'formset_data': json.dumps(formset.data),
         'formset_errors': json.dumps(formset.errors),
-        'language_configuration': json.dumps(settings.LANGUAGE_CONFIGURATION, ensure_ascii=False),
+        'language_configuration': json.dumps(
+            settings.LANGUAGE_CONFIGURATION,
+            ensure_ascii=False,
+            cls=ForceProxyEncoder,
+        ),
     })

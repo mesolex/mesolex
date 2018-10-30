@@ -78,8 +78,8 @@ const ControlledVocabInput = ({
     onChange={onChange}
   >
     {
-      languageConfiguration.azz.parts_of_speech.map(pos => (
-        <option value={pos} key={pos}>{`${gettext(pos)}`}</option>
+      languageConfiguration.azz.parts_of_speech.map(([pos, readable]) => (
+        <option value={pos} key={pos}>{`${gettext(readable)}`}</option>
       ))
     }
   </select>

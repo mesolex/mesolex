@@ -1,5 +1,9 @@
 import re
 
+from django.core.serializers.json import DjangoJSONEncoder
+from django.utils.encoding import force_text
+from django.utils.functional import Promise
+
 
 def to_vln(filter, query_string):
     """
@@ -25,3 +29,17 @@ def to_vln(filter, query_string):
         affixed_qstr = affixed_qstr + '$'
 
     return ('__iregex', affixed_qstr)
+
+
+class ForceProxyEncoder(DjangoJSONEncoder):
+    """
+    Special JSON encoder to allow us to serialize nested values
+    containing strings wrapped by ugettext_lazy. This is necessary
+    when, for example, passing over language configuration from
+    settings, since human-readable equivalents of grammatical
+    and inflectional categories will be wrapped by _().
+    """
+    def default(self, obj):
+        if isinstance(obj, Promise):
+            return force_text(obj)
+        return super().default(obj)

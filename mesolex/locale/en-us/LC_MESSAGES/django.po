@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-12 17:23+0000\n"
+"POT-Creation-Date: 2018-10-30 22:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,7 +53,11 @@ msgstr "Root"
 msgid "Campo semántico"
 msgstr "Semantic field"
 
-#: lexicon/forms.py:70
+#: lexicon/forms.py:35 lexicon/templates/search/search.html:72
+msgid "Categoría gramatical"
+msgstr "Grammatical category"
+
+#: lexicon/forms.py:72
 msgid "Expresión regular no válida."
 msgstr "Invalid regular expression."
 
@@ -98,10 +102,6 @@ msgstr "%(num_entries)s results (page %(page)s of %(num_pages)s)"
 #: lexicon/templates/search/search.html:67
 msgid "Citación"
 msgstr "Citation"
-
-#: lexicon/templates/search/search.html:72
-msgid "Categoría gramatical"
-msgstr "Grammatical category"
 
 #: lexicon/templates/search/search.html:72
 msgid "Inflexión"
@@ -149,15 +149,183 @@ msgstr "Next"
 msgid "Resultado no encontrado."
 msgstr "No results found."
 
-#: mesolex/settings/base.py:149
+#: mesolex/settings/base.py:150
 msgid "español"
 msgstr "Spanish"
 
-#: mesolex/settings/base.py:150
+#: mesolex/settings/base.py:151
 #, fuzzy
 #| msgid "inglés (EE.UU.)"
 msgid "inglés"
 msgstr "English"
+
+#: mesolex/settings/languages.py:8
+msgid "Adjetivo"
+msgstr "Adjective"
+
+#: mesolex/settings/languages.py:12
+msgid "Adverbio"
+msgstr "Adverb"
+
+#: mesolex/settings/languages.py:16
+msgid "Auxiliar"
+msgstr "Auxiliary"
+
+#: mesolex/settings/languages.py:20
+msgid "Habla-de-niños"
+msgstr "Baby-talk"
+
+#: mesolex/settings/languages.py:24
+msgid "Clítico"
+msgstr "Clitic"
+
+#: mesolex/settings/languages.py:28
+msgid "Conjunción"
+msgstr "Conjunction"
+
+#: mesolex/settings/languages.py:32
+msgid "Cópula"
+msgstr "Copula"
+
+#: mesolex/settings/languages.py:36
+msgid "Demostrativo"
+msgstr "Demonstrative"
+
+#: mesolex/settings/languages.py:40
+msgid "Direccional"
+msgstr "Directional"
+
+#: mesolex/settings/languages.py:44
+msgid "Estativo"
+msgstr "Stative"
+
+#: mesolex/settings/languages.py:48
+msgid "Interjección"
+msgstr "Interjection"
+
+#: mesolex/settings/languages.py:52
+msgid "Interrogativo"
+msgstr "Interrogative"
+
+#: mesolex/settings/languages.py:56
+msgid "Locativo"
+msgstr "Locative"
+
+#: mesolex/settings/languages.py:60
+msgid "Modal"
+msgstr "Modal"
+
+#: mesolex/settings/languages.py:64
+msgid "Muletilla"
+msgstr "Discourse-pause"
+
+#: mesolex/settings/languages.py:68
+msgid "Negación"
+msgstr "Negation"
+
+#: mesolex/settings/languages.py:72
+msgid "Prefijo"
+msgstr "Prefix"
+
+#: mesolex/settings/languages.py:76
+msgid "Preposición"
+msgstr "Preposition"
+
+#: mesolex/settings/languages.py:80
+msgid "Pronombre"
+msgstr "Pronoun"
+
+#: mesolex/settings/languages.py:84
+msgid "Saludo"
+msgstr "Salutation"
+
+#: mesolex/settings/languages.py:88
+msgid "Subordinador"
+msgstr "Subordinator"
+
+#: mesolex/settings/languages.py:92
+msgid "Sufijo"
+msgstr "Suffix"
+
+#: mesolex/settings/languages.py:96
+msgid "Sustantivo"
+msgstr "Noun"
+
+#: mesolex/settings/languages.py:100
+msgid "Terminación-aspectual"
+msgstr "Aspectual-ending"
+
+#: mesolex/settings/languages.py:104
+msgid "Topónimo"
+msgstr "Toponym"
+
+#: mesolex/settings/languages.py:108
+msgid "Verbo-impersonal"
+msgstr "Verb-impersonal"
+
+#: mesolex/settings/languages.py:112
+msgid "Verbo-intransitivo"
+msgstr "Verb-intransitive"
+
+#: mesolex/settings/languages.py:116
+msgid "Verbo-transitivo"
+msgstr "Verb-transitive"
+
+#: mesolex/settings/languages.py:120
+msgid "Verbo-bitransitivo"
+msgstr "Verb-bitransitive"
+
+#: mesolex/settings/languages.py:124
+msgid "Verbo-tritransitivo"
+msgstr "Verb-tritransitive"
+
+#: mesolex/settings/languages.py:128
+msgid "Vocativo"
+msgstr "Vocative"
+
+#: mesolex/settings/languages.py:134
+msgid "Verbo clase 1 (kwa)"
+msgstr "Class 1 verb (kwa)"
+
+#: mesolex/settings/languages.py:138
+msgid "Verbo clase 2a (pale:wia)"
+msgstr "Class 2a verb (pale:wia)"
+
+#: mesolex/settings/languages.py:142
+msgid "Verbo clase 2b (polowa)"
+msgstr "Class 2b verb (polowa)"
+
+#: mesolex/settings/languages.py:146
+msgid "Verbo clase 3 (kalaki)"
+msgstr "Class 3 verb (kalaki)"
+
+#: mesolex/settings/languages.py:150
+msgid "Verbo clase 4 (cho:ka)"
+msgstr "Class 4 verb (cho:ka)"
+
+#: mesolex/settings/languages.py:154
+msgid "Verbo clase 4-3 (ki:sa)"
+msgstr "Class 4-3 verb (ki:sa)"
+
+#: mesolex/settings/languages.py:158
+msgid "Verbo clase 4-3/3 (pata:ni)"
+msgstr "Class 4-3/3 verb (pata:ni)"
+
+#: mesolex/settings/languages.py:162
+msgid "Solamente no posesionado"
+msgstr "Only unpossessed"
+
+#: mesolex/settings/languages.py:166
+msgid "Posesión enajenable y no enajenable"
+msgstr "Either possessed or inalienably possessed"
+
+#: mesolex/settings/languages.py:170
+msgid "Posesión enajenable y no enajenable (no cambio de raíz)"
+msgstr "Either possessed or inalienably possessed (no change in stem)"
+
+#: mesolex/settings/languages.py:174
+msgid "Obligatoriamente posesionado"
+msgstr "Obligatorily possessed"
 
 #: mesolex/templates/includes/header.html:14
 msgid "Activar la navegación"
