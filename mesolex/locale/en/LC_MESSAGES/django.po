@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-30 22:42+0000\n"
+"POT-Creation-Date: 2018-10-30 23:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,7 +57,11 @@ msgstr "Semantic field"
 msgid "Categoría gramatical"
 msgstr "Grammatical category"
 
-#: lexicon/forms.py:72
+#: lexicon/forms.py:36 lexicon/templates/search/search.html:72
+msgid "Inflexión"
+msgstr "Inflection"
+
+#: lexicon/forms.py:74
 msgid "Expresión regular no válida."
 msgstr "Invalid regular expression."
 
@@ -102,10 +106,6 @@ msgstr "%(num_entries)s results (page %(page)s of %(num_pages)s)"
 #: lexicon/templates/search/search.html:67
 msgid "Citación"
 msgstr "Citation"
-
-#: lexicon/templates/search/search.html:72
-msgid "Inflexión"
-msgstr "Inflection"
 
 #: lexicon/templates/search/search.html:83
 msgid "Etimología"
