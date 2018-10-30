@@ -33,6 +33,7 @@ FILTERABLE_FIELDS = (
     ('root', _('Raiz')),
     ('category', _('Campo semántico')),
     ('part_of_speech', _('Categoría gramatical')),
+    ('inflectional_type', _('Inflexión')),
 )
 
 FILTERABLE_FIELDS_DICT = {
@@ -41,6 +42,7 @@ FILTERABLE_FIELDS_DICT = {
     'root': ('root__value', ),
     'category': ('category__value', ),
     'part_of_speech': ('grammargroup__part_of_speech', ),
+    'inflectional_type': ('grammargroup__inflectional_type', ),
 }
 
 

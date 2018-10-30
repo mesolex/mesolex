@@ -66,3 +66,12 @@ def link_part_of_speech(pos):
         _get_querystring(urlquote(pos), filter_on='part_of_speech'),
         pos,
     )
+
+
+@register.filter()
+def link_inflectional_type(it):
+    return '<a href="%s%s" class="it">%s</a>' % (
+        reverse('lexicon_search'),
+        _get_querystring(urlquote(it), filter_on='inflectional_type'),
+        it,
+    )
