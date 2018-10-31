@@ -3,6 +3,7 @@ import json
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.db.models.functions import Lower
 from django.shortcuts import render
 
 from .forms import (
@@ -84,7 +85,12 @@ def lexicon_search_view(request, *args, **kwargs):
                             query |= (~form_q)
 
         if query:
-            lexical_entries = LexicalEntry.valid_entries.filter(query)
+            lexical_entries = (
+                LexicalEntry.valid_entries
+                .filter(query)
+                .annotate(lower_lemma=Lower('lemma'))
+                .order_by('lower_lemma')
+            )
             paginator = Paginator(lexical_entries, 25)
 
             page = request.GET.get('page', 1)
