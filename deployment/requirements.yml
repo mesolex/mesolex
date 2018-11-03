@@ -15,10 +15,10 @@
   version: v0.9.18
   name: tequila-django
 
-- src: https://github.com/caktus/tequila-nodejs
-  version: v0.8.0
-  name: tequila-nodejs
-
 - src: geerlingguy.nodejs
-  version: 4.2.0
+  version: 4.2.2
   name: nodejs
+
+- src: https://github.com/caktus/tequila-nodejs
+  version: v0.8.1
+  name: tequila-nodejs
