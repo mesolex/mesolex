@@ -1,0 +1,14 @@
+---
+env_name: nsf
+repo_branch: nsf
+domain: nsf.mesolex.org
+letsencrypt_domains:
+  - nsf.mesolex.org
+
+cert_source: none
+force_ssl: false
+
+requirements_file: "{{ source_dir }}/requirements/base.txt"
+
+source_is_local: false
+gunicorn_num_workers: 1
