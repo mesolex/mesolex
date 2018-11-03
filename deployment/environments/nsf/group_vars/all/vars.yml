@@ -5,8 +5,8 @@ domain: nsf.mesolex.org
 letsencrypt_domains:
   - nsf.mesolex.org
 
-cert_source: none
-force_ssl: false
+cert_source: letsencrypt
+force_ssl: true
 
 requirements_file: "{{ source_dir }}/requirements/base.txt"
 
