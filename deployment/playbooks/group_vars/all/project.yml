@@ -1,6 +1,6 @@
 ---
 project_name: mesolex
-python_version: 3.5
+python_version: 3.7
 pg_version: 10
 
 secret_key: "{{ SECRET_KEY }}"

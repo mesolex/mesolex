@@ -12,7 +12,7 @@
   name: tequila-nginx
 
 - src: https://github.com/caktus/tequila-django
-  version: v0.9.13
+  version: v0.9.18
   name: tequila-django
 
 - src: https://github.com/caktus/tequila-nodejs
