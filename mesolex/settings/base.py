@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'robots',
 
     'lexicon',
+    'util',
 ]
 
 MIDDLEWARE = [
