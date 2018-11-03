@@ -74,7 +74,7 @@
 
                     {% if lexical_entry.category_set.exists %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Campo semántico' %}:</i> {% for category in lexical_entry.category_set.all %}{{ category|link_category|safe }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Campo semántico' %}:</i> {% for category in lexical_entry.category_set.all %}{{ category.value|link_category|safe }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
                     {# {% if data.raiz or data.raiz2 %} #}
