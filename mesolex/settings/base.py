@@ -33,12 +33,14 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
 
     'prettyjson',
     'rest_framework',
+    'robots',
 
     'lexicon',
 ]
@@ -154,3 +156,7 @@ LANGUAGES = [
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
+
+SITE_ID = 1
+
+ROBOTS_USE_SITEMAP = False
