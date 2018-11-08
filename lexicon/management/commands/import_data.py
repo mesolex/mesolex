@@ -62,55 +62,60 @@ class Command(BaseCommand):
                     models.Geo.objects.filter(
                         entry=lexical_entry,
                     ).delete()
-                    for lx_var in lx_vars:
-                        models.Geo.objects.create(
+                    models.Geo.objects.bulk_create([
+                        models.Geo(
                             entry=lexical_entry,
                             value=lx_var,
-                        )
+                        ) for lx_var in lx_vars
+                    ])
 
                 if 'lx_cita' in data:
                     lx_citas = data['lx_cita'] if isinstance(data['lx_cita'], list) else [data['lx_cita']]
                     models.Citation.objects.filter(
                         entry=lexical_entry,
                     ).delete()
-                    for lx_cita in lx_citas:
-                        models.Citation.objects.create(
+                    models.Citation.objects.bulk_create([
+                        models.Citation(
                             entry=lexical_entry,
                             value=lx_cita,
-                        )
+                        ) for lx_cita in lx_citas
+                    ])
 
                 if 'lx_alt' in data:
                     lx_alts = data['lx_alt'] if isinstance(data['lx_alt'], list) else [data['lx_alt']]
                     models.Variant.objects.filter(
                         entry=lexical_entry,
                     ).delete()
-                    for lx_alt in lx_alts:
-                        models.Variant.objects.create(
+                    models.Variant.objects.bulk_create([
+                        models.Variant(
                             entry=lexical_entry,
                             value=lx_alt,
-                        )
+                        ) for lx_alt in lx_alts
+                    ])
 
                 if 'sem' in data:
                     sems = data['sem'] if isinstance(data['sem'], list) else [data['sem']]
                     models.Category.objects.filter(
                         entry=lexical_entry,
                     ).delete()
-                    for sem in sems:
-                        models.Category.objects.create(
+                    models.Category.objects.bulk_create([
+                        models.Category(
                             entry=lexical_entry,
                             value=sem,
-                        )
+                        ) for sem in sems
+                    ])
 
                 if 'raiz' in data:
                     raizs = data['raiz'] if isinstance(data['raiz'], list) else [data['raiz']]
                     models.Root.objects.filter(
                         entry=lexical_entry,
                     ).delete()
-                    for raiz in raizs:
-                        models.Root.objects.create(
+                    models.Root.objects.bulk_create([
+                        models.Root(
                             entry=lexical_entry,
                             value=raiz,
-                        )
+                        ) for raiz in raizs
+                    ])
 
                 if 'raiz2' in data:
                     raiz2s = data['raiz2'] if isinstance(data['raiz2'], list) else [data['raiz2']]
@@ -118,23 +123,40 @@ class Command(BaseCommand):
                         entry=lexical_entry,
                         type='compound',
                     ).delete()
-                    for raiz2 in raiz2s:
-                        models.Root.objects.create(
+                    models.Root.objects.bulk_create([
+                        models.Root(
                             entry=lexical_entry,
-                            value=raiz,
+                            value=raiz2,
                             type='compound',
+                        ) for raiz2 in raiz2s
+                    ])
+
+                if 'pres_tipoGroup' in data:
+                    pres_tipo_groups = data['pres_tipoGroup'] if isinstance(data['pres_tipoGroup'], list) else [data['pres_tipoGroup']]
+                    models.NonNativeEtymology.objects.filter(
+                        entry=lexical_entry,
+                    ).delete()
+                    models.NonNativeEtymology.objects.bulk_create([
+                        models.NonNativeEtymology(
+                            type=pres_tipo_group['pres_tipo'],
+                            value=pres_tipo_group['pres_el'],
+                            entry=lexical_entry,
                         )
+                        for pres_tipo_group in pres_tipo_groups
+                        if 'pres_tipo' in pres_tipo_group and 'pres_el' in pres_tipo_group
+                    ])
 
                 if 'glosa' in data:
                     glosas = data['glosa'] if isinstance(data['glosa'], list) else [data['glosa']]
                     models.Gloss.objects.filter(
                         entry=lexical_entry,
                     ).delete()
-                    for glosa in glosas:
-                        models.Gloss.objects.create(
+                    models.Gloss.objects.bulk_create([
+                        models.Gloss(
                             entry=lexical_entry,
                             value=glosa,
-                        )
+                        ) for glosa in glosas
+                    ])
 
                 if 'nota' in data:
                     notas = data['nota'] if isinstance(data['nota'], list) else [data['nota']]
@@ -142,12 +164,13 @@ class Command(BaseCommand):
                         type='note',
                         entry=lexical_entry,
                     ).delete()
-                    for nota in notas:
-                        models.Note.objects.create(
+                    models.Note.objects.bulk_create([
+                        models.Note(
                             type='note',
                             entry=lexical_entry,
                             value=nota,
-                        )
+                        ) for nota in notas
+                    ])
 
                 if 'nsem' in data:
                     nsems = data['nsem'] if isinstance(data['nsem'], list) else [data['nsem']]
@@ -155,12 +178,13 @@ class Command(BaseCommand):
                         type='semantics',
                         entry=lexical_entry,
                     ).delete()
-                    for nsem in nsems:
-                        models.Note.objects.create(
+                    models.Note.objects.bulk_create([
+                        models.Note(
                             type='semantics',
                             entry=lexical_entry,
                             value=nsem,
-                        )
+                        ) for nsem in nsems
+                    ])
 
                 if 'nmorf' in data:
                     nmorfs = data['nmorf'] if isinstance(data['nmorf'], list) else [data['nmorf']]
@@ -168,12 +192,13 @@ class Command(BaseCommand):
                         type='morphology',
                         entry=lexical_entry,
                     ).delete()
-                    for nmorf in nmorfs:
-                        models.Note.objects.create(
+                    models.Note.objects.bulk_create([
+                        models.Note(
                             type='morphology',
                             entry=lexical_entry,
                             value=nmorf,
-                        )
+                        ) for nmorf in nmorfs
+                    ])
 
                 if 'catgrGroup' in data:
                     catgr_groups = (

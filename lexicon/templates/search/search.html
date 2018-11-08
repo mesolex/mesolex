@@ -92,6 +92,11 @@
                         {% if forloop.first %}&nbsp;|&nbsp;
                         <i>{% blocktrans count counter=lexical_entry.compound_roots|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% endif %}{{ root }}{% if not forloop.last %}; {% endif %}
                         {% endfor %}
+
+                        {% for non_native_etymology in lexical_entry.nonnativeetymology_set.all %}
+                        {% if forloop.first %}&nbsp;|&nbsp;
+                        <i>{% blocktrans count counter=lexical_entry.nonnativeetymology_set.all|length %}Palabra con elementos no de náhuat{% plural %}Palabras con elementos no de náhuat{% endblocktrans %}:</i> {% endif %}{{ non_native_etymology.value|link_vnawa|safe }}{% if not forloop.last %}; {% endif %}
+                        {% endfor %}
                     {% endif %}
                 </div>
                 {% for media in lexical_entry.citation_media %}

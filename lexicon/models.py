@@ -14,6 +14,7 @@ class ValidEntryManager(models.Manager):
             'grammargroup_set',
             'category_set',
             'root_set',
+            'nonnativeetymology_set',
             'note_set',
             'sense_set__example_set__quote_set__translations',
         )
@@ -128,6 +129,15 @@ class Variant(AbstractSimpleStringValue):
 
 class Root(AbstractSimpleStringValue):
     # <etym type="root">
+    type = models.CharField(
+        max_length=64,
+        blank=True,
+    )
+
+
+class NonNativeEtymology(AbstractSimpleStringValue):
+    # NOTE: this is specific to the azz dataset's pres_tipoGroup.
+    # <etym type="{type}">{value}</etym>
     type = models.CharField(
         max_length=64,
         blank=True,

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-30 23:11+0000\n"
+"POT-Creation-Date: 2018-11-08 23:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgstr "Equal to"
 msgid "Expresión regular"
 msgstr "Regular expression"
 
-#: lexicon/forms.py:31 lexicon/models.py:31 scratch_space/tei_models.py:196
+#: lexicon/forms.py:31 lexicon/models.py:32 scratch_space/tei_models.py:196
 msgid "Entrada"
 msgstr "Headword"
 
@@ -69,7 +69,7 @@ msgstr "Invalid regular expression."
 msgid "Lee una fuente de datos en XML y actualiza la base de datos."
 msgstr "Reads an XML data source file and updates the database."
 
-#: lexicon/models.py:27 scratch_space/tei_models.py:194
+#: lexicon/models.py:28 scratch_space/tei_models.py:194
 msgid "Identificación única"
 msgstr "Unique ID"
 
@@ -79,8 +79,7 @@ msgstr "Welcome to Mesolex"
 
 #: lexicon/templates/search/home.html:10
 msgid "Recursos lexicosemánticos para lenguas mesoamericanas (en desarrollo)"
-msgstr ""
-"Lexicosemantic resources for Mesoamerican languages (under construction)"
+msgstr "Lexicosemantic resources for Mesoamerican languages (under construction)"
 
 #: lexicon/templates/search/home.html:16
 msgid "Crédito: Ilustración por Inocencio Jiménez Chino"
@@ -125,35 +124,41 @@ msgid_plural "Raízes compuestas"
 msgstr[0] "Composite root"
 msgstr[1] "Composite roots"
 
-#: lexicon/templates/search/search.html:134
+#: lexicon/templates/search/search.html:98
+msgid "Palabra con elementos no de náhuat"
+msgid_plural "Palabras con elementos no de náhuat"
+msgstr[0] "Word with non-Nahuat elements"
+msgstr[1] "Words with non-Nahuat elements"
+
+#: lexicon/templates/search/search.html:139
 msgid "Notas semánticas"
 msgstr "Semantic notes"
 
-#: lexicon/templates/search/search.html:140
+#: lexicon/templates/search/search.html:145
 msgid "Notas morfológicas"
 msgstr "Morphological notes"
 
-#: lexicon/templates/search/search.html:146
+#: lexicon/templates/search/search.html:151
 msgid "Notas gramaticales"
 msgstr "Grammatical notes"
 
-#: lexicon/templates/search/search.html:163
+#: lexicon/templates/search/search.html:168
 msgid "Anterior"
 msgstr "Previous"
 
-#: lexicon/templates/search/search.html:176
+#: lexicon/templates/search/search.html:181
 msgid "Siguiente"
 msgstr "Next"
 
-#: lexicon/templates/search/search.html:188
+#: lexicon/templates/search/search.html:193
 msgid "Resultado no encontrado."
 msgstr "No results found."
 
-#: mesolex/settings/base.py:150
+#: mesolex/settings/base.py:153
 msgid "español"
 msgstr "Spanish"
 
-#: mesolex/settings/base.py:151
+#: mesolex/settings/base.py:154
 #, fuzzy
 #| msgid "inglés"
 msgid "inglés"
