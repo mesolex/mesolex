@@ -116,6 +116,7 @@ def lexicon_search_view(request, *args, **kwargs):
                 ensure_ascii=False,
                 cls=ForceProxyEncoder,
             ),
+            'language': 'azz',  # TODO: multi-language functionality
         })
 
     formset = LexicalSearchFilterFormset()

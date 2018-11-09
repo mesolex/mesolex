@@ -58,18 +58,14 @@
                 <div class="card-header card-header--search">
                     <span class="h5">{{ lexical_entry.lemma }}</span>
 
-                    {% if lexical_entry.variant_set.exists %}
-                    ({% for variant in lexical_entry.variant_set.all %}{{ variant }}{% if not forloop.last %}, {% endif %}{% endfor %})
-                    {% endif %}
-
                     {% if lexical_entry.citation_set.exists %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Citación' %}:</i> {% for citation in lexical_entry.citation_set.all %}{{ citation }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.gloss_set %}, <i>{% trans 'Glosa' %}:</i> {% for gloss in lexical_entry.gloss_set.all %}{{ gloss }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Citación' %}:</i> {% for citation in lexical_entry.citation_set.all %}{{ citation }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.variant_set.exists %}, <i>{% trans 'Formas alt.' %}:</i> {% for variant in lexical_entry.variant_set.all %}{{ variant }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.gloss_set %}, <i>{% trans 'Glosa' %}:</i> {% for gloss in lexical_entry.gloss_set.all %}{{ gloss }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
                     {% if lexical_entry.grammargroup_set.exists %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Categoría gramatical' %}:</i> {% for grammar_group in lexical_entry.grammargroup_set.all %}{{ grammar_group.part_of_speech|link_part_of_speech|safe }}{% if grammar_group.inflectional_type %}; <i>{% trans 'Inflexión' %}:</i> {{ grammar_group.inflectional_type|link_inflectional_type|safe }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Categoría gramatical' %}:</i> {% for grammar_group in lexical_entry.grammargroup_set.all %}{{ grammar_group.part_of_speech|link_part_of_speech:language|safe }}{% if grammar_group.inflectional_type %}; <i>{% trans 'Inflexión' %}:</i> {{ grammar_group.inflectional_type|link_inflectional_type:language|safe }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
                     {% if lexical_entry.category_set.exists %}
@@ -91,6 +87,11 @@
                         {% for root in lexical_entry.compound_roots %}
                         {% if forloop.first %}&nbsp;|&nbsp;
                         <i>{% blocktrans count counter=lexical_entry.compound_roots|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% endif %}{{ root }}{% if not forloop.last %}; {% endif %}
+                        {% endfor %}
+
+                        {% for non_native_etymology in lexical_entry.nonnativeetymology_set.all %}
+                        {% if forloop.first %}&nbsp;|&nbsp;
+                        <i>{% blocktrans count counter=lexical_entry.nonnativeetymology_set.all|length %}Palabra con elementos no de náhuat{% plural %}Palabras con elementos no de náhuat{% endblocktrans %}:</i> {% endif %}{{ non_native_etymology.value|link_vnawa|safe }}{% if not forloop.last %}; {% endif %}
                         {% endfor %}
                     {% endif %}
                 </div>

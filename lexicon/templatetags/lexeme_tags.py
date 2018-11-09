@@ -1,10 +1,22 @@
 import re
 
 from django import template
+from django.conf import settings
 from django.urls import reverse
 from django.utils.http import urlquote
 
 register = template.Library()
+
+
+# Translates the key-value pairs found within the LANGUAGE_CONFIGURATION
+# setting into a dictionary, allowing easy lookup of human-readable
+# forms for display.
+LANGUAGE_CATEGORIES_LOOKUPS = {
+    language: {
+        category: dict(key_val_pairs)
+        for (category, key_val_pairs, ) in category_dict.items()
+    } for (language, category_dict, ) in settings.LANGUAGE_CONFIGURATION.items()
+}
 
 
 @register.filter()
@@ -27,6 +39,24 @@ def _get_querystring(form, filter_on='lemma'):
         "&form-0-filter_on=%s"
         "&form-0-filter=exactly_equals"
     ) % (form, filter_on)
+
+
+def _get_human_readable(language, category, item):
+    """
+    Traverse LANGUAGE_CATEGORIES_LOOKUPS to find the human-readable
+    equivalent of ``item``. If it's not found, default to returning
+    ``item`` itself.
+    """
+    return LANGUAGE_CATEGORIES_LOOKUPS.get(
+        language,
+        {},
+    ).get(
+        category,
+        {},
+    ).get(
+        item,
+        item,
+    )
 
 
 @register.filter()
@@ -60,18 +90,18 @@ def link_category(category):
 
 
 @register.filter()
-def link_part_of_speech(pos):
+def link_part_of_speech(pos, language='azz'):
     return '<a href="%s%s" class="pos">%s</a>' % (
         reverse('lexicon_search'),
         _get_querystring(urlquote(pos), filter_on='part_of_speech'),
-        pos,
+        _get_human_readable(language, 'part_of_speech', pos),
     )
 
 
 @register.filter()
-def link_inflectional_type(it):
+def link_inflectional_type(it, language='azz'):
     return '<a href="%s%s" class="it">%s</a>' % (
         reverse('lexicon_search'),
         _get_querystring(urlquote(it), filter_on='inflectional_type'),
-        it,
+        _get_human_readable(language, 'inflectional_type', it),
     )
