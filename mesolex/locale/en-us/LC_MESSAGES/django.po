@@ -121,8 +121,8 @@ msgstr[1] "Roots"
 #| msgid "Raíz compuesta"
 msgid "Raíz compuesta"
 msgid_plural "Raízes compuestas"
-msgstr[0] "Composite root"
-msgstr[1] "Composite roots"
+msgstr[0] "Compound stem"
+msgstr[1] "Compound stems"
 
 #: lexicon/templates/search/search.html:98
 msgid "Palabra con elementos no de náhuat"
