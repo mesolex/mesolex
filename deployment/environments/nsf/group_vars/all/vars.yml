@@ -1,9 +1,9 @@
 ---
 env_name: nsf
 repo_branch: nsf
-domain: ga.mesolex.org
+domain: qa.mesolex.org
 letsencrypt_domains:
-  - ga.mesolex.org
+  - qa.mesolex.org
 
 cert_source: letsencrypt
 force_ssl: true
