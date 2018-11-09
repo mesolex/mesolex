@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-08 23:55+0000\n"
+"POT-Creation-Date: 2018-11-09 00:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,7 +41,7 @@ msgstr "Regular expression"
 msgid "Entrada"
 msgstr "Headword"
 
-#: lexicon/forms.py:32 lexicon/templates/search/search.html:67
+#: lexicon/forms.py:32 lexicon/templates/search/search.html:63
 msgid "Glosa"
 msgstr "Gloss"
 
@@ -49,15 +49,15 @@ msgstr "Gloss"
 msgid "Raiz"
 msgstr "Root"
 
-#: lexicon/forms.py:34 lexicon/templates/search/search.html:77
+#: lexicon/forms.py:34 lexicon/templates/search/search.html:73
 msgid "Campo semántico"
 msgstr "Semantic field"
 
-#: lexicon/forms.py:35 lexicon/templates/search/search.html:72
+#: lexicon/forms.py:35 lexicon/templates/search/search.html:68
 msgid "Categoría gramatical"
 msgstr "Grammatical category"
 
-#: lexicon/forms.py:36 lexicon/templates/search/search.html:72
+#: lexicon/forms.py:36 lexicon/templates/search/search.html:68
 msgid "Inflexión"
 msgstr "Inflection"
 
@@ -102,21 +102,25 @@ msgstr "Add filter"
 msgid "%(num_entries)s resultados (página %(page)s de %(num_pages)s)"
 msgstr "%(num_entries)s results (page %(page)s of %(num_pages)s)"
 
-#: lexicon/templates/search/search.html:67
+#: lexicon/templates/search/search.html:63
 msgid "Citación"
 msgstr "Citation"
 
-#: lexicon/templates/search/search.html:83
+#: lexicon/templates/search/search.html:63
+msgid "Formas alt."
+msgstr "Alt. forms"
+
+#: lexicon/templates/search/search.html:79
 msgid "Etimología"
 msgstr "Etymology"
 
-#: lexicon/templates/search/search.html:87
+#: lexicon/templates/search/search.html:83
 msgid "Raíz"
 msgid_plural "Raízes"
 msgstr[0] "Root"
 msgstr[1] "Roots"
 
-#: lexicon/templates/search/search.html:93
+#: lexicon/templates/search/search.html:89
 #, fuzzy
 #| msgid "Raíz compuesta"
 msgid "Raíz compuesta"
@@ -124,33 +128,33 @@ msgid_plural "Raízes compuestas"
 msgstr[0] "Compound stem"
 msgstr[1] "Compound stems"
 
-#: lexicon/templates/search/search.html:98
+#: lexicon/templates/search/search.html:94
 msgid "Palabra con elementos no de náhuat"
 msgid_plural "Palabras con elementos no de náhuat"
 msgstr[0] "Word with non-Nahuat elements"
 msgstr[1] "Words with non-Nahuat elements"
 
-#: lexicon/templates/search/search.html:139
+#: lexicon/templates/search/search.html:135
 msgid "Notas semánticas"
 msgstr "Semantic notes"
 
-#: lexicon/templates/search/search.html:145
+#: lexicon/templates/search/search.html:141
 msgid "Notas morfológicas"
 msgstr "Morphological notes"
 
-#: lexicon/templates/search/search.html:151
+#: lexicon/templates/search/search.html:147
 msgid "Notas gramaticales"
 msgstr "Grammatical notes"
 
-#: lexicon/templates/search/search.html:168
+#: lexicon/templates/search/search.html:164
 msgid "Anterior"
 msgstr "Previous"
 
-#: lexicon/templates/search/search.html:181
+#: lexicon/templates/search/search.html:177
 msgid "Siguiente"
 msgstr "Next"
 
-#: lexicon/templates/search/search.html:193
+#: lexicon/templates/search/search.html:189
 msgid "Resultado no encontrado."
 msgstr "No results found."
 
