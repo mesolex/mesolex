@@ -1,6 +1,7 @@
+import logging
+
 from dateutil.parser import parse
 import xml.etree.ElementTree as ET
-from xmljson import parker as xml_parser
 
 from django.core.management.base import BaseCommand
 from django.utils.translation import gettext as _
@@ -8,11 +9,41 @@ from django.utils.translation import gettext as _
 from lexicon import models
 
 
+logger = logging.getLogger(__name__)
+
+
 class Command(BaseCommand):
     help = _("Lee una fuente de datos en XML y actualiza la base de datos.")
 
     def add_arguments(self, parser):
         parser.add_argument('input', type=str)
+
+    def create_simple_string_instances(
+        self,
+        lx_group,
+        tag,
+        model_class,
+        lexical_entry,
+        additional_lookups={},
+        additional_args={},
+    ):
+        elements = lx_group.findall(tag)
+        model_class.objects.filter(
+            entry=lexical_entry,
+            **additional_lookups
+        ).delete()
+        try:
+            model_class.objects.bulk_create([
+                model_class(
+                    entry=lexical_entry,
+                    value=element.text,
+                    **additional_args
+                ) for element in elements
+            ])
+        except Exception as e:
+            logger.exception(
+                "Failed to create %s for lexical entry with ref %s, lx %s:\n%s" % (model_class._meta.verbose_name, lexical_entry._id, lexical_entry.lemma, e,)
+            )
 
     def handle(self, *args, **options):
         input = options['input']
@@ -22,279 +53,237 @@ class Command(BaseCommand):
 
         updated_entries = 0
         added_entries = 0
-        errors = 0
-        error_messages = []
 
-        for lx_group in root.getchildren():
+        for lx_group in root.findall('lxGroup'):
             (lexical_entry, created, ) = (None, None, )
+            entry_kwargs = {}
+            defaults = {}
+
+            ref = lx_group.find('ref')
+            if ref is None:
+                return False  # ref is obligatory
+            entry_kwargs['_id'] = ref.text
+
+            lx = lx_group.find('lx')
+            if lx is None:
+                return False  # lx is obligatory
+            entry_kwargs['lemma'] = lx.text
+
             try:
-                data = xml_parser.data(lx_group)
-
-                entry_kwargs = {}
-                defaults = {}
-
-                if 'ref' not in data:
-                    return False  # ref is obligatory
-                if isinstance(data['ref'], list):
-                    entry_kwargs['_id'] = data['ref'][0]
-                else:
-                    entry_kwargs['_id'] = data['ref']
-
-                if 'lx' not in data:
-                    return False  # lx is obligatory
-                if isinstance(data['lx'], list):
-                    entry_kwargs['lemma'] = data['lx'][0]
-                else:
-                    entry_kwargs['lemma'] = data['lx']
-
-                if 'dt' in data:
-                    defaults['date'] = parse(
-                        data['dt'][0] if isinstance(data['dt'], list) else data['dt']
-                    )
-
-                (lexical_entry, created, ) = models.LexicalEntry.objects.update_or_create(
-                    **entry_kwargs,
-                    defaults=defaults,
+                dt = lx_group.find('dt')
+                defaults['date'] = parse(dt.text) if (dt is not None) else None
+            except Exception as e:
+                logger.exception(
+                    "Failed to parse date in entry with ref %s, lx %s: %s" % (ref.text, lx.text, e,)
                 )
 
-                if 'lx_var' in data:
-                    lx_vars = data['lx_var'] if isinstance(data['lx_var'], list) else [data['lx_var']]
-                    models.Geo.objects.filter(
-                        entry=lexical_entry,
-                    ).delete()
-                    models.Geo.objects.bulk_create([
-                        models.Geo(
-                            entry=lexical_entry,
-                            value=lx_var,
-                        ) for lx_var in lx_vars
-                    ])
-
-                if 'lx_cita' in data:
-                    lx_citas = data['lx_cita'] if isinstance(data['lx_cita'], list) else [data['lx_cita']]
-                    models.Citation.objects.filter(
-                        entry=lexical_entry,
-                    ).delete()
-                    models.Citation.objects.bulk_create([
-                        models.Citation(
-                            entry=lexical_entry,
-                            value=lx_cita,
-                        ) for lx_cita in lx_citas
-                    ])
-
-                if 'lx_alt' in data:
-                    lx_alts = data['lx_alt'] if isinstance(data['lx_alt'], list) else [data['lx_alt']]
-                    models.Variant.objects.filter(
-                        entry=lexical_entry,
-                    ).delete()
-                    models.Variant.objects.bulk_create([
-                        models.Variant(
-                            entry=lexical_entry,
-                            value=lx_alt,
-                        ) for lx_alt in lx_alts
-                    ])
-
-                if 'sem' in data:
-                    sems = data['sem'] if isinstance(data['sem'], list) else [data['sem']]
-                    models.Category.objects.filter(
-                        entry=lexical_entry,
-                    ).delete()
-                    models.Category.objects.bulk_create([
-                        models.Category(
-                            entry=lexical_entry,
-                            value=sem,
-                        ) for sem in sems
-                    ])
-
-                if 'raiz' in data:
-                    raizs = data['raiz'] if isinstance(data['raiz'], list) else [data['raiz']]
-                    models.Root.objects.filter(
-                        entry=lexical_entry,
-                    ).delete()
-                    models.Root.objects.bulk_create([
-                        models.Root(
-                            entry=lexical_entry,
-                            value=raiz,
-                        ) for raiz in raizs
-                    ])
-
-                if 'raiz2' in data:
-                    raiz2s = data['raiz2'] if isinstance(data['raiz2'], list) else [data['raiz2']]
-                    models.Root.objects.filter(
-                        entry=lexical_entry,
-                        type='compound',
-                    ).delete()
-                    models.Root.objects.bulk_create([
-                        models.Root(
-                            entry=lexical_entry,
-                            value=raiz2,
-                            type='compound',
-                        ) for raiz2 in raiz2s
-                    ])
-
-                if 'pres_tipoGroup' in data:
-                    pres_tipo_groups = data['pres_tipoGroup'] if isinstance(data['pres_tipoGroup'], list) else [data['pres_tipoGroup']]
-                    models.NonNativeEtymology.objects.filter(
-                        entry=lexical_entry,
-                    ).delete()
-                    models.NonNativeEtymology.objects.bulk_create([
-                        models.NonNativeEtymology(
-                            type=pres_tipo_group['pres_tipo'],
-                            value=pres_tipo_group['pres_el'],
-                            entry=lexical_entry,
-                        )
-                        for pres_tipo_group in pres_tipo_groups
-                        if 'pres_tipo' in pres_tipo_group and 'pres_el' in pres_tipo_group
-                    ])
-
-                if 'glosa' in data:
-                    glosas = data['glosa'] if isinstance(data['glosa'], list) else [data['glosa']]
-                    models.Gloss.objects.filter(
-                        entry=lexical_entry,
-                    ).delete()
-                    models.Gloss.objects.bulk_create([
-                        models.Gloss(
-                            entry=lexical_entry,
-                            value=glosa,
-                        ) for glosa in glosas
-                    ])
-
-                if 'nota' in data:
-                    notas = data['nota'] if isinstance(data['nota'], list) else [data['nota']]
-                    models.Note.objects.filter(
-                        type='note',
-                        entry=lexical_entry,
-                    ).delete()
-                    models.Note.objects.bulk_create([
-                        models.Note(
-                            type='note',
-                            entry=lexical_entry,
-                            value=nota,
-                        ) for nota in notas
-                    ])
-
-                if 'nsem' in data:
-                    nsems = data['nsem'] if isinstance(data['nsem'], list) else [data['nsem']]
-                    models.Note.objects.filter(
-                        type='semantics',
-                        entry=lexical_entry,
-                    ).delete()
-                    models.Note.objects.bulk_create([
-                        models.Note(
-                            type='semantics',
-                            entry=lexical_entry,
-                            value=nsem,
-                        ) for nsem in nsems
-                    ])
-
-                if 'nmorf' in data:
-                    nmorfs = data['nmorf'] if isinstance(data['nmorf'], list) else [data['nmorf']]
-                    models.Note.objects.filter(
-                        type='morphology',
-                        entry=lexical_entry,
-                    ).delete()
-                    models.Note.objects.bulk_create([
-                        models.Note(
-                            type='morphology',
-                            entry=lexical_entry,
-                            value=nmorf,
-                        ) for nmorf in nmorfs
-                    ])
-
-                if 'catgrGroup' in data:
-                    catgr_groups = (
-                        data['catgrGroup']
-                        if isinstance(data['catgrGroup'], list)
-                        else [data['catgrGroup']]
-                    )
-                    models.GrammarGroup.objects.filter(
-                        entry=lexical_entry,
-                    ).delete()
-                    for catgr_group in catgr_groups:
-                        catgr_group_kwargs = {}
-                        misc_data = {}
-
-                        if 'catgr' in catgr_group:
-                            catgr_group_kwargs['part_of_speech'] = catgr_group['catgr']
-
-                        if 'inflGroup' in catgr_group:
-                            infl_group = catgr_group['inflGroup']
-                            if 'infl' in infl_group:
-                                catgr_group_kwargs['inflectional_type'] = infl_group['infl']
-
-                            if 'plural' in infl_group:
-                                misc_data['plural'] = infl_group['plural']
-
-                        if 'diag' in catgr_group:
-                            misc_data['diag'] = catgr_group['diag']
-
-                        models.GrammarGroup.objects.create(
-                            entry=lexical_entry,
-                            misc_data=misc_data,
-                            **catgr_group_kwargs,
-                        )
-
-                if 'sigGroup' in data:
-                    sig_groups = data['sigGroup'] if isinstance(data['sigGroup'], list) else [data['sigGroup']]
-                    models.Sense.objects.filter(
-                        entry=lexical_entry,
-                    ).delete()
-                    for i, sig_group in enumerate(sig_groups):
-                        sig_group_kwargs = {}
-                        if 'sig' in sig_group:
-                            sig_group_kwargs['definition'] = sig_group['sig']
-                        if 'sig_var' in sig_group:
-                            sig_group_kwargs['geo'] = sig_group['sig_var']
-                        sense = models.Sense.objects.create(
-                            entry=lexical_entry,
-                            order=i,
-                            **sig_group_kwargs,
-                        )
-
-                        if 'fr_nGroup' in sig_group:
-                            fr_n_groups = (
-                                sig_group['fr_nGroup']
-                                if isinstance(sig_group['fr_nGroup'], list)
-                                else [sig_group['fr_nGroup']]
-                            )
-                            for j, fr_n_group in enumerate(fr_n_groups):
-                                example_kwargs = {}
-                                if 'fr_var' in fr_n_group:
-                                    example_kwargs['geo'] = fr_n_group['fr_var']
-                                example = models.Example.objects.create(
-                                    sense=sense,
-                                    order=j,
-                                    **example_kwargs
-                                )
-
-                                if 'fr_n' in fr_n_group:
-                                    azz = models.Quote.objects.create(
-                                        example=example,
-                                        language='azz',
-                                        text=fr_n_group['fr_n']
-                                    )
-
-                                if 'fr_e' in fr_n_group:
-                                    models.Quote.objects.create(
-                                        example=example,
-                                        translation_of=azz,
-                                        language='es',
-                                        text=fr_n_group['fr_e']
-                                    )
-
-                if created:
-                    self.stdout.write('.', ending='')
-                    added_entries += 1
-                else:
-                    self.stdout.write('u', ending='')
-                    updated_entries += 1
+            try:
+                (lexical_entry, created, ) = models.LexicalEntry.objects.update_or_create(
+                    defaults=defaults,
+                    **entry_kwargs
+                )
             except Exception as e:
-                self.stdout.write('E', ending='')
-                errors += 1
-                error_messages.append(str(e))
+                logger.exception(
+                    "Failed to create entry with ref %s, lx %s: %s" % (ref.text, lx.text, e,)
+                )
 
-        if error_messages:
-            self.stderr.write('\n\n'.join(error_messages))
+            self.create_simple_string_instances(
+                lx_group,
+                'lx_var',
+                models.Geo,
+                lexical_entry,
+            )
 
-        self.stdout.write('\n\nTOTAL: %s added, %s updated, %s errors' % (
-            added_entries, updated_entries, errors,
+            self.create_simple_string_instances(
+                lx_group,
+                'lx_cita',
+                models.Citation,
+                lexical_entry,
+            )
+
+            self.create_simple_string_instances(
+                lx_group,
+                'lx_alt',
+                models.Variant,
+                lexical_entry,
+            )
+
+            self.create_simple_string_instances(
+                lx_group,
+                'sem',
+                models.Category,
+                lexical_entry,
+            )
+
+            self.create_simple_string_instances(
+                lx_group,
+                'raiz',
+                models.Root,
+                lexical_entry,
+            )
+
+            self.create_simple_string_instances(
+                lx_group,
+                'raiz2',
+                models.Root,
+                lexical_entry,
+                additional_lookups={
+                    'type': 'compound',
+                },
+                additional_args={
+                    'type': 'compound',
+                },
+            )
+
+            self.create_simple_string_instances(
+                lx_group,
+                'glosa',
+                models.Gloss,
+                lexical_entry,
+            )
+
+            self.create_simple_string_instances(
+                lx_group,
+                'nota',
+                models.Note,
+                lexical_entry,
+                additional_lookups={
+                    'type': 'note',
+                },
+                additional_args={
+                    'type': 'note',
+                },
+            )
+
+            self.create_simple_string_instances(
+                lx_group,
+                'nsem',
+                models.Note,
+                lexical_entry,
+                additional_lookups={
+                    'type': 'semantics',
+                },
+                additional_args={
+                    'type': 'semantics',
+                },
+            )
+
+            self.create_simple_string_instances(
+                lx_group,
+                'nmorf',
+                models.Note,
+                lexical_entry,
+                additional_lookups={
+                    'type': 'morphology',
+                },
+                additional_args={
+                    'type': 'morphology',
+                },
+            )
+
+            pres_tipo_groups = lx_group.findall('pres_tipoGroup')
+            models.NonNativeEtymology.objects.filter(
+                entry=lexical_entry,
+            ).delete()
+            models.NonNativeEtymology.objects.bulk_create([
+                models.NonNativeEtymology(
+                    type=pres_tipo_group.find('pres_tipo').text,
+                    value=pres_tipo_group.find('pres_el').text,
+                    entry=lexical_entry,
+                )
+                for pres_tipo_group in pres_tipo_groups
+                if pres_tipo_group.find('pres_tipo') is not None and pres_tipo_group.find('pres_el') is not None
+            ])
+
+            catgr_groups = lx_group.findall('catgrGroup')
+            models.GrammarGroup.objects.filter(
+                entry=lexical_entry,
+            ).delete()
+            for catgr_group in catgr_groups:
+                catgr_group_kwargs = {}
+                misc_data = {}
+
+                catgr = catgr_group.find('catgr')
+                if catgr is not None:
+                    catgr_group_kwargs['part_of_speech'] = catgr.text
+
+                infl_group = catgr_group.find('inflGroup')
+                if infl_group is not None:
+                    infl = infl_group.find('infl')
+                    if infl is not None:
+                        catgr_group_kwargs['inflectional_type'] = infl.text
+
+                    plural = infl_group.find('plural')
+                    if plural is not None:
+                        misc_data['plural'] = plural.text
+
+                diag = catgr_group.find('diag')
+                if diag is not None:
+                    misc_data['diag'] = diag.text
+
+                models.GrammarGroup.objects.create(
+                    entry=lexical_entry,
+                    misc_data=misc_data,
+                    **catgr_group_kwargs
+                )
+
+            sig_groups = lx_group.findall('sigGroup')
+            models.Sense.objects.filter(
+                entry=lexical_entry,
+            ).delete()
+            for i, sig_group in enumerate(sig_groups):
+                sig_group_kwargs = {}
+
+                sig = sig_group.find('sig')
+                if sig is not None:
+                    sig_group_kwargs['definition'] = sig.text
+
+                sig_var = sig_group.find('sig_var')
+                if sig_var is not None:
+                    sig_group_kwargs['geo'] = sig_var.text
+
+                sense = models.Sense.objects.create(
+                    entry=lexical_entry,
+                    order=i,
+                    **sig_group_kwargs
+                )
+
+                fr_n_groups = sig_group.findall('fr_nGroup')
+                for j, fr_n_group in enumerate(fr_n_groups):
+                    example_kwargs = {}
+
+                    fr_var = fr_n_group.find('fr_var')
+                    if fr_var is not None:
+                        example_kwargs['geo'] = fr_var.text
+
+                    example = models.Example.objects.create(
+                        sense=sense,
+                        order=j,
+                        **example_kwargs
+                    )
+
+                    fr_n = fr_n_group.find('fr_n')
+                    if fr_n is not None:
+                        azz = models.Quote.objects.create(
+                            example=example,
+                            language='azz',
+                            text=fr_n.text
+                        )
+
+                    fr_e = fr_n_group.find('fr_e')
+                    if fr_e is not None:
+                        models.Quote.objects.create(
+                            example=example,
+                            translation_of=azz,
+                            language='es',
+                            text=fr_e.text
+                        )
+
+            if created:
+                added_entries += 1
+            else:
+                updated_entries += 1
+
+        self.stdout.write('\n\nTOTAL: %s added, %s updated' % (
+            added_entries, updated_entries,
         ))
