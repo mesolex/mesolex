@@ -9,11 +9,18 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'hlm&v%v5685+3@5kz359#3dla==vccyz$8fs!
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
         'file': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
             'filename': 'log/error.log',
+            'formatter': 'verbose',
         },
     },
     'loggers': {

@@ -58,7 +58,10 @@ class Command(BaseCommand):
         updated_entries = 0
         added_entries = 0
 
-        for i, lx_group in enumerate(root.findall('lxGroup')):
+        lx_groups = root.findall('lxGroup')
+        total = len(lx_groups)
+
+        for i, lx_group in enumerate(lx_groups):
             (lexical_entry, created, ) = (None, None, )
             entry_kwargs = {}
             defaults = {}
@@ -341,6 +344,8 @@ class Command(BaseCommand):
             else:
                 updated_entries += 1
 
-        self.stdout.write('\n\nTOTAL: %s added, %s updated' % (
-            added_entries, updated_entries,
+        self.stdout.write('\n\nTOTAL: {add} added, {up} updated, {miss} missed'.format(
+            add=added_entries,
+            up=updated_entries,
+            miss=(total - added_entries - updated_entries),
         ))
