@@ -2,7 +2,7 @@ import logging
 
 from django import template
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 register = template.Library()
 
 
