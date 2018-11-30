@@ -40,9 +40,13 @@ class Command(BaseCommand):
                     **additional_args
                 ) for element in elements
             ])
-        except Exception as e:
+        except:
             logger.exception(
-                "Failed to create %s for lexical entry with ref %s, lx %s:\n%s" % (model_class._meta.verbose_name, lexical_entry._id, lexical_entry.lemma, e,)
+                "Failed to create {model} for lexical entry with ref {ref}, lx {lx}".format(
+                    model=model_class._meta.verbose_name,
+                    ref=lexical_entry._id,
+                    lx=lexical_entry.lemma,
+                )
             )
 
     def handle(self, *args, **options):
@@ -54,27 +58,32 @@ class Command(BaseCommand):
         updated_entries = 0
         added_entries = 0
 
-        for lx_group in root.findall('lxGroup'):
+        for i, lx_group in enumerate(root.findall('lxGroup')):
             (lexical_entry, created, ) = (None, None, )
             entry_kwargs = {}
             defaults = {}
 
             ref = lx_group.find('ref')
             if ref is None:
-                return False  # ref is obligatory
+                logger.error('No ref found for lxGroup at index {i}'.format(i=i))
+                continue
             entry_kwargs['_id'] = ref.text
 
             lx = lx_group.find('lx')
             if lx is None:
-                return False  # lx is obligatory
+                logger.error('No lx found for lxGroup at index {i}'.format(i=i))
+                continue
             entry_kwargs['lemma'] = lx.text
 
             try:
                 dt = lx_group.find('dt')
                 defaults['date'] = parse(dt.text) if (dt is not None) else None
-            except Exception as e:
+            except:
                 logger.exception(
-                    "Failed to parse date in entry with ref %s, lx %s: %s" % (ref.text, lx.text, e,)
+                    "Failed to parse date in entry with ref {ref}, lx {lx}".format(
+                        ref=ref.text,
+                        lx=lx.text,
+                    )
                 )
 
             try:
@@ -82,9 +91,12 @@ class Command(BaseCommand):
                     defaults=defaults,
                     **entry_kwargs
                 )
-            except Exception as e:
+            except:
                 logger.exception(
-                    "Failed to create entry with ref %s, lx %s: %s" % (ref.text, lx.text, e,)
+                    "Failed to create entry with ref {ref}, lx {lx}".format(
+                        ref=ref.text,
+                        lx=lx.text,
+                    )
                 )
 
             self.create_simple_string_instances(
@@ -185,15 +197,24 @@ class Command(BaseCommand):
             models.NonNativeEtymology.objects.filter(
                 entry=lexical_entry,
             ).delete()
-            models.NonNativeEtymology.objects.bulk_create([
-                models.NonNativeEtymology(
-                    type=pres_tipo_group.find('pres_tipo').text,
-                    value=pres_tipo_group.find('pres_el').text,
-                    entry=lexical_entry,
+            try:
+                models.NonNativeEtymology.objects.bulk_create([
+                    models.NonNativeEtymology(
+                        type=pres_tipo_group.find('pres_tipo').text,
+                        value=pres_tipo_group.find('pres_el').text,
+                        entry=lexical_entry,
+                    )
+                    for pres_tipo_group in pres_tipo_groups
+                    if pres_tipo_group.find('pres_tipo') is not None and pres_tipo_group.find('pres_el') is not None
+                ])
+            except:
+                logger.exception(
+                    "Failed to create {model} for lexical entry with ref {ref}, lx {lx}".format(
+                        model=models.NonNativeEtymology._meta.verbose_name,
+                        ref=lexical_entry._id,
+                        lx=lexical_entry.lemma,
+                    )
                 )
-                for pres_tipo_group in pres_tipo_groups
-                if pres_tipo_group.find('pres_tipo') is not None and pres_tipo_group.find('pres_el') is not None
-            ])
 
             catgr_groups = lx_group.findall('catgrGroup')
             models.GrammarGroup.objects.filter(
@@ -221,11 +242,20 @@ class Command(BaseCommand):
                 if diag is not None:
                     misc_data['diag'] = diag.text
 
-                models.GrammarGroup.objects.create(
-                    entry=lexical_entry,
-                    misc_data=misc_data,
-                    **catgr_group_kwargs
-                )
+                try:
+                    models.GrammarGroup.objects.create(
+                        entry=lexical_entry,
+                        misc_data=misc_data,
+                        **catgr_group_kwargs
+                    )
+                except:
+                    logger.exception(
+                        "Failed to create {model} for lexical entry with ref {ref}, lx {lx}".format(
+                            model=models.GrammarGroup._meta.verbose_name,
+                            ref=lexical_entry._id,
+                            lx=lexical_entry.lemma,
+                        )
+                    )
 
             sig_groups = lx_group.findall('sigGroup')
             models.Sense.objects.filter(
@@ -242,11 +272,20 @@ class Command(BaseCommand):
                 if sig_var is not None:
                     sig_group_kwargs['geo'] = sig_var.text
 
-                sense = models.Sense.objects.create(
-                    entry=lexical_entry,
-                    order=i,
-                    **sig_group_kwargs
-                )
+                try:
+                    sense = models.Sense.objects.create(
+                        entry=lexical_entry,
+                        order=i,
+                        **sig_group_kwargs
+                    )
+                except:
+                    logger.exception(
+                        "Failed to create {model} for lexical entry with ref {ref}, lx {lx}".format(
+                            model=models.Sense._meta.verbose_name,
+                            ref=lexical_entry._id,
+                            lx=lexical_entry.lemma,
+                        )
+                    )
 
                 fr_n_groups = sig_group.findall('fr_nGroup')
                 for j, fr_n_group in enumerate(fr_n_groups):
@@ -264,20 +303,38 @@ class Command(BaseCommand):
 
                     fr_n = fr_n_group.find('fr_n')
                     if fr_n is not None:
-                        azz = models.Quote.objects.create(
-                            example=example,
-                            language='azz',
-                            text=fr_n.text
-                        )
+                        try:
+                            azz = models.Quote.objects.create(
+                                example=example,
+                                language='azz',
+                                text=fr_n.text
+                            )
+                        except:
+                            logger.exception(
+                                "Failed to create {model} for lexical entry with ref {ref}, lx {lx}".format(
+                                    model=models.Quote._meta.verbose_name,
+                                    ref=lexical_entry._id,
+                                    lx=lexical_entry.lemma,
+                                )
+                            )
 
                     fr_e = fr_n_group.find('fr_e')
                     if fr_e is not None:
-                        models.Quote.objects.create(
-                            example=example,
-                            translation_of=azz,
-                            language='es',
-                            text=fr_e.text
-                        )
+                        try:
+                            models.Quote.objects.create(
+                                example=example,
+                                translation_of=azz,
+                                language='es',
+                                text=fr_e.text
+                            )
+                        except:
+                            logger.exception(
+                                "Failed to create {model} for lexical entry with ref {ref}, lx {lx}".format(
+                                    model=models.Quote._meta.verbose_name,
+                                    ref=lexical_entry._id,
+                                    lx=lexical_entry.lemma,
+                                )
+                            )
 
             if created:
                 added_entries += 1
