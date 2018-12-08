@@ -10,6 +10,7 @@ import SearchForm from './search-form';
 
 export default class SearchFormSet extends React.Component {
   static propTypes = {
+    formsetConfig: PropTypes.shape.isRequired,
     formsetData: PropTypes.shape.isRequired,
     formsetErrors: PropTypes.shape.isRequired,
     languageConfiguration: PropTypes.shape.isRequired,
@@ -170,6 +171,7 @@ export default class SearchFormSet extends React.Component {
             <SearchForm
               i={i}
               key={uniqueId}
+              config={this.props.formsetConfig}
               dataset={this.state.formsetIndexedDatasets[uniqueId]}
               errors={this.state.formsetIndexedErrors[uniqueId]}
               onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}

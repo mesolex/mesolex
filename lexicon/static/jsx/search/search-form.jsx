@@ -15,6 +15,7 @@ import {
 
 const SearchForm = ({
   i,
+  config,
   dataset,
   errors,
   onChangeFieldFrom,
@@ -127,12 +128,11 @@ const SearchForm = ({
           value={dataset.filter_on}
           onChange={onChangeFieldFrom('filter_on')}
         >
-          <option value="lemma">{`${gettext('entrada')}`}</option>
-          <option value="gloss">{`${gettext('glosa')}`}</option>
-          <option value="root">{`${gettext('raiz')}`}</option>
-          <option value="category">{`${gettext('campo semántico')}`}</option>
-          <option value="part_of_speech">{`${gettext('categoría gramatical')}`}</option>
-          <option value="inflectional_type">{`${gettext('inflexión')}`}</option>
+          {
+            (config.filterable_fields || []).map(([value, readableName]) => (
+              <option value={value}>{readableName}</option>
+            ))
+          }
         </select>
 
         <FilterSelector

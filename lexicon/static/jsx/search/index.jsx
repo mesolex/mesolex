@@ -12,6 +12,7 @@ const AUDIO_PLAYER_SELECTOR = 'lexical-entry-audio';
 
 window.onload = () => {
   const {
+    formset_config: formsetConfig,
     formset_data: formsetData,
     formset_errors: formsetErrors,
     language_configuration: languageConfiguration,
@@ -21,6 +22,7 @@ window.onload = () => {
     <SearchFormSet
       formsetData={formsetData}
       formsetErrors={formsetErrors}
+      formsetConfig={formsetConfig}
       languageConfiguration={languageConfiguration}
     />,
     document.querySelector('#search-form'),
