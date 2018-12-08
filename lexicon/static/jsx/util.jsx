@@ -1,46 +1,15 @@
 /* global gettext */
 import _ from 'lodash';
 
-import { CONTROLLED_VOCABULARY_FIELD_INDEX } from './constants';
-
 /*
-  Predicate to determine whether the combination of a field-name
-  and a value corresponds to a controlled vocabulary item.
-
-  For example. `isControlled('filter_on', 'part_of_speech') === true`
-  because "part of speech", as a value of the "filter on" form field,
-  does indeed refer to a controlled vocabulary (noun, intransitive verb,
-  etc).
+  Returns a predicate to determine whether a value corresponds
+  to a controlled vocabulary item for `filter_on`.
 */
-export const isControlled = (field, value) => (
-  _.includes(_.keys(CONTROLLED_VOCABULARY_FIELD_INDEX), field) &&
-  _.includes(CONTROLLED_VOCABULARY_FIELD_INDEX[field], value)
-);
-
-/*
-  Helper function to more easily display the human-readable
-  equivalent of some "filter on" value.
-
-  Used inside humanReadableFilters.
-*/
-const humanReadableFilterOn = (filterOn) => {
-  switch (filterOn) {
-    case 'lemma':
-      return gettext('entrada');
-    case 'gloss':
-      return gettext('glosa');
-    case 'root':
-      return gettext('raiz');
-    case 'category':
-      return gettext('campo semántico');
-    case 'part_of_speech':
-      return gettext('categoría gramatical');
-    case 'inflectional_type':
-      return gettext('inflexión');
-    default:
-      return gettext('entrada');
-  }
+export const controlledVocabCheck = (controlledVocabFields) => {
+  const keys = _.keys(controlledVocabFields);
+  return value => _.includes(keys, value);
 };
+
 
 /*
   Helper to render the text displayed above the input row.
@@ -51,6 +20,7 @@ export const humanReadableFilters = ({
   filterOn,
   filter,
   vln,
+  filterableFields,
 }) => {
   const initOpDict = {
     and: '',
@@ -71,5 +41,6 @@ export const humanReadableFilters = ({
     exactly_equals: gettext('es exactamente igual a'),
     regex: gettext('coincide con expresión regular'),
   };
-  return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${humanReadableFilterOn(filterOn)} ${filterDict[filter]}${ vln ? ` (${gettext('NCV')})` : ''}`;
+  const filterableFieldsDict = _.fromPairs(filterableFields);
+  return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${filterableFieldsDict[filterOn] || gettext('entrada')} ${filterDict[filter]}${vln ? ` (${gettext('NCV')})` : ''}`;
 };

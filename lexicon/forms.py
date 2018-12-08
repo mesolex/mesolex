@@ -2,8 +2,12 @@ import json
 import re
 
 from django import forms
-from django.utils.translation import gettext as _
+from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
+from .utils import (
+    ForceProxyEncoder,
+)
 
 BOOLEAN_OPERATORS = (
     ('and', 'y'),
@@ -79,16 +83,26 @@ class LexicalSearchFilterForm(forms.Form):
 class BaseLexiconQueryComposerFormset(forms.BaseFormSet):
     FILTERABLE_FIELDS = FILTERABLE_FIELDS
 
+    CONTROLLED_VOCAB_FIELDS = {
+        'part_of_speech': settings.LANGUAGE_CONFIGURATION['azz']['part_of_speech'],
+        'inflectional_type': settings.LANGUAGE_CONFIGURATION['azz']['inflectional_type'],
+    }
+
     @property
     def configuration_data(self):
         config = {
             'filterable_fields': self.FILTERABLE_FIELDS,
+            'controlled_vocab_fields': self.CONTROLLED_VOCAB_FIELDS,
         }
         return config
     
     @property
     def configuration_data_as_json(self):
-        return json.dumps(self.configuration_data)
+        return json.dumps(
+            self.configuration_data,
+            ensure_ascii=False,
+            cls=ForceProxyEncoder,
+        )
 
 
 LexicalSearchFilterFormset = forms.formset_factory(
