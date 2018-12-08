@@ -1,3 +1,4 @@
+import json
 import re
 
 from django import forms
@@ -74,4 +75,24 @@ class LexicalSearchFilterForm(forms.Form):
                 self.add_error('query_string', forms.ValidationError(_('Expresión regular no válida.')))
 
 
-LexicalSearchFilterFormset = forms.formset_factory(LexicalSearchFilterForm)
+# TODO: create an abstract superclass that this is an extension of.
+class BaseLexiconQueryComposerFormset(forms.BaseFormSet):
+    FILTERABLE_FIELDS = FILTERABLE_FIELDS
+
+    @property
+    def configuration_data(self):
+        config = {
+            'filterable_fields': self.FILTERABLE_FIELDS,
+        }
+        return config
+    
+    @property
+    def configuration_data_as_json(self):
+        return json.dumps(self.configuration_data)
+
+
+LexicalSearchFilterFormset = forms.formset_factory(
+    LexicalSearchFilterForm,
+    formset=BaseLexiconQueryComposerFormset,
+)
+
