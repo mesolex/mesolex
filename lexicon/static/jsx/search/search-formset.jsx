@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import uuid4 from 'uuid/v4';
 
-import { isControlled } from '../util';
+import { controlledVocabCheck } from '../util';
 import SearchForm from './search-form';
 
 
@@ -13,7 +13,6 @@ export default class SearchFormSet extends React.Component {
     formsetConfig: PropTypes.shape.isRequired,
     formsetData: PropTypes.shape.isRequired,
     formsetErrors: PropTypes.shape.isRequired,
-    languageConfiguration: PropTypes.shape.isRequired,
   }
 
   /*
@@ -120,13 +119,15 @@ export default class SearchFormSet extends React.Component {
             ...this.state.formsetIndexedDatasets[uniqueId],
             [field]: e.target[eKey],
           },
-          isControlled(field, e.target[eKey]) ? {
+          (field === 'filter_on' && this.isControlled(e.target[eKey])) ? {
             filter: 'exactly_equals',
           } : {},
         ),
       },
     });
   }
+
+  isControlled = controlledVocabCheck(this.props.formsetConfig.controlled_vocab_fields)
 
   removeFilter = uniqueId => () => {
     this.setState({
@@ -176,7 +177,6 @@ export default class SearchFormSet extends React.Component {
               errors={this.state.formsetIndexedErrors[uniqueId]}
               onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
               removeFilter={this.removeFilter(uniqueId)}
-              languageConfiguration={this.props.languageConfiguration}
             />
           ))
         }

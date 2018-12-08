@@ -15,7 +15,6 @@ window.onload = () => {
     formset_config: formsetConfig,
     formset_data: formsetData,
     formset_errors: formsetErrors,
-    language_configuration: languageConfiguration,
   } = JSON.parse(document.getElementById('js-init').text);
 
   ReactDOM.render(
@@ -23,7 +22,6 @@ window.onload = () => {
       formsetData={formsetData}
       formsetErrors={formsetErrors}
       formsetConfig={formsetConfig}
-      languageConfiguration={languageConfiguration}
     />,
     document.querySelector('#search-form'),
   );
