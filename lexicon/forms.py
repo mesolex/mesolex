@@ -32,6 +32,8 @@ FILTERS_DICT = {
     'regex': '__iregex',
 }
 
+# TODO: investigate why these gettext-strings have to be
+# lazy to work as expected when serialized by the formset.
 FILTERABLE_FIELDS = (
     ('lemma', _('Entrada')),
     ('gloss', _('Glosa')),
