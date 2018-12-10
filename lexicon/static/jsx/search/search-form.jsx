@@ -20,6 +20,7 @@ const SearchForm = ({
   errors,
   onChangeFieldFrom,
   removeFilter,
+  extraFilterComponents = [],
 }) => {
   const isControlled = controlledVocabCheck(config.controlled_vocab_fields || {});
 
@@ -148,24 +149,7 @@ const SearchForm = ({
           />
         </div>
         {
-          isControlled(dataset.filter_on)
-          ? null
-          : (
-            <div className="form-check mt-2">
-              <input
-                type="checkbox"
-                className="form-check-input"
-                id={`id_form-${i}-vln`}
-                name={`form-${i}-vln`}
-                checked={dataset.vln}
-                disabled={dataset.filter === 'regex'}
-                onChange={onChangeFieldFrom('vln', 'checked')}
-              />
-              <label htmlFor={`id_form-${i}-vln`} className="form-check-label">
-                {gettext('Neutralizar cantidad vocálica')}
-              </label>
-            </div>
-          )
+          extraFilterComponents
         }
       </div>
     </div>
@@ -179,6 +163,12 @@ SearchForm.propTypes = {
   errors: PropTypes.shape.isRequired,
   onChangeFieldFrom: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired,
+
+  extraFilterComponents: PropTypes.arrayOf(PropTypes.element),
+};
+
+SearchForm.defaultProps = {
+  extraFilterComponents: [],
 };
 
 export default SearchForm;
