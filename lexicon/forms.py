@@ -73,26 +73,35 @@ class LexicalSearchFilterForm(forms.Form):
     )
     vln = forms.BooleanField(required=False)
 
-    def get_query(self):
+    def get_filter_action_and_query(self):
+        """
+        filter_arg_val is the type of filtering to perform in the query,
+        e.g. "__istartswith" or "__iregex". Normally this will be
+        whatever in FILTERS_DICT corresponds to the particular value
+        from FILTERS. But if this has vowel length neutralization,
+        it will be transformed from whatever it was into a specially
+        constructed regular expression.
+        """
+        
         if not self.is_bound:
-            return
+            return (None, None)
         
         form_data = self.cleaned_data
-        
-        # filter_arg_val is the type of filtering to perform in the query,
-        # e.g. "__istartswith" or "__iregex". Normally this will be
-        # whatever in FILTERS_DICT corresponds to the particular value
-        # from FILTERS. But if this has vowel length neutralization,
-        # it will be transformed from whatever it was into a specially
-        # constructed regular expression.
         filter_str = form_data['filter']
         if form_data['vln']:
             (filter_arg_val, query_string,) = to_vln(filter_str, form_data['query_string'])
         else:
             filter_arg_val = FILTERS_DICT.get(filter_str, '')
             query_string = form_data['query_string']
+        
+        return (filter_arg_val, query_string)
 
-        filter_on_str = form_data['filter_on']
+    def get_query(self):
+        if not self.is_bound:
+            return
+        
+        (filter_arg_val, query_string) = self.get_filter_action_and_query()
+        filter_on_str = self.cleaned_data['filter_on']
         filter_on_vals = FILTERABLE_FIELDS_DICT.get(filter_on_str, [])
 
         query_expression = Q()
