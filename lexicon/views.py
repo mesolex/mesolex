@@ -10,7 +10,7 @@ from .forms import (
     LexicalSearchFilterFormset,
 )
 from .models import LexicalEntry
-from .utils import (
+from mesolex.utils import (
     ForceProxyEncoder,
 )
 
