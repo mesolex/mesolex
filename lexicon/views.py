@@ -7,35 +7,12 @@ from django.db.models.functions import Lower
 from django.shortcuts import render
 
 from .forms import (
-    FILTERS_DICT,
-    FILTERABLE_FIELDS_DICT,
     LexicalSearchFilterFormset,
 )
 from .models import LexicalEntry
 from .utils import (
-    to_vln,
     ForceProxyEncoder,
 )
-
-
-def _get_Q(form_data):
-    filter_str = form_data['filter']
-
-    if form_data['vln']:
-        (filter_arg_val, query_string, ) = to_vln(filter_str, form_data['query_string'])
-    else:
-        filter_arg_val = FILTERS_DICT.get(filter_str, '')
-        query_string = form_data['query_string']
-
-    filter_on_str = form_data['filter_on']
-    filter_on_vals = FILTERABLE_FIELDS_DICT.get(filter_on_str, ('lemma', ))
-
-    query_expression = Q()
-
-    for filter_on_val in filter_on_vals:
-        query_expression |= Q(**{'%s%s' % (filter_on_val, filter_arg_val): query_string})
-
-    return query_expression
 
 
 def lexicon_home(request, *args, **kwargs):
@@ -65,24 +42,7 @@ def lexicon_search_view(request, *args, **kwargs):
         page = 1
 
         if len(formset.forms) >= 1:
-            for form in formset.forms:
-                if form.is_valid():
-                    form_q = _get_Q(form.cleaned_data)
-                    operator = form.cleaned_data['operator']
-                    if not query:
-                        if operator == 'and_n' or operator == 'or_n':
-                            query = ~form_q
-                        else:
-                            query = form_q
-                    else:
-                        if operator == 'and':
-                            query &= form_q
-                        elif operator == 'or':
-                            query |= form_q
-                        elif operator == 'and_n':
-                            query &= (~form_q)
-                        elif operator == 'or_n':
-                            query |= (~form_q)
+            query = formset.get_full_query()
 
         if query:
             lexical_entries = (

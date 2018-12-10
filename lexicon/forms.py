@@ -3,9 +3,11 @@ import re
 
 from django import forms
 from django.conf import settings
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from .utils import (
+    to_vln,
     ForceProxyEncoder,
 )
 
@@ -71,6 +73,36 @@ class LexicalSearchFilterForm(forms.Form):
     )
     vln = forms.BooleanField(required=False)
 
+    def get_query(self):
+        if not self.is_bound:
+            return
+        
+        form_data = self.cleaned_data
+        
+        # filter_arg_val is the type of filtering to perform in the query,
+        # e.g. "__istartswith" or "__iregex". Normally this will be
+        # whatever in FILTERS_DICT corresponds to the particular value
+        # from FILTERS. But if this has vowel length neutralization,
+        # it will be transformed from whatever it was into a specially
+        # constructed regular expression.
+        filter_str = form_data['filter']
+        if form_data['vln']:
+            (filter_arg_val, query_string,) = to_vln(filter_str, form_data['query_string'])
+        else:
+            filter_arg_val = FILTERS_DICT.get(filter_str, '')
+            query_string = form_data['query_string']
+
+        filter_on_str = form_data['filter_on']
+        filter_on_vals = FILTERABLE_FIELDS_DICT.get(filter_on_str, [])
+
+        query_expression = Q()
+
+        for filter_on_val in filter_on_vals:
+            query_expression |= Q(**{'%s%s' % (filter_on_val, filter_arg_val): query_string})
+
+        return query_expression
+
+
     def clean(self):
         cleaned_data = super().clean()
         if 'filter' in cleaned_data and cleaned_data['filter'] == 'regex':
@@ -105,6 +137,31 @@ class BaseLexiconQueryComposerFormset(forms.BaseFormSet):
             ensure_ascii=False,
             cls=ForceProxyEncoder,
         )
+    
+    def get_full_query(self):
+        query = None
+
+        for form in self.forms:
+            if form.is_valid():
+                form_q = form.get_query()
+                operator = form.cleaned_data['operator']
+                if not query:
+                    if operator == 'and_n' or operator == 'or_n':
+                        query = ~form_q
+                    else:
+                        query = form_q
+                else:
+                    if operator == 'and':
+                        query &= form_q
+                    elif operator == 'or':
+                        query |= form_q
+                    elif operator == 'and_n':
+                        query &= (~form_q)
+                    elif operator == 'or_n':
+                        query |= (~form_q)
+        
+        return query
+
 
 
 LexicalSearchFilterFormset = forms.formset_factory(
