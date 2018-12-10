@@ -13,7 +13,7 @@ import {
 } from '../util';
 
 
-const SearchForm = ({
+const QueryBuilderForm = ({
   i,
   config,
   dataset,
@@ -156,7 +156,7 @@ const SearchForm = ({
   );
 };
 
-SearchForm.propTypes = {
+QueryBuilderForm.propTypes = {
   i: PropTypes.number.isRequired,
   config: PropTypes.shape.isRequired,
   dataset: PropTypes.shape.isRequired,
@@ -167,8 +167,8 @@ SearchForm.propTypes = {
   extraFilterComponents: PropTypes.arrayOf(PropTypes.element),
 };
 
-SearchForm.defaultProps = {
+QueryBuilderForm.defaultProps = {
   extraFilterComponents: [],
 };
 
-export default SearchForm;
+export default QueryBuilderForm;

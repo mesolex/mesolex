@@ -49,6 +49,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      'query-builder': path.resolve(__dirname, 'query_builder/static/jsx/')
+    }
   },
   plugins: [
     new ExtractTextPlugin({
