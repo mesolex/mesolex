@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import Plyr from 'plyr';
 
 import React from 'react';
