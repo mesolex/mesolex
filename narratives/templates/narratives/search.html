@@ -57,7 +57,7 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="h5">Basic metadata</div>
-                    <div>
+                    <div class="mb-2">
                         {% if metadata.fn_trans %}<i>Filename:</i> {{ metadata.fn_trans }};{% endif %}
                         {% if metadata.duration %}<i>Duration:</i> {{ metadata.duration }};{% endif %}
                         {% if metadata.size %}<i>Size:</i> {{ metadata.size }};{% endif %}
@@ -71,7 +71,15 @@
                     </div>
 
                     <div class="h5">Contributors</div>
-                    <div></div>
+                    <div class="mb-2">
+                        {% if metadata.contr1 %}
+                        <i>Contributor{% if metadata.con1_track %} ({{ metadata.con1_track }}){% endif %}:</i> {{ metadata.contr1 }}{% if metadata.con1_role %}; {{ metadata.con1_role }}{% endif %}{% if metadata.con1_sex %}; {{ metadata.con1_sex }}{% endif %}{% if metadata.con1_origin %}; from {{ metadata.con1_origin }}{% endif %}
+                        {% endif %}
+
+                        {% if metadata.contr2 %}
+                        <i>Contributor{% if metadata.con2_track %} ({{ metadata.con2_track }}){% endif %}:</i> {{ metadata.contr2 }}{% if metadata.con2_role %}; {{ metadata.con2_role }}{% endif %}{% if metadata.con2_sex %}; {{ metadata.con2_sex }}{% endif %}{% if metadata.con2_origin %}; from {{ metadata.con2_origin }}{% endif %}
+                        {% endif %}
+                    </div>
 
                     <div class="h5">Title and description</div>
                     <div></div>
