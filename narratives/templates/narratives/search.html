@@ -52,103 +52,36 @@
                 {% blocktrans %}{{ num_entries }} resultados (página {{ page }} de {{ num_pages }}){% endblocktrans %}
             </div>
 
-            {% for lexical_entry in metadatas %}
-            {% with data=lexical_entry.data %}
+            {% for metadata in metadatas %}
+            {% with data=metadata.data %}
             <div class="card mb-4">
-                <div class="card-header card-header--search">
-                    <span class="h5">{{ lexical_entry.lemma }}</span>
-
-                    {% if lexical_entry.citation_set.exists %}
-                    &nbsp;|&nbsp;
-                    <i>{% trans 'Citación' %}:</i> {% for citation in lexical_entry.citation_set.all %}{{ citation }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.variant_set.exists %}, <i>{% trans 'Formas alt.' %}:</i> {% for variant in lexical_entry.variant_set.all %}{{ variant }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.gloss_set %}, <i>{% trans 'Glosa' %}:</i> {% for gloss in lexical_entry.gloss_set.all %}{{ gloss }}{% if not forloop.last %}, {% endif %}{% endfor %}
-                    {% endif %}
-
-                    {% if lexical_entry.grammargroup_set.exists %}
-                    &nbsp;|&nbsp;
-                    <i>{% trans 'Categoría gramatical' %}:</i> {% for grammar_group in lexical_entry.grammargroup_set.all %}{{ grammar_group.part_of_speech|link_part_of_speech:language|safe }}{% if grammar_group.inflectional_type %}; <i>{% trans 'Inflexión' %}:</i> {{ grammar_group.inflectional_type|link_inflectional_type:language|safe }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
-                    {% endif %}
-
-                    {% if lexical_entry.category_set.exists %}
-                    &nbsp;|&nbsp;
-                    <i>{% trans 'Campo semántico' %}:</i> {% for category in lexical_entry.category_set.all %}{{ category.value|link_category|safe }}{% if not forloop.last %}, {% endif %}{% endfor %}
-                    {% endif %}
-
-                    {# {% if data.raiz or data.raiz2 %} #}
-                    {% if lexical_entry.simple_roots or lexical_entry.compound_roots %}
-                        &nbsp;|&nbsp;
-                        <strong>{% trans 'Etimología' %}:</strong>
-
-                        {% for root in lexical_entry.simple_roots %}
-                        {% if forloop.first %}
-                        <i>{% blocktrans count counter=lexical_entry.simple_roots|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>{% endif %}
-                        {{ root.value|link_raiz|safe }}{% if not forloop.last %}; {% endif %}
-                        {% endfor %}
-
-                        {% for root in lexical_entry.compound_roots %}
-                        {% if forloop.first %}&nbsp;|&nbsp;
-                        <i>{% blocktrans count counter=lexical_entry.compound_roots|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% endif %}{{ root }}{% if not forloop.last %}; {% endif %}
-                        {% endfor %}
-
-                        {% for non_native_etymology in lexical_entry.nonnativeetymology_set.all %}
-                        {% if forloop.first %}&nbsp;|&nbsp;
-                        <i>{% blocktrans count counter=lexical_entry.nonnativeetymology_set.all|length %}Palabra con elementos no de náhuat{% plural %}Palabras con elementos no de náhuat{% endblocktrans %}:</i> {% endif %}{{ non_native_etymology.value|link_vnawa|safe }}{% if not forloop.last %}; {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                </div>
-                {% for media in lexical_entry.citation_media %}
-                {% if forloop.first %}
-                    <div class="card-header card-header--audio">
-                {% endif %}
-                    <audio controls class="lexical-entry-audio">
-                        <source src="{{ media.url }}" type="{{ media.mime_type }}" />
-                    </audio>
-                {% if forloop.last %}
-                    </div>
-                {% endif %}
-                {% endfor %}
                 <div class="card-body">
-                    <ol class="search-results-list">
-                        {% for sense in lexical_entry.senses %}
-                        <li>
-                            <div class="card-text">
-                                <p>{{ sense.definition|link_vnawa|safe }}</p>
-                            </div>
-                            {% for example in sense.examples %}
-                                {% for quote in example.azz_quotes %}
-                                    <blockquote class="card-text example font-weight-light">
-                                        <p>
-                                            {{ quote.text|safe }}
-                                            <i>({{ quote.translations.first.text|link_vnawa|safe }})</i>
-                                        </p>
-                                    </blockquote>
-                                {% endfor %}
-                            {% endfor %}
-                        </li>
-                        {% endfor %}
-                    </ol>
+                    <div class="h5">Basic metadata</div>
+                    <div>
+                        {% if metadata.fn_trans %}<i>Filename:</i> {{ metadata.fn_trans }};{% endif %}
+                        {% if metadata.duration %}<i>Duration:</i> {{ metadata.duration }};{% endif %}
+                        {% if metadata.size %}<i>Size:</i> {{ metadata.size }};{% endif %}
+                        {% if metadata.lg_code %}<i>ISO 639-3 o Glottocode:</i> {{ metadata.lg_code }};{% endif %}
+                        {% if metadata.lgvil %}<i>Recording location:</i> {{ metadata.lgvil }}{% if metadata.lg_mpio %}, {{ metadata.lg_mpio }}{% endif %}{% if metadata.lg_state %}, {{ metadata.lg_state }}{% endif %};{% endif %}
+                        {% if metadata.date %}<i>Recording date:</i> {{ metadata.date }};{% endif %}
+                        {% if metadata.recordby %}<i>Recorded by:</i> {{ metadata.recordby }};{% endif %}
+                        {% if metadata.rec_format %}<i>Recording format:</i> {{ metadata.rec_format }};{% endif %}
+                        {% if metadata.rec_machine %}<i>Recorder:</i> {{ metadata.rec_machine }};{% endif %}
+                        {% if metadata.rec_mike %}<i>Microphone:</i> {{ metadata.rec_mike }}.{% endif %}
+                    </div>
+
+                    <div class="h5">Contributors</div>
+                    <div></div>
+
+                    <div class="h5">Title and description</div>
+                    <div></div>
+
+                    <div class="h5">URL for inline playback</div>
+                    <div></div>
+
+                    <div class="h5">Archives</div>
+                    <div></div>
                 </div>
-
-                {% if lexical_entry.note_set.exists %}
-                <div class="card-footer">
-                    {% for note in lexical_entry.notes_semantics %}
-                    <p class="notes nsem">
-                        <strong>{% trans 'Notas semánticas' %}:</strong> {{ note.value|link_vnawa|safe }}
-                    </p>
-                    {% endfor %}
-
-                    {% for note in lexical_entry.notes_morphology %}
-                    <p class="notes nmorf">
-                        <strong>{% trans 'Notas morfológicas' %}:</strong> {{ note.value|link_vnawa|safe }}
-                    </p>
-                    {% endfor %}
-
-                    {% for note in lexical_entry.notes_general %}
-                    <p class="notes ngram">
-                        <strong>{% trans 'Notas gramaticales' %}:</strong> {{ note.value|link_vnawa|safe }}
-                    </p>
-                    {% endfor %}
-                </div>
-                {% endif %}
             </div>
             {% endwith %}
             {% endfor %}
