@@ -20,6 +20,7 @@ from django.views.i18n import JavaScriptCatalog
 
 import lexicon.urls
 import lexicon.views
+import narratives.urls
 
 urlpatterns = [
     url(r'^robots\.txt', include('robots.urls')),
@@ -27,6 +28,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    url(r'^narratives/$', include(narratives.urls)),
     url('', include(lexicon.urls)),
 ]
 

@@ -67,7 +67,6 @@ class LexicalSearchFilterForm(QueryBuilderForm):
         return (filter_arg_val, query_string)
 
 
-# TODO: create an abstract superclass that this is an extension of.
 class BaseLexiconQueryComposerFormset(QueryBuilderBaseFormset):
     FILTERABLE_FIELDS = FILTERABLE_FIELDS
 

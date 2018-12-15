@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% load lexeme_tags %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block extra-head %}
+<link rel="stylesheet" href="{% static 'dist/lexicon_scss.bundle.css' %}" />
+{% endblock extra-head %}
+
+{% block content %}
+    {% if form_captions %}
+        <h2 class="h6">
+          {% trans 'Náhuat de la Sierra Nororiental de Puebla: Diccionario' %}
+        </h2>
+    {% endif %}
+
+    <div class="test-formset-form">
+        <form action="{% url 'narratives_search' %}" method="get">
+          <div id="search-form">
+            <!-- This will be replaced on page load. -->
+            {% for form in formset %}
+                <div class="form-group">
+                    <label>…</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <a class="btn btn-outline-primary" href="#">
+                                <svg style="display: inline-block; vertical-align: text-top;" width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true" version="1.1"><path fill-rule="evenodd" d="M14 8.76v-1.6l-1.94-.64-.45-1.09.88-1.84-1.13-1.13-1.81.91-1.09-.45L7.77 1h-1.6l-.63 1.94-1.11.45-1.84-.88-1.13 1.13.91 1.81-.45 1.09L0 7.22v1.59l1.94.64.45 1.09-.88 1.84 1.13 1.13 1.81-.91 1.09.45.69 1.92h1.59l.63-1.94 1.11-.45 1.84.88 1.13-1.13-.92-1.81.47-1.09L14 8.74v.02zm-7 2.23c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg>
+                            </a>
+                        </div>
+                        {{ form.query_string }}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">
+                    {% trans 'Buscar' %}
+                </button>
+                <button class="btn btn-primary float-right" id="add-filter">
+                    {% trans 'Agrega filtro' %}
+                </button>
+            </div>
+          </div>
+        </form>
+    </div>
+
+    {% if query %}
+    <div class="row">
+        <div class="col-12">
+            {% if metadatas %}
+
+            <div class="h5 mb-4">
+                {% blocktrans %}{{ num_entries }} resultados (página {{ page }} de {{ num_pages }}){% endblocktrans %}
+            </div>
+
+            {% for lexical_entry in metadatas %}
+            {% with data=lexical_entry.data %}
+            <div class="card mb-4">
+                <div class="card-header card-header--search">
+                    <span class="h5">{{ lexical_entry.lemma }}</span>
+
+                    {% if lexical_entry.citation_set.exists %}
+                    &nbsp;|&nbsp;
+                    <i>{% trans 'Citación' %}:</i> {% for citation in lexical_entry.citation_set.all %}{{ citation }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.variant_set.exists %}, <i>{% trans 'Formas alt.' %}:</i> {% for variant in lexical_entry.variant_set.all %}{{ variant }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.gloss_set %}, <i>{% trans 'Glosa' %}:</i> {% for gloss in lexical_entry.gloss_set.all %}{{ gloss }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    {% endif %}
+
+                    {% if lexical_entry.grammargroup_set.exists %}
+                    &nbsp;|&nbsp;
+                    <i>{% trans 'Categoría gramatical' %}:</i> {% for grammar_group in lexical_entry.grammargroup_set.all %}{{ grammar_group.part_of_speech|link_part_of_speech:language|safe }}{% if grammar_group.inflectional_type %}; <i>{% trans 'Inflexión' %}:</i> {{ grammar_group.inflectional_type|link_inflectional_type:language|safe }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    {% endif %}
+
+                    {% if lexical_entry.category_set.exists %}
+                    &nbsp;|&nbsp;
+                    <i>{% trans 'Campo semántico' %}:</i> {% for category in lexical_entry.category_set.all %}{{ category.value|link_category|safe }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    {% endif %}
+
+                    {# {% if data.raiz or data.raiz2 %} #}
+                    {% if lexical_entry.simple_roots or lexical_entry.compound_roots %}
+                        &nbsp;|&nbsp;
+                        <strong>{% trans 'Etimología' %}:</strong>
+
+                        {% for root in lexical_entry.simple_roots %}
+                        {% if forloop.first %}
+                        <i>{% blocktrans count counter=lexical_entry.simple_roots|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>{% endif %}
+                        {{ root.value|link_raiz|safe }}{% if not forloop.last %}; {% endif %}
+                        {% endfor %}
+
+                        {% for root in lexical_entry.compound_roots %}
+                        {% if forloop.first %}&nbsp;|&nbsp;
+                        <i>{% blocktrans count counter=lexical_entry.compound_roots|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% endif %}{{ root }}{% if not forloop.last %}; {% endif %}
+                        {% endfor %}
+
+                        {% for non_native_etymology in lexical_entry.nonnativeetymology_set.all %}
+                        {% if forloop.first %}&nbsp;|&nbsp;
+                        <i>{% blocktrans count counter=lexical_entry.nonnativeetymology_set.all|length %}Palabra con elementos no de náhuat{% plural %}Palabras con elementos no de náhuat{% endblocktrans %}:</i> {% endif %}{{ non_native_etymology.value|link_vnawa|safe }}{% if not forloop.last %}; {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {% for media in lexical_entry.citation_media %}
+                {% if forloop.first %}
+                    <div class="card-header card-header--audio">
+                {% endif %}
+                    <audio controls class="lexical-entry-audio">
+                        <source src="{{ media.url }}" type="{{ media.mime_type }}" />
+                    </audio>
+                {% if forloop.last %}
+                    </div>
+                {% endif %}
+                {% endfor %}
+                <div class="card-body">
+                    <ol class="search-results-list">
+                        {% for sense in lexical_entry.senses %}
+                        <li>
+                            <div class="card-text">
+                                <p>{{ sense.definition|link_vnawa|safe }}</p>
+                            </div>
+                            {% for example in sense.examples %}
+                                {% for quote in example.azz_quotes %}
+                                    <blockquote class="card-text example font-weight-light">
+                                        <p>
+                                            {{ quote.text|safe }}
+                                            <i>({{ quote.translations.first.text|link_vnawa|safe }})</i>
+                                        </p>
+                                    </blockquote>
+                                {% endfor %}
+                            {% endfor %}
+                        </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+
+                {% if lexical_entry.note_set.exists %}
+                <div class="card-footer">
+                    {% for note in lexical_entry.notes_semantics %}
+                    <p class="notes nsem">
+                        <strong>{% trans 'Notas semánticas' %}:</strong> {{ note.value|link_vnawa|safe }}
+                    </p>
+                    {% endfor %}
+
+                    {% for note in lexical_entry.notes_morphology %}
+                    <p class="notes nmorf">
+                        <strong>{% trans 'Notas morfológicas' %}:</strong> {{ note.value|link_vnawa|safe }}
+                    </p>
+                    {% endfor %}
+
+                    {% for note in lexical_entry.notes_general %}
+                    <p class="notes ngram">
+                        <strong>{% trans 'Notas gramaticales' %}:</strong> {{ note.value|link_vnawa|safe }}
+                    </p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endwith %}
+            {% endfor %}
+
+            {% if metadatas.has_previous or metadatas.has_next %}
+                <ul class="pagination">
+                    <li class="page-item{% if not metadatas.has_previous %} disabled{% endif %}">
+                        {% if metadatas.has_previous %}
+                            <a class="page-link" href="?{{ request.GET.urlencode }}&page={{ metadatas.previous_page_number }}">
+                        {% else %}
+                            <span class="page-link">
+                        {% endif %}
+                        &laquo; {% trans 'Anterior' %}
+                        {% if metadatas.has_previous %}
+                            </a>
+                        {% else %}
+                            </span>
+                        {% endif %}
+                    </li>
+                    <li class="page-item{% if not metadatas.has_next %} disabled{% endif %}">
+                        {% if metadatas.has_next %}
+                            <a class="page-link" href="?{{ request.GET.urlencode }}&page={{ metadatas.next_page_number }}">
+                        {% else %}
+                            <span class="page-link">
+                        {% endif %}
+                        {% trans 'Siguiente' %} &raquo;
+                        {% if metadatas.has_next %}
+                            </a>
+                        {% else %}
+                            </span>
+                        {% endif %}
+                    </li>
+                </ul>
+            {% endif %}
+
+            {% else %}
+            <p>
+                {% trans 'Resultado no encontrado.' %}
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block js-init %}
+  {{ block.super }}
+  "csrfToken": "{{ csrf_token }}",
+  "formset_config": {{ formset.configuration_data_as_json|safe }},
+  "formset_data": {{ formset_data|safe }},
+  "formset_errors": {{ formset_errors|safe }}
+{% endblock js-init %}
+
+{% block extra-js %}
+{{ block.super }}
+<script src="{% static 'dist/narratives.bundle.js' %}"></script>
+{% endblock extra-js %}
