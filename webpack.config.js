@@ -34,6 +34,7 @@ module.exports = {
   },
   entry: {
     search: path.join(__dirname, 'lexicon/static/jsx/search/index.jsx'),
+    narratives: path.join(__dirname, 'narratives/static/jsx/index.jsx'),
     lexicon_scss: path.join(__dirname, 'lexicon/static/scss/index.scss'),
   },
   output: {
