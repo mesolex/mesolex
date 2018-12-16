@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-16 11:40+0000\n"
+"POT-Creation-Date: 2018-12-16 12:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -325,6 +325,22 @@ msgstr "Obligatorily possessed"
 msgid "Activar la navegación"
 msgstr "Toggle navigation"
 
+#: narratives/forms.py:14
+msgid "Subgénero"
+msgstr "Subgenre"
+
+#: narratives/forms.py:15
+msgid "Nombre del contribuidor"
+msgstr "Contributor name"
+
+#: narratives/forms.py:16
+msgid "Pueblo de grabacion"
+msgstr "Recording village"
+
+#: narratives/forms.py:17
+`msgid "Título"
+msgstr "Title"
+
 #: narratives/templates/narratives/search.html:59
 msgid "Metadatos basicos"
 msgstr "Basic metadata"
@@ -387,9 +403,6 @@ msgid "Título indígena"
 msgstr "Indigenous title"
 
 #: narratives/templates/narratives/search.html:91
-msgid "inglés (EE.UU.)"
-msgstr "English"
-
 msgid "Título inglés"
 msgstr "English title"
 
@@ -432,6 +445,9 @@ msgstr "Lexical entry"
 #: scratch_space/tei_models.py:209
 msgid "Entradas léxicas"
 msgstr "Lexical entries"
+
+#~ msgid "inglés (EE.UU.)"
+#~ msgstr "English"
 
 #~ msgid "Idioma"
 #~ msgstr "Language"
