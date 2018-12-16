@@ -115,11 +115,21 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
     # controlled vocabulary fields and their pair values.
     CONTROLLED_VOCAB_FIELDS = {}
 
+    # Available for overriding if fields must
+    # be computed dynamically.
+    @property
+    def filterable_fields(self):
+        return self.FILTERABLE_FIELDS
+
+    @property
+    def controlled_vocab_fields(self):
+        return self.CONTROLLED_VOCAB_FIELDS
+
     @property
     def configuration_data(self):
         config = {
-            'filterable_fields': self.FILTERABLE_FIELDS,
-            'controlled_vocab_fields': self.CONTROLLED_VOCAB_FIELDS,
+            'filterable_fields': self.filterable_fields,
+            'controlled_vocab_fields': self.controlled_vocab_fields,
         }
         return config
     
