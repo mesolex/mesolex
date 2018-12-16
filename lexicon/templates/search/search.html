@@ -205,5 +205,6 @@
 
 {% block extra-js %}
 {{ block.super }}
+<script src="{% static 'dist/vendors.bundle.js' %}"></script>
 <script src="{% static 'dist/search.bundle.js' %}"></script>
 {% endblock extra-js %}
