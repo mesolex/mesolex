@@ -41,6 +41,18 @@ module.exports = {
     path: path.join(__dirname, 'mesolex/static/dist'),
     filename: '[name].bundle.js'
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendors: {
+          name: "vendors",
+          chunks: "initial",
+          minChunks: 2,
+          minSize: 0
+        }
+      }
+    }
+  },
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
