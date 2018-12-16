@@ -56,42 +56,42 @@
             {% with data=metadata.data %}
             <div class="card mb-4">
                 <div class="card-body">
-                    <div class="h5">Basic metadata</div>
+                    <div class="h5">{% trans 'Metadatos basicos' %}</div>
                     <div class="mb-4">
-                        {% if metadata.fn_trans %}<i>Filename:</i> {{ metadata.fn_trans }};{% endif %}
-                        {% if metadata.duration %}<i>Duration:</i> {{ metadata.duration }};{% endif %}
-                        {% if metadata.size %}<i>Size:</i> {{ metadata.size }};{% endif %}
-                        {% if metadata.lg_code %}<i>ISO 639-3 o Glottocode:</i> {{ metadata.lg_code }};{% endif %}
-                        {% if metadata.lgvil %}<i>Recording location:</i> {{ metadata.lgvil }}{% if metadata.lg_mpio %}, {{ metadata.lg_mpio }}{% endif %}{% if metadata.lg_state %}, {{ metadata.lg_state }}{% endif %};{% endif %}
-                        {% if metadata.date %}<i>Recording date:</i> {{ metadata.date }};{% endif %}
-                        {% if metadata.recordby %}<i>Recorded by:</i> {{ metadata.recordby }};{% endif %}
-                        {% if metadata.rec_format %}<i>Recording format:</i> {{ metadata.rec_format }};{% endif %}
-                        {% if metadata.rec_machine %}<i>Recorder:</i> {{ metadata.rec_machine }};{% endif %}
-                        {% if metadata.rec_mike %}<i>Microphone:</i> {{ metadata.rec_mike }}.{% endif %}
+                        {% if metadata.fn_trans %}<i>{% trans 'Nombre de archivo' %}:</i> {{ metadata.fn_trans }};{% endif %}
+                        {% if metadata.duration %}<i>{% trans 'Duración' %}:</i> {{ metadata.duration }};{% endif %}
+                        {% if metadata.size %}<i>{% trans 'Tamaño' %}:</i> {{ metadata.size }};{% endif %}
+                        {% if metadata.lg_code %}<i>{% trans 'ISO 639-3 o Glottocode'%}:</i> {{ metadata.lg_code }};{% endif %}
+                        {% if metadata.lgvil %}<i>{% trans 'Lugar de grabación' %}:</i> {{ metadata.lgvil }}{% if metadata.lg_mpio %}, {{ metadata.lg_mpio }}{% endif %}{% if metadata.lg_state %}, {{ metadata.lg_state }}{% endif %};{% endif %}
+                        {% if metadata.date %}<i>{% trans 'Fecha de grabación' %}:</i> {{ metadata.date }};{% endif %}
+                        {% if metadata.recordby %}<i>{% trans 'Grabado por' %}:</i> {{ metadata.recordby }};{% endif %}
+                        {% if metadata.rec_format %}<i>{% trans 'Formato de grabación' %}:</i> {{ metadata.rec_format }};{% endif %}
+                        {% if metadata.rec_machine %}<i>{% trans 'Grabadora' %}:</i> {{ metadata.rec_machine }};{% endif %}
+                        {% if metadata.rec_mike %}<i>{% trans 'Micrófono' %}:</i> {{ metadata.rec_mike }}.{% endif %}
                     </div>
 
-                    <div class="h5">Contributors</div>
+                    <div class="h5">{% trans 'Contribuidores' %}</div>
                     <div class="mb-4">
                         {% if metadata.contr1 %}
                         <div>
-                            <i>Contributor{% if metadata.con1_track %} ({{ metadata.con1_track }}){% endif %}:</i> {{ metadata.contr1 }}{% if metadata.con1_role %}; {{ metadata.con1_role }}{% endif %}{% if metadata.con1_sex %}; {{ metadata.con1_sex }}{% endif %}{% if metadata.con1_origin %}; from {{ metadata.con1_origin }}{% endif %}
+                            <i>{% trans 'Contribuidor' %}{% if metadata.con1_track %} ({{ metadata.con1_track }}){% endif %}:</i> {{ metadata.contr1 }}{% if metadata.con1_role %}; {{ metadata.con1_role }}{% endif %}{% if metadata.con1_sex %}; {{ metadata.con1_sex }}{% endif %}{% if metadata.con1_origin %}; from {{ metadata.con1_origin }}{% endif %}
                         </div>
                         {% endif %}
 
                         {% if metadata.contr2 %}
                         <div>
-                            <i>Contributor{% if metadata.con2_track %} ({{ metadata.con2_track }}){% endif %}:</i> {{ metadata.contr2 }}{% if metadata.con2_role %}; {{ metadata.con2_role }}{% endif %}{% if metadata.con2_sex %}; {{ metadata.con2_sex }}{% endif %}{% if metadata.con2_origin %}; from {{ metadata.con2_origin }}{% endif %}
+                            <i>{% trans 'Contribuidor' %}{% if metadata.con2_track %} ({{ metadata.con2_track }}){% endif %}:</i> {{ metadata.contr2 }}{% if metadata.con2_role %}; {{ metadata.con2_role }}{% endif %}{% if metadata.con2_sex %}; {{ metadata.con2_sex }}{% endif %}{% if metadata.con2_origin %}; from {{ metadata.con2_origin }}{% endif %}
                         </div>
                         {% endif %}
                     </div>
 
-                    <div class="h5">Title and description</div>
+                    <div class="h5">{% trans 'Título y descripción' %}</div>
                     <div class="mb-4">
                         <div>
-                            {% if metadata.titnative %}<i>Indigenous title:</i> {{ metadata.titnative }};{% endif %} {% if metadata.titeng %}<i>English title:</i> {{ metadata.titeng }}{% endif %}
+                            {% if metadata.titnative %}<i>{% trans 'Título indígena' %}:</i> {{ metadata.titnative }};{% endif %} {% if metadata.titeng %}<i>{% trans 'Título inglés'%}:</i> {{ metadata.titeng }}{% endif %}
                         </div>
                         <div>
-                            <i>Description:</i> {{ metadata.descrip }}
+                            <i>{% trans 'Descripción' %}:</i> {{ metadata.descrip }}
                         </div>
                     </div>
 
@@ -100,8 +100,8 @@
                         {{ metadata.url }}
                     </div>
 
-                    <div class="h5">Archives</div>
-                    <div class="mb-4">
+                    <div class="h5">{% trans 'Archivos' %}</div>
+                    <div>
                         {{ metadata.archive }}
                     </div>
                 </div>
