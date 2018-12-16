@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 
 from query_builder.forms import (
@@ -10,10 +11,10 @@ from narratives import models
 
 
 FILTERABLE_FIELDS = (
-    ('subgenre', 'subgenre'),
-    ('consultant_name', 'consultant name'),
-    ('village_of_recording', 'village of recording'),
-    ('title', 'title'),
+    ('subgenre', _('Subgénero')),
+    ('consultant_name', _('Nombre del contribuidor')),
+    ('village_of_recording', _('Pueblo de grabacion')),
+    ('title', _('Título')),
 )
 FILTERABLE_FIELDS_DICT = {
     'subgenre': ('subgenre', ),
@@ -37,7 +38,7 @@ class BaseSoundMetadataQueryComposerFormset(QueryBuilderBaseFormset):
         con1_names = set([x['contr1'] for x in models.SoundMetadata.objects.values('contr1')])
         con2_names = set([x['contr2'] for x in models.SoundMetadata.objects.values('contr2')])
         consultant_names = con1_names.union(con2_names)
-        
+
         con1_qs = models.SoundMetadata.objects.filter(con1_role='Consultant')
         con2_qs = models.SoundMetadata.objects.filter(con2_role='Consultant')
         con1_vs = set([x['con1_origin'] for x in con1_qs.values('con1_origin')])
