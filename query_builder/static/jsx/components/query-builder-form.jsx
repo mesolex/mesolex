@@ -34,7 +34,7 @@ const QueryBuilderForm = ({
         { humanReadableFilters({
           i,
           operator: dataset.operator || 'and',
-          filterOn: dataset.filter_on || 'lemma',
+          filterOn: dataset.filter_on || (config.filterable_fields || [[]])[0][0],
           filter: dataset.filter || 'begins_with',
           vln: (dataset.filter !== 'regex') && dataset.vln,
           filterableFields: config.filterable_fields,

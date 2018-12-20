@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-30 23:11+0000\n"
+"POT-Creation-Date: 2018-12-20 18:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,107 +17,97 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lexicon/static/jsx/search/search-form.jsx:12
-#: lexicon/static/jsx/search/search-form.jsx:24
-#: lexicon/static/jsx/search/search-form.jsx:256
-msgid "entrada"
-msgstr "headword"
-
-#: lexicon/static/jsx/search/search-form.jsx:14
-#: lexicon/static/jsx/search/search-form.jsx:257
-msgid "glosa"
-msgstr "gloss"
-
-#: lexicon/static/jsx/search/search-form.jsx:16
-#: lexicon/static/jsx/search/search-form.jsx:258
-msgid "raiz"
-msgstr "root"
-
-#: lexicon/static/jsx/search/search-form.jsx:18
-#: lexicon/static/jsx/search/search-form.jsx:259
-msgid "campo semántico"
-msgstr "semantic field"
-
-#: lexicon/static/jsx/search/search-form.jsx:20
-#: lexicon/static/jsx/search/search-form.jsx:260
-msgid "categoría gramatical"
-msgstr "grammatical category"
-
-#: lexicon/static/jsx/search/search-form.jsx:22
-#: lexicon/static/jsx/search/search-form.jsx:261
-msgid "inflexión"
-msgstr "inflection"
-
-#: lexicon/static/jsx/search/search-form.jsx:40
-#: lexicon/static/jsx/search/search-form.jsx:42
-#: lexicon/static/jsx/search/search-form.jsx:246
-msgid "no"
-msgstr "does not"
-
-#: lexicon/static/jsx/search/search-form.jsx:45
-#: lexicon/static/jsx/search/search-form.jsx:244
-msgid "y"
-msgstr "and"
-
-#: lexicon/static/jsx/search/search-form.jsx:46
-#: lexicon/static/jsx/search/search-form.jsx:245
-msgid "o"
-msgstr "or"
-
-#: lexicon/static/jsx/search/search-form.jsx:47
-#: lexicon/static/jsx/search/search-form.jsx:246
-msgid "y no"
-msgstr "and not"
-
-#: lexicon/static/jsx/search/search-form.jsx:48
-#: lexicon/static/jsx/search/search-form.jsx:247
-msgid "o no"
-msgstr "or not"
-
-#: lexicon/static/jsx/search/search-form.jsx:51
-#: lexicon/static/jsx/search/search-form.jsx:125
-msgid "empieza con"
-msgstr "begins with"
-
-#: lexicon/static/jsx/search/search-form.jsx:52
-#: lexicon/static/jsx/search/search-form.jsx:126
-msgid "termina con"
-msgstr "ends with"
-
-#: lexicon/static/jsx/search/search-form.jsx:53
-#: lexicon/static/jsx/search/search-form.jsx:127
-msgid "contiene"
-msgstr "contains"
-
-#: lexicon/static/jsx/search/search-form.jsx:54
-#: lexicon/static/jsx/search/search-form.jsx:128
-msgid "es exactamente igual a"
-msgstr "exactly equals"
-
-#: lexicon/static/jsx/search/search-form.jsx:55
-msgid "coincide con expresión regular"
-msgstr "matches regular expression"
-
-#: lexicon/static/jsx/search/search-form.jsx:57
-msgid "NCV"
-msgstr "VLN"
-
-#: lexicon/static/jsx/search/search-form.jsx:129
-msgid "expresión regular"
-msgstr "regular expression"
-
-#: lexicon/static/jsx/search/search-form.jsx:244
-msgid "si"
-msgstr "does"
-
-#: lexicon/static/jsx/search/search-form.jsx:284
+#: lexicon/static/jsx/search/vln.jsx:31
 msgid "Neutralizar cantidad vocálica"
 msgstr "Neutralize vowel length"
 
-#: lexicon/static/jsx/search/search-formset.jsx:183
+#: query_builder/static/jsx/components/filter-selector.jsx:29
+#: query_builder/static/jsx/util.jsx:38
+msgid "empieza con"
+msgstr "begins with"
+
+#: query_builder/static/jsx/components/filter-selector.jsx:30
+#: query_builder/static/jsx/util.jsx:39
+msgid "termina con"
+msgstr "ends with"
+
+#: query_builder/static/jsx/components/filter-selector.jsx:31
+#: query_builder/static/jsx/util.jsx:40
+msgid "contiene"
+msgstr "contains"
+
+#: query_builder/static/jsx/components/filter-selector.jsx:32
+#: query_builder/static/jsx/util.jsx:41
+msgid "es exactamente igual a"
+msgstr "exactly equals"
+
+#: query_builder/static/jsx/components/filter-selector.jsx:33
+msgid "expresión regular"
+msgstr "regular expression"
+
+#: query_builder/static/jsx/components/query-builder-form.jsx:123
+msgid "si"
+msgstr "does"
+
+#: query_builder/static/jsx/components/query-builder-form.jsx:123
+#: query_builder/static/jsx/util.jsx:32
+msgid "y"
+msgstr "and"
+
+#: query_builder/static/jsx/components/query-builder-form.jsx:124
+#: query_builder/static/jsx/util.jsx:33
+msgid "o"
+msgstr "or"
+
+#: query_builder/static/jsx/components/query-builder-form.jsx:125
+#: query_builder/static/jsx/util.jsx:27 query_builder/static/jsx/util.jsx:29
+msgid "no"
+msgstr "does not"
+
+#: query_builder/static/jsx/components/query-builder-form.jsx:125
+#: query_builder/static/jsx/util.jsx:34
+msgid "y no"
+msgstr "and not"
+
+#: query_builder/static/jsx/components/query-builder-form.jsx:126
+#: query_builder/static/jsx/util.jsx:35
+msgid "o no"
+msgstr "or not"
+
+#: query_builder/static/jsx/components/query-builder-formset.jsx:198
 msgid "Buscar"
 msgstr "Search"
 
-#: lexicon/static/jsx/search/search-formset.jsx:185
+#: query_builder/static/jsx/components/query-builder-formset.jsx:200
 msgid "Agregar filtro"
 msgstr "Add filter"
+
+#: query_builder/static/jsx/util.jsx:42
+msgid "coincide con expresión regular"
+msgstr "matches regular expression"
+
+#: query_builder/static/jsx/util.jsx:45
+msgid "ítem"
+msgstr "item"
+
+#: query_builder/static/jsx/util.jsx:45
+msgid "NCV"
+msgstr "VLN"
+
+msgid "entrada"
+msgstr "headword"
+
+msgid "glosa"
+msgstr "gloss"
+
+msgid "raiz"
+msgstr "root"
+
+msgid "campo semántico"
+msgstr "semantic field"
+
+msgid "categoría gramatical"
+msgstr "grammatical category"
+
+msgid "inflexión"
+msgstr "inflection"

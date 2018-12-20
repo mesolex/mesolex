@@ -42,5 +42,5 @@ export const humanReadableFilters = ({
     regex: gettext('coincide con expresión regular'),
   };
   const filterableFieldsDict = _.fromPairs(filterableFields);
-  return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${filterableFieldsDict[filterOn] || gettext('entrada')} ${filterDict[filter]}${vln ? ` (${gettext('NCV')})` : ''}`;
+  return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${filterableFieldsDict[filterOn] || gettext('ítem')} ${filterDict[filter]}${vln ? ` (${gettext('NCV')})` : ''}`;
 };
