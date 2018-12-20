@@ -48,14 +48,18 @@ def narratives_search_view(request, *args, **kwargs):
             'num_entries': metadatas.count() if metadatas else 0,
             'page': page,
             'query': True,
-            'formset': formset,
-            'formset_data': json.dumps(formset.data),
-            'formset_errors': json.dumps(formset.errors),
+            'narratives': {
+                'formset': formset,
+                'formset_data': json.dumps(formset.data),
+                'formset_errors': json.dumps(formset.errors),
+            }
         })
 
     formset = SoundMetadataQueryComposerFormset()
     return render(request, template_name, {
-        'formset': formset,
-        'formset_data': json.dumps(formset.data),
-        'formset_errors': json.dumps(formset.errors),
+        'narratives': {
+            'formset': formset,
+            'formset_data': json.dumps(formset.data),
+            'formset_errors': json.dumps(formset.errors),
+        }
     })

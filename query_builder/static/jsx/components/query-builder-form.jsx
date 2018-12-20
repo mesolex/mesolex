@@ -15,6 +15,8 @@ import {
 
 const QueryBuilderForm = ({
   i,
+  formsetName,
+  defaultFilter,
   config,
   dataset,
   errors,
@@ -28,14 +30,14 @@ const QueryBuilderForm = ({
     <div className="form-group">
       <label
         className="small search-form__filters-label"
-        htmlFor={`form-${i}-filters-collapse`}
-        onClick={() => $(`#form-${i}-filters-collapse`).collapse('toggle')}
+        htmlFor={`form-${i}-${formsetName}-filters-collapse`}
+        onClick={() => $(`#form-${i}-${formsetName}-filters-collapse`).collapse('toggle')}
       >
         { humanReadableFilters({
           i,
           operator: dataset.operator || 'and',
           filterOn: dataset.filter_on || (config.filterable_fields || [[]])[0][0],
-          filter: dataset.filter || 'begins_with',
+          filter: dataset.filter || defaultFilter,
           vln: (dataset.filter !== 'regex') && dataset.vln,
           filterableFields: config.filterable_fields,
         }) }
@@ -44,13 +46,13 @@ const QueryBuilderForm = ({
         <div className="input-group-prepend">
           <a
             className="btn btn-outline-primary"
-            href={`form-${i}-filters-collapse`}
-            id={`form-${i}-filters-link`}
+            href={`form-${i}-${formsetName}-filters-collapse`}
+            id={`form-${i}-${formsetName}-filters-link`}
             role="button"
             data-toggle="collapse"
             aria-expanded="false"
-            aria-controls={`form-${i}-filters-collapse`}
-            onClick={() => $(`#form-${i}-filters-collapse`).collapse('toggle')}
+            aria-controls={`form-${i}-${formsetName}-filters-collapse`}
+            onClick={() => $(`#form-${i}-${formsetName}-filters-collapse`).collapse('toggle')}
           >
             <Octicon name="gear" />
           </a>
@@ -65,7 +67,7 @@ const QueryBuilderForm = ({
                 'custom-select',
                 { 'is-invalid': (errors.query_string || []).length },
               )}
-              id={`id_form-${i}-query_string`}
+              id={`id_form-${i}-${formsetName}-query_string`}
               value={dataset.query_string}
               onChange={onChangeFieldFrom('query_string')}
               vocab={dataset.filter_on}
@@ -78,7 +80,7 @@ const QueryBuilderForm = ({
                 'form-control',
                 { 'is-invalid': (errors.query_string || []).length },
               )}
-              id={`id_form-${i}-query_string`}
+              id={`id_form-${i}-${formsetName}-query_string`}
               type="text"
               value={dataset.query_string}
               onChange={onChangeFieldFrom('query_string')}
@@ -100,7 +102,7 @@ const QueryBuilderForm = ({
         {
           (errors.query_string || []).length ?
             errors.query_string.map(error => (
-              <div className="invalid-feedback">
+              <div className="invalid-feedback" key={error}>
                 {error}
               </div>
             )) :
@@ -109,14 +111,14 @@ const QueryBuilderForm = ({
       </div>
       <div
         className="collapse input-group mt-2"
-        id={`form-${i}-filters-collapse`}
-        aria-labelledby={`form-${i}-filters-link`}
+        id={`form-${i}-${formsetName}-filters-collapse`}
+        aria-labelledby={`form-${i}-${formsetName}-filters-link`}
       >
         <div className="input-group">
           <select
             name={`form-${i}-operator`}
             className="custom-select search-form__select"
-            id={`id_form-${i}-operator`}
+            id={`id_form-${i}-${formsetName}-operator`}
             value={dataset.operator}
             onChange={onChangeFieldFrom('operator')}
           >
@@ -128,13 +130,13 @@ const QueryBuilderForm = ({
           <select
             name={`form-${i}-filter_on`}
             className="custom-select search-form__select"
-            id={`id_form-${i}-filter_on`}
+            id={`id_form-${i}-${formsetName}-filter_on`}
             value={dataset.filter_on}
             onChange={onChangeFieldFrom('filter_on')}
           >
             {
               (config.filterable_fields || []).map(([value, readableName]) => (
-                <option value={value}>{readableName}</option>
+                <option value={value} key={value}>{readableName}</option>
               ))
             }
           </select>
@@ -142,7 +144,7 @@ const QueryBuilderForm = ({
           <FilterSelector
             name={`form-${i}-filter`}
             className="custom-select search-form__select"
-            id={`id_form-${i}-filter`}
+            id={`id_form-${i}-${formsetName}-filter`}
             value={dataset.filter}
             onChange={onChangeFieldFrom('filter')}
             controlled={isControlled(dataset.filter_on)}
@@ -158,9 +160,11 @@ const QueryBuilderForm = ({
 
 QueryBuilderForm.propTypes = {
   i: PropTypes.number.isRequired,
-  config: PropTypes.shape.isRequired,
-  dataset: PropTypes.shape.isRequired,
-  errors: PropTypes.shape.isRequired,
+  formsetName: PropTypes.string,
+  defaultFilter: PropTypes.string,
+  config: PropTypes.shape({}).isRequired,
+  dataset: PropTypes.shape({}).isRequired,
+  errors: PropTypes.shape({}).isRequired,
   onChangeFieldFrom: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired,
 
@@ -168,6 +172,8 @@ QueryBuilderForm.propTypes = {
 };
 
 QueryBuilderForm.defaultProps = {
+  formsetName: 'default',
+  defaultFilter: 'exactly_equals',
   extraFilterComponents: [],
 };
 

@@ -36,8 +36,8 @@ const FilterSelector = ({
 
 FilterSelector.propTypes = {
   name: PropTypes.string.isRequired,
-  className: PropTypes.shape.isRequired,
-  id: PropTypes.number.isRequired,
+  className: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   controlled: PropTypes.bool.isRequired,

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block extra-head %}
+<link rel="stylesheet" href="{% static 'dist/lexicon_scss.bundle.css' %}" />
+{% endblock extra-head %}
+
+{% block content %}
+<div class="jumbotron lexicon-jumbotron mt-2 mb-2" style="background-image: url({% static 'img/ATC.jpg' %})">
+  <div class="lexicon-jumbotron__inner">
+    <h1 class="display-4 lexicon-jumbotron__headline">{% trans 'Bienvenido a Mesolex' %}</h1>
+    <p class="lead">
+      {% trans 'Recursos lexicosemánticos para lenguas mesoamericanas (en desarrollo)' %}
+    </p>
+  </div>
+</div>
+
+<p class="small mt-2 text-right">
+  {% trans 'Crédito: Ilustración por Inocencio Jiménez Chino' %}
+</p>
+
+<form action="{% url 'lexicon_search' %}" method="get">
+  <div id="lexicon-search-form">
+    <!-- This will be replaced on page load. -->
+    {% for form in lexicon.formset %}
+        <div class="form-group">
+            <label>…</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <a class="btn btn-outline-primary" href="#">
+                        <svg style="display: inline-block; vertical-align: text-top;" width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true" version="1.1"><path fill-rule="evenodd" d="M14 8.76v-1.6l-1.94-.64-.45-1.09.88-1.84-1.13-1.13-1.81.91-1.09-.45L7.77 1h-1.6l-.63 1.94-1.11.45-1.84-.88-1.13 1.13.91 1.81-.45 1.09L0 7.22v1.59l1.94.64.45 1.09-.88 1.84 1.13 1.13 1.81-.91 1.09.45.69 1.92h1.59l.63-1.94 1.11-.45 1.84.88 1.13-1.13-.92-1.81.47-1.09L14 8.74v.02zm-7 2.23c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg>
+                    </a>
+                </div>
+                {{ form.query_string }}
+            </div>
+        </div>
+    {% endfor %}
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">
+            {% trans 'Buscar' %}
+        </button>
+        <button class="btn btn-primary float-right" id="add-filter">
+            {% trans 'Agrega filtro' %}
+        </button>
+    </div>
+  </div>
+</form>
+
+ <form action="{% url 'narratives_search' %}" method="get">
+  <div id="narrative-search-form">
+    <!-- This will be replaced on page load. -->
+    {% for form in narratives.formset %}
+        <div class="form-group">
+            <label>…</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <a class="btn btn-outline-primary" href="#">
+                        <svg style="display: inline-block; vertical-align: text-top;" width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true" version="1.1"><path fill-rule="evenodd" d="M14 8.76v-1.6l-1.94-.64-.45-1.09.88-1.84-1.13-1.13-1.81.91-1.09-.45L7.77 1h-1.6l-.63 1.94-1.11.45-1.84-.88-1.13 1.13.91 1.81-.45 1.09L0 7.22v1.59l1.94.64.45 1.09-.88 1.84 1.13 1.13 1.81-.91 1.09.45.69 1.92h1.59l.63-1.94 1.11-.45 1.84.88 1.13-1.13-.92-1.81.47-1.09L14 8.74v.02zm-7 2.23c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg>
+                    </a>
+                </div>
+                {{ form.query_string }}
+            </div>
+        </div>
+    {% endfor %}
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">
+            {% trans 'Buscar' %}
+        </button>
+        <button class="btn btn-primary float-right" id="add-filter">
+            {% trans 'Agrega filtro' %}
+        </button>
+    </div>
+  </div>
+</form>
+
+{{ block.super }}
+{% endblock content %}
+
+{% block js-init %}
+  {{ block.super }}
+  "csrfToken": "{{ csrf_token }}",
+  "lexicon": {
+      "formset_config": {{ lexicon.formset.configuration_data_as_json|safe }},
+      "formset_data": {{ lexicon.formset_data|safe }},
+      "formset_errors": {{ lexicon.formset_errors|safe }}
+  },
+  "narratives": {
+      "formset_config": {{ narratives.formset.configuration_data_as_json|safe }},
+      "formset_data": {{ narratives.formset_data|safe }},
+      "formset_errors": {{ narratives.formset_errors|safe }}
+  },
+  "language_configuration": {{ language_configuration|safe }}
+{% endblock js-init %}
+
+{% block extra-js %}
+{{ block.super }}
+<script src="{% static 'dist/vendors.bundle.js' %}"></script>
+<script src="{% static 'dist/search.bundle.js' %}"></script>
+<script src="{% static 'dist/narratives.bundle.js' %}"></script>
+{% endblock extra-js %}

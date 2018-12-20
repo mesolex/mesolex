@@ -9,6 +9,7 @@ export default class SearchFormSet extends QueryBuilderFormset {
   extraFilterComponents = ({ i, uniqueId }) => ([
     <Vln
       i={i}
+      key="vln"
       config={this.props.formsetConfig}
       dataset={this.state.formsetIndexedDatasets[uniqueId]}
       onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
