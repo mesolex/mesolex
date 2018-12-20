@@ -15,22 +15,6 @@ from mesolex.utils import (
 )
 
 
-def lexicon_home(request, *args, **kwargs):
-    template_name = 'search/home.html'
-    formset = LexicalSearchFilterFormset()
-    return render(request, template_name, {
-        'formset': formset,
-        'formset_data': json.dumps({}),
-        'formset_errors': json.dumps({}),
-        'form_captions': True,
-        'language_configuration': json.dumps(
-            settings.LANGUAGE_CONFIGURATION,
-            ensure_ascii=False,
-            cls=ForceProxyEncoder,
-        ),
-    })
-
-
 def lexicon_search_view(request, *args, **kwargs):
     template_name = 'search/search.html'
     if request.GET:
@@ -68,9 +52,11 @@ def lexicon_search_view(request, *args, **kwargs):
             'num_entries': lexical_entries.count() if lexical_entries else 0,
             'page': page,
             'query': True,
-            'formset': formset,
-            'formset_data': json.dumps(formset.data),
-            'formset_errors': json.dumps(formset.errors),
+            'lexicon': {
+                'formset': formset,
+                'formset_data': json.dumps(formset.data),
+                'formset_errors': json.dumps(formset.errors),
+            },
             'language_configuration': json.dumps(
                 settings.LANGUAGE_CONFIGURATION,
                 ensure_ascii=False,
@@ -81,9 +67,11 @@ def lexicon_search_view(request, *args, **kwargs):
 
     formset = LexicalSearchFilterFormset()
     return render(request, template_name, {
-        'formset': formset,
-        'formset_data': json.dumps(formset.data),
-        'formset_errors': json.dumps(formset.errors),
+        'lexicon': {
+            'formset': formset,
+            'formset_data': json.dumps(formset.data),
+            'formset_errors': json.dumps(formset.errors),
+        },
         'language_configuration': json.dumps(
             settings.LANGUAGE_CONFIGURATION,
             ensure_ascii=False,

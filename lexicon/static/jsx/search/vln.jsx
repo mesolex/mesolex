@@ -37,8 +37,8 @@ const Vln = ({
 
 Vln.propTypes = {
   i: PropTypes.number.isRequired,
-  config: PropTypes.shape.isRequired,
-  dataset: PropTypes.shape.isRequired,
+  config: PropTypes.shape({}).isRequired,
+  dataset: PropTypes.shape({}).isRequired,
   onChangeFieldFrom: PropTypes.func.isRequired,
 };
 

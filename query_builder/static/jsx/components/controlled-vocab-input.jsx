@@ -35,12 +35,12 @@ const ControlledVocabInput = ({
 
 ControlledVocabInput.propTypes = {
   name: PropTypes.string.isRequired,
-  className: PropTypes.shape.isRequired,
-  id: PropTypes.number.isRequired,
+  className: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   vocab: PropTypes.string.isRequired,
-  vocabItems: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  vocabItems: PropTypes.shape({}).isRequired,
 };
 
 export default ControlledVocabInput;

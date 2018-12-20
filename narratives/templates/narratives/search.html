@@ -16,7 +16,7 @@
 
     <div class="test-formset-form">
         <form action="{% url 'narratives_search' %}" method="get">
-          <div id="search-form">
+          <div id="narrative-search-form">
             <!-- This will be replaced on page load. -->
             {% for form in formset %}
                 <div class="form-group">
@@ -153,9 +153,11 @@
 {% block js-init %}
   {{ block.super }}
   "csrfToken": "{{ csrf_token }}",
-  "formset_config": {{ formset.configuration_data_as_json|safe }},
-  "formset_data": {{ formset_data|safe }},
-  "formset_errors": {{ formset_errors|safe }}
+  "narratives": {
+    "formset_config": {{ narratives.formset.configuration_data_as_json|safe }},
+    "formset_data": {{ narratives.formset_data|safe }},
+    "formset_errors": {{ narratives.formset_errors|safe }}
+  }
 {% endblock js-init %}
 
 {% block extra-js %}

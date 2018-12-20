@@ -10,9 +10,14 @@ import QueryBuilderForm from './query-builder-form';
 
 export default class QueryBuilderFormSet extends React.Component {
   static propTypes = {
-    formsetConfig: PropTypes.shape.isRequired,
-    formsetData: PropTypes.shape.isRequired,
-    formsetErrors: PropTypes.shape.isRequired,
+    formsetName: PropTypes.string,
+    formsetConfig: PropTypes.shape({}).isRequired,
+    formsetData: PropTypes.shape({}).isRequired,
+    formsetErrors: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  }
+
+  static defaultProps = {
+    formsetName: 'default',
   }
 
   /*
@@ -31,7 +36,7 @@ export default class QueryBuilderFormSet extends React.Component {
   */
   constructor(props) {
     super(props);
-    const { formsetConfig, formsetData, formsetErrors } = props;
+    const { formsetName, formsetConfig, formsetData, formsetErrors } = props;
 
     /*
       Construct the list of forms by invoking `uuid` n times,
@@ -72,7 +77,7 @@ export default class QueryBuilderFormSet extends React.Component {
       forms,
       (acc, uniqueId, i) => ({
         ...acc,
-        [uniqueId]: formsetErrors[i] || {},
+        [uniqueId]: formsetErrors[i] || [],
       }),
       {},
     );
@@ -135,7 +140,7 @@ export default class QueryBuilderFormSet extends React.Component {
             [field]: e.target[eKey],
           },
           (field === 'filter_on' && this.isControlled(e.target[eKey])) ? {
-            filter: this.defaultFilter,
+            filter: 'exactly_equals',
           } : {},
         ),
       },
@@ -161,8 +166,8 @@ export default class QueryBuilderFormSet extends React.Component {
         ...this.state.formsetIndexedDatasets,
         [newUniqueId]: {
           operator: 'and',
-          filter_on: (this.props.formsetConfig.filterable_fields | [[]])[0][0],
-          filter: 'begins_with',
+          filter_on: (this.props.formsetConfig.filterable_fields || [[]])[0][0],
+          filter: this.defaultFilter,
           query_string: '',
         },
       },
@@ -188,6 +193,8 @@ export default class QueryBuilderFormSet extends React.Component {
           this.state.forms.map((uniqueId, i) => (
             <QueryBuilderForm
               i={i}
+              formsetName={this.props.formsetName}
+              defaultFilter={this.defaultFilter}
               key={uniqueId}
               config={this.props.formsetConfig}
               dataset={this.state.formsetIndexedDatasets[uniqueId]}
