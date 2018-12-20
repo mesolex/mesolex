@@ -338,7 +338,7 @@ msgid "Pueblo de grabacion"
 msgstr "Recording village"
 
 #: narratives/forms.py:17
-`msgid "Título"
+msgid "Título"
 msgstr "Title"
 
 #: narratives/templates/narratives/search.html:59

@@ -20,7 +20,7 @@ FILTERABLE_FIELDS_DICT = {
     'subgenre': ('subgenre', ),
     'consultant_name': ('contr1', 'contr2', ),
     'village_of_recording': ('con1_origin', 'con2_origin', ),
-    'title': ('titspn', 'titeng', ),
+    'title': ('titnative', 'titspn', 'titeng', ),
 }
 
 

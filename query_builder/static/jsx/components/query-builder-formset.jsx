@@ -31,7 +31,7 @@ export default class QueryBuilderFormSet extends React.Component {
   */
   constructor(props) {
     super(props);
-    const { formsetData, formsetErrors } = props;
+    const { formsetConfig, formsetData, formsetErrors } = props;
 
     /*
       Construct the list of forms by invoking `uuid` n times,
@@ -41,7 +41,6 @@ export default class QueryBuilderFormSet extends React.Component {
       parseInt(formsetData['form-TOTAL_FORMS'], 10) || 1,
       () => uuid4(),
     );
-
     /*
       Construct a single-key object with the `form` uuid
       as the key, then roll them all up together into one
@@ -54,8 +53,8 @@ export default class QueryBuilderFormSet extends React.Component {
           [uniqueId]: {
             query_string: formsetData[`form-${i}-query_string`] || '',
             operator: formsetData[`form-${i}-operator`] || 'and',
-            filter_on: formsetData[`form-${i}-filter_on`] || 'headword',
-            filter: formsetData[`form-${i}-filter`] || 'begins_with',
+            filter_on: formsetData[`form-${i}-filter_on`] || (formsetConfig.filterable_fields || [[]])[0][0],
+            filter: formsetData[`form-${i}-filter`] || this.defaultFilter,
             vln: !!formsetData[`form-${i}-vln`],
           },
         }),
@@ -83,6 +82,22 @@ export default class QueryBuilderFormSet extends React.Component {
       formsetIndexedDatasets,
       formsetIndexedErrors,
     };
+  }
+
+  /*
+    Check whether the first filterable field is a controlled
+    vocab field. This is used to determine whether "exactly equals"
+    or "begins with" is used as the default filter.
+  */
+  get firstIsControlled() {
+    return _.includes(
+      _.keys(this.props.formsetConfig.controlled_vocab_fields),
+      (this.props.formsetConfig.filterable_fields || [[]])[0][0],
+    );
+  }
+
+  get defaultFilter() {
+    return this.firstIsControlled ? 'exactly_equals' : 'begins_with';
   }
 
   /*
@@ -120,7 +135,7 @@ export default class QueryBuilderFormSet extends React.Component {
             [field]: e.target[eKey],
           },
           (field === 'filter_on' && this.isControlled(e.target[eKey])) ? {
-            filter: 'exactly_equals',
+            filter: this.defaultFilter,
           } : {},
         ),
       },
@@ -146,7 +161,7 @@ export default class QueryBuilderFormSet extends React.Component {
         ...this.state.formsetIndexedDatasets,
         [newUniqueId]: {
           operator: 'and',
-          filter_on: 'headword',
+          filter_on: (this.props.formsetConfig.filterable_fields | [[]])[0][0],
           filter: 'begins_with',
           query_string: '',
         },

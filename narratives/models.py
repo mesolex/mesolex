@@ -66,3 +66,7 @@ class SoundMetadata(models.Model):
     url = models.URLField(blank=True)
     notes = models.TextField(blank=True)
     ref = models.CharField(max_length=256, blank=True)
+
+    def __str__(self):
+        title = self.titspn if self.titspn else 'Sin titulo'
+        return f'{title} ({self.fn_trans})'
