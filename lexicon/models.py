@@ -83,6 +83,10 @@ class LexicalEntry(models.Model):
 
     def __str__(self):
         return self.lemma or self.ref or 'Word #%s' % (self.id)
+    
+    class Meta:
+        verbose_name = 'Lexical entry'
+        verbose_name_plural = 'Lexical entries'
 
 
 class AbstractSimpleStringValue(models.Model):

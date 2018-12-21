@@ -85,25 +85,30 @@
                         {% endif %}
                     </div>
 
-                    <div class="h5">{% trans 'Título y descripción' %}</div>
-                    <div class="mb-4">
-                        <div>
-                            {% if metadata.titnative %}<i>{% trans 'Título indígena' %}:</i> {{ metadata.titnative }};{% endif %} {% if metadata.titeng %}<i>{% trans 'Título inglés'%}:</i> {{ metadata.titeng }}{% endif %}
+                    {% if metadata.titnative or metadata.titeng or metadata.titspn or metadata.descrip %}<div class="h5">{% trans 'Título y descripción' %}</div>
+                        <div class="mb-4">
+                            <div>
+                                {% if metadata.titnative %}<i>{% trans 'Título indígena' %}:</i> {{ metadata.titnative }};{% endif %} {% if metadata.titeng %}<i>{% trans 'Título inglés'%}:</i> {{ metadata.titeng }}{% endif %}
+                            </div>
+                            <div>
+                                <i>{% trans 'Descripción' %}:</i> {{ metadata.descrip }}
+                            </div>
                         </div>
-                        <div>
-                            <i>{% trans 'Descripción' %}:</i> {{ metadata.descrip }}
+                    {% endif %}
+
+                    {% if metadata.url and metadata.url != 'Pending' %}
+                        <div class="h5">URL for inline playback</div>
+                        <div class="mb-4">
+                            <a href="{{ metadata.url }}">{{ metadata.url }}</a>
                         </div>
-                    </div>
+                    {% endif %}
 
-                    <div class="h5">URL for inline playback</div>
-                    <div class="mb-4">
-                        {{ metadata.url }}
-                    </div>
-
-                    <div class="h5">{% trans 'Archivos' %}</div>
-                    <div>
-                        {{ metadata.archive }}
-                    </div>
+                    {% if metadata.archive %}
+                        <div class="h5">{% trans 'Archivos' %}</div>
+                        <div>
+                            {{ metadata.archive }}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
             {% endwith %}
