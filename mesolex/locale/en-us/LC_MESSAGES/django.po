@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-16 12:12+0000\n"
+"POT-Creation-Date: 2018-12-21 18:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,16 +50,16 @@ msgstr "Reads an XML data source file and updates the database."
 msgid "Identificación única"
 msgstr "Unique ID"
 
-#: lexicon/templates/search/home.html:8
+#: lexicon/templates/search/home.html:8 mesolex/templates/home.html:12
 msgid "Bienvenido a Mesolex"
 msgstr "Welcome to Mesolex"
 
-#: lexicon/templates/search/home.html:10
+#: lexicon/templates/search/home.html:10 mesolex/templates/home.html:14
 msgid "Recursos lexicosemánticos para lenguas mesoamericanas (en desarrollo)"
 msgstr ""
 "Lexicosemantic resources for Mesoamerican languages (under construction)"
 
-#: lexicon/templates/search/home.html:16
+#: lexicon/templates/search/home.html:16 mesolex/templates/home.html:20
 msgid "Crédito: Ilustración por Inocencio Jiménez Chino"
 msgstr "Credit: Illustration by Inocencio Jiménez Chino"
 
@@ -68,12 +68,14 @@ msgstr "Credit: Illustration by Inocencio Jiménez Chino"
 msgid "Náhuat de la Sierra Nororiental de Puebla: Diccionario"
 msgstr "Nahuatl of the Sierra Nororiental de Puebla: Dictionary"
 
-#: lexicon/templates/search/search.html:36
+#: lexicon/templates/search/search.html:36 mesolex/templates/home.html:45
+#: mesolex/templates/home.html:76
 #: narratives/templates/narratives/search.html:36
 msgid "Buscar"
 msgstr "Search"
 
-#: lexicon/templates/search/search.html:39
+#: lexicon/templates/search/search.html:39 mesolex/templates/home.html:48
+#: mesolex/templates/home.html:79
 #: narratives/templates/narratives/search.html:39
 msgid "Agrega filtro"
 msgstr "Add filter"
@@ -320,6 +322,10 @@ msgstr "Either possessed or inalienably possessed (no change in stem)"
 #: mesolex/settings/languages.py:174
 msgid "Obligatoriamente posesionado"
 msgstr "Obligatorily possessed"
+
+#: mesolex/templates/home.html:55
+msgid "Narrativas mesoamericanas"
+msgstr "Mesoamerican narratives"
 
 #: mesolex/templates/includes/header.html:14
 msgid "Activar la navegación"
