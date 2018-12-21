@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     'lexicon',
     'narratives',
+    'query_builder',
     'util',
 ]
 
