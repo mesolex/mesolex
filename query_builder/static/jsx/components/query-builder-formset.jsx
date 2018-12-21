@@ -77,7 +77,7 @@ export default class QueryBuilderFormSet extends React.Component {
       forms,
       (acc, uniqueId, i) => ({
         ...acc,
-        [uniqueId]: formsetErrors[i] || [],
+        [uniqueId]: formsetErrors[i] || {},
       }),
       {},
     );
