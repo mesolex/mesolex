@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     url(r'^narratives/', include(narratives.urls)),
-    url('', include(lexicon.urls)),
+    url(r'^search/', include(lexicon.urls)),
 ]
 
 if settings.DEBUG:
