@@ -20,7 +20,11 @@
   {% trans 'Crédito: Ilustración por Inocencio Jiménez Chino' %}
 </p>
 
-<form action="{% url 'lexicon_search' %}" method="get">
+<h2 class="h5">
+    {% trans 'Náhuat de la Sierra Nororiental de Puebla: Diccionario' %}
+</h2>
+
+<form action="{% url 'lexicon_search' %}" method="get" class="mb-5">
   <div id="lexicon-search-form">
     <!-- This will be replaced on page load. -->
     {% for form in lexicon.formset %}
@@ -46,6 +50,10 @@
     </div>
   </div>
 </form>
+
+<h2 class="h5">
+  {% trans 'Narrativas mesoamericanas' %}
+</h2>
 
  <form action="{% url 'narratives_search' %}" method="get">
   <div id="narrative-search-form">
