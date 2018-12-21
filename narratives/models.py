@@ -69,4 +69,7 @@ class SoundMetadata(models.Model):
 
     def __str__(self):
         title = self.titspn if self.titspn else 'Sin titulo'
-        return f'{title} ({self.fn_trans})'
+        return '{title} ({fn_trans})'.format(
+            title=title,
+            fn_trans=self.fn_trans,
+        )
