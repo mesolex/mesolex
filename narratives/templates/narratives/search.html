@@ -10,37 +10,12 @@
 {% block content %}
     {% if form_captions %}
         <h2 class="h6">
-          {% trans 'Náhuat de la Sierra Nororiental de Puebla: Diccionario' %}
+            {% trans 'Náhuat de la Sierra Nororiental de Puebla: Diccionario' %}
         </h2>
     {% endif %}
 
     <div class="test-formset-form">
-        <form action="{% url 'narratives_search' %}" method="get">
-          <div id="narrative-search-form">
-            <!-- This will be replaced on page load. -->
-            {% for form in formset %}
-                <div class="form-group">
-                    <label>…</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <a class="btn btn-outline-primary" href="#">
-                                <svg style="display: inline-block; vertical-align: text-top;" width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true" version="1.1"><path fill-rule="evenodd" d="M14 8.76v-1.6l-1.94-.64-.45-1.09.88-1.84-1.13-1.13-1.81.91-1.09-.45L7.77 1h-1.6l-.63 1.94-1.11.45-1.84-.88-1.13 1.13.91 1.81-.45 1.09L0 7.22v1.59l1.94.64.45 1.09-.88 1.84 1.13 1.13 1.81-.91 1.09.45.69 1.92h1.59l.63-1.94 1.11-.45 1.84.88 1.13-1.13-.92-1.81.47-1.09L14 8.74v.02zm-7 2.23c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg>
-                            </a>
-                        </div>
-                        {{ form.query_string }}
-                    </div>
-                </div>
-            {% endfor %}
-            <div class="form-group">
-                <button type="submit" class="btn btn-success">
-                    {% trans 'Buscar' %}
-                </button>
-                <button class="btn btn-primary float-right" id="add-filter">
-                    {% trans 'Agrega filtro' %}
-                </button>
-            </div>
-          </div>
-        </form>
+        {% include 'query_builder/includes/query_builder.html' with query_builder_action=narratives_search_action query_builder_formset=narratives.formset query_builder_form_id='narrative-search-form' %}
     </div>
 
     {% if query %}
