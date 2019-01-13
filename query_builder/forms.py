@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
 from mesolex.utils import (
-    to_vln,
+    contains_word_to_regex,
     ForceProxyEncoder,
 )
 
@@ -23,6 +23,7 @@ class QueryBuilderForm(forms.Form):
         ('begins_with', _('Empieza con')),
         ('ends_with', _('Termina con')),
         ('contains', _('Incluye')),
+        ('contains_word', _('Incluye palabra')),
         ('exactly_equals', _('Es exactamente igual a')),
         ('regex', _('Expresión regular')),
     )
@@ -31,6 +32,7 @@ class QueryBuilderForm(forms.Form):
         'begins_with': '__istartswith',
         'ends_with': '__iendswith',
         'contains': '__icontains',
+        'contains_word': '__iregex',
         'exactly_equals': '',
         'regex': '__iregex',
     }
@@ -63,35 +65,64 @@ class QueryBuilderForm(forms.Form):
             widget=forms.Select(attrs={'class': 'custom-select'})
         )
 
+    @property
+    def transformations(self):
+        """
+        A sequence of transformations to apply to the form data to
+        produce the final filter action and query.
+
+        Although most filters have a "direct" interpretation in
+        ORM terms (for example, "starts with" translates to "__istartswith"),
+        some don't: "contains word", for example, needs to be
+        translated into some kind of regular expression.
+
+        The types of transformations that have to be applied are
+        domain-specific, and each subclass of QueryBuilderForm
+        can modify or add to the sequence of transformations.
+        For example, the lexicon search form for Nahuat data
+        includes a "vowel length neutralization" transformation.
+        """
+        return [
+            contains_word_to_regex,
+        ]
+
     def get_filter_action_and_query(self):
         """
         NOTE: this will have to be overridden if anything interesting
-        is done to generate a query string and filter action, e.g.
-        if there is a "vowel length neutralization" feature or some such.
+        is done to generate a query string and filter action beyond
+        what can be done with the "transformations" feature.
         """
         
         if not self.is_bound:
             return (None, None)
         
         form_data = self.cleaned_data
-        filter_str = form_data['filter']
-        filter_arg_val = self.FILTERS_DICT.get(filter_str, '')
+        filter_name = form_data['filter']
+        filter_action = self.FILTERS_DICT.get(filter_name, '')
         query_string = form_data['query_string']
+
+        for transformation in self.transformations:
+            (filter_action, query_string) = transformation(
+                filter_name,
+                filter_action,
+                query_string,
+                form_data,
+            )
         
-        return (filter_arg_val, query_string)
+        return (filter_action, query_string)
 
     def get_query(self):
         if not self.is_bound:
             return
         
-        (filter_arg_val, query_string) = self.get_filter_action_and_query()
+        (filter_action, query_string) = self.get_filter_action_and_query()
         filter_on_str = self.cleaned_data['filter_on']
         filter_on_vals = self.FILTERABLE_FIELDS_DICT.get(filter_on_str, [])
 
         query_expression = Q()
 
         for filter_on_val in filter_on_vals:
-            query_expression |= Q(**{'%s%s' % (filter_on_val, filter_arg_val): query_string})
+            query_expression |= Q(**{'%s%s' % (filter_on_val, filter_action): query_string})
 
         return query_expression
 

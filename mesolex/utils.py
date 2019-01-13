@@ -5,7 +5,17 @@ from django.utils.encoding import force_text
 from django.utils.functional import Promise
 
 
-def to_vln(filter, query_string):
+def contains_word_to_regex(filter_name, filter_action, query_string, _form_data):
+    if filter_name != 'contains_word':
+        return (filter_action, query_string)
+
+    new_query_string = '(?:^|\s|\.){query_string}(?:$|\s|\.)'.format(
+        query_string=query_string,
+    )
+    return ('__iregex', new_query_string)
+
+
+def to_vln(filter_name, filter_action, query_string, form_data):
     """
     Convert a filter + query string combination into a regular expression
     query that applies vowel length neutralization.
@@ -17,15 +27,17 @@ def to_vln(filter, query_string):
     as appropriate for the filter type. For example, a "begins with"
     query will have the string start character prepended to it.
     """
-    if filter == 'regex':
-        return ('__iregex', query_string)
+    if not form_data['vln'] or filter_name == 'regex':
+        return (filter_action, query_string)
+    
     with_neutralization = re.sub(r'([aeiouAEIOU]):?', r'\1:?', query_string)
 
     affixed_qstr = with_neutralization
-    if filter == 'begins_with' or filter == 'exactly_equals':
+
+    if filter_name in ['begins_with', 'exactly_equals']:
         affixed_qstr = '^' + affixed_qstr
 
-    if filter == 'ends_with' or filter == 'exactly_equals':
+    if filter_name in ['ends_with', 'exactly_equals']:
         affixed_qstr = affixed_qstr + '$'
 
     return ('__iregex', affixed_qstr)
