@@ -16,7 +16,7 @@ const ControlledVocabInput = ({
   value,
   onChange,
   vocab,
-  languageConfiguration,
+  vocabItems,
 }) => (
   <select
     name={name}
@@ -26,7 +26,7 @@ const ControlledVocabInput = ({
     onChange={onChange}
   >
     {
-      languageConfiguration.azz[vocab].map(([pos, readable]) => (
+      (vocabItems[vocab] || []).map(([pos, readable]) => (
         <option value={pos} key={pos}>{`${gettext(readable)}`}</option>
       ))
     }
@@ -35,12 +35,12 @@ const ControlledVocabInput = ({
 
 ControlledVocabInput.propTypes = {
   name: PropTypes.string.isRequired,
-  className: PropTypes.shape.isRequired,
-  id: PropTypes.number.isRequired,
+  className: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   vocab: PropTypes.string.isRequired,
-  languageConfiguration: PropTypes.shape.isRequired,
+  vocabItems: PropTypes.shape({}).isRequired,
 };
 
 export default ControlledVocabInput;

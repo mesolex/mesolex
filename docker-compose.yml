@@ -1,0 +1,21 @@
+version: '3'
+services:
+  db:
+    image: postgres:9.6
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      PGDATABASE: mesolex
+      PGUSER: postgres
+      PGHOST: db
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      # mount local repository into the container
+      - .:/code:delegated
+      # If the developer wants to deploy inside a docker container, expose their
+      # SSH keys to the container:
+      - ~/.ssh:/root/.ssh

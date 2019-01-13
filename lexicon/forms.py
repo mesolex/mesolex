@@ -1,32 +1,23 @@
+import json
 import re
 
 from django import forms
-from django.utils.translation import gettext as _
+from django.conf import settings
+from django.db.models import Q
+from django.utils.translation import ugettext_lazy as _
 
-
-BOOLEAN_OPERATORS = (
-    ('and', 'y'),
-    ('or', 'o'),
-    ('and_n', 'y no'),
-    ('or_n', 'o no'),
+from query_builder.forms import (
+    QueryBuilderForm,
+    QueryBuilderBaseFormset,
 )
 
-FILTERS = (
-    ('begins_with', _('Empieza con')),
-    ('ends_with', _('Termina con')),
-    ('contains', _('Incluye')),
-    ('exactly_equals', _('Es exactamente igual a')),
-    ('regex', _('Expresión regular')),
+from mesolex.utils import (
+    to_vln,
 )
 
-FILTERS_DICT = {
-    'begins_with': '__istartswith',
-    'ends_with': '__iendswith',
-    'contains': '__icontains',
-    'exactly_equals': '',
-    'regex': '__iregex',
-}
 
+# TODO: investigate why these gettext-strings have to be
+# lazy to work as expected when serialized by the formset.
 FILTERABLE_FIELDS = (
     ('lemma', _('Entrada')),
     ('gloss', _('Glosa')),
@@ -46,32 +37,30 @@ FILTERABLE_FIELDS_DICT = {
 }
 
 
-class LexicalSearchFilterForm(forms.Form):
-    query_string = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control'})
-    )
-    operator = forms.ChoiceField(
-        choices=BOOLEAN_OPERATORS,
-        widget=forms.Select(attrs={'class': 'custom-select'})
-    )
-    filter = forms.ChoiceField(
-        choices=FILTERS,
-        widget=forms.Select(attrs={'class': 'custom-select'})
-    )
-    filter_on = forms.ChoiceField(
-        choices=FILTERABLE_FIELDS,
-        widget=forms.Select(attrs={'class': 'custom-select'})
-    )
+class LexicalSearchFilterForm(QueryBuilderForm):
+    FILTERABLE_FIELDS = FILTERABLE_FIELDS
+    FILTERABLE_FIELDS_DICT = FILTERABLE_FIELDS_DICT
+
     vln = forms.BooleanField(required=False)
 
-    def clean(self):
-        cleaned_data = super().clean()
-        if 'filter' in cleaned_data and cleaned_data['filter'] == 'regex':
-            qs = cleaned_data['query_string']
-            try:
-                re.compile(qs)
-            except Exception:
-                self.add_error('query_string', forms.ValidationError(_('Expresión regular no válida.')))
+    @property
+    def transformations(self):
+        return super().transformations + [
+            to_vln,
+        ]
 
 
-LexicalSearchFilterFormset = forms.formset_factory(LexicalSearchFilterForm)
+class BaseLexiconQueryComposerFormset(QueryBuilderBaseFormset):
+    FILTERABLE_FIELDS = FILTERABLE_FIELDS
+
+    CONTROLLED_VOCAB_FIELDS = {
+        'part_of_speech': settings.LANGUAGE_CONFIGURATION['azz']['part_of_speech'],
+        'inflectional_type': settings.LANGUAGE_CONFIGURATION['azz']['inflectional_type'],
+    }
+
+
+LexicalSearchFilterFormset = forms.formset_factory(
+    LexicalSearchFilterForm,
+    formset=BaseLexiconQueryComposerFormset,
+)
+

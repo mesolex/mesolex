@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'robots',
 
     'lexicon',
+    'narratives',
+    'query_builder',
     'util',
 ]
 

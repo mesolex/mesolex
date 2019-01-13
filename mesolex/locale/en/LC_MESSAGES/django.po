@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-09 00:08+0000\n"
+"POT-Creation-Date: 2019-01-13 16:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,55 +17,32 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lexicon/forms.py:15
-msgid "Empieza con"
-msgstr "Begins with"
-
-#: lexicon/forms.py:16
-msgid "Termina con"
-msgstr "Ends with"
-
-#: lexicon/forms.py:17
-msgid "Incluye"
-msgstr "Contains"
-
-#: lexicon/forms.py:18
-msgid "Es exactamente igual a"
-msgstr "Equal to"
-
-#: lexicon/forms.py:19
-msgid "Expresión regular"
-msgstr "Regular expression"
-
-#: lexicon/forms.py:31 lexicon/models.py:32 scratch_space/tei_models.py:196
+#: lexicon/forms.py:22 lexicon/models.py:32 scratch_space/tei_models.py:196
 msgid "Entrada"
 msgstr "Headword"
 
-#: lexicon/forms.py:32 lexicon/templates/search/search.html:63
+#: lexicon/forms.py:23 lexicon/templates/search/search.html:38
 msgid "Glosa"
 msgstr "Gloss"
 
-#: lexicon/forms.py:33
+#: lexicon/forms.py:24
 msgid "Raiz"
 msgstr "Root"
 
-#: lexicon/forms.py:34 lexicon/templates/search/search.html:73
+#: lexicon/forms.py:25 lexicon/templates/search/search.html:48
 msgid "Campo semántico"
 msgstr "Semantic field"
 
-#: lexicon/forms.py:35 lexicon/templates/search/search.html:68
+#: lexicon/forms.py:26 lexicon/templates/search/search.html:43
 msgid "Categoría gramatical"
 msgstr "Grammatical category"
 
-#: lexicon/forms.py:36 lexicon/templates/search/search.html:68
+#: lexicon/forms.py:27 lexicon/templates/search/search.html:43
 msgid "Inflexión"
 msgstr "Inflection"
 
-#: lexicon/forms.py:74
-msgid "Expresión regular no válida."
-msgstr "Invalid regular expression."
-
-#: lexicon/management/commands/import_data.py:12
+#: lexicon/management/commands/import_data.py:16
+#: narratives/management/commands/import_narratives.py:16
 msgid "Lee una fuente de datos en XML y actualiza la base de datos."
 msgstr "Reads an XML data source file and updates the database."
 
@@ -73,54 +50,36 @@ msgstr "Reads an XML data source file and updates the database."
 msgid "Identificación única"
 msgstr "Unique ID"
 
-#: lexicon/templates/search/home.html:8
-msgid "Bienvenido a Mesolex"
-msgstr "Welcome to Mesolex"
-
-#: lexicon/templates/search/home.html:10
-msgid "Recursos lexicosemánticos para lenguas mesoamericanas (en desarrollo)"
-msgstr "Lexicosemantic resources for Mesoamerican languages (under construction)"
-
-#: lexicon/templates/search/home.html:16
-msgid "Crédito: Ilustración por Inocencio Jiménez Chino"
-msgstr "Credit: Illustration by Inocencio Jiménez Chino"
-
-#: lexicon/templates/search/search.html:13
+#: lexicon/templates/search/search.html:13 mesolex/templates/home.html:27
+#: narratives/templates/narratives/search.html:13
 msgid "Náhuat de la Sierra Nororiental de Puebla: Diccionario"
 msgstr "Nahuatl of the Sierra Nororiental de Puebla: Dictionary"
 
-#: lexicon/templates/search/search.html:36
-msgid "Buscar"
-msgstr "Search"
-
-#: lexicon/templates/search/search.html:39
-msgid "Agrega filtro"
-msgstr "Add filter"
-
-#: lexicon/templates/search/search.html:52
+#: lexicon/templates/search/search.html:27
+#: narratives/templates/narratives/search.html:27
 #, python-format
 msgid "%(num_entries)s resultados (página %(page)s de %(num_pages)s)"
 msgstr "%(num_entries)s results (page %(page)s of %(num_pages)s)"
 
-#: lexicon/templates/search/search.html:63
+#: lexicon/templates/search/search.html:38
 msgid "Citación"
 msgstr "Citation"
 
-#: lexicon/templates/search/search.html:63
+#: lexicon/templates/search/search.html:38
 msgid "Formas alt."
 msgstr "Alt. forms"
 
-#: lexicon/templates/search/search.html:79
+#: lexicon/templates/search/search.html:54
 msgid "Etimología"
 msgstr "Etymology"
 
-#: lexicon/templates/search/search.html:83
+#: lexicon/templates/search/search.html:58
 msgid "Raíz"
 msgid_plural "Raízes"
 msgstr[0] "Root"
 msgstr[1] "Roots"
 
-#: lexicon/templates/search/search.html:89
+#: lexicon/templates/search/search.html:64
 #, fuzzy
 #| msgid "Raíz compuesta"
 msgid "Raíz compuesta"
@@ -128,41 +87,44 @@ msgid_plural "Raízes compuestas"
 msgstr[0] "Compound stem"
 msgstr[1] "Compound stems"
 
-#: lexicon/templates/search/search.html:94
+#: lexicon/templates/search/search.html:69
 msgid "Palabra con elementos no de náhuat"
 msgid_plural "Palabras con elementos no de náhuat"
 msgstr[0] "Word with non-Nahuat elements"
 msgstr[1] "Words with non-Nahuat elements"
 
-#: lexicon/templates/search/search.html:135
+#: lexicon/templates/search/search.html:110
 msgid "Notas semánticas"
 msgstr "Semantic notes"
 
-#: lexicon/templates/search/search.html:141
+#: lexicon/templates/search/search.html:116
 msgid "Notas morfológicas"
 msgstr "Morphological notes"
 
-#: lexicon/templates/search/search.html:147
+#: lexicon/templates/search/search.html:122
 msgid "Notas gramaticales"
 msgstr "Grammatical notes"
 
-#: lexicon/templates/search/search.html:164
+#: lexicon/templates/search/search.html:139
+#: narratives/templates/narratives/search.html:100
 msgid "Anterior"
 msgstr "Previous"
 
-#: lexicon/templates/search/search.html:177
+#: lexicon/templates/search/search.html:152
+#: narratives/templates/narratives/search.html:113
 msgid "Siguiente"
 msgstr "Next"
 
-#: lexicon/templates/search/search.html:189
+#: lexicon/templates/search/search.html:164
+#: narratives/templates/narratives/search.html:125
 msgid "Resultado no encontrado."
 msgstr "No results found."
 
-#: mesolex/settings/base.py:153
+#: mesolex/settings/base.py:155
 msgid "español"
 msgstr "Spanish"
 
-#: mesolex/settings/base.py:154
+#: mesolex/settings/base.py:156
 #, fuzzy
 #| msgid "inglés"
 msgid "inglés"
@@ -336,9 +298,151 @@ msgstr "Either possessed or inalienably possessed (no change in stem)"
 msgid "Obligatoriamente posesionado"
 msgstr "Obligatorily possessed"
 
+#: mesolex/templates/home.html:12
+msgid "Bienvenido a Mesolex"
+msgstr "Welcome to Mesolex"
+
+#: mesolex/templates/home.html:14
+msgid "Recursos lexicosemánticos para lenguas mesoamericanas (en desarrollo)"
+msgstr ""
+"Lexicosemantic resources for Mesoamerican languages (under construction)"
+
+#: mesolex/templates/home.html:20
+msgid "Crédito: Ilustración por Inocencio Jiménez Chino"
+msgstr "Credit: Illustration by Inocencio Jiménez Chino"
+
+#: mesolex/templates/home.html:33
+msgid "Narrativas mesoamericanas"
+msgstr "Mesoamerican narratives"
+
 #: mesolex/templates/includes/header.html:14
 msgid "Activar la navegación"
 msgstr "Toggle navigation"
+
+#: narratives/forms.py:14
+msgid "Subgénero"
+msgstr "Subgenre"
+
+#: narratives/forms.py:15
+msgid "Nombre del contribuidor"
+msgstr "Contributor name"
+
+#: narratives/forms.py:16
+msgid "Pueblo de grabacion"
+msgstr "Recording village"
+
+#: narratives/forms.py:17
+msgid "Título"
+msgstr "Title"
+
+#: narratives/templates/narratives/search.html:34
+msgid "Metadatos basicos"
+msgstr "Basic metadata"
+
+#: narratives/templates/narratives/search.html:36
+msgid "Nombre de archivo"
+msgstr "Filename"
+
+#: narratives/templates/narratives/search.html:37
+msgid "Duración"
+msgstr "Duration"
+
+#: narratives/templates/narratives/search.html:38
+msgid "Tamaño"
+msgstr "Size"
+
+#: narratives/templates/narratives/search.html:39
+msgid "ISO 639-3 o Glottocode"
+msgstr "ISO 639-3 o Glottocode"
+
+#: narratives/templates/narratives/search.html:40
+msgid "Lugar de grabación"
+msgstr "Recording location"
+
+#: narratives/templates/narratives/search.html:41
+msgid "Fecha de grabación"
+msgstr "Recording date"
+
+#: narratives/templates/narratives/search.html:42
+msgid "Grabado por"
+msgstr "Recorded by"
+
+#: narratives/templates/narratives/search.html:43
+msgid "Formato de grabación"
+msgstr "Recording format"
+
+#: narratives/templates/narratives/search.html:44
+msgid "Grabadora"
+msgstr "Recorder"
+
+#: narratives/templates/narratives/search.html:45
+msgid "Micrófono"
+msgstr "Microphone"
+
+#: narratives/templates/narratives/search.html:48
+msgid "Contribuidores"
+msgstr "Contributors"
+
+#: narratives/templates/narratives/search.html:52
+#: narratives/templates/narratives/search.html:58
+msgid "Contribuidor"
+msgstr "Contributor"
+
+#: narratives/templates/narratives/search.html:63
+msgid "Título y descripción"
+msgstr "Title and description"
+
+#: narratives/templates/narratives/search.html:66
+msgid "Título indígena"
+msgstr "Indigenous title"
+
+#: narratives/templates/narratives/search.html:66
+msgid "Título inglés"
+msgstr "English title"
+
+#: narratives/templates/narratives/search.html:69
+msgid "Descripción"
+msgstr "Description"
+
+#: narratives/templates/narratives/search.html:82
+msgid "Archivos"
+msgstr "Archives"
+
+#: query_builder/forms.py:34
+msgid "Empieza con"
+msgstr "Begins with"
+
+#: query_builder/forms.py:35
+msgid "Termina con"
+msgstr "Ends with"
+
+#: query_builder/forms.py:36
+msgid "Incluye"
+msgstr "Contains"
+
+#: query_builder/forms.py:37
+msgid "Incluye palabra"
+msgstr "Contains word"
+
+#: query_builder/forms.py:38
+msgid "Es exactamente igual a"
+msgstr "Equal to"
+
+#: query_builder/forms.py:39
+msgid "Expresión regular"
+msgstr "Regular expression"
+
+#: query_builder/forms.py:148
+msgid "Expresión regular no válida."
+msgstr "Invalid regular expression."
+
+#: query_builder/templates/query_builder/includes/query_builder.html:21
+msgid "Buscar"
+msgstr "Search"
+
+#: query_builder/templates/query_builder/includes/query_builder.html:24
+msgid "Agrega filtro"
+msgstr "Add filter"
 
 #: scratch_space/tei_models.py:208
 msgid "Entrada léxica"
@@ -347,6 +451,9 @@ msgstr "Lexical entry"
 #: scratch_space/tei_models.py:209
 msgid "Entradas léxicas"
 msgstr "Lexical entries"
+
+#~ msgid "inglés (EE.UU.)"
+#~ msgstr "English"
 
 #~ msgid "Idioma"
 #~ msgstr "Language"

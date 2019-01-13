@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block extra-head %}
+<link rel="stylesheet" href="{% static 'dist/lexicon_scss.bundle.css' %}" />
+{% endblock extra-head %}
+
+{% block content %}
+<div class="jumbotron lexicon-jumbotron mt-2 mb-2" style="background-image: url({% static 'img/ATC.jpg' %})">
+  <div class="lexicon-jumbotron__inner">
+    <h1 class="display-4 lexicon-jumbotron__headline">{% trans 'Bienvenido a Mesolex' %}</h1>
+    <p class="lead">
+      {% trans 'Recursos lexicosemánticos para lenguas mesoamericanas (en desarrollo)' %}
+    </p>
+  </div>
+</div>
+
+<p class="small mt-2 text-right">
+  {% trans 'Crédito: Ilustración por Inocencio Jiménez Chino' %}
+</p>
+
+{% url 'lexicon_search' as lexicon_search_action %}
+{% url 'narratives_search' as narratives_search_action %}
+
+<h2 class="h5">
+    {% trans 'Náhuat de la Sierra Nororiental de Puebla: Diccionario' %}
+</h2>
+{% include 'query_builder/includes/query_builder.html' with query_builder_action=lexicon_search_action query_builder_formset=lexicon.formset query_builder_form_id='lexicon-search-form' %}
+
+
+<h2 class="h5">
+  {% trans 'Narrativas mesoamericanas' %}
+</h2>
+{% include 'query_builder/includes/query_builder.html' with query_builder_action=narratives_search_action query_builder_formset=narratives.formset query_builder_form_id='narrative-search-form' %}
+
+{{ block.super }}
+{% endblock content %}
+
+{% block js-init %}
+  {{ block.super }}
+  "csrfToken": "{{ csrf_token }}",
+  "lexicon": {
+      "formset_config": {{ lexicon.formset.configuration_data_as_json|safe }},
+      "formset_data": {{ lexicon.formset_data|safe }},
+      "formset_errors": {{ lexicon.formset_errors|safe }}
+  },
+  "narratives": {
+      "formset_config": {{ narratives.formset.configuration_data_as_json|safe }},
+      "formset_data": {{ narratives.formset_data|safe }},
+      "formset_errors": {{ narratives.formset_errors|safe }}
+  },
+  "language_configuration": {{ language_configuration|safe }}
+{% endblock js-init %}
+
+{% block extra-js %}
+{{ block.super }}
+<script src="{% static 'dist/vendors.bundle.js' %}"></script>
+<script src="{% static 'dist/search.bundle.js' %}"></script>
+<script src="{% static 'dist/narratives.bundle.js' %}"></script>
+{% endblock extra-js %}

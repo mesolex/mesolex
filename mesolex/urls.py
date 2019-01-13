@@ -20,14 +20,18 @@ from django.views.i18n import JavaScriptCatalog
 
 import lexicon.urls
 import lexicon.views
+import narratives.urls
+import mesolex.views
 
 urlpatterns = [
+    url(r'^$', mesolex.views.home, name='home'),
     url(r'^robots\.txt', include('robots.urls')),
     url(r'^api/', include('lexicon.api_urls'), name='api'),
     url(r'^admin/', admin.site.urls),
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
-    url('', include(lexicon.urls)),
+    url(r'^narratives/', include(narratives.urls)),
+    url(r'^search/', include(lexicon.urls)),
 ]
 
 if settings.DEBUG:

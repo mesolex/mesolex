@@ -7,14 +7,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            ['es2015', {'modules': false}],
-            'react',
-            'stage-2'
-          ]
-        }
+        loader: 'babel-loader'
       },
       {
         test: /\.(css|scss)$/,
@@ -41,14 +34,30 @@ module.exports = {
   },
   entry: {
     search: path.join(__dirname, 'lexicon/static/jsx/search/index.jsx'),
+    narratives: path.join(__dirname, 'narratives/static/jsx/index.jsx'),
     lexicon_scss: path.join(__dirname, 'lexicon/static/scss/index.scss'),
   },
   output: {
     path: path.join(__dirname, 'mesolex/static/dist'),
     filename: '[name].bundle.js'
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendors: {
+          name: "vendors",
+          chunks: "initial",
+          minChunks: 2,
+          minSize: 0
+        }
+      }
+    }
+  },
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      'query-builder': path.resolve(__dirname, 'query_builder/static/jsx/')
+    }
   },
   plugins: [
     new ExtractTextPlugin({
