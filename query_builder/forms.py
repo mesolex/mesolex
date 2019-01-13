@@ -22,8 +22,8 @@ class QueryBuilderForm(forms.Form):
     FILTERS = (
         ('begins_with', _('Empieza con')),
         ('ends_with', _('Termina con')),
-        ('contains', _('Incluye')),
-        ('contains_word', _('Incluye palabra')),
+        ('contains', _('Contiene secuencia')),
+        ('contains_word', _('Contiene palabra')),
         ('exactly_equals', _('Es exactamente igual a')),
         ('regex', _('Expresión regular')),
     )
