@@ -81,6 +81,17 @@ class QueryBuilderForm(forms.Form):
         can modify or add to the sequence of transformations.
         For example, the lexicon search form for Nahuat data
         includes a "vowel length neutralization" transformation.
+
+        Each transformation expects four arguments:
+
+        - filter_name (e.g. "contains_word")
+        - filter_action (e.g. "__iregex")
+        - query_string (e.g. "ta:ni")
+        - form_data (a dict of cleaned form data)
+
+        Each transformation returns a tuple containing the
+        new filter action and the new query string (both of which
+        may be the same as the input!).
         """
         return [
             contains_word_to_regex,
