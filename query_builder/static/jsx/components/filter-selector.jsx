@@ -28,7 +28,7 @@ const FilterSelector = ({
   >
     {controlled ? null : <option value="begins_with">{`${gettext('empieza con')}`}</option>}
     {controlled ? null : <option value="ends_with">{`${gettext('termina con')}`}</option>}
-    {controlled ? null : <option value="contains">{`${gettext('contiene')}`}</option>}
+    {controlled ? null : <option value="contains">{`${gettext('contiene secuencia')}`}</option>}
     {controlled ? null : <option value="contains_word">{`${gettext('contiene palabra')}`}</option>}
     <option value="exactly_equals">{`${gettext('es exactamente igual a')}`}</option>
     {controlled ? null : <option value="regex">{`${gettext('expresión regular')}`}</option>}
