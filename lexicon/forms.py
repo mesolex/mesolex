@@ -43,28 +43,11 @@ class LexicalSearchFilterForm(QueryBuilderForm):
 
     vln = forms.BooleanField(required=False)
 
-    def get_filter_action_and_query(self):
-        """
-        filter_arg_val is the type of filtering to perform in the query,
-        e.g. "__istartswith" or "__iregex". Normally this will be
-        whatever in FILTERS_DICT corresponds to the particular value
-        from FILTERS. But if this has vowel length neutralization,
-        it will be transformed from whatever it was into a specially
-        constructed regular expression.
-        """
-        
-        if not self.is_bound:
-            return (None, None)
-        
-        form_data = self.cleaned_data
-        filter_str = form_data['filter']
-        if form_data['vln']:
-            (filter_arg_val, query_string,) = to_vln(filter_str, form_data['query_string'])
-        else:
-            filter_arg_val = self.FILTERS_DICT.get(filter_str, '')
-            query_string = form_data['query_string']
-        
-        return (filter_arg_val, query_string)
+    @property
+    def transformations(self):
+        return super().transformations + [
+            to_vln,
+        ]
 
 
 class BaseLexiconQueryComposerFormset(QueryBuilderBaseFormset):

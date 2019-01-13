@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-20 18:15+0000\n"
+"POT-Creation-Date: 2019-01-13 16:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,76 +38,81 @@ msgstr "contains"
 
 #: query_builder/static/jsx/components/filter-selector.jsx:32
 #: query_builder/static/jsx/util.jsx:41
+msgid "contiene palabra"
+msgstr "contains word"
+
+#: query_builder/static/jsx/components/filter-selector.jsx:33
+#: query_builder/static/jsx/util.jsx:42
 msgid "es exactamente igual a"
 msgstr "exactly equals"
 
-#: query_builder/static/jsx/components/filter-selector.jsx:33
+#: query_builder/static/jsx/components/filter-selector.jsx:34
 msgid "expresión regular"
 msgstr "regular expression"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:123
+#: query_builder/static/jsx/components/query-builder-form.jsx:125
 msgid "si"
 msgstr "does"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:123
+#: query_builder/static/jsx/components/query-builder-form.jsx:125
 #: query_builder/static/jsx/util.jsx:32
 msgid "y"
 msgstr "and"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:124
+#: query_builder/static/jsx/components/query-builder-form.jsx:126
 #: query_builder/static/jsx/util.jsx:33
 msgid "o"
 msgstr "or"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:125
+#: query_builder/static/jsx/components/query-builder-form.jsx:127
 #: query_builder/static/jsx/util.jsx:27 query_builder/static/jsx/util.jsx:29
 msgid "no"
 msgstr "does not"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:125
+#: query_builder/static/jsx/components/query-builder-form.jsx:127
 #: query_builder/static/jsx/util.jsx:34
 msgid "y no"
 msgstr "and not"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:126
+#: query_builder/static/jsx/components/query-builder-form.jsx:128
 #: query_builder/static/jsx/util.jsx:35
 msgid "o no"
 msgstr "or not"
 
-#: query_builder/static/jsx/components/query-builder-formset.jsx:198
+#: query_builder/static/jsx/components/query-builder-formset.jsx:210
 msgid "Buscar"
 msgstr "Search"
 
-#: query_builder/static/jsx/components/query-builder-formset.jsx:200
+#: query_builder/static/jsx/components/query-builder-formset.jsx:212
 msgid "Agregar filtro"
 msgstr "Add filter"
 
-#: query_builder/static/jsx/util.jsx:42
+#: query_builder/static/jsx/util.jsx:43
 msgid "coincide con expresión regular"
 msgstr "matches regular expression"
 
-#: query_builder/static/jsx/util.jsx:45
+#: query_builder/static/jsx/util.jsx:46
 msgid "ítem"
 msgstr "item"
 
-#: query_builder/static/jsx/util.jsx:45
+#: query_builder/static/jsx/util.jsx:46
 msgid "NCV"
 msgstr "VLN"
 
-msgid "entrada"
-msgstr "headword"
+#~ msgid "entrada"
+#~ msgstr "headword"
 
-msgid "glosa"
-msgstr "gloss"
+#~ msgid "glosa"
+#~ msgstr "gloss"
 
-msgid "raiz"
-msgstr "root"
+#~ msgid "raiz"
+#~ msgstr "root"
 
-msgid "campo semántico"
-msgstr "semantic field"
+#~ msgid "campo semántico"
+#~ msgstr "semantic field"
 
-msgid "categoría gramatical"
-msgstr "grammatical category"
+#~ msgid "categoría gramatical"
+#~ msgstr "grammatical category"
 
-msgid "inflexión"
-msgstr "inflection"
+#~ msgid "inflexión"
+#~ msgstr "inflection"
