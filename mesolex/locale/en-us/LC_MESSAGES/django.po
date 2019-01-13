@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 17:39+0000\n"
+"POT-Creation-Date: 2019-01-13 18:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,6 +54,11 @@ msgstr "Unique ID"
 #: narratives/templates/narratives/search.html:13
 msgid "Náhuat de la Sierra Nororiental de Puebla: Diccionario"
 msgstr "Nahuatl of the Sierra Nororiental de Puebla: Dictionary"
+
+#: lexicon/templates/search/search.html:13 mesolex/templates/home.html:27
+#: narratives/templates/narratives/search.html:13
+msgid "última actualización"
+msgstr "last updated"
 
 #: lexicon/templates/search/search.html:27
 #: narratives/templates/narratives/search.html:27
