@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 16:26+0000\n"
+"POT-Creation-Date: 2019-01-13 17:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,11 +30,6 @@ msgstr "begins with"
 #: query_builder/static/jsx/util.jsx:39
 msgid "termina con"
 msgstr "ends with"
-
-#: query_builder/static/jsx/components/filter-selector.jsx:31
-#: query_builder/static/jsx/util.jsx:40
-msgid "contiene"
-msgstr "contains"
 
 #: query_builder/static/jsx/components/filter-selector.jsx:32
 #: query_builder/static/jsx/util.jsx:41
@@ -86,6 +81,10 @@ msgstr "Search"
 #: query_builder/static/jsx/components/query-builder-formset.jsx:212
 msgid "Agregar filtro"
 msgstr "Add filter"
+
+#: query_builder/static/jsx/util.jsx:40
+msgid "contiene secuencia"
+msgstr "contains sequence"
 
 #: query_builder/static/jsx/util.jsx:43
 msgid "coincide con expresión regular"

@@ -24,7 +24,7 @@
 {% url 'narratives_search' as narratives_search_action %}
 
 <h2 class="h5">
-    {% trans 'Náhuat de la Sierra Nororiental de Puebla: Diccionario' %}
+    {% trans 'Náhuat de la Sierra Nororiental de Puebla: Diccionario' %} ({% trans 'Última actualización' %} 2019-01-12)
 </h2>
 {% include 'query_builder/includes/query_builder.html' with query_builder_action=lexicon_search_action query_builder_formset=lexicon.formset query_builder_form_id='lexicon-search-form' %}
 

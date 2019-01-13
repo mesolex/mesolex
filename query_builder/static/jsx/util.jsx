@@ -37,7 +37,7 @@ export const humanReadableFilters = ({
   const filterDict = {
     begins_with: gettext('empieza con'),
     ends_with: gettext('termina con'),
-    contains: gettext('contiene'),
+    contains: gettext('contiene secuencia'),
     contains_word: gettext('contiene palabra'),
     exactly_equals: gettext('es exactamente igual a'),
     regex: gettext('coincide con expresión regular'),

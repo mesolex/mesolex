@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 16:13+0000\n"
+"POT-Creation-Date: 2019-01-13 18:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,6 +54,11 @@ msgstr "Unique ID"
 #: narratives/templates/narratives/search.html:13
 msgid "Náhuat de la Sierra Nororiental de Puebla: Diccionario"
 msgstr "Nahuatl of the Sierra Nororiental de Puebla: Dictionary"
+
+#: lexicon/templates/search/search.html:13 mesolex/templates/home.html:27
+#: narratives/templates/narratives/search.html:13
+msgid "Última actualización"
+msgstr "Last updated"
 
 #: lexicon/templates/search/search.html:27
 #: narratives/templates/narratives/search.html:27
@@ -408,27 +413,27 @@ msgstr "Description"
 msgid "Archivos"
 msgstr "Archives"
 
-#: query_builder/forms.py:34
+#: query_builder/forms.py:23
 msgid "Empieza con"
 msgstr "Begins with"
 
-#: query_builder/forms.py:35
+#: query_builder/forms.py:24
 msgid "Termina con"
 msgstr "Ends with"
 
-#: query_builder/forms.py:36
-msgid "Incluye"
-msgstr "Contains"
+#: query_builder/forms.py:25
+msgid "Contiene secuencia"
+msgstr "Contains sequence"
 
-#: query_builder/forms.py:37
-msgid "Incluye palabra"
+#: query_builder/forms.py:26
+msgid "Contiene palabra"
 msgstr "Contains word"
 
-#: query_builder/forms.py:38
+#: query_builder/forms.py:27
 msgid "Es exactamente igual a"
 msgstr "Equal to"
 
-#: query_builder/forms.py:39
+#: query_builder/forms.py:28
 msgid "Expresión regular"
 msgstr "Regular expression"
 
@@ -451,6 +456,9 @@ msgstr "Lexical entry"
 #: scratch_space/tei_models.py:209
 msgid "Entradas léxicas"
 msgstr "Lexical entries"
+
+#~ msgid "Incluye"
+#~ msgstr "Contains"
 
 #~ msgid "inglés (EE.UU.)"
 #~ msgstr "English"
