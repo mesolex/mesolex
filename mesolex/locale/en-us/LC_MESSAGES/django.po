@@ -57,8 +57,8 @@ msgstr "Nahuatl of the Sierra Nororiental de Puebla: Dictionary"
 
 #: lexicon/templates/search/search.html:13 mesolex/templates/home.html:27
 #: narratives/templates/narratives/search.html:13
-msgid "última actualización"
-msgstr "last updated"
+msgid "Última actualización"
+msgstr "Last updated"
 
 #: lexicon/templates/search/search.html:27
 #: narratives/templates/narratives/search.html:27
