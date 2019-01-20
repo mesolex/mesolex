@@ -1,5 +1,5 @@
-const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require("path");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   module: {
@@ -7,22 +7,22 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: "babel-loader"
       },
       {
         test: /\.(css|scss)$/,
         loader: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
+          fallback: "style-loader",
           use: [
             {
-              loader: 'css-loader',
+              loader: "css-loader",
               options: {
                 sourceMap: true
               }
             },
-            'postcss-loader',
+            "postcss-loader",
             {
-              loader: 'sass-loader',
+              loader: "sass-loader",
               options: {
                 sourceMap: true
               }
@@ -33,13 +33,23 @@ module.exports = {
     ]
   },
   entry: {
-    search: path.join(__dirname, 'lexicon/static/jsx/search/index.jsx'),
-    narratives: path.join(__dirname, 'narratives/static/jsx/index.jsx'),
-    lexicon_scss: path.join(__dirname, 'lexicon/static/scss/index.scss'),
+    home: [
+      "babel-polyfill",
+      path.join(__dirname, "mesolex/static/js/index.js")
+    ],
+    search: [
+      "babel-polyfill",
+      path.join(__dirname, "lexicon/static/jsx/search/index.jsx")
+    ],
+    narratives: [
+      "babel-polyfill",
+      path.join(__dirname, "narratives/static/jsx/index.jsx")
+    ],
+    lexicon_scss: path.join(__dirname, "lexicon/static/scss/index.scss")
   },
   output: {
-    path: path.join(__dirname, 'mesolex/static/dist'),
-    filename: '[name].bundle.js'
+    path: path.join(__dirname, "mesolex/static/dist"),
+    filename: "[name].bundle.js"
   },
   optimization: {
     splitChunks: {
@@ -54,14 +64,16 @@ module.exports = {
     }
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: [".js", ".jsx"],
     alias: {
-      'query-builder': path.resolve(__dirname, 'query_builder/static/jsx/')
+      lexicon: path.resolve(__dirname, "lexicon/static/jsx/search/"),
+      narratives: path.resolve(__dirname, "narratives/static/jsx/"),
+      "query-builder": path.resolve(__dirname, "query_builder/static/jsx/")
     }
   },
   plugins: [
     new ExtractTextPlugin({
-      filename: '[name].bundle.css'
+      filename: "[name].bundle.css"
     })
-  ],
-}
+  ]
+};
