@@ -14,8 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import url, include
 from django.contrib import admin
+from django.urls import include, path
 from django.views.i18n import JavaScriptCatalog
 
 import lexicon.urls
@@ -24,18 +24,18 @@ import narratives.urls
 import mesolex.views
 
 urlpatterns = [
-    url(r'^$', mesolex.views.home, name='home'),
-    url(r'^robots\.txt', include('robots.urls')),
-    url(r'^api/', include('lexicon.api_urls'), name='api'),
-    url(r'^admin/', admin.site.urls),
-    url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
-    url(r'^narratives/', include(narratives.urls)),
-    url(r'^search/', include(lexicon.urls)),
+    path('', mesolex.views.home, name='home'),
+    path('robots\.txt', include('robots.urls')),
+    path('api/', include('lexicon.api_urls'), name='api'),
+    path('admin/', admin.site.urls),
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    path('narratives/', include(narratives.urls)),
+    path('search/', include(lexicon.urls)),
 ]
 
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
+        path('__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
