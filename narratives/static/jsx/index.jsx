@@ -1,4 +1,4 @@
-import { initfunction } from "./app";
+import { initFunction } from "./app";
 
 if (window.addEventListener) {
   window.addEventListener("load", initFunction);
