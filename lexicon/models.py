@@ -9,7 +9,7 @@ class ValidEntryManager(models.Manager):
             sense__isnull=True
         ).prefetch_related(
             'variant_set',
-            'citation_set__citationmedia_set',
+            'media_set',
             'gloss_set',
             'grammargroup_set',
             'category_set',
@@ -49,13 +49,6 @@ class LexicalEntry(models.Model):
         blank=True,
         null=True,
     )
-
-    @property
-    def citation_media(self):
-        return sum(
-            [[media for media in citation.citationmedia_set.all()] for citation in self.citation_set.all()],
-            [],
-        )
 
     @property
     def simple_roots(self):
@@ -113,17 +106,20 @@ class Citation(AbstractSimpleStringValue):
     pass
 
 
-class CitationMedia(models.Model):
-    # <form mesolex:type="citation" type="simple"><media mimeType={mime_type} url={url}>
-    form = models.ForeignKey(
-        Citation,
+class Media(models.Model):
+    entry = models.ForeignKey(
+        LexicalEntry,
         on_delete=models.CASCADE,
+        null=True,
     )
     url = models.URLField()
     mime_type = models.CharField(
         max_length=64,
         default='audio/mpeg',
     )
+
+    def __str__(self):
+        return self.url
 
 
 class Variant(AbstractSimpleStringValue):
