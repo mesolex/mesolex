@@ -11,9 +11,9 @@ class GeoSerializer(serializers.ModelSerializer):
         )
 
 
-class CitationMediaSerializer(serializers.ModelSerializer):
+class MediaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.CitationMedia
+        model = models.Media
         fields = (
             'url',
             'mime_type',
@@ -21,15 +21,9 @@ class CitationMediaSerializer(serializers.ModelSerializer):
 
 
 class CitationSerializer(serializers.ModelSerializer):
-    media = CitationMediaSerializer(
-        required=False,
-        many=True,
-    )
-
     class Meta:
         model = models.Citation
         fields = (
-            'media',
             'value',
         )
 
@@ -172,6 +166,11 @@ class LexicalEntrySerializer(serializers.ModelSerializer):
         many=True,
     )
 
+    media_set = MediaSerializer(
+        required=False,
+        many=True,
+    )
+
     class Meta:
         model = models.LexicalEntry
         fields = (
@@ -192,4 +191,6 @@ class LexicalEntrySerializer(serializers.ModelSerializer):
             'grammargroup_set',
 
             'sense_set',
+
+            'media_set',
         )

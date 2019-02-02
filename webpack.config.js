@@ -64,11 +64,12 @@ module.exports = {
     }
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js", ".jsx", ".scss"],
     alias: {
       lexicon: path.resolve(__dirname, "lexicon/static/jsx/search/"),
       narratives: path.resolve(__dirname, "narratives/static/jsx/"),
-      "query-builder": path.resolve(__dirname, "query_builder/static/jsx/")
+      "query-builder": path.resolve(__dirname, "query_builder/static/jsx/"),
+      "plyr-src": path.resolve(__dirname, 'node_modules/plyr/src/')
     }
   },
   plugins: [
