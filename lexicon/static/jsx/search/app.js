@@ -24,5 +24,7 @@ export const initFunction = () => {
     document.querySelector("#lexicon-search-form")
   );
 
-  Plyr.setup(`.${AUDIO_PLAYER_SELECTOR}`);
+  Plyr.setup(`.${AUDIO_PLAYER_SELECTOR}`, {
+    controls: ['play'],
+  });
 };
