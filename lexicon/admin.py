@@ -34,9 +34,13 @@ class MediaCSVUploadForm(forms.Form):
         decoded = io.StringIO(csv_file.read().decode('utf-8'))
         reader = csv.DictReader(decoded, fieldnames=CSV_FIELDS)
         rows = [row for row in reader]
+        header = rows[0]
 
-        if len(rows) == 0 or len(rows[1]) > len(CSV_FIELDS):
-            raise forms.ValidationError('Problem with CSV format.')
+        if not set(CSV_FIELDS).issubset(set([h for h in header.values() if not isinstance(h, list)])):
+            raise forms.ValidationError((
+                'Your CSV does not appear to start with a header that includes the values '
+                '"{fields}". Check the format of your CSV and try again.'
+            ).format(fields=('", "'.join(CSV_FIELDS))))
 
         return rows[1:]
 
@@ -58,7 +62,7 @@ class MediaAdmin(admin.ModelAdmin):
                 created = 0
                 for item in form.cleaned_data['csv_file']:
                     try:
-                        entry = models.LexicalEntry.objects.get(_id=str(item['UID']).zfill(5))
+                        entry = models.LexicalEntry.objects.get(_id=item['UID'])
                         (_, _created) = models.Media.objects.update_or_create(
                             entry=entry,
                             defaults={
@@ -71,7 +75,7 @@ class MediaAdmin(admin.ModelAdmin):
                         else:
                             updated += 1
                     except:
-                        logger.exception("Error adding media file with UID {uid}".format(uid=item['uid']))
+                        logger.exception("Error adding media file with UID {uid}".format(uid=item['UID']))
                         errors += 1
                 
                 messages.add_message(
