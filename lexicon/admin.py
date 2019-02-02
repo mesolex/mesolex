@@ -32,24 +32,25 @@ class MediaCSVUploadForm(forms.Form):
     def clean_csv_file(self):
         csv_file = self.cleaned_data['csv_file']
         decoded = io.StringIO(csv_file.read().decode('utf-8'))
-        reader = csv.DictReader(decoded, fieldnames=CSV_FIELDS)
+        reader = csv.DictReader(decoded)
         rows = [row for row in reader]
-        header = rows[0]
 
-        if not set(CSV_FIELDS).issubset(set([h for h in header.values() if not isinstance(h, list)])):
+        if not set(CSV_FIELDS).issubset(set(reader.fieldnames)):
             raise forms.ValidationError((
                 'Your CSV does not appear to start with a header that includes the values '
                 '"{fields}". Check the format of your CSV and try again.'
             ).format(fields=('", "'.join(CSV_FIELDS))))
 
-        return rows[1:]
+        return rows
 
 
 class MediaAdmin(admin.ModelAdmin):
+    change_list_template = 'admin/lexicon_media_change_list.html'
+
     def get_urls(self):
         urls = super().get_urls()
         citation_urls = [
-            path('csv/', self.admin_site.admin_view(self.csv_view))
+            path('csv/', self.admin_site.admin_view(self.csv_view), name='media_csv_upload')
         ]
         return citation_urls + urls
     

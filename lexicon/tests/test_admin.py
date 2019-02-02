@@ -22,7 +22,18 @@ class MediaCSVUploadFormTest(TestCase):
         form = MediaCSVUploadForm({}, post_data)
         self.assertFalse(form.is_valid())
     
+    def test_rejects_csv_with_no_headers(self):
+        post_data = {'csv_file': self._create_file('no-header.csv')}
+        form = MediaCSVUploadForm({}, post_data)
+        self.assertFalse(form.is_valid())
+    
     def test_accepts_csv_with_correct_headers(self):
-        post_data = {'csv_file': self._create_file('some-empty-cols.csv')}
+        # even if there are excess cols ...
+        post_data = {'csv_file': self._create_file('excess-cols.csv')}
+        form = MediaCSVUploadForm({}, post_data)
+        self.assertTrue(form.is_valid())
+
+        # in any order ...
+        post_data = {'csv_file': self._create_file('ok-weird-order.csv')}
         form = MediaCSVUploadForm({}, post_data)
         self.assertTrue(form.is_valid())
