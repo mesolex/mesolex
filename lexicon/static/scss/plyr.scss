@@ -1,0 +1,14 @@
+$plyr-control-icon-size: 12px;
+
+@import "plyr-src/sass/plyr";
+
+.plyr {
+  display: inline-block;
+  min-width: auto;
+}
+
+.plyr--audio .plyr__controls {
+  padding: 0;
+  box-shadow: 0 1px 3px 0 rgba(48, 49, 51, 0.2);
+  border-radius: 8px;
+}
