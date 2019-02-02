@@ -62,13 +62,14 @@ class MediaAdmin(admin.ModelAdmin):
                 updated = 0
                 created = 0
                 for item in form.cleaned_data['csv_file']:
+                    path = '/'.join(item['Path'].split('/') + [item['Filename']])
                     try:
                         entry = models.LexicalEntry.objects.get(_id=item['UID'])
                         (_, _created) = models.Media.objects.update_or_create(
                             entry=entry,
                             defaults={
                                 'mime_type': 'audio/mpeg',
-                                'url': item['Path'] + item['Filename'],
+                                'url': path,
                             },
                         )
                         if _created:
