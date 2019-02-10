@@ -26,13 +26,13 @@
 <h2 class="h5">
     {% trans 'Náhuat de la Sierra Nororiental de Puebla: Diccionario' %} ({% trans 'Última actualización' %} 2019-01-12)
 </h2>
-{% include 'query_builder/includes/query_builder.html' with query_builder_action=lexicon_search_action query_builder_formset=lexicon.formset query_builder_form_id='lexicon-search-form' %}
+{% include 'query_builder/includes/query_builder.html' with query_builder_action=lexicon_search_action query_builder_formset=lexicon.formset query_builder_form_id='lexicon-search-form' query_builder_formset_global_filters_form=lexicon.formset_global_filters_form %}
 
 
 <h2 class="h5">
   {% trans 'Narrativas mesoamericanas' %}
 </h2>
-{% include 'query_builder/includes/query_builder.html' with query_builder_action=narratives_search_action query_builder_formset=narratives.formset query_builder_form_id='narrative-search-form' %}
+{% include 'query_builder/includes/query_builder.html' with query_builder_action=narratives_search_action query_builder_formset=narratives.formset query_builder_form_id='narrative-search-form' query_builder_formset_global_filters_form=narratives.formset_global_filters_form %}
 
 {{ block.super }}
 {% endblock content %}
@@ -43,11 +43,13 @@
   "lexicon": {
       "formset_config": {{ lexicon.formset.configuration_data_as_json|safe }},
       "formset_data": {{ lexicon.formset_data|safe }},
+      "formset_global_filters_form_data": {{ lexicon.formset_global_filters_form_data|safe }},
       "formset_errors": {{ lexicon.formset_errors|safe }}
   },
   "narratives": {
       "formset_config": {{ narratives.formset.configuration_data_as_json|safe }},
       "formset_data": {{ narratives.formset_data|safe }},
+      "formset_global_filters_form_data": {{ narratives.formset_global_filters_form_data|safe }},
       "formset_errors": {{ narratives.formset_errors|safe }}
   },
   "language_configuration": {{ language_configuration|safe }}

@@ -7,6 +7,7 @@ export const initFunction = () => {
   const {
     formset_config: formsetConfig,
     formset_data: formsetData,
+    formset_global_filters_form_data: formsetGlobalFiltersData,
     formset_errors: formsetErrors
   } = JSON.parse(document.getElementById("js-init").text).narratives;
 
@@ -16,6 +17,7 @@ export const initFunction = () => {
       formsetData={formsetData}
       formsetErrors={formsetErrors}
       formsetConfig={formsetConfig}
+      formsetGlobalFiltersData={formsetGlobalFiltersData}
     />,
     document.querySelector("#narrative-search-form")
   );

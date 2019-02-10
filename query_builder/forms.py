@@ -148,7 +148,19 @@ class QueryBuilderForm(forms.Form):
                 self.add_error('query_string', forms.ValidationError(_('Expresión regular no válida.')))
 
 
+class QueryBuilderGlobalFiltersForm(forms.Form):
+    # NOTE: this is just an abstract placeholder for concrete classes
+    # to be used by subclasses of QueryBuilderBaseFormset.
+    # The idea is that this form is a sidekick of the formset that
+    # represents "global" filters that get intersected with the
+    # filters represented by the formset components at the end
+    # of the query-composition process.
+    pass
+
+
 class QueryBuilderBaseFormset(forms.BaseFormSet):
+    global_filters_class = QueryBuilderGlobalFiltersForm
+
     # NOTE: abstract, must be filled in with sequence of pairs,
     # e.g. ``('lemma', _('Entrada'))``
     FILTERABLE_FIELDS = []
@@ -182,7 +194,11 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
             ensure_ascii=False,
             cls=ForceProxyEncoder,
         )
-    
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.global_filters_form = self.global_filters_class(*args, **kwargs)
+
     def get_full_query(self):
         query = None
 
@@ -204,5 +220,9 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
                         query &= (~form_q)
                     elif operator == 'or_n':
                         query |= (~form_q)
+        
+        if self.global_filters_form.is_valid() and query:
+            for (name, global_filter,) in self.global_filters_form.cleaned_data.items():
+                query &= global_filter
         
         return query

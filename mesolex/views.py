@@ -16,12 +16,14 @@ def home(request, *args, **kwargs):
         'lexicon': {
             'formset': LexicalSearchFilterFormset(),
             'formset_data': json.dumps({}),
+            'formset_global_filters_form_data': json.dumps({}),
             'formset_errors': json.dumps([]),
             'form_captions': True,
         },
         'narratives': {
             'formset': SoundMetadataQueryComposerFormset(),
             'formset_data': json.dumps({}),
+            'formset_global_filters_form_data': json.dumps({}),
             'formset_errors': json.dumps([]),
             'form_captions': True,
         },
