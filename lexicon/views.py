@@ -54,7 +54,9 @@ def lexicon_search_view(request, *args, **kwargs):
             'query': True,
             'lexicon': {
                 'formset': formset,
+                'formset_global_filters_firm': formset.global_filters_form,
                 'formset_data': json.dumps(formset.data),
+                'formset_global_filters_form_data': json.dumps(formset.global_filters_form.data),
                 'formset_errors': json.dumps(formset.errors),
             },
             'language_configuration': json.dumps(
