@@ -224,5 +224,5 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
         if self.global_filters_form.is_valid() and query:
             for (name, global_filter,) in self.global_filters_form.cleaned_data.items():
                 query &= global_filter
-        
+
         return query
