@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 17:39+0000\n"
+"POT-Creation-Date: 2019-02-11 00:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: lexicon/static/jsx/search/search-formset.jsx:21
+msgid "Sólo mostrar entradas con sonidos"
+msgstr "Only show entries with accompanying sounds"
 
 #: lexicon/static/jsx/search/vln.jsx:31
 msgid "Neutralizar cantidad vocálica"
@@ -30,6 +34,11 @@ msgstr "begins with"
 #: query_builder/static/jsx/util.jsx:39
 msgid "termina con"
 msgstr "ends with"
+
+#: query_builder/static/jsx/components/filter-selector.jsx:31
+#: query_builder/static/jsx/util.jsx:40
+msgid "contiene secuencia"
+msgstr "contains sequence"
 
 #: query_builder/static/jsx/components/filter-selector.jsx:32
 #: query_builder/static/jsx/util.jsx:41
@@ -74,17 +83,13 @@ msgstr "and not"
 msgid "o no"
 msgstr "or not"
 
-#: query_builder/static/jsx/components/query-builder-formset.jsx:210
+#: query_builder/static/jsx/components/query-builder-formset.jsx:235
 msgid "Buscar"
 msgstr "Search"
 
-#: query_builder/static/jsx/components/query-builder-formset.jsx:212
+#: query_builder/static/jsx/components/query-builder-formset.jsx:237
 msgid "Agregar filtro"
 msgstr "Add filter"
-
-#: query_builder/static/jsx/util.jsx:40
-msgid "contiene secuencia"
-msgstr "contains sequence"
 
 #: query_builder/static/jsx/util.jsx:43
 msgid "coincide con expresión regular"

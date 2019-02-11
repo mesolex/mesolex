@@ -13,6 +13,7 @@ export default class QueryBuilderFormSet extends React.Component {
     formsetName: PropTypes.string,
     formsetConfig: PropTypes.shape({}).isRequired,
     formsetData: PropTypes.shape({}).isRequired,
+    formsetGlobalFiltersData: PropTypes.shape({}).isRequired,
     formsetErrors: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }
 
@@ -36,7 +37,12 @@ export default class QueryBuilderFormSet extends React.Component {
   */
   constructor(props) {
     super(props);
-    const { formsetName, formsetConfig, formsetData, formsetErrors } = props;
+    const {
+      formsetConfig,
+      formsetData,
+      formsetGlobalFiltersData,
+      formsetErrors,
+    } = props;
 
     /*
       Construct the list of forms by invoking `uuid` n times,
@@ -86,6 +92,7 @@ export default class QueryBuilderFormSet extends React.Component {
       forms,
       formsetIndexedDatasets,
       formsetIndexedErrors,
+      formsetGlobalFiltersData,
     };
   }
 
@@ -147,6 +154,15 @@ export default class QueryBuilderFormSet extends React.Component {
     });
   }
 
+  onChangeGlobalField = (fieldName, eKey = 'value') => ({ target }) => {
+    this.setState({
+      formsetGlobalFiltersData: {
+        ...this.state.formsetGlobalFiltersData,
+        [fieldName]: target[eKey],
+      },
+    });
+  }
+
   isControlled = controlledVocabCheck(this.props.formsetConfig.controlled_vocab_fields)
 
   removeFilter = uniqueId => () => {
@@ -180,6 +196,8 @@ export default class QueryBuilderFormSet extends React.Component {
 
   extraFilterComponents = () => []
 
+  globalFiltersComponents = () => null
+
   render() {
     const count = this.state.forms.length;
     return (
@@ -204,6 +222,13 @@ export default class QueryBuilderFormSet extends React.Component {
               extraFilterComponents={this.extraFilterComponents({ i, uniqueId })}
             />
           ))
+        }
+
+        {
+          this.globalFiltersComponents({
+            data: this.state.formsetGlobalFiltersData,
+            onChangeGlobalField: this.onChangeGlobalField,
+          })
         }
 
         <div className="form-group">

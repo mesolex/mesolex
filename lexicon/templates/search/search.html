@@ -15,7 +15,7 @@
     {% endif %}
 
     <div class="test-formset-form">
-        {% include 'query_builder/includes/query_builder.html' with query_builder_action=lexicon_search_action query_builder_formset=lexicon.formset query_builder_form_id='lexicon-search-form' %}
+        {% include 'query_builder/includes/query_builder.html' with query_builder_action=lexicon_search_action query_builder_formset=lexicon.formset query_builder_form_id='lexicon-search-form' query_builder_formset_global_filters_form=lexicon.formset_global_filters_form %}
     </div>
 
     {% if query %}
@@ -32,6 +32,15 @@
             <div class="card mb-4">
                 <div class="card-header card-header--search">
                     <span class="h5">{{ lexical_entry.lemma }}</span>
+
+                    {% if lexical_entry.media_set.exists %}
+                        &nbsp;
+                        {% for media in lexical_entry.media_set.all %}
+                            <audio controls class="lexical-entry-audio">
+                                <source src="{{ media.url }}" type="{{ media.mime_type }}" />
+                            </audio>
+                        {% endfor %}
+                    {% endif %}
 
                     {% if lexical_entry.citation_set.exists %}
                     &nbsp;|&nbsp;
@@ -70,17 +79,6 @@
                         {% endfor %}
                     {% endif %}
                 </div>
-                {% for media in lexical_entry.citation_media %}
-                {% if forloop.first %}
-                    <div class="card-header card-header--audio">
-                {% endif %}
-                    <audio controls class="lexical-entry-audio">
-                        <source src="{{ media.url }}" type="{{ media.mime_type }}" />
-                    </audio>
-                {% if forloop.last %}
-                    </div>
-                {% endif %}
-                {% endfor %}
                 <div class="card-body">
                     <ol class="search-results-list">
                         {% for sense in lexical_entry.senses %}
@@ -175,6 +173,7 @@
   "lexicon": {
     "formset_config": {{ lexicon.formset.configuration_data_as_json|safe }},
     "formset_data": {{ lexicon.formset_data|safe }},
+    "formset_global_filters_form_data": {{ lexicon.formset_global_filters_form_data|safe }},
     "formset_errors": {{ lexicon.formset_errors|safe }}
   },
   "language_configuration": {{ language_configuration|safe }}
