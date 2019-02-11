@@ -18,7 +18,7 @@ export default class SearchFormSet extends QueryBuilderFormset {
           onChange={onChangeGlobalField('only_with_sound', 'checked')}
         />
         <label htmlFor="id_only_with_sound" className="form-check-label">
-          {gettext('Only words with sound files')}
+          {gettext('Solo mostrar palabras con sonidos')}
         </label>
       </div>
     </div>
