@@ -58,6 +58,7 @@ class LexiconQueryBuilderGlobalFiltersForm(QueryBuilderGlobalFiltersForm):
         only_with_sound = self.cleaned_data['only_with_sound']
         return Q(media__isnull=(not only_with_sound))
 
+
 class BaseLexiconQueryComposerFormset(QueryBuilderBaseFormset):
     global_filters_class = LexiconQueryBuilderGlobalFiltersForm
 
