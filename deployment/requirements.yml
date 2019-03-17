@@ -16,7 +16,7 @@
   name: tequila-django
 
 - src: geerlingguy.nodejs
-  version: 5.0.0
+  version: 4.2.2
   name: nodejs
 
 - src: https://github.com/caktus/tequila-nodejs
