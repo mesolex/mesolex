@@ -3,6 +3,7 @@ import React from 'react';
 
 import QueryBuilderFormset from 'query-builder/components/query-builder-formset';
 import Vln from './vln';
+import NahuatOrthography from './nahuat-orthography';
 
 
 export default class SearchFormSet extends QueryBuilderFormset {
@@ -28,6 +29,13 @@ export default class SearchFormSet extends QueryBuilderFormset {
     <Vln
       i={i}
       key="vln"
+      config={this.props.formsetConfig}
+      dataset={this.state.formsetIndexedDatasets[uniqueId]}
+      onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
+    />,
+    <NahuatOrthography
+      i={i}
+      key="nahuat_orthography"
       config={this.props.formsetConfig}
       dataset={this.state.formsetIndexedDatasets[uniqueId]}
       onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
