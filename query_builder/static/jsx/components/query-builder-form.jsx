@@ -39,6 +39,7 @@ const QueryBuilderForm = ({
           filterOn: dataset.filter_on || (config.filterable_fields || [[]])[0][0],
           filter: dataset.filter || defaultFilter,
           vln: (dataset.filter !== 'regex') && dataset.vln,
+          nahuatOrthography: dataset.nahuat_orthography,
           filterableFields: config.filterable_fields,
         }) }
       </label>
@@ -151,7 +152,11 @@ const QueryBuilderForm = ({
           />
         </div>
         {
-          extraFilterComponents
+          extraFilterComponents.map(Component => (
+            <div className="input-group">
+              { Component }
+            </div>
+          ))
         }
       </div>
     </div>

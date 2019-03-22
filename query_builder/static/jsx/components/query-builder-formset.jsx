@@ -15,10 +15,12 @@ export default class QueryBuilderFormSet extends React.Component {
     formsetData: PropTypes.shape({}).isRequired,
     formsetGlobalFiltersData: PropTypes.shape({}).isRequired,
     formsetErrors: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    extraFieldNames: PropTypes.arrayOf(PropTypes.string),
   }
 
   static defaultProps = {
     formsetName: 'default',
+    extraFieldNames: [],
   }
 
   /*
@@ -32,6 +34,9 @@ export default class QueryBuilderFormSet extends React.Component {
       indexed by the unique identifier from `forms`
     - `formsetIndexedErrors`, the errors for each form,
       indexed by the unique identifier from `forms`
+    - `formsetGlobalFiltersData`, the form data for filters
+      applied to the formset as a whole, as determined
+      by the value of `globalFiltersComponents`
 
     After being consumed, `formsetData` and `formsetErrors` are not used.
   */
@@ -42,6 +47,7 @@ export default class QueryBuilderFormSet extends React.Component {
       formsetData,
       formsetGlobalFiltersData,
       formsetErrors,
+      extraFieldNames,
     } = props;
 
     /*
@@ -52,6 +58,7 @@ export default class QueryBuilderFormSet extends React.Component {
       parseInt(formsetData['form-TOTAL_FORMS'], 10) || 1,
       () => uuid4(),
     );
+
     /*
       Construct a single-key object with the `form` uuid
       as the key, then roll them all up together into one
@@ -66,7 +73,19 @@ export default class QueryBuilderFormSet extends React.Component {
             operator: formsetData[`form-${i}-operator`] || 'and',
             filter_on: formsetData[`form-${i}-filter_on`] || (formsetConfig.filterable_fields || [[]])[0][0],
             filter: formsetData[`form-${i}-filter`] || this.defaultFilter,
-            vln: !!formsetData[`form-${i}-vln`],
+            /**
+             * Roll the list of extra field names into an object with
+             * all the initial data related to those field names, then merge
+             * them into the indexed dataset being constructed
+             */
+            ...(_.reduce(
+              extraFieldNames,
+              (acc, fieldName) => ({
+                ...acc,
+                [fieldName]: !!formsetData[`form-${i}-${fieldName}`],
+              }),
+              {},
+            ))
           },
         }),
       ),

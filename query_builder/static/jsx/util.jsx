@@ -13,6 +13,10 @@ export const controlledVocabCheck = (controlledVocabFields) => {
 
 /*
   Helper to render the text displayed above the input row.
+
+  NOTE: it is not at all satisfactory to have vln and nahuatOrthography in here,
+  as those propertly belong to the Lexicon app. TODO: move them over there and
+  refactor to make that possible.
 */
 export const humanReadableFilters = ({
   i,
@@ -20,6 +24,7 @@ export const humanReadableFilters = ({
   filterOn,
   filter,
   vln,
+  nahuatOrthography,
   filterableFields,
 }) => {
   const initOpDict = {
@@ -43,5 +48,13 @@ export const humanReadableFilters = ({
     regex: gettext('coincide con expresión regular'),
   };
   const filterableFieldsDict = _.fromPairs(filterableFields);
-  return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${filterableFieldsDict[filterOn] || gettext('ítem')} ${filterDict[filter]}${vln ? ` (${gettext('NCV')})` : ''}`;
+  const modifiers = _.reduce(
+    [
+      [vln, gettext('NCV')],
+      [nahuatOrthography, gettext('flex. ort.')],
+    ],
+    (acc, [val, repr]) => (val ? acc.concat(repr) : acc),
+    [],
+  );
+  return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${filterableFieldsDict[filterOn] || gettext('ítem')} ${filterDict[filter]}${modifiers.length ? ` (${modifiers.join(', ')})` : ''}`;
 };
