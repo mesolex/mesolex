@@ -22,6 +22,7 @@ export const initFunction = () => {
       formsetErrors={formsetErrors}
       formsetConfig={formsetConfig}
       formsetGlobalFiltersData={formsetGlobalFiltersData}
+      extraFieldNames={['vln', 'nahuat_orthography']}
     />,
     document.querySelector("#lexicon-search-form")
   );

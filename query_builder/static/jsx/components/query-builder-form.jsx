@@ -151,7 +151,11 @@ const QueryBuilderForm = ({
           />
         </div>
         {
-          extraFilterComponents
+          extraFilterComponents.map(Component => (
+            <div className="input-group">
+              { Component }
+            </div>
+          ))
         }
       </div>
     </div>

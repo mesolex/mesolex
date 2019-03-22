@@ -16,6 +16,8 @@ from mesolex.utils import (
     to_vln,
 )
 
+from lexicon.transformations.nahuat_orthography import nahuat_orthography
+
 
 # TODO: investigate why these gettext-strings have to be
 # lazy to work as expected when serialized by the formset.
@@ -43,11 +45,13 @@ class LexicalSearchFilterForm(QueryBuilderForm):
     FILTERABLE_FIELDS_DICT = FILTERABLE_FIELDS_DICT
 
     vln = forms.BooleanField(required=False)
+    nahuat_orthography = forms.BooleanField(required=False)
 
     @property
     def transformations(self):
         return super().transformations + [
             to_vln,
+            nahuat_orthography,
         ]
 
 
