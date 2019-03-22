@@ -33,7 +33,7 @@ class OrthographyTransformTestCase(TestCase):
         Multi-character consonants are handled correctly.
         """
         in_string = 'kwatzcuiuh'
-        out_string = '(kwa|qua|cua)(ts|tz)(ku|cu|que)i(w|v|uh|u)'
+        out_string = '(kwa|qua|cua)(ts|tz)(kwi|cui)(w|v|uh|u)'
         self.assertEqual(
             out_string,
             nahuat_orthography._original_fn(in_string),
