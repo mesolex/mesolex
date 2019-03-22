@@ -29,7 +29,7 @@ EQUIVALENCE_SETS = [
     ["kwa", "qua", "cua"],
     ["kwe", "cue"],
     ["kwi", "cui"],
-    ["ku", "cu", "que"],
+    # ["ku", "cu", "que"],  ## This is causing problems ... TODO: find out why and fix!
     ["ka", "ca"],
     ["ko", "co"],
     ["ke", "que"],
