@@ -50,8 +50,8 @@ class LexicalSearchFilterForm(QueryBuilderForm):
     @property
     def transformations(self):
         return super().transformations + [
-            to_vln,
             nahuat_orthography,
+            to_vln,
         ]
 
 
