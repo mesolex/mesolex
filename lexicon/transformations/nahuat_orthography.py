@@ -69,6 +69,10 @@ CONTEXTUAL_EQUIVALENCE_SETS = [
 
 
 def transform_equivalences(query_string, equivalences):
+    """
+    Apply a substitution to turn any member of an equivalence class
+    into the union of all variants of that equivalence class.
+    """
     substitution_class = '({composed})'.format(
         composed='|'.join(equivalences)
     )
@@ -76,6 +80,10 @@ def transform_equivalences(query_string, equivalences):
 
 
 def transform_equivalences_with_context(query_string, equivalences_with_contexts):
+    """
+    Like `transform_equivalences`, but applied with the understanding that the preceding
+    negative context and following positive context are to be included in the substitution.
+    """
     equi_classes = '|'.join(equivalences_with_contexts[1])
     lookbehind_classes = '|'.join(equivalences_with_contexts[0])
     lookahead_classes = '|'.join(equivalences_with_contexts[2])
