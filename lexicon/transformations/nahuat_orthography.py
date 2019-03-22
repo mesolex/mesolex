@@ -1,5 +1,7 @@
 import re
 
+from mesolex.utils import transformation
+
 
 OTHER = [
     '\(', '\)',
@@ -85,7 +87,9 @@ def transform_equivalences_with_context(query_string, equivalences_with_contexts
     target_transformation = '({equi})'.format(equi=equi_classes)
     return re.sub(re.compile(substitution_class), target_transformation, query_string)
 
-def _transform(query_string):
+
+@transformation(data_field='neutralize_orthography')
+def nahuat_orthography(query_string):
     new_string = query_string
 
     for equivalences in EQUIVALENCE_SETS:
@@ -95,11 +99,4 @@ def _transform(query_string):
         new_string = transform_equivalences_with_context(new_string, equivalences)
 
     return new_string
-
-
-def transform(filter_name, filter_action, query_string, form_data):
-    if not form_data['neutralize_orthography']:
-        return (filter_action, query_string)
-    
-    return ('__iregex', _transform(query_string))
     

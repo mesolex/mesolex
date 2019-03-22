@@ -1,3 +1,4 @@
+import functools
 import re
 
 from django.core.serializers.json import DjangoJSONEncoder
@@ -15,7 +16,43 @@ def contains_word_to_regex(filter_name, filter_action, query_string, _form_data)
     return ('__iregex', new_query_string)
 
 
-def to_vln(filter_name, filter_action, query_string, form_data):
+def transformation(data_field=None):
+    """
+    Turns a simple string-to-string function into a transformation
+    ready to be plugged into a QueryBuilderForm's transformation
+    pipeline.
+    """
+    def decorator(transformer_fn):
+        @functools.wraps(transformer_fn)
+        def wrapper(
+            filter_name,
+            filter_action,
+            query_string,
+            form_data,
+        ):
+            if not form_data.get(data_field, None):
+                return (filter_action, query_string)
+            
+            transformed_qstring = transformer_fn(query_string)
+            
+            if filter_name in ['begins_with', 'exactly_equals']:
+                transformed_qstring = '^' + transformed_qstring
+
+            if filter_name in ['ends_with', 'exactly_equals']:
+                transformed_qstring = transformed_qstring + '$'
+
+            return ('__iregex', transformed_qstring)
+
+        # Stash a reference to the original for the sake of testing,
+        # where we seldom care about the transformation-pipe aspect
+        # of all this
+        wrapper._original_fn = transformer_fn
+        return wrapper
+    return decorator
+
+
+@transformation(data_field='vln')
+def to_vln(query_string):
     """
     Convert a filter + query string combination into a regular expression
     query that applies vowel length neutralization.
@@ -27,20 +64,7 @@ def to_vln(filter_name, filter_action, query_string, form_data):
     as appropriate for the filter type. For example, a "begins with"
     query will have the string start character prepended to it.
     """
-    if not form_data['vln'] or filter_name == 'regex':
-        return (filter_action, query_string)
-    
-    with_neutralization = re.sub(r'([aeiouAEIOU]):?', r'\1:?', query_string)
-
-    affixed_qstr = with_neutralization
-
-    if filter_name in ['begins_with', 'exactly_equals']:
-        affixed_qstr = '^' + affixed_qstr
-
-    if filter_name in ['ends_with', 'exactly_equals']:
-        affixed_qstr = affixed_qstr + '$'
-
-    return ('__iregex', affixed_qstr)
+    return re.sub(r'([aeiouAEIOU]):?', r'\1:?', query_string)
 
 
 class ForceProxyEncoder(DjangoJSONEncoder):

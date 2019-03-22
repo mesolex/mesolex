@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from lexicon.transformations.nahuat_orthography import _transform
+from lexicon.transformations.nahuat_orthography import nahuat_orthography
 
 
 class OrthographyTransformTestCase(TestCase):
@@ -13,7 +13,7 @@ class OrthographyTransformTestCase(TestCase):
         out_string = '(kwe|cue)(kwa|qua|cua)(w|v|hu|u)a(w|v|uh|u)'
         self.assertEqual(
             out_string,
-            _transform(in_string),
+            nahuat_orthography._original_fn(in_string),
         )
     
     def test_respects_s_contexts(self):
@@ -25,7 +25,7 @@ class OrthographyTransformTestCase(TestCase):
         out_string = '(si|ci)(ts|tz)e(se|ce)(sa|za|ça)'
         self.assertEqual(
             out_string,
-            _transform(in_string),
+            nahuat_orthography._original_fn(in_string),
         )
     
     def test_handles_multichar_consonants(self):
@@ -36,5 +36,5 @@ class OrthographyTransformTestCase(TestCase):
         out_string = '(kwa|qua|cua)(ts|tz)(ku|cu|que)i(w|v|uh|u)'
         self.assertEqual(
             out_string,
-            _transform(in_string),
+            nahuat_orthography._original_fn(in_string),
         )
