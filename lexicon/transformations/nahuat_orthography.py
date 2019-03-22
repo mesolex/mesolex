@@ -26,19 +26,19 @@ CONSONANTS = [
 ]
 
 EQUIVALENCE_SETS = [
+    ["kwa", "qua", "cua"],
+    ["kwe", "cue"],
+    ["kwi", "cui"],
+    ["ku", "cu", "que"],
     ["ka", "ca"],
     ["ko", "co"],
     ["ke", "que"],
     ["ki", "qui"],
-    ["ku", "cu", "que"],
     ["ts", "tz"],
     # ["se", "ce"],
     # ["si", "ci"],
     ["sa", "za", "ça"],
     ["so", "zo", "ço"],
-    ["kwe", "cue"],
-    ["kwi", "cui"],
-    ["kwa", "qua", "cua"],
 ]
 
 # Unfortunately, we have to assume that all left
@@ -88,7 +88,7 @@ def transform_equivalences_with_context(query_string, equivalences_with_contexts
     return re.sub(re.compile(substitution_class), target_transformation, query_string)
 
 
-@transformation(data_field='neutralize_orthography')
+@transformation(data_field='nahuat_orthography')
 def nahuat_orthography(query_string):
     new_string = query_string
 

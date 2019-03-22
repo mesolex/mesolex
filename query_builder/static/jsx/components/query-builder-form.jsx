@@ -39,6 +39,7 @@ const QueryBuilderForm = ({
           filterOn: dataset.filter_on || (config.filterable_fields || [[]])[0][0],
           filter: dataset.filter || defaultFilter,
           vln: (dataset.filter !== 'regex') && dataset.vln,
+          nahuatOrthography: dataset.nahuat_orthography,
           filterableFields: config.filterable_fields,
         }) }
       </label>
