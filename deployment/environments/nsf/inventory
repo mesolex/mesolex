@@ -1,4 +1,4 @@
-mesolex_nsf ansible_host=68.183.115.190
+mesolex_nsf ansible_host=142.93.193.182
 
 [web]
 mesolex_nsf
