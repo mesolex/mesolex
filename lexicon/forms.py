@@ -16,6 +16,8 @@ from mesolex.utils import (
     to_vln,
 )
 
+from lexicon.transformations.nahuat_orthography import nahuat_orthography
+
 
 # TODO: investigate why these gettext-strings have to be
 # lazy to work as expected when serialized by the formset.
@@ -43,10 +45,12 @@ class LexicalSearchFilterForm(QueryBuilderForm):
     FILTERABLE_FIELDS_DICT = FILTERABLE_FIELDS_DICT
 
     vln = forms.BooleanField(required=False)
+    nahuat_orthography = forms.BooleanField(required=False)
 
     @property
     def transformations(self):
         return super().transformations + [
+            nahuat_orthography,
             to_vln,
         ]
 
@@ -57,6 +61,7 @@ class LexiconQueryBuilderGlobalFiltersForm(QueryBuilderGlobalFiltersForm):
     def clean_only_with_sound(self):
         only_with_sound = self.cleaned_data['only_with_sound']
         return Q(media__isnull=(not only_with_sound))
+
 
 class BaseLexiconQueryComposerFormset(QueryBuilderBaseFormset):
     global_filters_class = LexiconQueryBuilderGlobalFiltersForm
