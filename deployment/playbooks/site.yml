@@ -3,3 +3,4 @@
 - include: db.yml
 - include: web.yml
 - include: locale.yml
+- include: search.yml

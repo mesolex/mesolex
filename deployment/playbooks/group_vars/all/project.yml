@@ -3,6 +3,12 @@ project_name: mesolex
 python_version: 3.7
 pg_version: 11
 
+es_instance_name: mesolex
+es_enable_xpack: false
+es_config:
+  network.host: 0.0.0.0
+es_heap_size: 256m
+
 secret_key: "{{ SECRET_KEY }}"
 
 root_dir: "/var/www/{{ project_name }}"
