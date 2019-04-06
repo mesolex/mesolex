@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
 
+    'django_elasticsearch_dsl',
     'prettyjson',
     'rest_framework',
     'robots',
@@ -163,3 +164,9 @@ LOCALE_PATHS = (
 SITE_ID = 1
 
 ROBOTS_USE_SITEMAP = False
+
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': 'localhost:9200',
+    },
+}
