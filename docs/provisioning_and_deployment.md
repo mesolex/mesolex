@@ -7,6 +7,12 @@ server.
 
 ## Deploying mesolex
 
+### Requirements
+
+Mesolex has been developed and tested on a Digital Ocean droplet running Ubuntu 18.04.
+Mesolex's hardware requirements are very low, and it should run acceptably on
+a droplet with 1 vCPU and 1 GB RAM (or on any reasonably new laptop).
+
 ### Setup
 
 Before deploying, be sure to install the deployment requirements, which
@@ -164,7 +170,7 @@ It is now safe to check `secrets.yml` into the repo.
 ## Initial provisioning
 
 Before doing anything else, you will need to ensure that your new server
-has Python 2 installed, without which Ansible won't be able to do its thing.
+has Python 2 installed, without which Ansible won't work.
 
 Most likely your new server does not have a user and ssh key set up for you
 yet, so you will have to use a premade `root` user to run the first few

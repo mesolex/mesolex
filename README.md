@@ -6,22 +6,8 @@ mesolex is a smart dictionary for Nahuatl (and eventually other Indigenous
 languages of Mexico) built with a combination of the Django web application
 framework and finite-state morphological analysis.
 
-*NOTE: as of right now, the morphological analysis is a planned feature
-rather than an existing one. It will be added before the first production
-release.*
-
-## Status of project
-
-**This doesn't work yet.** As of May 15, 2018, basic project architecture
-is set up to the point where it's possible to create an environment, load data,
-and do *simple* search of the text fields of lexical entries using an
-interface that isn't distractingly bad. Some docs have been added,
-as have a few tests. *Otherwise everything remains to be done.*
-The repo has been made public to invite collaboration as early as
-possible, but be warned!
-
-Work to be done before an initial release will be tracked through one
-of Github's productivity tools (*TODO:* choose one and add tickets, etc).
+*NOTE: as of right now, the morphological analysis is a planned feature.
+It will be added in a future phase of work.*
 
 ## Local setup for developers
 
@@ -30,13 +16,10 @@ simple provisioning of and deployment to new instances.
 
 Before installing, make sure you have the following prerequisites installed:
 
-- Python >= 3.5
-- pip >= 1.5
-- NodeJS >= 6.11
-- npm >= 2.14.7
-- Postgres >= 9.5
-- Java >= 8.0
-- git >= 1.7
+- Python 3.7
+- Node 10.x
+- Postgres >= 11
+- Elasticsearch 6.x
 
 ### Getting started
 
@@ -47,15 +30,15 @@ $ git clone git@github.com:nmashton/mesolex.git
 $ cd mesolex
 ```
 
-Create a virtual environment for the project and install dependencies. The
-following is how to do it with [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/),
-but you can also use pyenv or whatever other method you prefer:
+Create a virtual environment for the project and install dependencies, for example using [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
 
 ```
-$ mkvirtualenv mesolex -p `which python3.5`
+$ pyenv virtualenv 3.7.1 mesolex
+$ pyenv activate mesoled
 (mesolex)$ pip install -r requirements/dev.txt
-(mesolex)$ npm install
 ```
+
+Install Node dependencies using `npm install`. It is recommended that you use [nvm](https://github.com/creationix/nvm) to keep your Node environment in sync with the project's requirements.
 
 ### Configuration settings
 
@@ -97,16 +80,6 @@ To run mesolex, just run the server as usual for a Django project:
 
 ```
 (mesolex)$ python manage.py runserver
-```
-
-### Load some data
-
-In order to use the project, you will need an XML file containing
-a set of lexicon data. (*TODO:* make this available here or elsewhere!)
-It can be loaded with a Django management command:
-
-```
-(mesolex)$ python manage.py import_data Your-Data-File.xml
 ```
 
 ## Deployment
