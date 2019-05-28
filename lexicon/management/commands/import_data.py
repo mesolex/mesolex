@@ -76,7 +76,7 @@ class Command(BaseCommand):
             if lx is None:
                 logger.error('No lx found for lxGroup at index {i}'.format(i=i))
                 continue
-            entry_kwargs['lemma'] = lx.text
+            defaults['lemma'] = lx.text
 
             try:
                 dt = lx_group.find('dt')
@@ -96,11 +96,14 @@ class Command(BaseCommand):
                 )
             except:
                 logger.exception(
-                    "Failed to create entry with ref {ref}, lx {lx}".format(
-                        ref=ref.text,
-                        lx=lx.text,
+                    "Failed to create entry with defaults {defaults}, entry_kwargs {entry_kwargs}".format(
+                        defaults=defaults,
+                        entry_kwargs=entry_kwargs,
                     )
                 )
+                # If we don't have a lexical entry, we can't do a whole
+                # heck of a lot from hereon in
+                continue
 
             self.create_simple_string_instances(
                 lx_group,

@@ -170,3 +170,8 @@ ELASTICSEARCH_DSL={
         'hosts': 'localhost:9200',
     },
 }
+
+# Data doesn't exactly change all the time, and leaving these True
+# does something bad to data import. Disable for now, reconsider later.
+ELASTICSEARCH_DSL_AUTOSYNC=False
+ELASTICSEARCH_DSL_AUTO_REFRESH=False

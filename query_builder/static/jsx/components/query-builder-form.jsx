@@ -45,9 +45,8 @@ const QueryBuilderForm = ({
       </label>
       <div className="input-group">
         <div className="input-group-prepend">
-          <a
+          <div
             className="btn btn-outline-primary"
-            href={`form-${i}-${formsetName}-filters-collapse`}
             id={`form-${i}-${formsetName}-filters-link`}
             role="button"
             data-toggle="collapse"
@@ -56,7 +55,7 @@ const QueryBuilderForm = ({
             onClick={() => $(`#form-${i}-${formsetName}-filters-collapse`).collapse('toggle')}
           >
             <Octicon name="gear" />
-          </a>
+          </div>
         </div>
         {
           isControlled(dataset.filter_on)
