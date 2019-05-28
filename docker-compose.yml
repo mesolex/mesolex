@@ -1,7 +1,15 @@
 version: '3'
 services:
   db:
-    image: postgres:9.6
+    image: mdillon/postgis:11-alpine
+  
+  search:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.0
+    ports:
+      - "9200:9200"
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -13,9 +21,9 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - search
     volumes:
-      # mount local repository into the container
-      - .:/code:delegated
-      # If the developer wants to deploy inside a docker container, expose their
-      # SSH keys to the container:
-      - ~/.ssh:/root/.ssh
+      - .:/code
+
+volumes:
+  pgdata:

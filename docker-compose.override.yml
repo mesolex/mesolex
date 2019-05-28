@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    volumes:
+      # mount local repository into the container
+      - .:/code:delegated
+    depends_on:
+      - webpack
+  webpack:
+    build: .
+    command: bash -lc "npx webpack --watch --mode development"
+    volumes:
+      # mount local repository into the container
+      - .:/code:delegated
