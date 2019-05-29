@@ -70,7 +70,11 @@ class Command(BaseCommand):
             if ref is None:
                 logger.error('No ref found for lxGroup at index {i}'.format(i=i))
                 continue
-            entry_kwargs['_id'] = ref.text
+            
+            try:
+                entry_kwargs['_id'] = int(ref.text)
+            except ValueError:
+                entra_kwargs['_id'] = ref.text
 
             lx = lx_group.find('lx')
             if lx is None:
