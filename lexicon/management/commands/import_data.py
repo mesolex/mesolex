@@ -74,7 +74,7 @@ class Command(BaseCommand):
             try:
                 entry_kwargs['_id'] = int(ref.text)
             except ValueError:
-                entra_kwargs['_id'] = ref.text
+                entry_kwargs['_id'] = ref.text
 
             lx = lx_group.find('lx')
             if lx is None:
