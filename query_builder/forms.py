@@ -46,6 +46,12 @@ class QueryBuilderForm(forms.Form):
     # field, e.g. ``'lemma': ('lemma', 'variant__value')``.
     FILTERABLE_FIELDS_DICT = {}
 
+    # NOTE: abstract, must be filled in with dictionary
+    # matching elasticsearch quasi-filters and lists
+    # of index fields
+    ELASTICSEARCH_FIELDS = []
+    ELASTICSEARCH_FIELDS_DICT = {}
+
     query_string = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
@@ -61,7 +67,7 @@ class QueryBuilderForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['filter_on'] = forms.ChoiceField(
-            choices=self.FILTERABLE_FIELDS,
+            choices=self.FILTERABLE_FIELDS + self.ELASTICSEARCH_FIELDS,
             widget=forms.Select(attrs={'class': 'custom-select'})
         )
 
@@ -122,10 +128,7 @@ class QueryBuilderForm(forms.Form):
         
         return (filter_action, query_string)
 
-    def get_query(self):
-        if not self.is_bound:
-            return
-        
+    def _get_db_query(self):
         (filter_action, query_string) = self.get_filter_action_and_query()
         filter_on_str = self.cleaned_data['filter_on']
         filter_on_vals = self.FILTERABLE_FIELDS_DICT.get(filter_on_str, [])
@@ -136,6 +139,24 @@ class QueryBuilderForm(forms.Form):
             query_expression |= Q(**{'%s%s' % (filter_on_val, filter_action): query_string})
 
         return query_expression
+
+    def _get_es_query(self):
+        query_fields = self.ELASTICSEARCH_FIELDS_DICT.get(self.cleaned_data['filter_on'])
+        results = self.DocumentClass.search().query(
+            'multi_match',
+            query=self.cleaned_data['query_string'],
+            fields=query_fields,
+        )
+        return Q(pk__in=[result.meta.id for result in results])
+
+    def get_query(self):
+        if not self.is_bound:
+            return
+        
+        if self.cleaned_data['filter_on'] in [field[0] for field in self.ELASTICSEARCH_FIELDS]:
+            return self._get_es_query()
+
+        return self._get_db_query()
 
 
     def clean(self):

@@ -16,19 +16,20 @@ from mesolex.utils import (
     to_vln,
 )
 
+from lexicon.documents import LexicalEntryDocument
 from lexicon.transformations.nahuat_orthography import nahuat_orthography
 
 
 # TODO: investigate why these gettext-strings have to be
 # lazy to work as expected when serialized by the formset.
-FILTERABLE_FIELDS = (
+FILTERABLE_FIELDS = [
     ('lemma', _('Entrada')),
     ('gloss', _('Glosa')),
     ('root', _('Raiz')),
     ('category', _('Campo semántico')),
     ('part_of_speech', _('Categoría gramatical')),
     ('inflectional_type', _('Inflexión')),
-)
+]
 
 FILTERABLE_FIELDS_DICT = {
     'lemma': ('lemma', 'variant__value'),
@@ -39,10 +40,24 @@ FILTERABLE_FIELDS_DICT = {
     'inflectional_type': ('grammargroup__inflectional_type', ),
 }
 
+ELASTICSEARCH_FIELDS = [
+    ('definitions', _('Definiciones')),
+    ('quotations', _('Citas')),
+]
+
+ELASTICSEARCH_FIELDS_DICT = {
+    'definitions': ['definitions_es'],
+    'quotations': ['quotations_es', 'quotations_azz'],
+}
+
 
 class LexicalSearchFilterForm(QueryBuilderForm):
     FILTERABLE_FIELDS = FILTERABLE_FIELDS
     FILTERABLE_FIELDS_DICT = FILTERABLE_FIELDS_DICT
+    ELASTICSEARCH_FIELDS = ELASTICSEARCH_FIELDS
+    ELASTICSEARCH_FIELDS_DICT = ELASTICSEARCH_FIELDS_DICT
+
+    DocumentClass = LexicalEntryDocument
 
     vln = forms.BooleanField(required=False)
     nahuat_orthography = forms.BooleanField(required=False)
@@ -68,7 +83,7 @@ class LexiconQueryBuilderGlobalFiltersForm(QueryBuilderGlobalFiltersForm):
 class BaseLexiconQueryComposerFormset(QueryBuilderBaseFormset):
     global_filters_class = LexiconQueryBuilderGlobalFiltersForm
 
-    FILTERABLE_FIELDS = FILTERABLE_FIELDS
+    FILTERABLE_FIELDS = FILTERABLE_FIELDS + ELASTICSEARCH_FIELDS
 
     CONTROLLED_VOCAB_FIELDS = {
         'part_of_speech': settings.LANGUAGE_CONFIGURATION['azz']['part_of_speech'],

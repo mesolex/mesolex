@@ -1,6 +1,6 @@
 from django_elasticsearch_dsl import DocType, Index, fields
 
-from .models import LexicalEntry, Quote
+from .models import LexicalEntry, Quote, Sense
 
 
 lexical_entry = Index('lexical_entry')
@@ -17,6 +17,17 @@ class LexicalEntryDocument(DocType):
         multi=True,
     )
     quotations_azz = fields.TextField(multi=True)
+
+    definitions_es = fields.TextField(
+        analyzer='spanish',
+        multi=True,
+    )
+
+    def prepare_definitions_es(self, instance):
+        return list(
+            Sense.objects.filter(entry__id=instance.id)
+            .values_list('definition', flat=True)
+        )
 
     def prepare_quotations_es(self, instance):
         return list(
