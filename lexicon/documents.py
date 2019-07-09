@@ -1,6 +1,6 @@
 from django_elasticsearch_dsl import DocType, Index, fields
 
-from .models import LexicalEntry, Quote, Sense
+from .models import LexicalEntry, Note, Quote, Sense
 
 
 lexical_entry = Index('lexical_entry')
@@ -23,6 +23,11 @@ class LexicalEntryDocument(DocType):
         multi=True,
     )
 
+    nsem_es = fields.TextField(
+        analyzer='spanish',
+        multi=True,
+    )
+
     def prepare_definitions_es(self, instance):
         return list(
             Sense.objects.filter(entry__id=instance.id)
@@ -35,13 +40,20 @@ class LexicalEntryDocument(DocType):
             .filter(language='es')
             .values_list('text', flat=True)
         )
-    
+
     def prepare_quotations_azz(self, instance):
         return list(
                 Quote.objects.filter(example__sense__entry__id=instance.id)
                 .filter(language='azz')
                 .values_list('text', flat=True)
             )
+
+    def prepare_nsem_es(self, instance):
+        return list(
+            Note.objects.filter(entry__id=instance.id)
+            .filter(type='semantics')
+            .values_list('value', flat=True)
+        )
 
     class Meta:
         model = LexicalEntry
