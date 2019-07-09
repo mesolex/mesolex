@@ -84,6 +84,7 @@ class BaseLexiconQueryComposerFormset(QueryBuilderBaseFormset):
     global_filters_class = LexiconQueryBuilderGlobalFiltersForm
 
     FILTERABLE_FIELDS = FILTERABLE_FIELDS + ELASTICSEARCH_FIELDS
+    TEXT_SEARCH_FIELDS = [field[0] for field in ELASTICSEARCH_FIELDS]
 
     CONTROLLED_VOCAB_FIELDS = {
         'part_of_speech': settings.LANGUAGE_CONFIGURATION['azz']['part_of_speech'],

@@ -190,6 +190,10 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
     # controlled vocabulary fields and their pair values.
     CONTROLLED_VOCAB_FIELDS = {}
 
+    # NOTE: abstract, must be filled in with list of
+    # fields that are searched with the search engine backend.
+    TEXT_SEARCH_FIELDS = []
+
     # Available for overriding if fields must
     # be computed dynamically.
     @property
@@ -201,10 +205,15 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
         return self.CONTROLLED_VOCAB_FIELDS
 
     @property
+    def text_search_fields(self):
+        return self.TEXT_SEARCH_FIELDS
+
+    @property
     def configuration_data(self):
         config = {
-            'filterable_fields': self.filterable_fields,
             'controlled_vocab_fields': self.controlled_vocab_fields,
+            'filterable_fields': self.filterable_fields,
+            'text_search_fields': self.text_search_fields,
         }
         return config
     

@@ -10,12 +10,12 @@ from query_builder.forms import (
 from narratives import models
 
 
-FILTERABLE_FIELDS = (
+FILTERABLE_FIELDS = [
     ('subgenre', _('Subgénero')),
     ('consultant_name', _('Nombre del contribuidor')),
     ('village_of_recording', _('Pueblo de grabacion')),
     ('title', _('Título')),
-)
+]
 FILTERABLE_FIELDS_DICT = {
     'subgenre': ('subgenre', ),
     'consultant_name': ('contr1', 'contr2', ),
