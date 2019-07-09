@@ -26,6 +26,7 @@ class QueryBuilderForm(forms.Form):
         ('contains_word', _('Contiene palabra')),
         ('exactly_equals', _('Es exactamente igual a')),
         ('regex', _('Expresión regular')),
+        ('text_search', _('Coincide con')),
     )
 
     FILTERS_DICT = {
@@ -35,6 +36,7 @@ class QueryBuilderForm(forms.Form):
         'contains_word': '__iregex',
         'exactly_equals': '',
         'regex': '__iregex',
+        'text_search': None,
     }
 
     # NOTE: abstract, must be filled in with sequence of pairs,
@@ -112,7 +114,7 @@ class QueryBuilderForm(forms.Form):
         
         if not self.is_bound:
             return (None, None)
-        
+
         form_data = self.cleaned_data
         filter_name = form_data['filter']
         filter_action = self.FILTERS_DICT.get(filter_name, '')
@@ -152,12 +154,11 @@ class QueryBuilderForm(forms.Form):
     def get_query(self):
         if not self.is_bound:
             return
-        
+
         if self.cleaned_data['filter_on'] in [field[0] for field in self.ELASTICSEARCH_FIELDS]:
             return self._get_es_query()
 
         return self._get_db_query()
-
 
     def clean(self):
         cleaned_data = super().clean()
