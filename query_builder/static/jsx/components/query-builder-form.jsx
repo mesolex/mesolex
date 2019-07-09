@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Octicon from 'react-component-octicons';
+import _ from 'lodash';
 
 import ControlledVocabInput from './controlled-vocab-input';
 import FilterSelector from './filter-selector';
@@ -25,6 +26,7 @@ const QueryBuilderForm = ({
   extraFilterComponents = [],
 }) => {
   const isControlled = controlledVocabCheck(config.controlled_vocab_fields || {});
+  const isTextSearch = fieldName => _.includes(config.text_search_fields || [], fieldName);
 
   return (
     <div className="form-group">
@@ -148,6 +150,7 @@ const QueryBuilderForm = ({
             value={dataset.filter}
             onChange={onChangeFieldFrom('filter')}
             controlled={isControlled(dataset.filter_on)}
+            textSearch={isTextSearch(dataset.filter_on)}
           />
         </div>
         {

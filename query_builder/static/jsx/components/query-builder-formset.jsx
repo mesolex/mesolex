@@ -154,23 +154,38 @@ export default class QueryBuilderFormSet extends React.Component {
     a particular set of vocab items they can search on, so
     only "is exactly equal to" is relevant), the `filter`
     value will be automatically set to `'exactly_equals'.`
+
+    Similarly, if the field-value pair is part of a "text search"
+    (which will normally be handled via the search engine), it
+    will force the choice of `filter` to the special value
+    "text search". If the previous value of the filter had
+    this, it will unset it if a non-text-search value is picked.
   */
-  onChangeFieldFrom = uniqueId => (field, eKey = 'value') => (e) => {
-    this.setState({
+  onChangeFieldFrom = uniqueId => (field, eKey = 'value') => ({target}) => {
+    this.setState(state => ({
       formsetIndexedDatasets: {
-        ...this.state.formsetIndexedDatasets,
+        ...state.formsetIndexedDatasets,
         [uniqueId]: Object.assign(
           {},
           {
-            ...this.state.formsetIndexedDatasets[uniqueId],
-            [field]: e.target[eKey],
+            ...state.formsetIndexedDatasets[uniqueId],
+            [field]: target[eKey],
           },
-          (field === 'filter_on' && this.isControlled(e.target[eKey])) ? {
+          (field === 'filter_on' && this.isControlled(target[eKey])) ? {
             filter: 'exactly_equals',
+          } : {},
+          (field === 'filter_on' && this.isTextSearch(target[eKey])) ? {
+            filter: 'text_search',
+          } : {},
+          (field === 'filter_on'
+            && state.formsetIndexedDatasets[uniqueId].filter === 'text_search'
+            && !this.isTextSearch(target[eKey])
+          ) ? {
+            filter: this.defaultFilter,
           } : {},
         ),
       },
-    });
+    }));
   }
 
   onChangeGlobalField = (fieldName, eKey = 'value') => ({ target }) => {
@@ -183,6 +198,8 @@ export default class QueryBuilderFormSet extends React.Component {
   }
 
   isControlled = controlledVocabCheck(this.props.formsetConfig.controlled_vocab_fields)
+
+  isTextSearch = fieldname => _.includes(this.props.formsetConfig.text_search_fields, fieldname)
 
   removeFilter = uniqueId => () => {
     this.setState({

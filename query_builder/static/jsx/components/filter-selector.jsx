@@ -18,6 +18,7 @@ const FilterSelector = ({
   value,
   onChange,
   controlled,
+  textSearch,
 }) => (
   <select
     name={name}
@@ -26,12 +27,13 @@ const FilterSelector = ({
     value={controlled ? 'exactly_equals' : value}
     onChange={onChange}
   >
-    {controlled ? null : <option value="begins_with">{`${gettext('empieza con')}`}</option>}
-    {controlled ? null : <option value="ends_with">{`${gettext('termina con')}`}</option>}
-    {controlled ? null : <option value="contains">{`${gettext('contiene secuencia')}`}</option>}
-    {controlled ? null : <option value="contains_word">{`${gettext('contiene palabra')}`}</option>}
-    <option value="exactly_equals">{`${gettext('es exactamente igual a')}`}</option>
-    {controlled ? null : <option value="regex">{`${gettext('expresión regular')}`}</option>}
+    {controlled || textSearch ? null : <option value="begins_with">{`${gettext('empieza con')}`}</option>}
+    {controlled || textSearch ? null : <option value="ends_with">{`${gettext('termina con')}`}</option>}
+    {controlled || textSearch ? null : <option value="contains">{`${gettext('contiene secuencia')}`}</option>}
+    {controlled || textSearch ? null : <option value="contains_word">{`${gettext('contiene palabra')}`}</option>}
+    {textSearch ? null : <option value="exactly_equals">{`${gettext('es exactamente igual a')}`}</option>}
+    {controlled || textSearch ? null : <option value="regex">{`${gettext('expresión regular')}`}</option>}
+    {textSearch ? <option value="text_search">{`${gettext('coincide con')}`}</option> : null}
   </select>
 );
 
@@ -42,6 +44,7 @@ FilterSelector.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   controlled: PropTypes.bool.isRequired,
+  textSearch: PropTypes.bool.isRequired,
 };
 
 export default FilterSelector;
