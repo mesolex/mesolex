@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-13 18:01+0000\n"
+"POT-Creation-Date: 2019-07-09 23:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,36 +17,56 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lexicon/forms.py:22 lexicon/models.py:32 scratch_space/tei_models.py:196
+#: lexicon/forms.py:23 lexicon/models.py:32
 msgid "Entrada"
 msgstr "Headword"
 
-#: lexicon/forms.py:23 lexicon/templates/search/search.html:38
+#: lexicon/forms.py:24 lexicon/templates/search/search.html:47
 msgid "Glosa"
 msgstr "Gloss"
 
-#: lexicon/forms.py:24
+#: lexicon/forms.py:25
 msgid "Raiz"
 msgstr "Root"
 
-#: lexicon/forms.py:25 lexicon/templates/search/search.html:48
+#: lexicon/forms.py:26 lexicon/templates/search/search.html:57
 msgid "Campo semántico"
 msgstr "Semantic field"
 
-#: lexicon/forms.py:26 lexicon/templates/search/search.html:43
+#: lexicon/forms.py:27 lexicon/templates/search/search.html:52
 msgid "Categoría gramatical"
 msgstr "Grammatical category"
 
-#: lexicon/forms.py:27 lexicon/templates/search/search.html:43
+#: lexicon/forms.py:28 lexicon/templates/search/search.html:52
 msgid "Inflexión"
 msgstr "Inflection"
+
+#: lexicon/forms.py:41
+msgid "Significado definicional"
+msgstr "Definitional meaning"
+
+#: lexicon/forms.py:42
+msgid "Significado descrito"
+msgstr "Described meaning"
+
+#: lexicon/forms.py:43
+msgid "Significado contextual"
+msgstr "Contextual meaning"
+
+#: lexicon/forms.py:44
+msgid "Todos significados"
+msgstr "All meanings"
+
+#: lexicon/forms.py:45
+msgid "Citas"
+msgstr "Examples"
 
 #: lexicon/management/commands/import_data.py:16
 #: narratives/management/commands/import_narratives.py:16
 msgid "Lee una fuente de datos en XML y actualiza la base de datos."
 msgstr "Reads an XML data source file and updates the database."
 
-#: lexicon/models.py:28 scratch_space/tei_models.py:194
+#: lexicon/models.py:28
 msgid "Identificación única"
 msgstr "Unique ID"
 
@@ -66,25 +86,25 @@ msgstr "Last updated"
 msgid "%(num_entries)s resultados (página %(page)s de %(num_pages)s)"
 msgstr "%(num_entries)s results (page %(page)s of %(num_pages)s)"
 
-#: lexicon/templates/search/search.html:38
+#: lexicon/templates/search/search.html:47
 msgid "Citación"
 msgstr "Citation"
 
-#: lexicon/templates/search/search.html:38
+#: lexicon/templates/search/search.html:47
 msgid "Formas alt."
 msgstr "Alt. forms"
 
-#: lexicon/templates/search/search.html:54
+#: lexicon/templates/search/search.html:63
 msgid "Etimología"
 msgstr "Etymology"
 
-#: lexicon/templates/search/search.html:58
+#: lexicon/templates/search/search.html:67
 msgid "Raíz"
 msgid_plural "Raízes"
 msgstr[0] "Root"
 msgstr[1] "Roots"
 
-#: lexicon/templates/search/search.html:64
+#: lexicon/templates/search/search.html:73
 #, fuzzy
 #| msgid "Raíz compuesta"
 msgid "Raíz compuesta"
@@ -92,44 +112,44 @@ msgid_plural "Raízes compuestas"
 msgstr[0] "Compound stem"
 msgstr[1] "Compound stems"
 
-#: lexicon/templates/search/search.html:69
+#: lexicon/templates/search/search.html:78
 msgid "Palabra con elementos no de náhuat"
 msgid_plural "Palabras con elementos no de náhuat"
 msgstr[0] "Word with non-Nahuat elements"
 msgstr[1] "Words with non-Nahuat elements"
 
-#: lexicon/templates/search/search.html:110
+#: lexicon/templates/search/search.html:108
 msgid "Notas semánticas"
 msgstr "Semantic notes"
 
-#: lexicon/templates/search/search.html:116
+#: lexicon/templates/search/search.html:114
 msgid "Notas morfológicas"
 msgstr "Morphological notes"
 
-#: lexicon/templates/search/search.html:122
+#: lexicon/templates/search/search.html:120
 msgid "Notas gramaticales"
 msgstr "Grammatical notes"
 
-#: lexicon/templates/search/search.html:139
+#: lexicon/templates/search/search.html:137
 #: narratives/templates/narratives/search.html:100
 msgid "Anterior"
 msgstr "Previous"
 
-#: lexicon/templates/search/search.html:152
+#: lexicon/templates/search/search.html:150
 #: narratives/templates/narratives/search.html:113
 msgid "Siguiente"
 msgstr "Next"
 
-#: lexicon/templates/search/search.html:164
+#: lexicon/templates/search/search.html:162
 #: narratives/templates/narratives/search.html:125
 msgid "Resultado no encontrado."
 msgstr "No results found."
 
-#: mesolex/settings/base.py:155
+#: mesolex/settings/base.py:156
 msgid "español"
 msgstr "Spanish"
 
-#: mesolex/settings/base.py:156
+#: mesolex/settings/base.py:157
 #, fuzzy
 #| msgid "inglés"
 msgid "inglés"
@@ -309,8 +329,7 @@ msgstr "Welcome to Mesolex"
 
 #: mesolex/templates/home.html:14
 msgid "Recursos lexicosemánticos para lenguas mesoamericanas (en desarrollo)"
-msgstr ""
-"Lexicosemantic resources for Mesoamerican languages (under construction)"
+msgstr "Lexicosemantic resources for Mesoamerican languages (under construction)"
 
 #: mesolex/templates/home.html:20
 msgid "Crédito: Ilustración por Inocencio Jiménez Chino"
@@ -437,25 +456,27 @@ msgstr "Equal to"
 msgid "Expresión regular"
 msgstr "Regular expression"
 
-#: query_builder/forms.py:148
+#: query_builder/forms.py:29
+msgid "Coincide con"
+msgstr "Matches"
+
+#: query_builder/forms.py:170
 msgid "Expresión regular no válida."
 msgstr "Invalid regular expression."
 
-#: query_builder/templates/query_builder/includes/query_builder.html:21
+#: query_builder/templates/query_builder/includes/query_builder.html:24
 msgid "Buscar"
 msgstr "Search"
 
-#: query_builder/templates/query_builder/includes/query_builder.html:24
+#: query_builder/templates/query_builder/includes/query_builder.html:27
 msgid "Agrega filtro"
 msgstr "Add filter"
 
-#: scratch_space/tei_models.py:208
-msgid "Entrada léxica"
-msgstr "Lexical entry"
+#~ msgid "Entrada léxica"
+#~ msgstr "Lexical entry"
 
-#: scratch_space/tei_models.py:209
-msgid "Entradas léxicas"
-msgstr "Lexical entries"
+#~ msgid "Entradas léxicas"
+#~ msgstr "Lexical entries"
 
 #~ msgid "Incluye"
 #~ msgstr "Contains"

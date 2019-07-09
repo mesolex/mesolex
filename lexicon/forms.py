@@ -38,10 +38,10 @@ FILTERABLE_FIELDS_DICT = {
 }
 
 ELASTICSEARCH_FIELDS = [
-    ('meaning', _('Defined meaning')),
-    ('described_meaning', _('Described meaning')),
-    ('contextual_meaning', _('Contextual meaning')),
-    ('all_meaning', _('Meaning (all)')),
+    ('meaning', _('Significado definicional')),
+    ('described_meaning', _('Significado descrito')),
+    ('contextual_meaning', _('Significado contextual')),
+    ('all_meaning', _('Todos significados')),
     ('quotations', _('Citas')),
 ]
 

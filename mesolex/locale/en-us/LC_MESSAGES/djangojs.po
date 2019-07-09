@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-22 23:15+0000\n"
+"POT-Creation-Date: 2019-07-09 23:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,99 +17,89 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lexicon/static/jsx/search/nahuat-orthography.jsx:31
-msgid "Activar flexibilidad ortográfica"
-msgstr "Activate flexible orthography"
-
 #: lexicon/static/jsx/search/search-formset.jsx:22
 msgid "Sólo mostrar entradas con sonidos"
 msgstr "Only show entries with accompanying sounds"
 
-#: lexicon/static/jsx/search/vln.jsx:31
-msgid "Neutralizar cantidad vocálica"
-msgstr "Neutralize vowel length"
-
-#: query_builder/static/jsx/components/filter-selector.jsx:29
-#: query_builder/static/jsx/util.jsx:39
+#: query_builder/static/jsx/components/filter-selector.jsx:30
 msgid "empieza con"
 msgstr "begins with"
 
-#: query_builder/static/jsx/components/filter-selector.jsx:30
-#: query_builder/static/jsx/util.jsx:40
+#: query_builder/static/jsx/components/filter-selector.jsx:31
 msgid "termina con"
 msgstr "ends with"
 
-#: query_builder/static/jsx/components/filter-selector.jsx:31
-#: query_builder/static/jsx/util.jsx:41
+#: query_builder/static/jsx/components/filter-selector.jsx:32
 msgid "contiene secuencia"
 msgstr "contains sequence"
 
-#: query_builder/static/jsx/components/filter-selector.jsx:32
-#: query_builder/static/jsx/util.jsx:42
+#: query_builder/static/jsx/components/filter-selector.jsx:33
 msgid "contiene palabra"
 msgstr "contains word"
 
-#: query_builder/static/jsx/components/filter-selector.jsx:33
-#: query_builder/static/jsx/util.jsx:43
+#: query_builder/static/jsx/components/filter-selector.jsx:34
 msgid "es exactamente igual a"
 msgstr "exactly equals"
 
-#: query_builder/static/jsx/components/filter-selector.jsx:34
+#: query_builder/static/jsx/components/filter-selector.jsx:35
 msgid "expresión regular"
 msgstr "regular expression"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:126
-msgid "si"
-msgstr "does"
+#: query_builder/static/jsx/components/filter-selector.jsx:36
+msgid "coincide con"
+msgstr "matches"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:126
-#: query_builder/static/jsx/util.jsx:33
-msgid "y"
-msgstr "and"
-
-#: query_builder/static/jsx/components/query-builder-form.jsx:127
-#: query_builder/static/jsx/util.jsx:34
+#: query_builder/static/jsx/components/query-builder-form.jsx:128
+#: query_builder/static/jsx/util.jsx:38
 msgid "o"
 msgstr "or"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:128
-#: query_builder/static/jsx/util.jsx:28 query_builder/static/jsx/util.jsx:30
-msgid "no"
-msgstr "does not"
-
-#: query_builder/static/jsx/components/query-builder-form.jsx:128
-#: query_builder/static/jsx/util.jsx:35
-msgid "y no"
-msgstr "and not"
-
-#: query_builder/static/jsx/components/query-builder-form.jsx:129
-#: query_builder/static/jsx/util.jsx:36
+#: query_builder/static/jsx/components/query-builder-form.jsx:130
+#: query_builder/static/jsx/util.jsx:40
 msgid "o no"
 msgstr "or not"
 
-#: query_builder/static/jsx/components/query-builder-formset.jsx:254
+#: query_builder/static/jsx/components/query-builder-formset.jsx:271
 msgid "Buscar"
 msgstr "Search"
 
-#: query_builder/static/jsx/components/query-builder-formset.jsx:256
+#: query_builder/static/jsx/components/query-builder-formset.jsx:273
 msgid "Agregar filtro"
 msgstr "Add filter"
 
-#: query_builder/static/jsx/util.jsx:44
-msgid "coincide con expresión regular"
-msgstr "matches regular expression"
+#: query_builder/static/jsx/util.jsx:32 query_builder/static/jsx/util.jsx:34
+msgid "no"
+msgstr "does not"
 
-#: query_builder/static/jsx/util.jsx:49
-msgid "NCV"
-msgstr "VLN"
+#: query_builder/static/jsx/util.jsx:37
+msgid "y"
+msgstr "and"
 
-#: query_builder/static/jsx/util.jsx:50
-msgid "flex. ort."
-msgstr "flex. orth."
+#: query_builder/static/jsx/util.jsx:39
+msgid "y no"
+msgstr "and not"
 
-#: query_builder/static/jsx/util.jsx:55
+#: query_builder/static/jsx/util.jsx:60
 msgid "ítem"
 msgstr "item"
+
+#~ msgid "Activar flexibilidad ortográfica"
+#~ msgstr "Activate flexible orthography"
+
+#~ msgid "Neutralizar cantidad vocálica"
+#~ msgstr "Neutralize vowel length"
+
+#~ msgid "si"
+#~ msgstr "does"
+
+#~ msgid "coincide con expresión regular"
+#~ msgstr "matches regular expression"
+
+#~ msgid "NCV"
+#~ msgstr "VLN"
+
+#~ msgid "flex. ort."
+#~ msgstr "flex. orth."
 
 #~ msgid "entrada"
 #~ msgstr "headword"
