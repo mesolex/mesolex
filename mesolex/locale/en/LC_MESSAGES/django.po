@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-09 23:19+0000\n"
+"POT-Creation-Date: 2019-07-09 23:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -359,6 +359,10 @@ msgstr "Recording village"
 msgid "Título"
 msgstr "Title"
 
+#: narratives/forms.py:27 narratives/templates/narratives/search.html:69
+msgid "Descripción"
+msgstr "Description"
+
 #: narratives/templates/narratives/search.html:34
 msgid "Metadatos basicos"
 msgstr "Basic metadata"
@@ -423,10 +427,6 @@ msgstr "Indigenous title"
 #: narratives/templates/narratives/search.html:66
 msgid "Título inglés"
 msgstr "English title"
-
-#: narratives/templates/narratives/search.html:69
-msgid "Descripción"
-msgstr "Description"
 
 #: narratives/templates/narratives/search.html:82
 msgid "Archivos"

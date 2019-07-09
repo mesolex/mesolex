@@ -99,4 +99,3 @@ LexicalSearchFilterFormset = forms.formset_factory(
     LexicalSearchFilterForm,
     formset=BaseLexiconQueryComposerFormset,
 )
-

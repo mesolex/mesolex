@@ -7,7 +7,7 @@ from query_builder.forms import (
     QueryBuilderBaseFormset,
 )
 
-from narratives import models
+from narratives import models, documents
 
 
 FILTERABLE_FIELDS = [
@@ -23,14 +23,28 @@ FILTERABLE_FIELDS_DICT = {
     'title': ('titnative', 'titspn', 'titeng', ),
 }
 
+ELASTICSEARCH_FIELDS = [
+    ('description', _('Descripción')),
+]
+
+ELASTICSEARCH_FIELDS_DICT = {
+    'description': ['descrip'],
+}
+
 
 class SoundMetadataSearchFilterForm(QueryBuilderForm):
     FILTERABLE_FIELDS = FILTERABLE_FIELDS
     FILTERABLE_FIELDS_DICT = FILTERABLE_FIELDS_DICT
 
+    ELASTICSEARCH_FIELDS = ELASTICSEARCH_FIELDS
+    ELASTICSEARCH_FIELDS_DICT = ELASTICSEARCH_FIELDS_DICT
+
+    DocumentClass = documents.SoundMetadataDocument
+
 
 class BaseSoundMetadataQueryComposerFormset(QueryBuilderBaseFormset):
-    FILTERABLE_FIELDS = FILTERABLE_FIELDS
+    FILTERABLE_FIELDS = FILTERABLE_FIELDS + ELASTICSEARCH_FIELDS
+    TEXT_SEARCH_FIELDS = [field[0] for field in ELASTICSEARCH_FIELDS]
 
     @property
     def controlled_vocab_fields(self):

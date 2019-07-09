@@ -18,7 +18,7 @@ class SoundMetadata(models.Model):
     language = models.CharField(max_length=256, blank=True)
     lg_var = models.CharField(max_length=256, blank=True)
     lg_code = models.CharField(max_length=8, blank=True)
-    
+
     lgvil = models.CharField(max_length=256, blank=True)
     lg_mpio = models.CharField(max_length=256, blank=True)
     lg_state = models.CharField(max_length=256, blank=True)
@@ -29,7 +29,7 @@ class SoundMetadata(models.Model):
     recordby = models.CharField(max_length=256, blank=True)
     date = models.DateField(null=True, blank=True)
     tracks = models.CharField(max_length=256, blank=True)
-    
+
     rec_format = models.CharField(max_length=256, blank=True)
     rec_orig = models.CharField(max_length=256, blank=True) # NOTE: also recorig
     rec_machine = models.CharField(max_length=256, blank=True)
@@ -49,7 +49,7 @@ class SoundMetadata(models.Model):
     # genreGroup
     genre = models.CharField(max_length=256, blank=True)
     subgenre = models.CharField(max_length=256, blank=True)
-    
+
     titnative = models.CharField(max_length=512, blank=True)
     titspn = models.CharField(max_length=512, blank=True)
     titeng = models.CharField(max_length=512, blank=True)
