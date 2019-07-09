@@ -111,7 +111,7 @@ class QueryBuilderForm(forms.Form):
         is done to generate a query string and filter action beyond
         what can be done with the "transformations" feature.
         """
-        
+
         if not self.is_bound:
             return (None, None)
 
@@ -127,7 +127,7 @@ class QueryBuilderForm(forms.Form):
                 query_string,
                 form_data,
             )
-        
+
         return (filter_action, query_string)
 
     def _get_db_query(self):
@@ -251,9 +251,9 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
                         query &= (~form_q)
                     elif operator == 'or_n':
                         query |= (~form_q)
-        
+
         if self.global_filters_form.is_valid() and query:
-            for (name, global_filter,) in self.global_filters_form.cleaned_data.items():
+            for (_name, global_filter,) in self.global_filters_form.cleaned_data.items():
                 query &= global_filter
 
         return query
