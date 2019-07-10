@@ -165,7 +165,7 @@ SITE_ID = 1
 
 ROBOTS_USE_SITEMAP = False
 
-ELASTICSEARCH_DSL={
+ELASTICSEARCH_DSL = {
     'default': {
         'hosts': 'localhost:9200',
     },
@@ -173,5 +173,5 @@ ELASTICSEARCH_DSL={
 
 # Data doesn't exactly change all the time, and leaving these True
 # does something bad to data import. Disable for now, reconsider later.
-ELASTICSEARCH_DSL_AUTOSYNC=False
-ELASTICSEARCH_DSL_AUTO_REFRESH=False
+ELASTICSEARCH_DSL_AUTOSYNC = False
+ELASTICSEARCH_DSL_AUTO_REFRESH = False
