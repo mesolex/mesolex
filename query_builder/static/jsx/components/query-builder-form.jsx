@@ -124,9 +124,9 @@ const QueryBuilderForm = ({
             value={dataset.operator}
             onChange={onChangeFieldFrom('operator')}
           >
-            <option value="and">{i === 0 ? gettext('si') : gettext('y')}</option>
+            <option value="and">{`${i === 0 ? gettext('si') : gettext('y')}`}</option>
             {i === 0 ? null : <option value="or">{`${gettext('o')}`}</option>}
-            <option value="and_n">{i === 0 ? gettext('no') : gettext('y no')}</option>
+            <option value="and_n">{`${i === 0 ? gettext('no') : gettext('y no')}`}</option>
             {i === 0 ? null : <option value="or_n">{`${gettext('o no')}`}</option>}
           </select>
           <select

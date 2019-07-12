@@ -28,7 +28,7 @@ const NahuatOrthography = ({
             onChange={onChangeFieldFrom('nahuat_orthography', 'checked')}
           />
           <label htmlFor={`id_form-${i}-nahuat_orthography`} className="form-check-label">
-            {gettext('Activar flexibilidad ortográfica')}
+            {`${gettext('Activar flexibilidad ortográfica')}`}
           </label>
         </div>
       )

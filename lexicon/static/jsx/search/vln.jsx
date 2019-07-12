@@ -28,7 +28,7 @@ const Vln = ({
             onChange={onChangeFieldFrom('vln', 'checked')}
           />
           <label htmlFor={`id_form-${i}-vln`} className="form-check-label">
-            {gettext('Neutralizar cantidad vocálica')}
+            {`${gettext('Neutralizar cantidad vocálica')}`}
           </label>
         </div>
       )

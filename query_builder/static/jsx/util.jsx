@@ -40,13 +40,13 @@ export const humanReadableFilters = ({
     or_n: `${gettext('o no')}:`,
   };
   const filterDict = {
-    begins_with: gettext('empieza con'),
-    ends_with: gettext('termina con'),
-    contains: gettext('contiene secuencia'),
-    contains_word: gettext('contiene palabra'),
-    exactly_equals: gettext('es exactamente igual a'),
-    regex: gettext('coincide con expresión regular'),
-    text_search: gettext('coincide con'),
+    begins_with: `${gettext('empieza con')}`,
+    ends_with: `${gettext('termina con')}`,
+    contains: `${gettext('contiene secuencia')}`,
+    contains_word: `${gettext('contiene palabra')}`,
+    exactly_equals: `${gettext('es exactamente igual a')}`,
+    regex: `${gettext('coincide con expresión regular')}`,
+    text_search: `${gettext('coincide con')}`,
   };
   const filterableFieldsDict = _.fromPairs(filterableFields);
   const modifiers = _.reduce(
