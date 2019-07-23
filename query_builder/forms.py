@@ -148,7 +148,7 @@ class QueryBuilderForm(forms.Form):
             'multi_match',
             query=self.cleaned_data['query_string'],
             fields=query_fields,
-        )
+        ).scan()
         return Q(pk__in=[result.meta.id for result in results])
 
     def get_query(self):
