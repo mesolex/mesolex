@@ -281,6 +281,11 @@ class Command(BaseCommand):
                 sig_var = sig_group.find('sig_var')
                 if sig_var is not None:
                     sig_group_kwargs['geo'] = sig_var.text
+                
+                ostens = sig_group.findall('osten')
+                if ostens is not None:
+                    osten_string = '; '.join([osten.text for osten in ostens])
+                    sig_group_kwargs['ostentive'] = osten_string
 
                 try:
                     sense = models.Sense.objects.create(

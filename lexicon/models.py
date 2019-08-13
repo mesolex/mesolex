@@ -202,6 +202,11 @@ class Sense(models.Model):
         blank=True,
     )
 
+    # <usg type="subj">
+    ostentive = models.TextField(
+        blank=True,
+    )
+
     # <usg type="geo">
     geo = models.CharField(
         max_length=64,

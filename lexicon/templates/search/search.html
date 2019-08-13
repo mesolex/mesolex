@@ -84,7 +84,7 @@
                         {% for sense in lexical_entry.senses %}
                         <li>
                             <div class="card-text">
-                                <p>{{ sense.definition|link_vnawa|safe }}</p>
+                                <p>{{ sense.definition|link_vnawa|safe }}{% if sense.ostentive %} ({{ sense.ostentive|link_vnawa|safe }}){% endif %}</p>
                             </div>
                             {% for example in sense.examples %}
                                 {% for quote in example.azz_quotes %}
