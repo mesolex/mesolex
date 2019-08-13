@@ -23,6 +23,11 @@ class LexicalEntryDocument(DocType):
         multi=True,
     )
 
+    ostentives_es = fields.TextField(
+        analyzer='spanish',
+        multi=True,
+    )
+
     nsem_es = fields.TextField(
         analyzer='spanish',
         multi=True,
@@ -32,6 +37,12 @@ class LexicalEntryDocument(DocType):
         return list(
             Sense.objects.filter(entry__id=instance.id)
             .values_list('definition', flat=True)
+        )
+
+    def prepare_ostentives_es(self, instance):
+        return list(
+            Sense.objects.filter(entry__id=instance.id)
+            .values_list('ostentive', flat=True)
         )
 
     def prepare_quotations_es(self, instance):

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-09 23:36+0000\n"
+"POT-Creation-Date: 2019-08-13 22:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,24 +42,20 @@ msgid "Inflexión"
 msgstr "Inflection"
 
 #: lexicon/forms.py:41
-msgid "Significado definicional"
-msgstr "Definitional meaning"
+msgid "Significado preciso"
+msgstr "Precise meaning"
 
 #: lexicon/forms.py:42
-msgid "Significado descrito"
-msgstr "Described meaning"
+msgid "Significado extendido"
+msgstr "Extended meaning"
 
 #: lexicon/forms.py:43
-msgid "Significado contextual"
-msgstr "Contextual meaning"
+msgid "Frase ilustrativas"
+msgstr "Illustrative phrases"
 
 #: lexicon/forms.py:44
-msgid "Todos significados"
-msgstr "All meanings"
-
-#: lexicon/forms.py:45
-msgid "Citas"
-msgstr "Examples"
+msgid "Búsqueda exhaustiva"
+msgstr "Complete search"
 
 #: lexicon/management/commands/import_data.py:16
 #: narratives/management/commands/import_narratives.py:16
@@ -329,7 +325,8 @@ msgstr "Welcome to Mesolex"
 
 #: mesolex/templates/home.html:14
 msgid "Recursos lexicosemánticos para lenguas mesoamericanas (en desarrollo)"
-msgstr "Lexicosemantic resources for Mesoamerican languages (under construction)"
+msgstr ""
+"Lexicosemantic resources for Mesoamerican languages (under construction)"
 
 #: mesolex/templates/home.html:20
 msgid "Crédito: Ilustración por Inocencio Jiménez Chino"
@@ -471,6 +468,18 @@ msgstr "Search"
 #: query_builder/templates/query_builder/includes/query_builder.html:27
 msgid "Agrega filtro"
 msgstr "Add filter"
+
+#~ msgid "Significado definicional"
+#~ msgstr "Definitional meaning"
+
+#~ msgid "Significado contextual"
+#~ msgstr "Contextual meaning"
+
+#~ msgid "Todos significados"
+#~ msgstr "All meanings"
+
+#~ msgid "Citas"
+#~ msgstr "Examples"
 
 #~ msgid "Entrada léxica"
 #~ msgstr "Lexical entry"

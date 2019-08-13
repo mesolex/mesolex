@@ -38,19 +38,17 @@ FILTERABLE_FIELDS_DICT = {
 }
 
 ELASTICSEARCH_FIELDS = [
-    ('meaning', _('Significado definicional')),
-    ('described_meaning', _('Significado descrito')),
-    ('contextual_meaning', _('Significado contextual')),
-    ('all_meaning', _('Todos significados')),
-    ('quotations', _('Citas')),
+    ('precise_meaning', _('Significado preciso')),
+    ('extended_meaning', _('Significado extendido')),
+    ('illustrative_phrases', _('Frase ilustrativas')),
+    ('complete_search', _('Búsqueda exhaustiva')),
 ]
 
 ELASTICSEARCH_FIELDS_DICT = {
-    'meaning': ['definitions_es'],
-    'described_meaning': ['definitions_es', 'nsem_es'],
-    'contextual_meaning': ['definitions_es', 'quotations_es'],
-    'all_meaning': ['definitions_es', 'nsem_es', 'quotations_es'],
-    'quotations': ['quotations_es', 'quotations_azz'],
+    'precise_meaning': ['definitions_es'],
+    'extended_meaning': ['definitions_es', 'ostentives_es'],
+    'illustrative_phrases': ['quotations_es'],
+    'complete_search': ['definitions_es', 'ostentives_es', 'quotations_es'],
 }
 
 
