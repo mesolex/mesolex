@@ -20,6 +20,5 @@ WORKDIR /code
 # Install the python dependencies that this project uses:
 COPY requirements /code/requirements
 RUN pip install -r requirements/dev.txt
-RUN pip install -r requirements/deploy.txt
 
 COPY . /code/
