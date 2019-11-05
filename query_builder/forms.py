@@ -1,5 +1,8 @@
 import json
+import operator
 import re
+from collections import namedtuple
+from functools import reduce
 
 from django import forms
 from django.db.models import Q
@@ -10,6 +13,49 @@ from mesolex.utils import (
     ForceProxyEncoder,
 )
 
+
+class CombiningQuery(namedtuple(
+    'CombiningQuery',
+    ['operator', 'query'],
+)):
+    """
+    Helper structure to hold query data as it is composed
+    together into its final form.
+    """
+    pass
+
+def handle_next_and(accumulator, next):
+    """
+    Reducer function to multiply together all queries
+    tagged with the "and" operator. This ensures that "and"
+    binds tighter; "or" can be handled in a second cleanup
+    reduction.
+    """
+    (queries, and_tree) = accumulator
+    if next.operator == 'and':
+        and_tree &= next.query
+    else:
+        queries = queries + [and_tree]
+        and_tree = next.query
+    return (queries, and_tree)
+
+def group_ands(queries):
+    (queries, and_tree) = reduce(
+        handle_next_and,
+        queries,
+        ([], Q()),
+    )
+    return queries + [and_tree]
+
+def group_queries(queries):
+    """
+    Takes a sequence of CombiningQuery objects and
+    composes together their "query" properties,
+    respecting a simple operator precedence rule
+    according to which "and" binds tighter than "or".
+    """
+    with_grouped_ands = group_ands(queries)
+    return reduce(operator.or_, with_grouped_ands)
 
 class QueryBuilderForm(forms.Form):
     BOOLEAN_OPERATORS = (
@@ -232,28 +278,25 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
 
     def get_full_query(self):
         query = None
+        queries = []
 
         for form in self.forms:
             if form.is_valid():
                 form_q = form.get_query()
                 operator = form.cleaned_data['operator']
-                if not query:
-                    if operator == 'and_n' or operator == 'or_n':
-                        query = ~form_q
-                    else:
-                        query = form_q
-                else:
-                    if operator == 'and':
-                        query &= form_q
-                    elif operator == 'or':
-                        query |= form_q
-                    elif operator == 'and_n':
-                        query &= (~form_q)
-                    elif operator == 'or_n':
-                        query |= (~form_q)
+                if operator == 'and_n' or operator == 'or_n':
+                    form_q = ~form_q
+                    operator = operator.replace('_n', '')
+                
+                if self.global_filters_form.is_valid() and form_q:
+                    for (_name, global_filter,) in self.global_filters_form.cleaned_data.items():
+                        form_q &= global_filter
 
-        if self.global_filters_form.is_valid() and query:
-            for (_name, global_filter,) in self.global_filters_form.cleaned_data.items():
-                query &= global_filter
+                queries.append(CombiningQuery(
+                    operator=operator,
+                    query=form_q,
+                ))
+
+        query = group_queries(queries)
 
         return query

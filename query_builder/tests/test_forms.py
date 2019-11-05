@@ -52,6 +52,88 @@ class QueryBuilderFormTestCase(TestCase):
     
 
 class QueryBuilderBaseFormsetTestCase(TestCase):
+    def test_respects_operator_predence(self):
+        class TestForm(forms.QueryBuilderForm):
+            FILTERABLE_FIELDS = [
+                ('bar', 'Bar',),
+            ]
+            FILTERABLE_FIELDS_DICT = {
+                'bar': ('bar', ),
+            }
+
+        test_formset = django.forms.formset_factory(
+            TestForm,
+            formset=forms.QueryBuilderBaseFormset,
+        )
+
+        formset_data = {
+            "form-0-query_string": "foo1",
+            "form-0-operator": "and",
+            "form-0-filter": "begins_with",
+            "form-0-filter_on": "bar",
+            
+            "form-1-query_string": "foo2",
+            "form-1-operator": "and",
+            "form-1-filter": "begins_with",
+            "form-1-filter_on": "bar",
+
+            "form-2-query_string": "foo3",
+            "form-2-operator": "or",
+            "form-2-filter": "begins_with",
+            "form-2-filter_on": "bar",
+
+            "form-3-query_string": "foo4",
+            "form-3-operator": "and",
+            "form-3-filter": "begins_with",
+            "form-3-filter_on": "bar",
+
+            "form-4-query_string": "foo5",
+            "form-4-operator": "and",
+            "form-4-filter": "begins_with",
+            "form-4-filter_on": "bar",
+
+            "form-INITIAL_FORMS": "0",
+            "form-MAX_NUM_FORMS": "1000",
+            "form-MIN_NUM_FORMS": "0",
+            "form-TOTAL_FORMS": "5",
+        }
+
+        bound_formset = test_formset(formset_data)
+
+        self.assertTrue(bound_formset.is_valid())
+
+        query = bound_formset.get_full_query()
+
+        self.assertEqual(
+            'OR',
+            query.connector,
+        )
+
+        branch_1 = query.children[0]
+        branch_2 = query.children[1]
+
+        self.assertEqual(2, len(branch_1))
+        self.assertEqual(3, len(branch_2))
+
+        self.assertEqual('AND', branch_1.connector)
+        self.assertEqual('AND', branch_2.connector)
+
+        self.assertEqual(
+            [
+                ('bar__istartswith', 'foo1'),
+                ('bar__istartswith', 'foo2'),
+            ],
+            branch_1.children,
+        )
+        self.assertEqual(
+            [
+                ('bar__istartswith', 'foo3'),
+                ('bar__istartswith', 'foo4'),
+                ('bar__istartswith', 'foo5'),
+            ],
+            branch_2.children,
+        )
+
     def test_works_without_global_filters(self):
         class TestForm(forms.QueryBuilderForm):
             FILTERABLE_FIELDS = [
