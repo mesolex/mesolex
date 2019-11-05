@@ -1,6 +1,7 @@
 import json
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.db.models.functions import Lower
@@ -18,15 +19,22 @@ from mesolex.utils import (
 def lexicon_search_view(request, *args, **kwargs):
     template_name = 'search/search.html'
     if request.GET:
-        formset = LexicalSearchFilterFormset(request.GET)
+        formset = LexicalSearchFilterFormset(request.GET)        
         lexical_entries = None
         display_entries = None
         query = None
         paginator = None
         page = 1
 
-        if len(formset.forms) >= 1:
-            query = formset.get_full_query()
+        try:
+            if len(formset.forms) >= 1:
+                query = formset.get_full_query()
+        except ValidationError:
+            # The formset has been tampered with.
+            # Django doesn't handle this very gracefully.
+            # To prevent a 500 error, just bail out here.
+            # TODO: make this nicer.
+            formset = LexicalSearchFilterFormset()
 
         if query:
             lexical_entries = (
