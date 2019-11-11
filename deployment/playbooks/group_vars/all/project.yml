@@ -25,7 +25,7 @@ repo:
 
 github_deploy_key: "{{ SECRET_GITHUB_DEPLOY_KEY|default('') }}"
 
-nodejs_version: "10.x"
+nodejs_version: "12.x"
 nodejs_install_npm_user: "{{ project_name }}"
 nodejs_package_json_path: "{{ source_dir }}"
 nodejs_config_unsafe_perm: true

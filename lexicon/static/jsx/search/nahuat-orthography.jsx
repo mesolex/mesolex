@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import { controlledVocabCheck } from 'query-builder/util';
 
-
 const NahuatOrthography = ({
   i,
   config,
@@ -27,7 +26,10 @@ const NahuatOrthography = ({
             disabled={dataset.filter === 'regex'}
             onChange={onChangeFieldFrom('nahuat_orthography', 'checked')}
           />
-          <label htmlFor={`id_form-${i}-nahuat_orthography`} className="form-check-label">
+          <label
+            htmlFor={`id_form-${i}-nahuat_orthography`}
+            className="form-check-label"
+          >
             {`${gettext('Activar flexibilidad ortográfica')}`}
           </label>
         </div>
@@ -37,8 +39,14 @@ const NahuatOrthography = ({
 
 NahuatOrthography.propTypes = {
   i: PropTypes.number.isRequired,
-  config: PropTypes.shape({}).isRequired,
-  dataset: PropTypes.shape({}).isRequired,
+  config: PropTypes.shape({
+    controlled_vocab_fields: PropTypes.shape({}),
+  }).isRequired,
+  dataset: PropTypes.shape({
+    filter: PropTypes.string,
+    filter_on: PropTypes.string,
+    nahuat_orthography: PropTypes.bool,
+  }).isRequired,
   onChangeFieldFrom: PropTypes.func.isRequired,
 };
 

@@ -1,19 +1,19 @@
-import Plyr from "plyr";
+import Plyr from 'plyr';
 
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import SearchFormSet from "./search-formset";
+import SearchFormSet from './search-formset';
 
-const AUDIO_PLAYER_SELECTOR = "lexical-entry-audio";
+const AUDIO_PLAYER_SELECTOR = 'lexical-entry-audio';
 
 export const initFunction = () => {
   const {
     formset_config: formsetConfig,
     formset_data: formsetData,
     formset_global_filters_form_data: formsetGlobalFiltersData,
-    formset_errors: formsetErrors
-  } = JSON.parse(document.getElementById("js-init").text).lexicon;
+    formset_errors: formsetErrors,
+  } = JSON.parse(document.getElementById('js-init').text).lexicon;
 
   ReactDOM.render(
     <SearchFormSet
@@ -24,7 +24,7 @@ export const initFunction = () => {
       formsetGlobalFiltersData={formsetGlobalFiltersData}
       extraFieldNames={['vln', 'nahuat_orthography']}
     />,
-    document.querySelector("#lexicon-search-form")
+    document.querySelector('#lexicon-search-form'),
   );
 
   Plyr.setup(`.${AUDIO_PLAYER_SELECTOR}`, {
