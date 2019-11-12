@@ -9,10 +9,22 @@ import QueryBuilderForm from './query-builder-form';
 
 
 export default class QueryBuilderFormSet extends React.Component {
+  isControlled = controlledVocabCheck(this.props.formsetConfig.controlled_vocab_fields)
+
   static propTypes = {
     formsetName: PropTypes.string,
-    formsetConfig: PropTypes.shape({}).isRequired,
-    formsetData: PropTypes.shape({}).isRequired,
+    formsetConfig: PropTypes.shape({
+      controlled_vocab_fields: PropTypes.object,
+      filterable_fields: PropTypes.array,
+      text_search_fields: PropTypes.arrayOf(PropTypes.string),
+    }).isRequired,
+    formsetData: PropTypes.arrayOf(PropTypes.shape({
+      query_string: PropTypes.string,
+      operator: PropTypes.string,
+      filter_on: PropTypes.string,
+      filter: PropTypes.string,
+      vln: PropTypes.bool,
+    })).isRequired,
     formsetGlobalFiltersData: PropTypes.shape({}).isRequired,
     formsetErrors: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     extraFieldNames: PropTypes.arrayOf(PropTypes.string),
@@ -23,23 +35,23 @@ export default class QueryBuilderFormSet extends React.Component {
     extraFieldNames: [],
   }
 
-  /*
-    Upon being initialized with formsetData and formsetErrors
-    (which are provided from the rendered template on the basis
-    of previously-submitted form data), the constructor will
-    build an initial state consisting of:
-
-    - `forms`, a simple list of unique identifiers
-    - `formsetIndexedDatasets`, the form data for each form,
-      indexed by the unique identifier from `forms`
-    - `formsetIndexedErrors`, the errors for each form,
-      indexed by the unique identifier from `forms`
-    - `formsetGlobalFiltersData`, the form data for filters
-      applied to the formset as a whole, as determined
-      by the value of `globalFiltersComponents`
-
-    After being consumed, `formsetData` and `formsetErrors` are not used.
-  */
+  /**
+   * Upon being initialized with `formsetData` and `formsetErrors`,
+   * which are provided from the rendered template on the basis
+   * of previously-submitted form data, the constructor will
+   * build an initial state consisting of:
+   *
+   * - `forms`, a simple list of unique identifiers
+   * - `formsetIndexedDatasets`, the form data for each form,
+   *   indexed by the unique identifier from `forms`
+   * - `formsetIndexedErrors`, the errors for each form,
+   *   indexed by the unique identifier from `forms`
+   * - `formsetGlobalFiltersData`, the form data for filters
+   *   applied to the formset as a whole, as determined
+   *   by the value of `globalFiltersComponents`
+   *
+   * After being consumed, `formsetData` and `formsetErrors` are not used.
+   */
   constructor(props) {
     super(props);
     const {
@@ -55,8 +67,8 @@ export default class QueryBuilderFormSet extends React.Component {
       where n == the initial formset's count or 1.
     */
     const forms = _.times(
-      parseInt(formsetData['form-TOTAL_FORMS'], 10) || 1,
-      () => uuid4(),
+      formsetData.length || 1,
+      uuid4,
     );
 
     /*
@@ -67,27 +79,23 @@ export default class QueryBuilderFormSet extends React.Component {
     const formsetIndexedDatasets = _.reduce(
       _.map(
         forms,
-        (uniqueId, i) => ({
-          [uniqueId]: {
-            query_string: formsetData[`form-${i}-query_string`] || '',
-            operator: formsetData[`form-${i}-operator`] || 'and',
-            filter_on: formsetData[`form-${i}-filter_on`] || (formsetConfig.filterable_fields || [[]])[0][0],
-            filter: formsetData[`form-${i}-filter`] || this.defaultFilter,
-            /**
-             * Roll the list of extra field names into an object with
-             * all the initial data related to those field names, then merge
-             * them into the indexed dataset being constructed
-             */
-            ...(_.reduce(
-              extraFieldNames,
-              (acc, fieldName) => ({
-                ...acc,
-                [fieldName]: !!formsetData[`form-${i}-${fieldName}`],
-              }),
-              {},
-            ))
-          },
-        }),
+        (uniqueId, i) => {
+          const dataset = formsetData[i] || {};
+
+          return {
+            [uniqueId]: _.defaults(
+              dataset,
+              ..._.map(extraFieldNames, (fieldName) => ({ [fieldName]: !!dataset[fieldName] })),
+              {
+                query_string: '',
+                operator: 'and',
+                filter_on: (formsetConfig.filterable_fields || [[]])[0][0],
+                filter: this.defaultFilter,
+              },
+              ..._.map(extraFieldNames, (fieldName) => ({ [fieldName]: false })),
+            ),
+          };
+        },
       ),
       (acc, dataset) => ({ ...acc, ...dataset }),
       {},
@@ -161,61 +169,62 @@ export default class QueryBuilderFormSet extends React.Component {
     "text search". If the previous value of the filter had
     this, it will unset it if a non-text-search value is picked.
   */
-  onChangeFieldFrom = uniqueId => (field, eKey = 'value') => ({target}) => {
-    this.setState(state => ({
+  onChangeFieldFrom = (uniqueId) => (field, eKey = 'value') => ({ target }) => {
+    this.setState((state) => ({
       formsetIndexedDatasets: {
         ...state.formsetIndexedDatasets,
-        [uniqueId]: Object.assign(
-          {},
-          {
-            ...state.formsetIndexedDatasets[uniqueId],
-            [field]: target[eKey],
-          },
-          (field === 'filter_on' && this.isControlled(target[eKey])) ? {
-            filter: 'exactly_equals',
-          } : {},
-          (field === 'filter_on' && this.isTextSearch(target[eKey])) ? {
-            filter: 'text_search',
-          } : {},
-          (field === 'filter_on'
-            && state.formsetIndexedDatasets[uniqueId].filter === 'text_search'
-            && !this.isTextSearch(target[eKey])
-          ) ? {
-            filter: this.defaultFilter,
-          } : {},
-        ),
+        [uniqueId]: {
+          ...state.formsetIndexedDatasets[uniqueId],
+          [field]: target[eKey],
+          ...(
+            (field === 'filter_on' && this.isControlled(target[eKey])) ? {
+              filter: 'exactly_equals',
+            } : {}
+          ),
+          ...(
+            (field === 'filter_on' && this.isTextSearch(target[eKey])) ? {
+              filter: 'text_search',
+            } : {}
+          ),
+          ...(
+            (field === 'filter_on'
+              && state.formsetIndexedDatasets[uniqueId].filter === 'text_search'
+              && !this.isTextSearch(target[eKey])
+            ) ? {
+                filter: this.defaultFilter,
+              } : {}
+          ),
+        },
       },
     }));
   }
 
   onChangeGlobalField = (fieldName, eKey = 'value') => ({ target }) => {
-    this.setState({
+    this.setState((state) => ({
       formsetGlobalFiltersData: {
-        ...this.state.formsetGlobalFiltersData,
+        ...state.formsetGlobalFiltersData,
         [fieldName]: target[eKey],
       },
-    });
+    }));
   }
 
-  isControlled = controlledVocabCheck(this.props.formsetConfig.controlled_vocab_fields)
+  isTextSearch = (fieldname) => _.includes(this.props.formsetConfig.text_search_fields, fieldname)
 
-  isTextSearch = fieldname => _.includes(this.props.formsetConfig.text_search_fields, fieldname)
-
-  removeFilter = uniqueId => () => {
-    this.setState({
-      forms: _.filter(this.state.forms, form => uniqueId !== form),
-      formsetIndexedDatasets: _.omit(this.state.formsetIndexedDatasets, uniqueId),
-      formsetIndexedErrors: _.omit(this.state.formsetIndexedErrors, uniqueId),
-    });
+  removeFilter = (uniqueId) => () => {
+    this.setState((state) => ({
+      forms: _.filter(state.forms, (form) => uniqueId !== form),
+      formsetIndexedDatasets: _.omit(state.formsetIndexedDatasets, uniqueId),
+      formsetIndexedErrors: _.omit(state.formsetIndexedErrors, uniqueId),
+    }));
   }
 
   addFilter = (e) => {
     e.preventDefault();
     const newUniqueId = uuid4();
-    this.setState({
-      forms: [...this.state.forms, newUniqueId],
+    this.setState((state) => ({
+      forms: [...state.forms, newUniqueId],
       formsetIndexedDatasets: {
-        ...this.state.formsetIndexedDatasets,
+        ...state.formsetIndexedDatasets,
         [newUniqueId]: {
           operator: 'and',
           filter_on: (this.props.formsetConfig.filterable_fields || [[]])[0][0],
@@ -224,10 +233,10 @@ export default class QueryBuilderFormSet extends React.Component {
         },
       },
       formsetIndexedErrors: {
-        ...this.state.formsetIndexedErrors,
+        ...state.formsetIndexedErrors,
         [newUniqueId]: {},
       },
-    });
+    }));
   }
 
   extraFilterComponents = () => []
@@ -269,7 +278,12 @@ export default class QueryBuilderFormSet extends React.Component {
 
         <div className="form-group">
           <button type="submit" className="btn btn-success">{`${gettext('Buscar')}`}</button>
-          <button className="btn btn-primary float-right" id="add-filter" onClick={this.addFilter}>
+          <button
+            className="btn btn-primary float-right"
+            id="add-filter"
+            onClick={this.addFilter}
+            type="button"
+          >
             {`${gettext('Agregar filtro')}`}
           </button>
         </div>
