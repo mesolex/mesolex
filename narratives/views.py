@@ -50,7 +50,7 @@ def narratives_search_view(request, *args, **kwargs):
             'query': True,
             'narratives': {
                 'formset': formset,
-                'formset_data': json.dumps(formset.data),
+                'formset_data': json.dumps([form.cleaned_data for form in formset.forms]),
                 'formset_errors': json.dumps(formset.errors),
             }
         })
