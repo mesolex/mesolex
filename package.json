@@ -47,7 +47,7 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "jquery": "^3.4.1",
     "lodash": "^4.17.15",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "plyr": "3.4.3",
     "popper.js": "^1.16.0",
     "postcss-loader": "^2.1.5",
