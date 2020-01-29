@@ -9,6 +9,7 @@ from query_builder.forms import (
     QueryBuilderBaseFormset,
 )
 
+from mesolex.config import LANGUAGES
 from mesolex.utils import (
     to_vln,
 )
@@ -20,35 +21,23 @@ from lexicon.transformations.nahuat_orthography import nahuat_orthography
 # TODO: investigate why these gettext-strings have to be
 # lazy to work as expected when serialized by the formset.
 FILTERABLE_FIELDS = [
-    ('lemma', _('Entrada')),
-    ('gloss', _('Glosa')),
-    ('root', _('Raiz')),
-    ('category', _('Campo semántico')),
-    ('part_of_speech', _('Categoría gramatical')),
-    ('inflectional_type', _('Inflexión')),
+    (field['field'], field['label'])
+    for field in LANGUAGES['azz']['filterable_fields']
 ]
 
 FILTERABLE_FIELDS_DICT = {
-    'lemma': ('lemma', 'variant__value'),
-    'gloss': ('gloss__value', ),
-    'root': ('root__value', ),
-    'category': ('category__value', ),
-    'part_of_speech': ('grammargroup__part_of_speech', ),
-    'inflectional_type': ('grammargroup__inflectional_type', ),
+    field['field']: field['terms']
+    for field in LANGUAGES['azz']['filterable_fields']
 }
 
 ELASTICSEARCH_FIELDS = [
-    ('precise_meaning', _('Significado preciso')),
-    ('extended_meaning', _('Significado extendido')),
-    ('illustrative_phrases', _('Frase ilustrativas')),
-    ('complete_search', _('Búsqueda exhaustiva')),
+    (field['field'], field['label'])
+    for field in LANGUAGES['azz']['elasticsearch_fields']
 ]
 
 ELASTICSEARCH_FIELDS_DICT = {
-    'precise_meaning': ['definitions_es'],
-    'extended_meaning': ['definitions_es', 'ostentives_es'],
-    'illustrative_phrases': ['quotations_es'],
-    'complete_search': ['definitions_es', 'ostentives_es', 'quotations_es'],
+    field['field']: field['terms']
+    for field in LANGUAGES['azz']['elasticsearch_fields']
 }
 
 
@@ -88,8 +77,8 @@ class BaseLexiconQueryComposerFormset(QueryBuilderBaseFormset):
     TEXT_SEARCH_FIELDS = [field[0] for field in ELASTICSEARCH_FIELDS]
 
     CONTROLLED_VOCAB_FIELDS = {
-        'part_of_speech': settings.LANGUAGE_CONFIGURATION['azz']['part_of_speech'],
-        'inflectional_type': settings.LANGUAGE_CONFIGURATION['azz']['inflectional_type'],
+        field['field']: [(item['value'], item['label']) for item in field['items']]
+        for field in LANGUAGES['azz']['controlled_vocab_fields']
     }
 
 
