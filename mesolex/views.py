@@ -27,10 +27,5 @@ def home(request, *args, **kwargs):
             'formset_errors': json.dumps([]),
             'form_captions': True,
         },
-        'language_configuration': json.dumps(
-            settings.LANGUAGE_CONFIGURATION,
-            ensure_ascii=False,
-            cls=ForceProxyEncoder,
-        ),
     })
 

@@ -67,11 +67,6 @@ def lexicon_search_view(request, *args, **kwargs):
                 'formset_global_filters_form_data': json.dumps(formset.global_filters_form.data),
                 'formset_errors': json.dumps(formset.errors),
             },
-            'language_configuration': json.dumps(
-                settings.LANGUAGE_CONFIGURATION,
-                ensure_ascii=False,
-                cls=ForceProxyEncoder,
-            ),
             'language': 'azz',  # TODO: multi-language functionality
         })
 
@@ -82,9 +77,4 @@ def lexicon_search_view(request, *args, **kwargs):
             'formset_data': json.dumps(formset.data),
             'formset_errors': json.dumps(formset.errors),
         },
-        'language_configuration': json.dumps(
-            settings.LANGUAGE_CONFIGURATION,
-            ensure_ascii=False,
-            cls=ForceProxyEncoder,
-        ),
     })
