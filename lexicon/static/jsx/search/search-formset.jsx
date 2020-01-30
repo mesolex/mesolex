@@ -25,20 +25,26 @@ export default class SearchFormSet extends QueryBuilderFormset {
     </div>
   )
 
-  extraFilterComponents = ({ i, uniqueId }) => ([
-    <Vln
-      i={i}
-      key="vln"
-      config={this.props.formsetConfig}
-      dataset={this.state.formsetIndexedDatasets[uniqueId]}
-      onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
-    />,
-    <NahuatOrthography
-      i={i}
-      key="nahuat_orthography"
-      config={this.props.formsetConfig}
-      dataset={this.state.formsetIndexedDatasets[uniqueId]}
-      onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
-    />,
-  ])
+  extraFilterComponents = ({ i, uniqueId }) => (
+    <>
+      <div className="input-group">
+        <Vln
+          i={i}
+          key="vln"
+          config={this.props.formsetConfig}
+          dataset={this.state.formsetIndexedDatasets[uniqueId]}
+          onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
+        />
+      </div>
+      <div className="input-group">
+        <NahuatOrthography
+          i={i}
+          key="nahuat_orthography"
+          config={this.props.formsetConfig}
+          dataset={this.state.formsetIndexedDatasets[uniqueId]}
+          onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
+        />
+      </div>
+    </>
+  )
 }
