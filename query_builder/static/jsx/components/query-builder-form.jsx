@@ -19,13 +19,14 @@ const QueryBuilderForm = ({
   formsetName,
   defaultFilter,
   config,
+  controlledVocabFields,
   dataset,
   errors,
   onChangeFieldFrom,
   removeFilter,
   extraFilterComponents = [],
 }) => {
-  const isControlled = controlledVocabCheck(config.controlled_vocab_fields || {});
+  const isControlled = controlledVocabCheck(controlledVocabFields);
   const isTextSearch = (fieldName) => _.includes(config.text_search_fields || [], fieldName);
 
   return (
@@ -73,7 +74,7 @@ const QueryBuilderForm = ({
                 value={dataset.query_string}
                 onChange={onChangeFieldFrom('query_string')}
                 vocab={dataset.filter_on}
-                vocabItems={config.controlled_vocab_fields}
+                vocabItems={controlledVocabFields}
               />
             )
             : (
@@ -172,6 +173,7 @@ QueryBuilderForm.propTypes = {
     filterable_fields: PropTypes.any,
     text_search_fields: PropTypes.any,
   }).isRequired,
+  controlledVocabFields: PropTypes.shape(),
   dataset: PropTypes.shape({
     filter: PropTypes.any,
     filter_on: PropTypes.any,
@@ -191,6 +193,7 @@ QueryBuilderForm.propTypes = {
 };
 
 QueryBuilderForm.defaultProps = {
+  controlledVocabFields: {},
   formsetName: 'default',
   defaultFilter: 'exactly_equals',
   extraFilterComponents: [],

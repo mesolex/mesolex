@@ -11,6 +11,7 @@ from .forms import (
     LexicalSearchFilterFormset,
 )
 from .models import LexicalEntry
+from mesolex.config import LANGUAGES
 from mesolex.utils import (
     ForceProxyEncoder,
 )
@@ -60,6 +61,11 @@ def lexicon_search_view(request, *args, **kwargs):
             'num_entries': lexical_entries.count() if lexical_entries else 0,
             'page': page,
             'query': True,
+            'languages': json.dumps(
+                LANGUAGES,
+                ensure_ascii=False,
+                cls=ForceProxyEncoder,
+            ),
             'lexicon': {
                 'formset': formset,
                 'formset_global_filters_form': formset.global_filters_form,
@@ -72,6 +78,11 @@ def lexicon_search_view(request, *args, **kwargs):
 
     formset = LexicalSearchFilterFormset()
     return render(request, template_name, {
+        'languages': json.dumps(
+            LANGUAGES,
+            ensure_ascii=False,
+            cls=ForceProxyEncoder,
+        ),
         'lexicon': {
             'formset': formset,
             'formset_data': json.dumps(formset.data),

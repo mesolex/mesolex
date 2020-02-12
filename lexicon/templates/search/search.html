@@ -170,6 +170,7 @@
 {% block js-init %}
   {{ block.super }}
   "csrfToken": "{{ csrf_token }}",
+  "languages": {{ languages|safe }},
   "lexicon": {
     "formset_config": {{ lexicon.formset.configuration_data_as_json|safe }},
     "formset_data": {{ lexicon.formset_data|safe }},

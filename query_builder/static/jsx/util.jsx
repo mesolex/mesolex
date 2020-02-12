@@ -7,7 +7,7 @@ import _ from 'lodash';
 */
 export const controlledVocabCheck = (controlledVocabFields) => {
   const keys = _.keys(controlledVocabFields);
-  return value => _.includes(keys, value);
+  return (value) => _.includes(keys, value);
 };
 
 
@@ -59,3 +59,14 @@ export const humanReadableFilters = ({
   );
   return `${i === 0 ? initOpDict[operator] : opDict[operator]} ${filterableFieldsDict[filterOn] || gettext('ítem')} ${filterDict[filter]}${modifiers.length ? ` (${modifiers.join(', ')})` : ''}`;
 };
+
+/**
+ * Converts the structure of the LANGUAGES config's controlled
+ * vocab fields to the {fieldName: [[value, label]]} structure
+ * expected by the front-end.
+ */
+export const makeControlledVocabFields = (languagesCVFs) => _.chain(languagesCVFs)
+  .map(({ field, items }) => ({ [field]: items }))
+  .reduce((acc, next) => ({ ...acc, ...next }))
+  .mapValues((items) => _.map(items, ({ value, label }) => [value, label]))
+  .value();

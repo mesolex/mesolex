@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import uuid4 from 'uuid/v4';
 
-import { controlledVocabCheck } from '../util';
+import {
+  controlledVocabCheck,
+  makeControlledVocabFields,
+} from '../util';
 import QueryBuilderForm from './query-builder-form';
 
 
 export default class QueryBuilderFormSet extends React.Component {
-  isControlled = controlledVocabCheck(this.props.formsetConfig.controlled_vocab_fields)
-
   static propTypes = {
     formsetName: PropTypes.string,
     formsetConfig: PropTypes.shape({
@@ -28,11 +29,13 @@ export default class QueryBuilderFormSet extends React.Component {
     formsetGlobalFiltersData: PropTypes.shape({}).isRequired,
     formsetErrors: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     extraFieldNames: PropTypes.arrayOf(PropTypes.string),
+    languages: PropTypes.shape(),
   }
 
   static defaultProps = {
     formsetName: 'default',
     extraFieldNames: [],
+    languages: {},
   }
 
   /**
@@ -123,6 +126,18 @@ export default class QueryBuilderFormSet extends React.Component {
     };
   }
 
+  get controlledVocabFields() {
+    if (!_.isEmpty(this.props.languages)) {
+      return makeControlledVocabFields(this.props.languages.azz.controlled_vocab_fields);
+    }
+
+    return this.props.formsetConfig.controlled_vocab_fields;
+  }
+
+  get isControlled() {
+    return controlledVocabCheck(this.controlledVocabFields);
+  }
+
   /*
     Check whether the first filterable field is a controlled
     vocab field. This is used to determine whether "exactly equals"
@@ -130,7 +145,7 @@ export default class QueryBuilderFormSet extends React.Component {
   */
   get firstIsControlled() {
     return _.includes(
-      _.keys(this.props.formsetConfig.controlled_vocab_fields),
+      _.keys(this.controlledVocabFields),
       (this.props.formsetConfig.filterable_fields || [[]])[0][0],
     );
   }
@@ -262,6 +277,7 @@ export default class QueryBuilderFormSet extends React.Component {
               defaultFilter={this.defaultFilter}
               key={uniqueId}
               config={this.props.formsetConfig}
+              controlledVocabFields={this.controlledVocabFields}
               dataset={this.state.formsetIndexedDatasets[uniqueId]}
               errors={this.state.formsetIndexedErrors[uniqueId]}
               onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
