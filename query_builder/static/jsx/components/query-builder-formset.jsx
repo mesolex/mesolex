@@ -149,6 +149,14 @@ export default class QueryBuilderFormSet extends React.Component {
     return this.props.formsetConfig.controlled_vocab_fields;
   }
 
+  get textSearchFields() {
+    if (this.hasLanguageConfig) {
+      return _.map(this.props.languages.azz.elasticsearch_fields, ({ field }) => field);
+    }
+
+    return this.props.formsetConfig.text_search_fields;
+  }
+
   get isControlled() {
     return controlledVocabCheck(this.controlledVocabFields);
   }
@@ -238,7 +246,7 @@ export default class QueryBuilderFormSet extends React.Component {
     }));
   }
 
-  isTextSearch = (fieldname) => _.includes(this.props.formsetConfig.text_search_fields, fieldname)
+  isTextSearch = (fieldname) => _.includes(this.textSearchFields, fieldname)
 
   removeFilter = (uniqueId) => () => {
     this.setState((state) => ({
@@ -291,13 +299,13 @@ export default class QueryBuilderFormSet extends React.Component {
               formsetName={this.props.formsetName}
               defaultFilter={this.defaultFilter}
               key={uniqueId}
-              config={this.props.formsetConfig}
               controlledVocabFields={this.controlledVocabFields}
               dataset={this.state.formsetIndexedDatasets[uniqueId]}
               errors={this.state.formsetIndexedErrors[uniqueId]}
               filterableFields={this.filterableFields}
               onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
               removeFilter={this.removeFilter(uniqueId)}
+              textSearchFields={this.textSearchFields}
               extraFilterComponents={this.extraFilterComponents({ i, uniqueId })}
             />
           ))

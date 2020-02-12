@@ -18,17 +18,17 @@ const QueryBuilderForm = ({
   i,
   formsetName,
   defaultFilter,
-  config,
   controlledVocabFields,
   dataset,
   errors,
   filterableFields,
   onChangeFieldFrom,
   removeFilter,
+  textSearchFields,
   extraFilterComponents = [],
 }) => {
   const isControlled = controlledVocabCheck(controlledVocabFields);
-  const isTextSearch = (fieldName) => _.includes(config.text_search_fields || [], fieldName);
+  const isTextSearch = (fieldName) => _.includes(textSearchFields, fieldName);
 
   return (
     <div className="form-group">
@@ -169,11 +169,6 @@ QueryBuilderForm.propTypes = {
   i: PropTypes.number.isRequired,
   formsetName: PropTypes.string,
   defaultFilter: PropTypes.string,
-  config: PropTypes.shape({
-    controlled_vocab_fields: PropTypes.any,
-    filterable_fields: PropTypes.any,
-    text_search_fields: PropTypes.any,
-  }).isRequired,
   controlledVocabFields: PropTypes.shape(),
   dataset: PropTypes.shape({
     filter: PropTypes.any,
@@ -190,6 +185,7 @@ QueryBuilderForm.propTypes = {
   filterableFields: PropTypes.shape(),
   onChangeFieldFrom: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired,
+  textSearchFields: PropTypes.arrayOf(PropTypes.string),
 
   extraFilterComponents: PropTypes.arrayOf(PropTypes.element),
 };
@@ -200,6 +196,7 @@ QueryBuilderForm.defaultProps = {
   defaultFilter: 'exactly_equals',
   extraFilterComponents: [],
   filterableFields: [],
+  textSearchFields: [],
 };
 
 export default QueryBuilderForm;
