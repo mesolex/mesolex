@@ -7,6 +7,7 @@ import uuid4 from 'uuid/v4';
 import {
   controlledVocabCheck,
   makeControlledVocabFields,
+  makeFilterableFields,
 } from '../util';
 import QueryBuilderForm from './query-builder-form';
 
@@ -58,7 +59,6 @@ export default class QueryBuilderFormSet extends React.Component {
   constructor(props) {
     super(props);
     const {
-      formsetConfig,
       formsetData,
       formsetGlobalFiltersData,
       formsetErrors,
@@ -92,7 +92,7 @@ export default class QueryBuilderFormSet extends React.Component {
               {
                 query_string: '',
                 operator: 'and',
-                filter_on: (formsetConfig.filterable_fields || [[]])[0][0],
+                filter_on: (this.filterableFields || [[]])[0][0],
                 filter: this.defaultFilter,
               },
               ..._.map(extraFieldNames, (fieldName) => ({ [fieldName]: false })),
@@ -126,8 +126,23 @@ export default class QueryBuilderFormSet extends React.Component {
     };
   }
 
+  get hasLanguageConfig() {
+    return !_.isEmpty(this.props.languages);
+  }
+
+  get filterableFields() {
+    if (this.hasLanguageConfig) {
+      return makeFilterableFields(
+        this.props.languages.azz.filterable_fields,
+        this.props.languages.azz.elasticsearch_fields,
+      );
+    }
+
+    return this.props.formsetConfig.filterable_fields;
+  }
+
   get controlledVocabFields() {
-    if (!_.isEmpty(this.props.languages)) {
+    if (this.hasLanguageConfig) {
       return makeControlledVocabFields(this.props.languages.azz.controlled_vocab_fields);
     }
 
@@ -146,7 +161,7 @@ export default class QueryBuilderFormSet extends React.Component {
   get firstIsControlled() {
     return _.includes(
       _.keys(this.controlledVocabFields),
-      (this.props.formsetConfig.filterable_fields || [[]])[0][0],
+      (this.filterableFields || [[]])[0][0],
     );
   }
 
@@ -242,7 +257,7 @@ export default class QueryBuilderFormSet extends React.Component {
         ...state.formsetIndexedDatasets,
         [newUniqueId]: {
           operator: 'and',
-          filter_on: (this.props.formsetConfig.filterable_fields || [[]])[0][0],
+          filter_on: (this.filterableFields || [[]])[0][0],
           filter: this.defaultFilter,
           query_string: '',
         },
@@ -280,6 +295,7 @@ export default class QueryBuilderFormSet extends React.Component {
               controlledVocabFields={this.controlledVocabFields}
               dataset={this.state.formsetIndexedDatasets[uniqueId]}
               errors={this.state.formsetIndexedErrors[uniqueId]}
+              filterableFields={this.filterableFields}
               onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
               removeFilter={this.removeFilter(uniqueId)}
               extraFilterComponents={this.extraFilterComponents({ i, uniqueId })}

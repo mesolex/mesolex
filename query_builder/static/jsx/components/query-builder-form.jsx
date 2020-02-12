@@ -22,6 +22,7 @@ const QueryBuilderForm = ({
   controlledVocabFields,
   dataset,
   errors,
+  filterableFields,
   onChangeFieldFrom,
   removeFilter,
   extraFilterComponents = [],
@@ -39,11 +40,11 @@ const QueryBuilderForm = ({
         { humanReadableFilters({
           i,
           operator: dataset.operator || 'and',
-          filterOn: dataset.filter_on || (config.filterable_fields || [[]])[0][0],
+          filterOn: dataset.filter_on || (filterableFields || [[]])[0][0],
           filter: dataset.filter || defaultFilter,
           vln: (dataset.filter !== 'regex') && dataset.vln,
           nahuatOrthography: dataset.nahuat_orthography,
-          filterableFields: config.filterable_fields,
+          filterableFields,
         }) }
       </label>
       <div className="input-group">
@@ -142,7 +143,7 @@ const QueryBuilderForm = ({
             onChange={onChangeFieldFrom('filter_on')}
           >
             {
-              (config.filterable_fields || []).map(([value, readableName]) => (
+              (filterableFields || []).map(([value, readableName]) => (
                 <option value={value} key={value}>{readableName}</option>
               ))
             }
@@ -186,6 +187,7 @@ QueryBuilderForm.propTypes = {
   errors: PropTypes.shape({
     query_string: PropTypes.any,
   }).isRequired,
+  filterableFields: PropTypes.shape(),
   onChangeFieldFrom: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired,
 
@@ -197,6 +199,7 @@ QueryBuilderForm.defaultProps = {
   formsetName: 'default',
   defaultFilter: 'exactly_equals',
   extraFilterComponents: [],
+  filterableFields: [],
 };
 
 export default QueryBuilderForm;

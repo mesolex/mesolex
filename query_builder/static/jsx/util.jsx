@@ -70,3 +70,8 @@ export const makeControlledVocabFields = (languagesCVFs) => _.chain(languagesCVF
   .reduce((acc, next) => ({ ...acc, ...next }))
   .mapValues((items) => _.map(items, ({ value, label }) => [value, label]))
   .value();
+
+export const makeFilterableFields = (...languageFFs) => _.map(
+  _.concat(...languageFFs),
+  ({ field, label }) => [field, label],
+);
