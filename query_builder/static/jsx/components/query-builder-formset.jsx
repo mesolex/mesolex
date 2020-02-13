@@ -27,6 +27,9 @@ export default class QueryBuilderFormSet extends React.Component {
       filter: PropTypes.string,
       vln: PropTypes.bool,
     })).isRequired,
+    formsetDatasetsFormData: PropTypes.shape({
+      datasets: PropTypes.arrayOf(PropTypes.any),
+    }),
     formsetGlobalFiltersData: PropTypes.shape({}).isRequired,
     formsetErrors: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     extraFieldNames: PropTypes.arrayOf(PropTypes.string),
@@ -35,6 +38,7 @@ export default class QueryBuilderFormSet extends React.Component {
 
   static defaultProps = {
     formsetName: 'default',
+    formsetDatasetsFormData: {},
     extraFieldNames: [],
     languages: {},
   }
@@ -60,6 +64,7 @@ export default class QueryBuilderFormSet extends React.Component {
     super(props);
     const {
       formsetData,
+      formsetDatasetsFormData,
       formsetGlobalFiltersData,
       formsetErrors,
       extraFieldNames,
@@ -120,6 +125,7 @@ export default class QueryBuilderFormSet extends React.Component {
 
     this.state = {
       forms,
+      formsetDatasetsFormData,
       formsetIndexedDatasets,
       formsetIndexedErrors,
       formsetGlobalFiltersData,
@@ -130,11 +136,18 @@ export default class QueryBuilderFormSet extends React.Component {
     return !_.isEmpty(this.props.languages);
   }
 
+  get selectedLanguageConfig() {
+    return (
+      !_.isEmpty(this.state)
+      && this.props.languages[this.state.formsetDatasetsFormData.dataset]
+    ) || _.chain(this.props.languages).toArray().head().value();
+  }
+
   get filterableFields() {
     if (this.hasLanguageConfig) {
       return makeFilterableFields(
-        this.props.languages.azz.filterable_fields,
-        this.props.languages.azz.elasticsearch_fields,
+        this.selectedLanguageConfig.filterable_fields,
+        this.selectedLanguageConfig.elasticsearch_fields,
       );
     }
 
@@ -143,7 +156,7 @@ export default class QueryBuilderFormSet extends React.Component {
 
   get controlledVocabFields() {
     if (this.hasLanguageConfig) {
-      return makeControlledVocabFields(this.props.languages.azz.controlled_vocab_fields);
+      return makeControlledVocabFields(this.selectedLanguageConfig.controlled_vocab_fields);
     }
 
     return this.props.formsetConfig.controlled_vocab_fields;
@@ -151,10 +164,18 @@ export default class QueryBuilderFormSet extends React.Component {
 
   get textSearchFields() {
     if (this.hasLanguageConfig) {
-      return _.map(this.props.languages.azz.elasticsearch_fields, ({ field }) => field);
+      return _.map(this.selectedLanguageConfig.elasticsearch_fields, ({ field }) => field);
     }
 
     return this.props.formsetConfig.text_search_fields;
+  }
+
+  get languageChoices() {
+    if (this.hasLanguageConfig) {
+      return _.keys(this.props.languages);
+    }
+
+    return [];
   }
 
   get isControlled() {
@@ -290,7 +311,34 @@ export default class QueryBuilderFormSet extends React.Component {
         <input name="form-MIN_NUM_FORMS" value="0" id="id_form-MIN_NUM_FORMS" type="hidden" />
         <input name="form-MAX_NUM_FORMS" value="1000" id="id_form-MAX_NUM_FORMS" type="hidden" />
 
-        <div className="form-group" />
+        {
+          this.hasLanguageConfig
+            ? (
+              <div className="form-group">
+                <div className="input-group">
+                  <select
+                    name="dataset"
+                    className="custom-select search-form__select"
+                    id="id_form-dataset"
+                    value={this.state.formsetDatasetsFormData.dataset}
+                    onChange={({ target }) => {
+                      this.setState({
+                        formsetDatasetsFormData: { dataset: target.value },
+                      });
+                    }}
+                  >
+                    {
+                      _.map(
+                        this.props.languages,
+                        ({ label, code }) => <option value={code}>{ label }</option>,
+                      )
+                    }
+                  </select>
+                </div>
+              </div>
+            )
+            : null
+        }
 
         {
           this.state.forms.map((uniqueId, i) => (

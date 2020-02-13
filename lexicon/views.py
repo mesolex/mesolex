@@ -71,6 +71,8 @@ def lexicon_search_view(request, *args, **kwargs):
                 'formset_global_filters_form': formset.global_filters_form,
                 'formset_data': json.dumps([form.cleaned_data for form in formset.forms]),
                 'formset_global_filters_form_data': json.dumps(formset.global_filters_form.data),
+                'formset_datasets_form': formset.datasets_form,
+                'formset_datasets_form_data': json.dumps(formset.datasets_form.data),
                 'formset_errors': json.dumps(formset.errors),
             },
             'language': 'azz',  # TODO: multi-language functionality

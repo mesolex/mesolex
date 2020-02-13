@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from query_builder.forms import (
     QueryBuilderForm,
     QueryBuilderGlobalFiltersForm,
+    QueryBuilderDatasetsForm,
     QueryBuilderBaseFormset,
 )
 
@@ -69,6 +70,12 @@ class LexiconQueryBuilderGlobalFiltersForm(QueryBuilderGlobalFiltersForm):
             return Q(media__isnull=(not only_with_sound))
         return Q()
 
+
+class LexiconQueryBuilderDatasetsForm(QueryBuilderDatasetsForm):
+    dataset = forms.ChoiceField(
+        choices=[(l['code'], l['label']) for l in LANGUAGES.values()],
+        widget=forms.Select(attrs={'class': 'custom-select'}),
+    )
 
 class BaseLexiconQueryComposerFormset(QueryBuilderBaseFormset):
     global_filters_class = LexiconQueryBuilderGlobalFiltersForm

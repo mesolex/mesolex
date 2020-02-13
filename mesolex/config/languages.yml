@@ -2,6 +2,8 @@
 # Used to set up Django forms and front-end components.
 ---
 azz:
+    label: Náhuat de la Sierra Nororiental de Puebla
+    code: azz
     filterable_fields:
         - field: lemma
           label: Entrada
@@ -137,3 +139,83 @@ azz:
               label: Posesión enajenable y no enajenable (no cambio de raíz)
             - value: Oblig        
               label: Obligatoriamente posesionado
+# faux_azz:
+#     label: Test Copy of Náhuat
+#     code: faux_azz
+#     filterable_fields:
+#         - field: lemma
+#           label: Entrada
+#           terms:
+#             - lemma
+#             - variant__value
+#         - field: gloss
+#           label: Glosa
+#           terms:
+#             - gloss__value
+#         - field: root
+#           label: Raiz
+#           terms:
+#             - root__value
+#     elasticsearch_fields:
+#         - field: precise_meaning
+#           label: Significado preciso
+#           terms:
+#             - definitions_es
+#         - field: extended_meaning
+#           label: Significado extendido
+#           terms:
+#             - definitions_es
+#             - ostentives_es
+#     controlled_vocab_fields:
+#         - field: part_of_speech
+#           items:
+#             - value: Adj
+#               label: Adjetivo
+#             - value: Adv
+#               label: Adverbio
+#             - value: Aux
+#               label: Auxiliar
+#             - value: Bebe
+#               label: Habla-de-niños
+#             - value: Clítico
+#               label: Clítico
+#             - value: Conjunc
+#               label: Conjunción
+#             - value: Copula
+#               label: Cópula
+#             - value: Demostrativo
+#               label: Demostrativo
+#             - value: Direccional
+#               label: Direccional
+#             - value: Estativo
+#               label: Estativo
+#             - value: Interj
+#               label: Interjección
+#             - value: Interrogativo
+#               label: Interrogativo
+#             - value: Locativo
+#               label: Locativo
+#             - value: Modal
+#               label: Modal
+#             - value: Muletilla
+#               label: Muletilla
+#             - value: Neg
+#               label: Negación
+#             - value: Prefijo
+#               label: Prefijo
+#             - value: Preposición
+#               label: Preposición
+#             - value: Pronombre
+#               label: Pronombre
+#         - field: inflectional_type
+#           items:
+#             - value: Clase 1
+#               label: Verbo clase 1 (kwa)
+#             - value: Clase 2a
+#               label: Verbo clase 2a (pale:wia)
+#             - value: Clase 2b
+#               label: Verbo clase 2b (polowa)
+#             - value: Clase 3
+#               label: Verbo clase 3 (kalaki)
+#             - value: Clase 4
+#               label: Verbo clase 4 (cho:ka)

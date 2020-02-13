@@ -12,6 +12,7 @@ export const initFunction = () => {
   const {
     formset_config: formsetConfig,
     formset_data: formsetData,
+    formset_datasets_form_data: formsetDatasetsFormData,
     formset_global_filters_form_data: formsetGlobalFiltersData,
     formset_errors: formsetErrors,
   } = init.lexicon;
@@ -23,6 +24,7 @@ export const initFunction = () => {
       extraFieldNames={['vln', 'nahuat_orthography']}
       formsetConfig={formsetConfig}
       formsetData={formsetData}
+      formsetDatasetsFormData={formsetDatasetsFormData}
       formsetName="lexicon"
       formsetErrors={formsetErrors}
       formsetGlobalFiltersData={formsetGlobalFiltersData}
