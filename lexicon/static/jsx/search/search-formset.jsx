@@ -1,5 +1,6 @@
 /* global gettext */
 import React from 'react';
+import _ from 'lodash';
 
 import QueryBuilderFormset from 'query-builder/components/query-builder-formset';
 import Vln from './vln';
@@ -25,26 +26,37 @@ export default class SearchFormSet extends QueryBuilderFormset {
     </div>
   )
 
-  extraFilterComponents = ({ i, uniqueId }) => (
+  extraFilterComponents = ({ i, uniqueId, extraFieldNames }) => (
     <>
-      <div className="input-group">
-        <Vln
-          i={i}
-          key="vln"
-          config={this.props.formsetConfig}
-          dataset={this.state.formsetIndexedDatasets[uniqueId]}
-          onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
-        />
-      </div>
-      <div className="input-group">
-        <NahuatOrthography
-          i={i}
-          key="nahuat_orthography"
-          config={this.props.formsetConfig}
-          dataset={this.state.formsetIndexedDatasets[uniqueId]}
-          onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
-        />
-      </div>
+      {
+        _.includes(extraFieldNames, 'vln')
+        && (
+          <div className="input-group">
+            <Vln
+              i={i}
+              key="vln"
+              config={this.props.formsetConfig}
+              dataset={this.state.formsetIndexedDatasets[uniqueId]}
+              onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
+            />
+          </div>
+        )
+      }
+
+      {
+        _.includes(extraFieldNames, 'nahuat_orthography')
+        && (
+          <div className="input-group">
+            <NahuatOrthography
+              i={i}
+              key="nahuat_orthography"
+              config={this.props.formsetConfig}
+              dataset={this.state.formsetIndexedDatasets[uniqueId]}
+              onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
+            />
+          </div>
+        )
+      }
     </>
   )
 }

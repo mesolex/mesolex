@@ -62,73 +62,25 @@ export default class QueryBuilderFormSet extends React.Component {
    */
   constructor(props) {
     super(props);
-    const {
-      formsetData,
-      formsetDatasetsFormData,
-      formsetGlobalFiltersData,
-      formsetErrors,
-      extraFieldNames,
-    } = props;
 
-    /*
-      Construct the list of forms by invoking `uuid` n times,
-      where n == the initial formset's count or 1.
-    */
-    const forms = _.times(
-      formsetData.length || 1,
-      uuid4,
-    );
+    const forms = this.constructForms({ formsetData: this.props.formsetData });
 
-    /*
-      Construct a single-key object with the `form` uuid
-      as the key, then roll them all up together into one
-      big object.
-    */
-    const formsetIndexedDatasets = _.reduce(
-      _.map(
-        forms,
-        (uniqueId, i) => {
-          const dataset = formsetData[i] || {};
-
-          return {
-            [uniqueId]: _.defaults(
-              dataset,
-              ..._.map(extraFieldNames, (fieldName) => ({ [fieldName]: !!dataset[fieldName] })),
-              {
-                query_string: '',
-                operator: 'and',
-                filter_on: (this.filterableFields || [[]])[0][0],
-                filter: this.defaultFilter,
-              },
-              ..._.map(extraFieldNames, (fieldName) => ({ [fieldName]: false })),
-            ),
-          };
-        },
-      ),
-      (acc, dataset) => ({ ...acc, ...dataset }),
-      {},
-    );
-
-    /*
-      Construct the set of form errors by the same summing-up
-      process as with formsetIndexedDatasets but with simpler
-      construction logic (less postprocessing needed).
-    */
-    const formsetIndexedErrors = _.reduce(
+    const formsetIndexedDatasets = this.constructFormDatasets({
       forms,
-      (acc, uniqueId, i) => ({
-        ...acc,
-        [uniqueId]: formsetErrors[i] || {},
-      }),
-      {},
-    );
+      formsetData: this.props.formsetData,
+    });
+
+    const formsetIndexedErrors = this.constructFormErrors({
+      forms,
+      formsetErrors: this.props.formsetErrors,
+    });
 
     this.state = {
       forms,
-      formsetDatasetsFormData,
+      formsetDatasetsFormData: this.props.formsetDatasetsFormData,
       formsetIndexedDatasets,
       formsetIndexedErrors,
-      formsetGlobalFiltersData,
+      formsetGlobalFiltersData: this.props.formsetGlobalFiltersData,
     };
   }
 
@@ -141,6 +93,14 @@ export default class QueryBuilderFormSet extends React.Component {
       !_.isEmpty(this.state)
       && this.props.languages[this.state.formsetDatasetsFormData.dataset]
     ) || _.chain(this.props.languages).toArray().head().value();
+  }
+
+  get extraFieldNames() {
+    if (this.hasLanguageConfig) {
+      return this.selectedLanguageConfig.extra_fields || [];
+    }
+
+    return this.props.extraFieldNames;
   }
 
   get filterableFields() {
@@ -197,6 +157,59 @@ export default class QueryBuilderFormSet extends React.Component {
   get defaultFilter() {
     return this.firstIsControlled ? 'exactly_equals' : 'begins_with';
   }
+
+  /*
+    Construct the list of forms by invoking `uuid` n times,
+    where n == the initial formset's count or 1.
+  */
+  constructForms = ({ formsetData }) => _.times(
+    formsetData.length || 1,
+    uuid4,
+  );
+
+  /*
+    Construct a single-key object with the `form` uuid
+    as the key, then roll them all up together into one
+    big object.
+  */
+  constructFormDatasets = ({ forms, formsetData }) => _.reduce(
+    _.map(
+      forms,
+      (uniqueId, i) => {
+        const dataset = formsetData[i] || {};
+
+        return {
+          [uniqueId]: _.defaults(
+            dataset,
+            ..._.map(this.extraFieldNames, (fieldName) => ({ [fieldName]: !!dataset[fieldName] })),
+            {
+              query_string: '',
+              operator: 'and',
+              filter_on: (this.filterableFields || [[]])[0][0],
+              filter: this.defaultFilter,
+            },
+            ..._.map(this.extraFieldNames, (fieldName) => ({ [fieldName]: false })),
+          ),
+        };
+      },
+    ),
+    (acc, dataset) => ({ ...acc, ...dataset }),
+    {},
+  );
+
+  /*
+    Construct the set of form errors by the same summing-up
+    process as with constructFormDatasets but with simpler
+    construction logic (less postprocessing needed).
+  */
+  constructFormErrors = ({ forms, formsetErrors }) => _.reduce(
+    forms,
+    (acc, uniqueId, i) => ({
+      ...acc,
+      [uniqueId]: formsetErrors[i] || {},
+    }),
+    {},
+  );
 
   /*
     Higher-order function to create "onChange" functions that
@@ -298,6 +311,29 @@ export default class QueryBuilderFormSet extends React.Component {
     }));
   }
 
+  onChangeDataset = ({ target }) => {
+    const formsetData = [];
+
+    const forms = this.constructForms({ formsetData });
+
+    const formsetIndexedDatasets = this.constructFormDatasets({
+      forms,
+      formsetData,
+    });
+
+    const formsetIndexedErrors = this.constructFormErrors({
+      forms,
+      formsetErrors: [],
+    });
+
+    this.setState({
+      forms,
+      formsetDatasetsFormData: { dataset: target.value },
+      formsetIndexedDatasets,
+      formsetIndexedErrors,
+    });
+  }
+
   extraFilterComponents = () => <></>
 
   globalFiltersComponents = () => null
@@ -327,11 +363,7 @@ export default class QueryBuilderFormSet extends React.Component {
                     className="custom-select search-form__select"
                     id="id_form-dataset"
                     value={this.state.formsetDatasetsFormData.dataset}
-                    onChange={({ target }) => {
-                      this.setState({
-                        formsetDatasetsFormData: { dataset: target.value },
-                      });
-                    }}
+                    onChange={this.onChangeDataset}
                   >
                     {
                       _.map(
@@ -360,7 +392,11 @@ export default class QueryBuilderFormSet extends React.Component {
               onChangeFieldFrom={this.onChangeFieldFrom(uniqueId)}
               removeFilter={this.removeFilter(uniqueId)}
               textSearchFields={this.textSearchFields}
-              extraFilterComponents={this.extraFilterComponents({ i, uniqueId })}
+              extraFilterComponents={this.extraFilterComponents({
+                i,
+                uniqueId,
+                extraFieldNames: this.extraFieldNames,
+              })}
             />
           ))
         }

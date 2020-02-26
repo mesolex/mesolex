@@ -4,6 +4,9 @@
 azz:
     label: Náhuat de la Sierra Nororiental de Puebla
     code: azz
+    extra_fields:
+        - vln
+        - nahuat_orthography
     filterable_fields:
         - field: lemma
           label: Entrada

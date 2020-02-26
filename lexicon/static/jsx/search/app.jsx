@@ -21,7 +21,6 @@ export const initFunction = () => {
 
   ReactDOM.render(
     <SearchFormSet
-      extraFieldNames={['vln', 'nahuat_orthography']}
       formsetConfig={formsetConfig}
       formsetData={formsetData}
       formsetDatasetsFormData={formsetDatasetsFormData}
