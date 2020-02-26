@@ -315,6 +315,12 @@ export default class QueryBuilderFormSet extends React.Component {
           this.hasLanguageConfig
             ? (
               <div className="form-group">
+                <label
+                  className="small search-form__filters-label"
+                  htmlFor="id_form-dataset"
+                >
+                  {`${gettext('Diccionario')}`}
+                </label>
                 <div className="input-group">
                   <select
                     name="dataset"
