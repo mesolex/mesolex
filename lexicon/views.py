@@ -7,9 +7,7 @@ from django.db.models import Q
 from django.db.models.functions import Lower
 from django.shortcuts import render
 
-from .forms import (
-    LexicalSearchFilterFormset,
-)
+from .forms import formset_for_lg
 from .models import LexicalEntry
 from mesolex.config import LANGUAGES
 from mesolex.utils import (
@@ -20,7 +18,8 @@ from mesolex.utils import (
 def lexicon_search_view(request, *args, **kwargs):
     template_name = 'search/search.html'
     if request.GET:
-        formset = LexicalSearchFilterFormset(request.GET)        
+        formset_class = formset_for_lg(request.GET.get('dataset'))
+        formset = formset_class(request.GET)        
         lexical_entries = None
         display_entries = None
         query = None
@@ -35,7 +34,7 @@ def lexicon_search_view(request, *args, **kwargs):
             # Django doesn't handle this very gracefully.
             # To prevent a 500 error, just bail out here.
             # TODO: make this nicer.
-            formset = LexicalSearchFilterFormset()
+            formset = formset_class()
 
         if query:
             lexical_entries = (
@@ -78,7 +77,7 @@ def lexicon_search_view(request, *args, **kwargs):
             'language': 'azz',  # TODO: multi-language functionality
         })
 
-    formset = LexicalSearchFilterFormset()
+    formset = formset_for_lg(None)
     return render(request, template_name, {
         'languages': json.dumps(
             LANGUAGES,
