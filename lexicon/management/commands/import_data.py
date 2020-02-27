@@ -17,6 +17,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('input', type=str)
+        parser.add_argument('--language', type=str)
 
     def create_simple_string_instances(
         self,
@@ -49,12 +50,7 @@ class Command(BaseCommand):
                 )
             )
 
-    def handle(self, *args, **options):
-        input = options['input']
-
-        tree = ET.parse(input)
-        root = tree.getroot()
-
+    def _handle_azz(self, root):
         updated_entries = 0
         added_entries = 0
 
@@ -64,7 +60,7 @@ class Command(BaseCommand):
         for i, lx_group in enumerate(lx_groups):
             (lexical_entry, created, ) = (None, None, )
             entry_kwargs = {}
-            defaults = {}
+            defaults = {'language': 'azz'}
 
             ref = lx_group.find('ref')
             if ref is None:
@@ -356,6 +352,20 @@ class Command(BaseCommand):
             else:
                 updated_entries += 1
 
+        return (added_entries, updated_entries, total)
+
+    def handle(self, *args, **options):
+        input = options['input']
+        language = options.get('language', 'azz')
+
+        tree = ET.parse(input)
+        root = tree.getroot()
+    
+        (added_entries, updated_entries, total) = (0, 0, 0)
+
+        if language == 'azz':
+            (added_entries, updated_entries, total) = self._handle_azz(root)
+        
         self.stdout.write('\n\nTOTAL: {add} added, {up} updated, {miss} missed'.format(
             add=added_entries,
             up=updated_entries,

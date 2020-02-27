@@ -26,6 +26,7 @@ class LexicalEntry(models.Model):
 
     # <entry xml:id="{ref}">
     _id = models.CharField(_("Identificación única"), max_length=64)
+    language = models.CharField("Lengua", max_length=64)
 
     # <form type="lemma"><orth>
     lemma = models.CharField(
