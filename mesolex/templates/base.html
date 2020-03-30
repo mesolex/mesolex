@@ -31,7 +31,8 @@
         {% block content %}
         {% endblock %}
     </main>
-    <footer></footer>
+
+    {% include 'includes/footer.html' %}
 
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
     <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
