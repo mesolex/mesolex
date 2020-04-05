@@ -11,14 +11,19 @@ from lexicon import models
 
 logger = logging.getLogger(__name__)
 
+class Importer(object):
+    def __init__(self, input):
+        self.input = input
+    
+    def _handle_root(self, root):
+        raise NotImplementedError()
 
-class Command(BaseCommand):
-    help = _("Lee una fuente de datos en XML y actualiza la base de datos.")
+    def run(self):
+        tree = ET.parse(self.input)
+        root = tree.getroot()
+        return self._handle_root(root)
 
-    def add_arguments(self, parser):
-        parser.add_argument('input', type=str)
-        parser.add_argument('--language', type=str)
-
+class AzzImporter(Importer):
     def create_simple_string_instances(
         self,
         lx_group,
@@ -49,8 +54,8 @@ class Command(BaseCommand):
                     lx=lexical_entry.lemma,
                 )
             )
-
-    def _handle_azz(self, root):
+    
+    def _handle_root(self, root):
         updated_entries = 0
         added_entries = 0
 
@@ -354,20 +359,31 @@ class Command(BaseCommand):
 
         return (added_entries, updated_entries, total)
 
+
+class Command(BaseCommand):
+    help = _("Lee una fuente de datos en XML y actualiza la base de datos.")
+
+    IMPORTERS_BY_CODE = {
+        'azz': AzzImporter,
+    }
+
+    def add_arguments(self, parser):
+        parser.add_argument('language', type=str)
+        parser.add_argument('input', type=str)
+
     def handle(self, *args, **options):
         input = options['input']
-        language = options.get('language', 'azz')
+        language = options['language']
 
-        tree = ET.parse(input)
-        root = tree.getroot()
-    
-        (added_entries, updated_entries, total) = (0, 0, 0)
+        importer = self._importer_for(language)
 
-        if language == 'azz':
-            (added_entries, updated_entries, total) = self._handle_azz(root)
+        (added_entries, updated_entries, total) = importer(input).run() if importer is not None else (0, 0, 0)
         
         self.stdout.write('\n\nTOTAL: {add} added, {up} updated, {miss} missed'.format(
             add=added_entries,
             up=updated_entries,
             miss=(total - added_entries - updated_entries),
         ))
+
+    def _importer_for(self, language_code):
+        return self.IMPORTERS_BY_CODE.get(language_code, None)
