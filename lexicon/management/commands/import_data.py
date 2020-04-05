@@ -302,6 +302,7 @@ class AzzImporter(Importer):
                             lx=lexical_entry.lemma,
                         )
                     )
+                    continue
 
                 fr_n_groups = sig_group.findall('fr_nGroup')
                 for j, fr_n_group in enumerate(fr_n_groups):
@@ -323,7 +324,7 @@ class AzzImporter(Importer):
                             azz = models.Quote.objects.create(
                                 example=example,
                                 language='azz',
-                                text=fr_n.text
+                                text=fr_n.text,
                             )
                         except:
                             logger.exception(
@@ -360,11 +361,175 @@ class AzzImporter(Importer):
         return (added_entries, updated_entries, total)
 
 
+class TrqImporter(Importer):
+    def create_simple_string_instances(
+        self,
+        root_element,
+        lexical_entry,
+        path,
+        model_class,
+        additional_lookups={},
+        additional_args={},
+    ):
+        elements = root_element.findall(path)
+        model_class.objects.filter(
+            entry=lexical_entry,
+            **additional_lookups
+        ).delete()
+
+        try:
+            model_class.objects.bulk_create([
+                model_class(
+                    entry=lexical_entry,
+                    value=element.text,
+                    **additional_args
+                ) for element in elements
+            ])
+        except:
+            logger.exception(
+                f"Failed to create {model_class._meta.verbose_name} for lexical entry with ID {lexical_entry._id}, lemma {lexical_entry.lemma}"
+            )
+
+    def _handle_root(self, root):
+        updated_entries = 0
+        added_entries = 0
+
+        entries = root.findall('entry')
+        total = len(entries)
+
+        for i, entry_element in enumerate(entries):
+            (lexical_entry, created, ) = (None, None, )
+            entry_kwargs = {}
+            defaults = {'language': 'trq'}
+
+            # get ID for entry
+            id_ = entry_element.attrib.get('guid')
+            entry_kwargs['_id'] = id_
+            
+            # get date
+            try:
+                defaults['date'] = parse(entry_element.attrib.get('dateModified') or entry_element.attrib.get('dateCreated'))
+            except:
+                logger.exception(f"Failed to parse date in entry with id {id_}")
+                continue
+            
+            # get headword
+            try:
+                defaults['lemma'] = entry_element.find('./lexical-unit/form[@lang="trq"]/text').text
+            except:
+                logger.Exception(f"Failed to find headword in entry with id {id_}")
+                continue
+            
+            # create entry
+            try:
+                (lexical_entry, created, ) = models.LexicalEntry.objects.update_or_create(
+                    defaults=defaults,
+                    **entry_kwargs
+                )
+            except:
+                logger.exception(
+                    f"Failed to create entry with defaults {defaults}, entry_kwargs {entry_kwargs}",
+                )
+                # If we don't have a lexical entry, we can't do a whole
+                # heck of a lot from hereon in
+                continue
+            
+            # create citation forms
+            self.create_simple_string_instances(
+                entry_element,
+                lexical_entry,
+                './citation/form/text',
+                models.Citation,
+            )
+
+            # create senses and examples
+            # ./sense/
+            #   ./sense/gloss/text
+            #   OR ./sense/definition/form/text
+            #   ./sense/example/form/text/span
+            #   ./sense/example/translation/form/text
+
+            senses = entry_element.findall('./sense')
+            models.Sense.objects.filter(
+                entry=lexical_entry,
+            ).delete()
+            senses.sort(key=lambda sense: sense.attrib.get('order', 0))
+
+            for i, sense_element in enumerate(senses):
+                sense_kwargs = {}
+
+                definition_element = (
+                    sense_element.find('./definition/form/text')
+                    or sense_element.find('./gloss/text')
+                    or None
+                )
+
+                order = int(sense_element.attrib.get('order', i))
+
+                if definition_element is not None:
+                    sense_kwargs['definition'] = definition_element.text
+                else:
+                    continue
+                
+                try:
+                    sense = models.Sense.objects.create(
+                        entry=lexical_entry,
+                        order=order,
+                        **sense_kwargs,
+                    )
+                except:
+                    logger.exception(
+                        f"Failed to create {models.Sense._meta.verbose_name} for lexical entry with ID {lexical_entry._id}, lemma {lexical_entry.lemma}",
+                    )
+                    continue
+                
+                examples = sense_element.findall('example')
+                for j, example_element in enumerate(examples):
+                    example = models.Example.objects.create(
+                        sense=sense,
+                        order=j,
+                    )
+
+                    ex_text = example_element.find('./form[@lang="es-MX-fonipa-x-emic"]/text/span')
+                    if ex_text is not None:
+                        try:
+                            trq = models.Quote.objects.create(
+                                example=example,
+                                language='trq',
+                                text=ex_text.text,
+                            )
+                        except:
+                            logger.exception(f"Failed to create {models.Quote._meta.verbose_name} for lexical entry with ID {lexical_entry._id}, lemma {lexical_entry.lemma}")
+                            continue
+
+                    ex_translation = example_element.find('./translation/form[@lang="es"]/text')
+                    if ex_translation is not None:
+                        try:
+                            es = models.Quote.objects.create(
+                                example=example,
+                                translation_of=trq,
+                                language='es',
+                                text=ex_translation.text,
+                            )
+                        except:
+                            logger.exception(f"Failed to create {models.Quote._meta.verbose_name} for lexical entry with ID {lexical_entry._id}, lemma {lexical_entry.lemma}")
+                            continue
+            
+            if created:
+                added_entries += 1
+            else:
+                updated_entries += 1
+
+        return (added_entries, updated_entries, total)
+
+
+
 class Command(BaseCommand):
     help = _("Lee una fuente de datos en XML y actualiza la base de datos.")
 
     IMPORTERS_BY_CODE = {
         'azz': AzzImporter,
+        'trq': TrqImporter,
     }
 
     def add_arguments(self, parser):

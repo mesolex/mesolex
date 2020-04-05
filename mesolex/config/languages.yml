@@ -142,6 +142,16 @@ azz:
               label: Posesión enajenable y no enajenable (no cambio de raíz)
             - value: Oblig        
               label: Obligatoriamente posesionado
+trq:
+    label: Triqui
+    code: trq
+    filterable_fields:
+        - field: lemma
+          label: Entrada
+          terms:
+            - lemma
+    elasticsearch_fields: []
+    controlled_vocab_fields: []
 # faux_azz:
 #     label: Test Copy of Náhuat
 #     code: faux_azz
