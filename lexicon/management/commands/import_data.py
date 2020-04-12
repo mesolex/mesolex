@@ -458,10 +458,12 @@ class TrqImporter(Importer):
             for i, sense_element in enumerate(senses):
                 sense_kwargs = {}
 
+                # NOTE: disjunction on etree elements isn't short-circuiting!
+                # TODO: find a properly short-circuiting method to go here
+                # to prevent some unnecessary queries
                 definition_element = (
-                    sense_element.find('./definition/form/text')
-                    or sense_element.find('./gloss/text')
-                    or None
+                    sense_element.find('./gloss/text')
+                    or sense_element.find('./definition/form/text')
                 )
 
                 order = int(sense_element.attrib.get('order', i))
