@@ -241,10 +241,9 @@ class Example(models.Model):
         blank=True,
     )
 
-    # TODO: make this cross-linguistically valid!
     @property
-    def azz_quotes(self):
-        return [quote for quote in self.quote_set.all() if quote.language != 'es']
+    def original_quotes(self):
+        return [quote for quote in self.quote_set.filter(translation_of__isnull=True)]
 
 
 class Quote(models.Model):

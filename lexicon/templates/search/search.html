@@ -87,11 +87,13 @@
                                 <p>{{ sense.definition|link_vnawa|safe }}{% if sense.ostentive %} ({{ sense.ostentive|link_vnawa|safe }}){% endif %}</p>
                             </div>
                             {% for example in sense.examples %}
-                                {% for quote in example.azz_quotes %}
+                                {% for quote in example.original_quotes %}
                                     <blockquote class="card-text example font-weight-light">
                                         <p>
                                             {{ quote.text|safe }}
-                                            <i>({{ quote.translations.first.text|link_vnawa|safe }})</i>
+                                            {% if quote.translations.exists %}
+                                                <i>({{ quote.translations.first.text|link_vnawa|safe }})</i>
+                                            {% endif %}
                                         </p>
                                     </blockquote>
                                 {% endfor %}
