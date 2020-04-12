@@ -15,67 +15,83 @@ from mesolex.utils import (
 )
 
 
+def _search_query_data(
+    formset,
+    lexical_entries = None,
+    display_entries = None,
+    query = None,
+    paginator = None,
+    page = 1,
+):
+    return {
+        'lexical_entries': display_entries,
+        'num_pages': paginator.num_pages if paginator else 0,
+        'num_entries': lexical_entries.count() if lexical_entries else 0,
+        'page': page,
+        'query': True,
+        'languages': json.dumps(
+            LANGUAGES,
+            ensure_ascii=False,
+            cls=ForceProxyEncoder,
+        ),
+        'lexicon': {
+            'formset': formset,
+            'formset_global_filters_form': formset.global_filters_form,
+            'formset_data': json.dumps([form.cleaned_data for form in formset.forms]),
+            'formset_global_filters_form_data': json.dumps(formset.global_filters_form.data),
+            'formset_datasets_form': formset.datasets_form,
+            'formset_datasets_form_data': json.dumps(formset.datasets_form.data),
+            'formset_errors': json.dumps(formset.errors),
+        },
+        'language': 'azz',  # TODO: multi-language functionality
+    }
+
+
+def _search_query(request, template_name):
+    formset_class = formset_for_lg(request.GET.get('dataset'))
+    formset = formset_class(request.GET)        
+
+    try:
+        query = formset.get_full_query()
+    except ValidationError:
+        # The formset has been tampered with.
+        # Django doesn't handle this very gracefully.
+        # To prevent a 500 error, just bail out here.
+        # TODO: make this nicer.
+        return render(request, template_name, _search_query_data(formset_class()))
+
+    lexical_entries = (
+        LexicalEntry.valid_entries
+        .filter(query)
+        .annotate(lower_lemma=Lower('lemma'))
+        .order_by('lower_lemma')
+    )
+    paginator = Paginator(lexical_entries, 25)
+    page = request.GET.get('page', 1)
+
+    try:
+        display_entries = paginator.page(page)
+    except PageNotAnInteger:
+        display_entries = paginator.page(1)
+    except EmptyPage:
+        display_entries = paginator.page(paginator.num_pages)
+        page = paginator.num_pages
+
+    return render(request, template_name, _search_query_data(
+        formset,
+        lexical_entries=lexical_entries,
+        display_entries=display_entries,
+        query=query,
+        paginator=paginator,
+        page=page,
+    ))
+
+
 def lexicon_search_view(request, *args, **kwargs):
     template_name = 'search/search.html'
+
     if request.GET:
-        formset_class = formset_for_lg(request.GET.get('dataset'))
-        formset = formset_class(request.GET)        
-        lexical_entries = None
-        display_entries = None
-        query = None
-        paginator = None
-        page = 1
-
-        try:
-            if len(formset.forms) >= 1:
-                query = formset.get_full_query()
-        except ValidationError:
-            # The formset has been tampered with.
-            # Django doesn't handle this very gracefully.
-            # To prevent a 500 error, just bail out here.
-            # TODO: make this nicer.
-            formset = formset_class()
-
-        if query:
-            lexical_entries = (
-                LexicalEntry.valid_entries
-                .filter(query)
-                .annotate(lower_lemma=Lower('lemma'))
-                .order_by('lower_lemma')
-            )
-            paginator = Paginator(lexical_entries, 25)
-
-            page = request.GET.get('page', 1)
-            try:
-                display_entries = paginator.page(page)
-            except PageNotAnInteger:
-                display_entries = paginator.page(1)
-            except EmptyPage:
-                display_entries = paginator.page(paginator.num_pages)
-                page = paginator.num_pages
-
-        return render(request, template_name, {
-            'lexical_entries': display_entries,
-            'num_pages': paginator.num_pages if paginator else 0,
-            'num_entries': lexical_entries.count() if lexical_entries else 0,
-            'page': page,
-            'query': True,
-            'languages': json.dumps(
-                LANGUAGES,
-                ensure_ascii=False,
-                cls=ForceProxyEncoder,
-            ),
-            'lexicon': {
-                'formset': formset,
-                'formset_global_filters_form': formset.global_filters_form,
-                'formset_data': json.dumps([form.cleaned_data for form in formset.forms]),
-                'formset_global_filters_form_data': json.dumps(formset.global_filters_form.data),
-                'formset_datasets_form': formset.datasets_form,
-                'formset_datasets_form_data': json.dumps(formset.datasets_form.data),
-                'formset_errors': json.dumps(formset.errors),
-            },
-            'language': 'azz',  # TODO: multi-language functionality
-        })
+        return _search_query(request, template_name)
 
     formset = formset_for_lg(None)
     return render(request, template_name, {
