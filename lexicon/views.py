@@ -43,7 +43,7 @@ def _search_query_data(
             'formset_datasets_form_data': json.dumps(formset.datasets_form.data),
             'formset_errors': json.dumps(formset.errors),
         },
-        'language': 'azz',  # TODO: multi-language functionality
+        'language': formset.data.get('dataset', 'azz')
     }
 
 

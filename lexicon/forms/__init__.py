@@ -1,4 +1,4 @@
-from .azz import LexicalSearchFilterFormset as AzzFormset
+from .azz import AzzLexicalSearchFilterFormset as AzzFormset
 
 DEFAULT_FORMSET = AzzFormset
 
