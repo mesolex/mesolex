@@ -44,7 +44,7 @@
 
                     {% if lexical_entry.citation_set.exists %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Citación' %}:</i> {% for citation in lexical_entry.citation_set.all %}{{ citation }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.variant_set.exists %}, <i>{% trans 'Formas alt.' %}:</i> {% for variant in lexical_entry.variant_set.all %}{{ variant }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.gloss_set %}, <i>{% trans 'Glosa' %}:</i> {% for gloss in lexical_entry.gloss_set.all %}{{ gloss }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Citación' %}:</i> {% for citation in lexical_entry.citation_set.all %}{{ citation }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.variant_set.exists %}, <i>{% trans 'Formas alt.' %}:</i> {% for variant in lexical_entry.variant_set.all %}{{ variant }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.gloss_set.exists %}, <i>{% trans 'Glosa' %}:</i> {% for gloss in lexical_entry.gloss_set.all %}{{ gloss }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
                     {% if lexical_entry.grammargroup_set.exists %}
