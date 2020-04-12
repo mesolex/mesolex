@@ -12,6 +12,7 @@ from query_builder.forms import (
 
 from mesolex.config import LANGUAGES
 from mesolex.utils import (
+    Language,
     to_vln,
 )
 
@@ -19,34 +20,14 @@ from lexicon.documents import LexicalEntryDocument
 from lexicon.transformations.nahuat_orthography import nahuat_orthography
 
 
-# TODO: investigate why these gettext-strings have to be
-# lazy to work as expected when serialized by the formset.
-FILTERABLE_FIELDS = [
-    (field['field'], field['label'])
-    for field in LANGUAGES['azz']['filterable_fields']
-]
-
-FILTERABLE_FIELDS_DICT = {
-    field['field']: field['terms']
-    for field in LANGUAGES['azz']['filterable_fields']
-}
-
-ELASTICSEARCH_FIELDS = [
-    (field['field'], field['label'])
-    for field in LANGUAGES['azz']['elasticsearch_fields']
-]
-
-ELASTICSEARCH_FIELDS_DICT = {
-    field['field']: field['terms']
-    for field in LANGUAGES['azz']['elasticsearch_fields']
-}
+Azz = Language('azz')
 
 
 class LexicalSearchFilterForm(QueryBuilderForm):
-    FILTERABLE_FIELDS = FILTERABLE_FIELDS
-    FILTERABLE_FIELDS_DICT = FILTERABLE_FIELDS_DICT
-    ELASTICSEARCH_FIELDS = ELASTICSEARCH_FIELDS
-    ELASTICSEARCH_FIELDS_DICT = ELASTICSEARCH_FIELDS_DICT
+    FILTERABLE_FIELDS = Azz.filterable_fields
+    FILTERABLE_FIELDS_DICT = Azz.filterable_fields_dict
+    ELASTICSEARCH_FIELDS = Azz.elasticsearch_fields
+    ELASTICSEARCH_FIELDS_DICT = Azz.elasticsearch_fields_dict
 
     DocumentClass = LexicalEntryDocument
 
@@ -80,8 +61,8 @@ class LexiconQueryBuilderDatasetsForm(QueryBuilderDatasetsForm):
 class BaseLexiconQueryComposerFormset(QueryBuilderBaseFormset):
     global_filters_class = LexiconQueryBuilderGlobalFiltersForm
 
-    FILTERABLE_FIELDS = FILTERABLE_FIELDS + ELASTICSEARCH_FIELDS
-    TEXT_SEARCH_FIELDS = [field[0] for field in ELASTICSEARCH_FIELDS]
+    FILTERABLE_FIELDS = Azz.filterable_fields + Azz.elasticsearch_fields
+    TEXT_SEARCH_FIELDS = [field[0] for field in Azz.elasticsearch_fields_dict]
 
     CONTROLLED_VOCAB_FIELDS = {
         field['field']: [(item['value'], item['label']) for item in field['items']]
