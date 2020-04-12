@@ -46,6 +46,7 @@ azz:
         - field: illustrative_phrases
           label: Frase ilustrativas
           terms:
+            - quotations_azz
             - quotations_es
         - field: complete_search
           label: Búsqueda exhaustiva
@@ -150,7 +151,16 @@ trq:
           label: Entrada
           terms:
             - lemma
-    elasticsearch_fields: []
+    elasticsearch_fields:
+        - field: precise_meaning
+          label: Significado preciso
+          terms:
+            - definitions_es
+        - field: illustrative_phrases
+          label: Frase ilustrativas
+          terms:
+            - quotations_trq
+            - quotations_es
     controlled_vocab_fields: []
 # faux_azz:
 #     label: Test Copy of Náhuat
