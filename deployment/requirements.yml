@@ -1,6 +1,6 @@
 ---
 - src: https://github.com/caktus/tequila-common
-  version: v0.8.9
+  version: v0.9.2
   name: tequila-common
 
 - src: https://github.com/caktus/tequila-postgresql
@@ -8,11 +8,11 @@
   name: tequila-postgresql
 
 - src: https://github.com/caktus/tequila-nginx
-  version: v0.8.9
+  version: v0.8.12
   name: tequila-nginx
 
 - src: https://github.com/caktus/tequila-django
-  version: v0.9.21
+  version: v0.9.28
   name: tequila-django
 
 - src: geerlingguy.nodejs
