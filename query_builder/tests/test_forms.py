@@ -53,6 +53,15 @@ class QueryBuilderFormTestCase(TestCase):
 
 class QueryBuilderBaseFormsetTestCase(TestCase):
     def test_respects_operator_predence(self):
+        """
+        When composing together queries specified by the formsets,
+        QueryBuilderBaseFormset should respect operator precedence
+        by binding AND tighter than OR.
+
+        For example, "foo1 & foo2 | foo3 & foo4 & foo5" should
+        be bracketed as "(foo1 & foo2) | (foo3 & foo4 & foo5)",
+        rather than as (for example) "(((foo1 & foo2) | foo3) & foo4) & foo5".
+        """
         class TestForm(forms.QueryBuilderForm):
             FILTERABLE_FIELDS = [
                 ('bar', 'Bar',),
@@ -104,6 +113,7 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
 
         query = bound_formset.get_full_query()
 
+        # Expected bracketing: (foo1 & foo2) | (foo3 & foo4 & foo5)
         self.assertEqual(
             'OR',
             query.connector,
