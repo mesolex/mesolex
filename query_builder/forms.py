@@ -32,8 +32,8 @@ class QueryGrouper(object):
     respects operator precedence. Add queries to the sequence
     to be composed together by calling 
     """
-    def __init__(self):
-        self._queries = []
+    def __init__(self, queries=None):
+        self._queries = [] if queries is None else queries
     
     def append(self, val: CombiningQuery):
         self._queries.append(val)

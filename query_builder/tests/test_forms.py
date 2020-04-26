@@ -7,6 +7,58 @@ from django.test import TestCase
 from query_builder import forms
 
 
+class QueryGrouperTestCase(TestCase):
+    def test_respects_operator_precedence(self):
+        """
+        The QueryGrouper helper class should respect operator
+        precedence by binding "and" tighter than "or" when
+        combining queries.
+
+        For example, "foo1 & foo2 | foo3 & foo4 & foo5" should
+        be bracketed as "(foo1 & foo2) | (foo3 & foo4 & foo5)",
+        rather than as (for example) "(((foo1 & foo2) | foo3) & foo4) & foo5".
+        """
+        grouper = forms.QueryGrouper([
+            forms.CombiningQuery('and', Q(foo1__isnull=True)),
+            forms.CombiningQuery('and', Q(foo2__isnull=True)),
+            forms.CombiningQuery('or', Q(foo3__isnull=True)),
+            forms.CombiningQuery('and', Q(foo4__isnull=True)),
+            forms.CombiningQuery('and', Q(foo5__isnull=True)),
+        ])
+        query = grouper.combined_query
+
+        # Expected bracketing: (foo1 & foo2) | (foo3 & foo4 & foo5)
+        self.assertEqual(
+            'OR',
+            query.connector,
+        )
+
+        branch_1 = query.children[0]
+        branch_2 = query.children[1]
+
+        self.assertEqual(2, len(branch_1))
+        self.assertEqual(3, len(branch_2))
+
+        self.assertEqual('AND', branch_1.connector)
+        self.assertEqual('AND', branch_2.connector)
+
+        self.assertEqual(
+            [
+                ('foo1__isnull', True),
+                ('foo2__isnull', True),
+            ],
+            branch_1.children,
+        )
+        self.assertEqual(
+            [
+                ('foo3__isnull', True),
+                ('foo4__isnull', True),
+                ('foo5__isnull', True),
+            ],
+            branch_2.children,
+        )
+
+
 class QueryBuilderFormTestCase(TestCase):
     def test_applies_transformations(self):
         """
