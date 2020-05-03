@@ -102,6 +102,7 @@ class MediaAdmin(admin.ModelAdmin):
 
 
 class LexicalEntryAdmin(admin.ModelAdmin):
+    list_display = ('lemma', 'language', 'date',  '_id', )
     formfield_overrides = {
         JSONField: {'widget': PrettyJSONWidget(attrs={'initial': 'parsed'})}
     }

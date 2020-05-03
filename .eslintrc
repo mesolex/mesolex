@@ -16,6 +16,8 @@
   "rules": {
     "react/destructuring-assignment": 0,
     "react/static-property-placement": 0,
-    "import/prefer-default-export": 0
+    "import/prefer-default-export": 0,
+    "jsx-a11y/interactive-supports-focus": 0,
+    "jsx-a11y/click-events-have-key-events": 0
   }
 }

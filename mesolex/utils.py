@@ -5,6 +5,8 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.encoding import force_text
 from django.utils.functional import Promise
 
+from mesolex.config import LANGUAGES
+
 
 def contains_word_to_regex(filter_name, filter_action, query_string, _form_data):
     if filter_name != 'contains_word':
@@ -75,7 +77,54 @@ class ForceProxyEncoder(DjangoJSONEncoder):
     settings, since human-readable equivalents of grammatical
     and inflectional categories will be wrapped by _().
     """
+
     def default(self, obj):
         if isinstance(obj, Promise):
             return force_text(obj)
         return super().default(obj)
+
+
+class Language(object):
+    """
+    Wrapper for the contents of the language configuration data (mesolex.config.LANGUAGES).
+    Provides accessors to the language configuration data in the format expected by
+    the QueryBuilderForm et al.
+
+    Instantiated by providing the language code where the language's data can be
+    found in the configuration data. Raises a KeyError if that language is not
+    actually in the data.
+    """
+
+    def __init__(self, language_key):
+        if language_key not in LANGUAGES:
+            raise KeyError(f'Language key "{language_key} not found in languages config.')
+
+        self.language_key = language_key
+    
+    def _fields(self, key):
+        return [
+            (field['field'], field['label'])
+            for field in LANGUAGES[self.language_key][key]
+        ]
+    
+    def _dict(self, key):
+        return {
+            field['field']: field['terms']
+            for field in LANGUAGES[self.language_key][key]
+        }
+
+    @property
+    def filterable_fields(self):
+        return self._fields('filterable_fields')
+    
+    @property
+    def filterable_fields_dict(self):
+        return self._dict('filterable_fields')
+
+    @property
+    def elasticsearch_fields(self):
+        return self._fields('elasticsearch_fields')
+    
+    @property
+    def elasticsearch_fields_dict(self):
+        return self._dict('elasticsearch_fields')

@@ -1,0 +1,244 @@
+# Configuration for the languages supported by Mesolex.
+# Used to set up Django forms and front-end components.
+---
+azz:
+    label: Náhuat de la Sierra Nororiental de Puebla
+    code: azz
+    extra_fields:
+        - vln
+        - nahuat_orthography
+    filterable_fields:
+        - field: lemma
+          label: Entrada
+          terms:
+            - lemma
+            - variant__value
+        - field: gloss
+          label: Glosa
+          terms:
+            - gloss__value
+        - field: root
+          label: Raiz
+          terms:
+            - root__value
+        - field: category
+          label: Campo semántico
+          terms:
+            - category__value
+        - field: part_of_speech
+          label: Categoría gramatical
+          terms:
+            - grammargroup__part_of_speech
+        - field: inflectional_type
+          label: Inflexión
+          terms:
+            - grammargroup__inflectional_type
+    elasticsearch_fields:
+        - field: precise_meaning
+          label: Significado preciso
+          terms:
+            - definitions_es
+        - field: extended_meaning
+          label: Significado extendido
+          terms:
+            - definitions_es
+            - ostentives_es
+        - field: illustrative_phrases
+          label: Frase ilustrativas
+          terms:
+            - quotations_azz
+            - quotations_es
+        - field: complete_search
+          label: Búsqueda exhaustiva
+          terms:
+            - definitions_es
+            - quotations_es
+            - ostentives_es
+    controlled_vocab_fields:
+        - field: part_of_speech
+          items:
+            - value: Adj
+              label: Adjetivo
+            - value: Adv
+              label: Adverbio
+            - value: Aux
+              label: Auxiliar
+            - value: Bebe
+              label: Habla-de-niños
+            - value: Clítico
+              label: Clítico
+            - value: Conjunc
+              label: Conjunción
+            - value: Copula
+              label: Cópula
+            - value: Demostrativo
+              label: Demostrativo
+            - value: Direccional
+              label: Direccional
+            - value: Estativo
+              label: Estativo
+            - value: Interj
+              label: Interjección
+            - value: Interrogativo
+              label: Interrogativo
+            - value: Locativo
+              label: Locativo
+            - value: Modal
+              label: Modal
+            - value: Muletilla
+              label: Muletilla
+            - value: Neg
+              label: Negación
+            - value: Prefijo
+              label: Prefijo
+            - value: Preposición
+              label: Preposición
+            - value: Pronombre
+              label: Pronombre
+            - value: Saludo
+              label: Saludo
+            - value: Subord
+              label: Subordinador
+            - value: Sufijo
+              label: Sufijo
+            - value: Sust
+              label: Sustantivo
+            - value: Terminación aspectual
+              label: Terminación-aspectual
+            - value: Topónimo
+              label: Topónimo
+            - value: V0
+              label: Verbo-impersonal
+            - value: V1
+              label: Verbo-intransitivo
+            - value: V2
+              label: Verbo-transitivo
+            - value: V3
+              label: Verbo-bitransitivo
+            - value: V4
+              label: Verbo-tritransitivo
+            - value: Vocativo
+              label: Vocativo
+        - field: inflectional_type
+          items:
+            - value: Clase 1
+              label: Verbo clase 1 (kwa)
+            - value: Clase 2a
+              label: Verbo clase 2a (pale:wia)
+            - value: Clase 2b
+              label: Verbo clase 2b (polowa)
+            - value: Clase 3
+              label: Verbo clase 3 (kalaki)
+            - value: Clase 4
+              label: Verbo clase 4 (cho:ka)
+            - value: Clase 4-3
+              label: Verbo clase 4-3 (ki:sa)
+            - value: Clase 4-3/3
+              label: Verbo clase 4-3/3 (pata:ni)
+            - value: N1
+              label: Solamente no posesionado
+            - value: N1, N2
+              label: Posesión enajenable y no enajenable
+            - value: N1=N2
+              label: Posesión enajenable y no enajenable (no cambio de raíz)
+            - value: Oblig        
+              label: Obligatoriamente posesionado
+trq:
+    label: Triqui
+    code: trq
+    filterable_fields:
+        - field: lemma
+          label: Entrada
+          terms:
+            - lemma
+    elasticsearch_fields:
+        - field: precise_meaning
+          label: Significado preciso
+          terms:
+            - definitions_es
+        - field: illustrative_phrases
+          label: Frase ilustrativas
+          terms:
+            - quotations_trq
+            - quotations_es
+    controlled_vocab_fields: []
+# faux_azz:
+#     label: Test Copy of Náhuat
+#     code: faux_azz
+#     filterable_fields:
+#         - field: lemma
+#           label: Entrada
+#           terms:
+#             - lemma
+#             - variant__value
+#         - field: gloss
+#           label: Glosa
+#           terms:
+#             - gloss__value
+#         - field: root
+#           label: Raiz
+#           terms:
+#             - root__value
+#     elasticsearch_fields:
+#         - field: precise_meaning
+#           label: Significado preciso
+#           terms:
+#             - definitions_es
+#         - field: extended_meaning
+#           label: Significado extendido
+#           terms:
+#             - definitions_es
+#             - ostentives_es
+#     controlled_vocab_fields:
+#         - field: part_of_speech
+#           items:
+#             - value: Adj
+#               label: Adjetivo
+#             - value: Adv
+#               label: Adverbio
+#             - value: Aux
+#               label: Auxiliar
+#             - value: Bebe
+#               label: Habla-de-niños
+#             - value: Clítico
+#               label: Clítico
+#             - value: Conjunc
+#               label: Conjunción
+#             - value: Copula
+#               label: Cópula
+#             - value: Demostrativo
+#               label: Demostrativo
+#             - value: Direccional
+#               label: Direccional
+#             - value: Estativo
+#               label: Estativo
+#             - value: Interj
+#               label: Interjección
+#             - value: Interrogativo
+#               label: Interrogativo
+#             - value: Locativo
+#               label: Locativo
+#             - value: Modal
+#               label: Modal
+#             - value: Muletilla
+#               label: Muletilla
+#             - value: Neg
+#               label: Negación
+#             - value: Prefijo
+#               label: Prefijo
+#             - value: Preposición
+#               label: Preposición
+#             - value: Pronombre
+#               label: Pronombre
+#         - field: inflectional_type
+#           items:
+#             - value: Clase 1
+#               label: Verbo clase 1 (kwa)
+#             - value: Clase 2a
+#               label: Verbo clase 2a (pale:wia)
+#             - value: Clase 2b
+#               label: Verbo clase 2b (polowa)
+#             - value: Clase 3
+#               label: Verbo clase 3 (kalaki)
+#             - value: Clase 4
+#               label: Verbo clase 4 (cho:ka)

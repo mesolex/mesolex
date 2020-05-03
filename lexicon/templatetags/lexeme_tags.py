@@ -5,17 +5,23 @@ from django.conf import settings
 from django.urls import reverse
 from django.utils.http import urlquote
 
+from mesolex.config import LANGUAGES
+
 register = template.Library()
 
 
-# Translates the key-value pairs found within the LANGUAGE_CONFIGURATION
-# setting into a dictionary, allowing easy lookup of human-readable
-# forms for display.
+# Translates the key-value pairs found within the LANGUAGES
+# controlled vocab fields into a dictionary, allowing easy lookup
+# of human-readable forms for display.
+
 LANGUAGE_CATEGORIES_LOOKUPS = {
     language: {
-        category: dict(key_val_pairs)
-        for (category, key_val_pairs, ) in category_dict.items()
-    } for (language, category_dict, ) in settings.LANGUAGE_CONFIGURATION.items()
+        field['field']: {
+            item['value']: item['label']
+            for item in field['items']
+        } for field in language_data['controlled_vocab_fields']
+    }
+    for (language, language_data) in LANGUAGES.items()
 }
 
 

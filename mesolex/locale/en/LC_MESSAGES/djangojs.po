@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-12 17:33+0000\n"
+"POT-Creation-Date: 2020-02-26 22:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lexicon/static/jsx/search/nahuat-orthography.jsx:31
+#: lexicon/static/jsx/search/nahuat-orthography.jsx:33
 msgid "Activar flexibilidad ortográfica"
 msgstr "Activate flexible orthography"
 
@@ -63,40 +63,44 @@ msgstr "regular expression"
 msgid "coincide con"
 msgstr "matches"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:127
+#: query_builder/static/jsx/components/query-builder-form.jsx:133
 msgid "si"
 msgstr "does"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:127
+#: query_builder/static/jsx/components/query-builder-form.jsx:133
 #: query_builder/static/jsx/util.jsx:37
 msgid "y"
 msgstr "and"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:128
+#: query_builder/static/jsx/components/query-builder-form.jsx:134
 #: query_builder/static/jsx/util.jsx:38
 msgid "o"
 msgstr "or"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:129
+#: query_builder/static/jsx/components/query-builder-form.jsx:135
 #: query_builder/static/jsx/util.jsx:32 query_builder/static/jsx/util.jsx:34
 msgid "no"
 msgstr "does not"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:129
+#: query_builder/static/jsx/components/query-builder-form.jsx:135
 #: query_builder/static/jsx/util.jsx:39
 msgid "y no"
 msgstr "and not"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:130
+#: query_builder/static/jsx/components/query-builder-form.jsx:136
 #: query_builder/static/jsx/util.jsx:40
 msgid "o no"
 msgstr "or not"
 
-#: query_builder/static/jsx/components/query-builder-formset.jsx:271
+#: query_builder/static/jsx/components/query-builder-formset.jsx:322
+msgid "Diccionario"
+msgstr "Dictionary"
+
+#: query_builder/static/jsx/components/query-builder-formset.jsx:376
 msgid "Buscar"
 msgstr "Search"
 
-#: query_builder/static/jsx/components/query-builder-formset.jsx:273
+#: query_builder/static/jsx/components/query-builder-formset.jsx:383
 msgid "Agregar filtro"
 msgstr "Add filter"
 

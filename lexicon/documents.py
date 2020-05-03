@@ -23,7 +23,9 @@ class LexicalEntryDocument(Document):
         analyzer='spanish',
         multi=True,
     )
+
     quotations_azz = fields.TextField(multi=True)
+    quotations_trq = fields.TextField(multi=True)
 
     definitions_es = fields.TextField(
         analyzer='spanish',
@@ -61,10 +63,17 @@ class LexicalEntryDocument(Document):
 
     def prepare_quotations_azz(self, instance):
         return list(
-                Quote.objects.filter(example__sense__entry__id=instance.id)
-                .filter(language='azz')
-                .values_list('text', flat=True)
-            )
+            Quote.objects.filter(example__sense__entry__id=instance.id)
+            .filter(language='azz')
+            .values_list('text', flat=True)
+        )
+
+    def prepare_quotations_trq(self, instance):
+        return list(
+            Quote.objects.filter(example__sense__entry__id=instance.id)
+            .filter(language='trq')
+            .values_list('text', flat=True)
+        )
 
     def prepare_nsem_es(self, instance):
         return list(

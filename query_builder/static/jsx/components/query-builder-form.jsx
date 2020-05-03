@@ -18,15 +18,17 @@ const QueryBuilderForm = ({
   i,
   formsetName,
   defaultFilter,
-  config,
+  controlledVocabFields,
   dataset,
   errors,
+  filterableFields,
   onChangeFieldFrom,
   removeFilter,
+  textSearchFields,
   extraFilterComponents = [],
 }) => {
-  const isControlled = controlledVocabCheck(config.controlled_vocab_fields || {});
-  const isTextSearch = fieldName => _.includes(config.text_search_fields || [], fieldName);
+  const isControlled = controlledVocabCheck(controlledVocabFields);
+  const isTextSearch = (fieldName) => _.includes(textSearchFields, fieldName);
 
   return (
     <div className="form-group">
@@ -38,11 +40,11 @@ const QueryBuilderForm = ({
         { humanReadableFilters({
           i,
           operator: dataset.operator || 'and',
-          filterOn: dataset.filter_on || (config.filterable_fields || [[]])[0][0],
+          filterOn: dataset.filter_on || (filterableFields || [[]])[0][0],
           filter: dataset.filter || defaultFilter,
           vln: (dataset.filter !== 'regex') && dataset.vln,
           nahuatOrthography: dataset.nahuat_orthography,
-          filterableFields: config.filterable_fields,
+          filterableFields,
         }) }
       </label>
       <div className="input-group">
@@ -61,54 +63,58 @@ const QueryBuilderForm = ({
         </div>
         {
           isControlled(dataset.filter_on)
-          ?
-            <ControlledVocabInput
-              name={`form-${i}-query_string`}
-              className={classnames(
-                'form-control',
-                'custom-select',
-                { 'is-invalid': (errors.query_string || []).length },
-              )}
-              id={`id_form-${i}-${formsetName}-query_string`}
-              value={dataset.query_string}
-              onChange={onChangeFieldFrom('query_string')}
-              vocab={dataset.filter_on}
-              vocabItems={config.controlled_vocab_fields}
-            />
-          :
-            <input
-              name={`form-${i}-query_string`}
-              className={classnames(
-                'form-control',
-                { 'is-invalid': (errors.query_string || []).length },
-              )}
-              id={`id_form-${i}-${formsetName}-query_string`}
-              type="text"
-              value={dataset.query_string}
-              onChange={onChangeFieldFrom('query_string')}
-            />
+            ? (
+              <ControlledVocabInput
+                name={`form-${i}-query_string`}
+                className={classnames(
+                  'form-control',
+                  'custom-select',
+                  { 'is-invalid': (errors.query_string || []).length },
+                )}
+                id={`id_form-${i}-${formsetName}-query_string`}
+                value={dataset.query_string}
+                onChange={onChangeFieldFrom('query_string')}
+                vocab={dataset.filter_on}
+                vocabItems={controlledVocabFields}
+              />
+            )
+            : (
+              <input
+                name={`form-${i}-query_string`}
+                className={classnames(
+                  'form-control',
+                  { 'is-invalid': (errors.query_string || []).length },
+                )}
+                id={`id_form-${i}-${formsetName}-query_string`}
+                type="text"
+                value={dataset.query_string}
+                onChange={onChangeFieldFrom('query_string')}
+              />
+            )
         }
         {
-          i > 0 ?
-            <div className="input-group-append">
-              <button
-                type="button"
-                className="btn btn-outline-secondary"
-                onClick={removeFilter}
-              >
-                <Octicon name="x" />
-              </button>
-            </div> :
-            null
+          i > 0
+            ? (
+              <div className="input-group-append">
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  onClick={removeFilter}
+                >
+                  <Octicon name="x" />
+                </button>
+              </div>
+            )
+            : null
         }
         {
-          (errors.query_string || []).length ?
-            errors.query_string.map(error => (
+          (errors.query_string || []).length
+            ? errors.query_string.map((error) => (
               <div className="invalid-feedback" key={error}>
                 {error}
               </div>
-            )) :
-            null
+            ))
+            : null
         }
       </div>
       <div
@@ -137,12 +143,12 @@ const QueryBuilderForm = ({
             onChange={onChangeFieldFrom('filter_on')}
           >
             {
-              (config.filterable_fields || []).map(([value, readableName]) => (
+              (filterableFields || []).map(([value, readableName]) => (
                 <option value={value} key={value}>{readableName}</option>
               ))
             }
           </select>
-  
+
           <FilterSelector
             name={`form-${i}-filter`}
             className="custom-select search-form__select"
@@ -153,13 +159,7 @@ const QueryBuilderForm = ({
             textSearch={isTextSearch(dataset.filter_on)}
           />
         </div>
-        {
-          extraFilterComponents.map((Component, j) => (
-            <div className="input-group" key={`extra-filter-${j}`}>
-              { Component }
-            </div>
-          ))
-        }
+        { extraFilterComponents }
       </div>
     </div>
   );
@@ -169,19 +169,34 @@ QueryBuilderForm.propTypes = {
   i: PropTypes.number.isRequired,
   formsetName: PropTypes.string,
   defaultFilter: PropTypes.string,
-  config: PropTypes.shape({}).isRequired,
-  dataset: PropTypes.shape({}).isRequired,
-  errors: PropTypes.shape({}).isRequired,
+  controlledVocabFields: PropTypes.shape(),
+  dataset: PropTypes.shape({
+    filter: PropTypes.any,
+    filter_on: PropTypes.any,
+    nahuat_orthography: PropTypes.any,
+    operator: PropTypes.any,
+    query_string: PropTypes.any,
+    vln: PropTypes.any,
+
+  }).isRequired,
+  errors: PropTypes.shape({
+    query_string: PropTypes.any,
+  }).isRequired,
+  filterableFields: PropTypes.shape(),
   onChangeFieldFrom: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired,
+  textSearchFields: PropTypes.arrayOf(PropTypes.string),
 
   extraFilterComponents: PropTypes.arrayOf(PropTypes.element),
 };
 
 QueryBuilderForm.defaultProps = {
+  controlledVocabFields: {},
   formsetName: 'default',
   defaultFilter: 'exactly_equals',
   extraFilterComponents: [],
+  filterableFields: [],
+  textSearchFields: [],
 };
 
 export default QueryBuilderForm;

@@ -26,6 +26,7 @@ class LexicalEntry(models.Model):
 
     # <entry xml:id="{ref}">
     _id = models.CharField(_("Identificación única"), max_length=64)
+    language = models.CharField("Lengua", max_length=64)
 
     # <form type="lemma"><orth>
     lemma = models.CharField(
@@ -241,8 +242,8 @@ class Example(models.Model):
     )
 
     @property
-    def azz_quotes(self):
-        return [quote for quote in self.quote_set.all() if quote.language == 'azz']
+    def original_quotes(self):
+        return [quote for quote in self.quote_set.filter(translation_of__isnull=True)]
 
 
 class Quote(models.Model):

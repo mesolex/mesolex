@@ -241,9 +241,15 @@ class QueryBuilderGlobalFiltersForm(forms.Form):
     # of the query-composition process.
     pass
 
+class QueryBuilderDatasetsForm(forms.Form):
+    dataset = forms.ChoiceField(
+        choices=[],
+        widget=forms.Select(attrs={'class': 'custom-select'}),
+    )
 
 class QueryBuilderBaseFormset(forms.BaseFormSet):
     global_filters_class = QueryBuilderGlobalFiltersForm
+    datasets_class = QueryBuilderDatasetsForm
 
     # NOTE: abstract, must be filled in with sequence of pairs,
     # e.g. ``('lemma', _('Entrada'))``
@@ -291,6 +297,7 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.global_filters_form = self.global_filters_class(*args, **kwargs)
+        self.datasets_form = self.datasets_class(*args, **kwargs)
 
     def get_full_query(self):
         queries = QueryGrouper()
