@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "outDir": "./mesolex/static/dist/",
+    "sourceMap": true,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "target": "es5",
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      "lexicon/*": ["lexicon/static/jsx/search/*"],
+      "narratives/*": ["narratives/static/jsx/*"],
+      "query-builder/*": ["query_builder/static/jsx/*"],
+      "plyr-src/*": ["node_modules/plyr/src/*"],
+    }
+  }
+}
