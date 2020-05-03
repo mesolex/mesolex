@@ -1,3 +1,4 @@
+from typing import List
 import json
 import operator
 import re
@@ -24,38 +25,53 @@ class CombiningQuery(namedtuple(
     """
     pass
 
-def handle_next_and(accumulator, next):
-    """
-    Reducer function to multiply together all queries
-    tagged with the "and" operator. This ensures that "and"
-    binds tighter; "or" can be handled in a second cleanup
-    reduction.
-    """
-    (queries, and_tree) = accumulator
-    if next.operator == 'and':
-        and_tree &= next.query
-    else:
-        queries = queries + [and_tree]
-        and_tree = next.query
-    return (queries, and_tree)
 
-def group_ands(queries):
-    (queries, and_tree) = reduce(
-        handle_next_and,
-        queries,
-        ([], Q()),
-    )
-    return queries + [and_tree]
+class QueryGrouper(object):
+    """
+    Helper class to compose together queries in a way that
+    respects operator precedence. Add queries to the sequence
+    to be composed together by calling 
+    """
+    def __init__(self, queries=None):
+        self._queries = [] if queries is None else queries
+    
+    def append(self, val: CombiningQuery):
+        self._queries.append(val)
 
-def group_queries(queries):
-    """
-    Takes a sequence of CombiningQuery objects and
-    composes together their "query" properties,
-    respecting a simple operator precedence rule
-    according to which "and" binds tighter than "or".
-    """
-    with_grouped_ands = group_ands(queries)
-    return reduce(operator.or_, with_grouped_ands)
+    @staticmethod
+    def _handle_next_and(accumulator, next: CombiningQuery):
+        """
+        Reducer function to multiply together all queries
+        tagged with the "and" operator. This ensures that "and"
+        binds tighter; "or" can be handled in a second cleanup
+        reduction.
+        """
+        (queries, and_tree) = accumulator
+        if next.operator == 'and':
+            and_tree &= next.query
+        else:
+            queries = queries + [and_tree]
+            and_tree = next.query
+        return (queries, and_tree)
+    
+    @staticmethod
+    def _group_ands(queries: List[CombiningQuery]):
+        (queries, and_tree) = reduce(
+            QueryGrouper._handle_next_and,
+            queries,
+            ([], Q()),
+        )
+        return queries + [and_tree]
+
+    @staticmethod
+    def _group_queries(queries: List[CombiningQuery]):
+        with_grouped_ands = QueryGrouper._group_ands(queries)
+        return reduce(operator.or_, with_grouped_ands)
+    
+    @property
+    def combined_query(self):
+        return QueryGrouper._group_queries(self._queries)
+
 
 class QueryBuilderForm(forms.Form):
     BOOLEAN_OPERATORS = (
@@ -284,8 +300,7 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
         self.datasets_form = self.datasets_class(*args, **kwargs)
 
     def get_full_query(self):
-        query = None
-        queries = []
+        queries = QueryGrouper()
 
         for form in self.forms:
             if form.is_valid():
@@ -304,6 +319,4 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
                     query=form_q,
                 ))
 
-        query = group_queries(queries)
-
-        return query
+        return queries.combined_query

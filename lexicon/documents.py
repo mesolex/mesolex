@@ -1,17 +1,24 @@
-from django_elasticsearch_dsl import DocType, Index, fields
+from django_elasticsearch_dsl import Document, fields
+from django_elasticsearch_dsl.registries import registry
 
 from .models import LexicalEntry, Note, Quote, Sense
 
 
-lexical_entry = Index('lexical_entry')
-lexical_entry.settings(
-    number_of_shards=1,
-    number_of_replicas=0
-)
+@registry.register_document
+class LexicalEntryDocument(Document):
+    class Index:
+        name = 'lexical_entry'
+        settings = {
+            'number_of_shards': 1,
+            'number_of_replicas': 0,
+        }
 
+    class Django:
+        model = LexicalEntry
+        fields = [
+            'lemma',
+        ]
 
-@lexical_entry.doc_type
-class LexicalEntryDocument(DocType):
     quotations_es = fields.TextField(
         analyzer='spanish',
         multi=True,
@@ -74,9 +81,3 @@ class LexicalEntryDocument(DocType):
             .filter(type='semantics')
             .values_list('value', flat=True)
         )
-
-    class Meta:
-        model = LexicalEntry
-        fields = [
-            'lemma',
-        ]
