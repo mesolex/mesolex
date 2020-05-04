@@ -7,6 +7,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 import QueryBuilderForm from './query-builder-form';
 
+// TODO: figure out how to make this global
+declare const gettext: (messageId: string) => string;
 
 interface QueryBuilderFormSetProps {
   languages: Array<LanguageDefinition>,
@@ -63,7 +65,7 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps) => (
 
     <Form.Group>
       <Form.Label>
-        Diccionario
+        {gettext('Diccionario')}
       </Form.Label>
 
       <InputGroup>

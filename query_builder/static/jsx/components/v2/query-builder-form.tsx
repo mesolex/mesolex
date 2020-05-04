@@ -5,13 +5,15 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
+declare const gettext: (messageId: string) => string;
+
 
 const OperatorSelect = () => (
   <Form.Control as="select" custom>
-    <option value="and">and</option>
-    <option value="or">or</option>
-    <option value="and_n">and not</option>
-    <option value="or_n">or not</option>
+    <option value="and">{gettext('y')}</option>
+    <option value="or">{gettext('o')}</option>
+    <option value="and_n">{gettext('y no')}</option>
+    <option value="or_n">{gettext('o no')}</option>
   </Form.Control>
 );
 
