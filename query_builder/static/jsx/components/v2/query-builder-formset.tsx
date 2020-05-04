@@ -5,6 +5,9 @@ import * as _ from 'lodash';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
+import QueryBuilderForm from './query-builder-form';
+
+
 interface QueryBuilderFormSetProps {
   languages: Array<LanguageDefinition>,
 }
@@ -62,13 +65,17 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps) => (
       <Form.Label>
         Diccionario
       </Form.Label>
+
+      <InputGroup>
+        <Form.Control as="select" custom>
+          <LanguageOptions languages={props.languages} />
+        </Form.Control>
+      </InputGroup>
     </Form.Group>
 
-    <InputGroup>
-      <Form.Control as="select" custom>
-        <LanguageOptions languages={props.languages} />
-      </Form.Control>
-    </InputGroup>
+    <Form.Group>
+      <QueryBuilderForm />
+    </Form.Group>
   </>
 );
 
