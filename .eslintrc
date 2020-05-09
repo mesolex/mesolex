@@ -1,5 +1,8 @@
 {
-  "extends": "airbnb",
+  "extends": [
+    "airbnb-typescript",
+    "plugin:@typescript-eslint/recommended",
+  ],
 
   "env": {
     "browser": true
@@ -12,7 +15,8 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2020,
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
   "settings": {
     "import/resolver": "webpack"
