@@ -7,15 +7,35 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 declare const gettext: (messageId: string) => string;
 
+interface FormDataset {
+  filter: string,
+  filterOn: string,
+  operator: string,
+  queryString: string,
+}
 
-const OperatorSelect = () => (
-  <Form.Control as="select" custom>
+interface FormProps {
+  dataset: FormDataset,
+}
+
+interface SelectProps {
+  onChange: (event: React.FormEvent<HTMLSelectElement>) => void,
+  value: string,
+}
+
+const OperatorSelect = React.forwardRef((props: SelectProps, ref: React.Ref<HTMLSelectElement>) => (
+  <Form.Control
+    ref={ref}
+    as="select"
+    custom
+    value={props.value}
+  >
     <option value="and">{gettext('y')}</option>
     <option value="or">{gettext('o')}</option>
     <option value="and_n">{gettext('y no')}</option>
     <option value="or_n">{gettext('o no')}</option>
   </Form.Control>
-);
+));
 
 const FieldSelect = () => (
   <Form.Control as="select" custom>
@@ -41,7 +61,7 @@ const FilterSelect = () => (
  */
 
 
-const QueryBuilderForm = () => (
+const QueryBuilderForm = (props: FormProps) => (
   <Form.Group>
     <Form.Label>
       (Label of filter input)
@@ -53,15 +73,13 @@ const QueryBuilderForm = () => (
         id="filter-params"
         title="Filter params"
       >
-        <Dropdown.Item as={OperatorSelect}>
-          Operator
-        </Dropdown.Item>
-        <Dropdown.Item as={FieldSelect}>
-          Field
-        </Dropdown.Item>
-        <Dropdown.Item as={FilterSelect}>
-          Filter type
-        </Dropdown.Item>
+        <Dropdown.Item
+          as={OperatorSelect}
+          onChange={(event) => console.log('Hello world', event)}
+          value={props.dataset.operator}
+        />
+        <Dropdown.Item as={FieldSelect} />
+        <Dropdown.Item as={FilterSelect} />
       </DropdownButton>
 
       <Form.Control placeholder="Query string" />

@@ -1,17 +1,43 @@
 import * as React from 'react';
+import { useState } from 'react';
 
 import * as _ from 'lodash';
+import * as uuid4 from 'uuid/v4';
 
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 
 import QueryBuilderForm from './query-builder-form';
 
 // TODO: figure out how to make this global
-declare const gettext: (messageId: string) => string;
+
+interface FormDataset {
+  query_string: string, // eslint-disable-line camelcase
+  operator: string,
+  filter_on: string, // eslint-disable-line camelcase
+  filter: string,
+  [extraValues: string]: string,
+}
+
+interface ControlledVocabField {
+  field: string,
+  label: string,
+}
+
+interface FilterableField {
+  field: string,
+  label: string,
+  terms: Array<string>,
+}
 
 interface QueryBuilderFormSetProps {
-  languages: Array<LanguageDefinition>,
+  formsetData: Array<FormDataset>,
+  formsetErrors: Array<{ [fieldName: string]: Array<string> }>,
+
+  // from language:
+  controlledVocabFields: Array<ControlledVocabField>,
+  extraFieldNames: Array<string>,
+  filterableFields: Array<FilterableField>,
+  elasticsearchFields: Array<FilterableField>,
 }
 
 interface LanguageDefinition {
@@ -49,37 +75,59 @@ const FormsetInitForms = (props: {count: number}) => (
   </>
 );
 
-const LanguageOptions = (props: {languages: Array<LanguageDefinition>}) => (
-  <>
-    { _.map(props.languages, ({ label, code }) => (
-      <option value={code}>
-        { label }
-      </option>
-    )) }
-  </>
-);
+const constructInitialFormState = (params: {
+  formsetData: Array<FormDataset>,
+  formsetErrors: Array<{ [formFieldName: string]: Array<string> }>,
+  extraFieldNames: Array<string>,
+  filterableFields: Array<string>,
+  defaultFilter: string,
+}): Array<any> => {
+  const formDataPairs = _.zip(params.formsetData, params.formsetErrors);
 
-const QueryBuilderFormSet = (props: QueryBuilderFormSetProps) => (
-  <>
-    <FormsetInitForms count={1} />
+  return _.map(
+    formDataPairs,
+    ([data, errors]) => ({
+      id: uuid4(),
 
-    <Form.Group>
-      <Form.Label>
-        {gettext('Diccionario')}
-      </Form.Label>
+      data: _.defaults(
+        data,
+        ..._.map(params.extraFieldNames, (fieldName) => ({ [fieldName]: !!data[fieldName] })),
+        {
+          query_string: '',
+          operator: 'and',
+          filter_on: params.filterableFields[0][0],
+          filter: params.defaultFilter,
+        },
+        ..._.map(params.extraFieldNames, (fieldName) => ({ [fieldName]: false })),
+      ),
 
-      <InputGroup>
-        <Form.Control as="select" custom>
-          <LanguageOptions languages={props.languages} />
-        </Form.Control>
-      </InputGroup>
-    </Form.Group>
+      errors,
+    }),
+  );
+};
 
-    <Form.Group>
-      <QueryBuilderForm />
-    </Form.Group>
-  </>
-);
+const QueryBuilderFormSet = (props: QueryBuilderFormSetProps) => {
+  const [state] = useState(() => constructInitialFormState({
+    formsetData: props.formsetData,
+    formsetErrors: props.formsetErrors,
+    extraFieldNames: props.extraFieldNames,
+    filterableFields: _.concat(
+      _.map(props.filterableFields, ({ field }) => field),
+      _.map(props.elasticsearchFields, ({ field }) => field),
+    ),
+    defaultFilter: 'begins_with',
+  }));
+
+  return (
+    <>
+      <FormsetInitForms count={props.formsetData.length || 1} />
+
+      <Form.Group>
+        { _.map(state, ({ data }) => <QueryBuilderForm dataset={data} />) }
+      </Form.Group>
+    </>
+  );
+};
 
 export default QueryBuilderFormSet;
 
