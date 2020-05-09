@@ -1,26 +1,24 @@
 import * as React from 'react';
 
+import * as _ from 'lodash';
+
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
+import FilterSelector from './filter-selector';
+import { FilterableField, FormDataset, SelectProps } from './types';
+
 declare const gettext: (messageId: string) => string;
 
-interface FormDataset {
-  filter: string,
-  filterOn: string,
-  operator: string,
-  queryString: string,
-}
-
 interface FormProps {
-  dataset: FormDataset,
+  dataset: FormDataset;
+  filterableFields: Array<FilterableField>;
 }
 
-interface SelectProps {
-  onChange: (event: React.FormEvent<HTMLSelectElement>) => void,
-  value: string,
+interface FieldSelectProps extends SelectProps {
+  fields: Array<FilterableField>;
 }
 
 const OperatorSelect = React.forwardRef((props: SelectProps, ref: React.Ref<HTMLSelectElement>) => (
@@ -37,29 +35,24 @@ const OperatorSelect = React.forwardRef((props: SelectProps, ref: React.Ref<HTML
   </Form.Control>
 ));
 
-const FieldSelect = () => (
-  <Form.Control as="select" custom>
-    <option value="1">Headword</option>
-    <option value="2">Gloss</option>
-    <option value="3">Root</option>
-    <option value="4">Semantic Field</option>
+const FieldSelect = React.forwardRef((
+  props: FieldSelectProps,
+  ref: React.Ref<HTMLSelectElement>,
+) => (
+  <Form.Control
+    ref={ref}
+    as="select"
+    custom
+    value={props.value}
+  >
+    { _.map(props.fields, ({ field, label }) => <option value={field}>{ label }</option>) }
   </Form.Control>
-);
-
-const FilterSelect = () => (
-  <Form.Control as="select" custom>
-    <option value="1">begins with</option>
-    <option value="2">ends with</option>
-    <option value="3">contains sequence</option>
-    <option value="4">contains word</option>
-  </Form.Control>
-);
+));
 
 /**
  * TODO: customize the styles to eliminate the borders
  * in the dropdown select inputs
  */
-
 
 const QueryBuilderForm = (props: FormProps) => (
   <Form.Group>
@@ -78,8 +71,22 @@ const QueryBuilderForm = (props: FormProps) => (
           onChange={(event) => console.log('Hello world', event)}
           value={props.dataset.operator}
         />
-        <Dropdown.Item as={FieldSelect} />
-        <Dropdown.Item as={FilterSelect} />
+
+        <Dropdown.Item
+          as={FieldSelect}
+          fields={props.filterableFields}
+          onChange={(event) => console.log('Hello world', event)}
+          value={props.dataset.filter_on}
+        />
+
+        {/* TODO: add control and search determination */}
+        <Dropdown.Item
+          as={FilterSelector}
+          controlled={false}
+          textSearch={false}
+          onChange={(event) => console.log('Hello world', event)}
+          value={props.dataset.filter}
+        />
       </DropdownButton>
 
       <Form.Control placeholder="Query string" />

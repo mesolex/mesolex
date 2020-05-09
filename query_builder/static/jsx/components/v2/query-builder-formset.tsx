@@ -8,42 +8,24 @@ import Form from 'react-bootstrap/Form';
 
 import QueryBuilderForm from './query-builder-form';
 
+import { FilterableField, FormDataset } from './types';
+
 // TODO: figure out how to make this global
 
-interface FormDataset {
-  query_string: string, // eslint-disable-line camelcase
-  operator: string,
-  filter_on: string, // eslint-disable-line camelcase
-  filter: string,
-  [extraValues: string]: string,
-}
-
 interface ControlledVocabField {
-  field: string,
-  label: string,
-}
-
-interface FilterableField {
-  field: string,
-  label: string,
-  terms: Array<string>,
+  field: string;
+  label: string;
 }
 
 interface QueryBuilderFormSetProps {
-  formsetData: Array<FormDataset>,
-  formsetErrors: Array<{ [fieldName: string]: Array<string> }>,
+  formsetData: Array<FormDataset>;
+  formsetErrors: Array<{ [fieldName: string]: Array<string> }>;
 
   // from language:
-  controlledVocabFields: Array<ControlledVocabField>,
-  extraFieldNames: Array<string>,
-  filterableFields: Array<FilterableField>,
-  elasticsearchFields: Array<FilterableField>,
-}
-
-interface LanguageDefinition {
-  code: string,
-  label: string,
-  [other: string]: any,
+  controlledVocabFields: Array<ControlledVocabField>;
+  extraFieldNames: Array<string>;
+  filterableFields: Array<FilterableField>;
+  elasticsearchFields: Array<FilterableField>;
 }
 
 const FormsetInitForms = (props: {count: number}) => (
@@ -75,12 +57,13 @@ const FormsetInitForms = (props: {count: number}) => (
   </>
 );
 
+// TODO: correct "Any" type here
 const constructInitialFormState = (params: {
-  formsetData: Array<FormDataset>,
-  formsetErrors: Array<{ [formFieldName: string]: Array<string> }>,
-  extraFieldNames: Array<string>,
-  filterableFields: Array<string>,
-  defaultFilter: string,
+  formsetData: Array<FormDataset>;
+  formsetErrors: Array<{ [formFieldName: string]: Array<string> }>;
+  extraFieldNames: Array<string>;
+  filterableFields: Array<string>;
+  defaultFilter: string;
 }): Array<any> => {
   const formDataPairs = _.zip(params.formsetData, params.formsetErrors);
 
@@ -93,8 +76,9 @@ const constructInitialFormState = (params: {
         data,
         ..._.map(params.extraFieldNames, (fieldName) => ({ [fieldName]: !!data[fieldName] })),
         {
-          query_string: '',
+          query_string: '', // eslint-disable-line @typescript-eslint/camelcase
           operator: 'and',
+          // eslint-disable-next-line @typescript-eslint/camelcase
           filter_on: params.filterableFields[0][0],
           filter: params.defaultFilter,
         },
@@ -107,14 +91,13 @@ const constructInitialFormState = (params: {
 };
 
 const QueryBuilderFormSet = (props: QueryBuilderFormSetProps) => {
+  const filterableFields = _.concat(props.filterableFields, props.elasticsearchFields);
+
   const [state] = useState(() => constructInitialFormState({
     formsetData: props.formsetData,
     formsetErrors: props.formsetErrors,
     extraFieldNames: props.extraFieldNames,
-    filterableFields: _.concat(
-      _.map(props.filterableFields, ({ field }) => field),
-      _.map(props.elasticsearchFields, ({ field }) => field),
-    ),
+    filterableFields: _.map(filterableFields, ({ field }) => field),
     defaultFilter: 'begins_with',
   }));
 
@@ -123,18 +106,15 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps) => {
       <FormsetInitForms count={props.formsetData.length || 1} />
 
       <Form.Group>
-        { _.map(state, ({ data }) => <QueryBuilderForm dataset={data} />) }
+        { _.map(state, ({ data }) => (
+          <QueryBuilderForm
+            dataset={data}
+            filterableFields={filterableFields}
+          />
+        )) }
       </Form.Group>
     </>
   );
 };
 
 export default QueryBuilderFormSet;
-
-/**
- * Essentials of the query builder form:
- *
- * - props include a set of `language` config data
- * - initialized with a set of `formsetData` provided by Django
- * - on mount, creates state that tracks its component forms
- */
