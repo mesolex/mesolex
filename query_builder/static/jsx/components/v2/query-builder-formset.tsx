@@ -28,7 +28,20 @@ interface QueryBuilderFormSetProps {
   elasticsearchFields: Array<FilterableField>;
 }
 
-const FormsetInitForms = (props: {count: number}) => (
+/**
+ * See https://docs.djangoproject.com/en/3.0/ref/forms/api/#django.forms.Form.errors
+ */
+interface QueryBuilderErrorIndex {
+  [fieldName: string]: Array<string>;
+}
+
+interface QueryBuilderFormStateItem {
+  id: string;
+  data: FormDataset;
+  errors: QueryBuilderErrorIndex;
+}
+
+const FormsetInitForms = (props: {count: number}): JSX.Element => (
   <>
     <input
       name="form-TOTAL_FORMS"
@@ -60,11 +73,11 @@ const FormsetInitForms = (props: {count: number}) => (
 // TODO: correct "Any" type here
 const constructInitialFormState = (params: {
   formsetData: Array<FormDataset>;
-  formsetErrors: Array<{ [formFieldName: string]: Array<string> }>;
+  formsetErrors: Array<QueryBuilderErrorIndex>;
   extraFieldNames: Array<string>;
   filterableFields: Array<string>;
   defaultFilter: string;
-}): Array<any> => {
+}): Array<QueryBuilderFormStateItem> => {
   const formDataPairs = _.zip(params.formsetData, params.formsetErrors);
 
   return _.map(
@@ -90,10 +103,10 @@ const constructInitialFormState = (params: {
   );
 };
 
-const QueryBuilderFormSet = (props: QueryBuilderFormSetProps) => {
+const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
   const filterableFields = _.concat(props.filterableFields, props.elasticsearchFields);
 
-  const [state] = useState(() => constructInitialFormState({
+  const [formState] = useState(() => constructInitialFormState({
     formsetData: props.formsetData,
     formsetErrors: props.formsetErrors,
     extraFieldNames: props.extraFieldNames,
@@ -106,7 +119,7 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps) => {
       <FormsetInitForms count={props.formsetData.length || 1} />
 
       <Form.Group>
-        { _.map(state, ({ data }) => (
+        { _.map(formState, ({ data }) => (
           <QueryBuilderForm
             dataset={data}
             filterableFields={filterableFields}

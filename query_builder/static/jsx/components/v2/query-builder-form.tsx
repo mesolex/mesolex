@@ -54,7 +54,7 @@ const FieldSelect = React.forwardRef((
  * in the dropdown select inputs
  */
 
-const QueryBuilderForm = (props: FormProps) => (
+const QueryBuilderForm = (props: FormProps): JSX.Element => (
   <Form.Group>
     <Form.Label>
       (Label of filter input)
@@ -68,14 +68,11 @@ const QueryBuilderForm = (props: FormProps) => (
       >
         <Dropdown.Item
           as={OperatorSelect}
-          onChange={(event) => console.log('Hello world', event)}
           value={props.dataset.operator}
         />
-
         <Dropdown.Item
           as={FieldSelect}
           fields={props.filterableFields}
-          onChange={(event) => console.log('Hello world', event)}
           value={props.dataset.filter_on}
         />
 
@@ -84,7 +81,6 @@ const QueryBuilderForm = (props: FormProps) => (
           as={FilterSelector}
           controlled={false}
           textSearch={false}
-          onChange={(event) => console.log('Hello world', event)}
           value={props.dataset.filter}
         />
       </DropdownButton>
