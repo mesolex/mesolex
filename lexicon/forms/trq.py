@@ -25,7 +25,7 @@ class BaseTrqLexiconQueryComposerFormset(QueryBuilderBaseFormset):
     global_filters_class = LexiconQueryBuilderGlobalFiltersForm
 
     FILTERABLE_FIELDS = Trq.filterable_fields + Trq.elasticsearch_fields
-    TEXT_SEARCH_FIELDS = [field[0] for field in Trq.elasticsearch_fields_dict]
+    TEXT_SEARCH_FIELDS = [field[0] for field in Trq.elasticsearch_fields]
 
     CONTROLLED_VOCAB_FIELDS = {
         field['field']: [(item['value'], item['label']) for item in field['items']]

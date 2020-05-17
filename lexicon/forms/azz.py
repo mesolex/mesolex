@@ -36,7 +36,7 @@ class BaseAzzLexiconQueryComposerFormset(QueryBuilderBaseFormset):
     global_filters_class = LexiconQueryBuilderGlobalFiltersForm
 
     FILTERABLE_FIELDS = Azz.filterable_fields + Azz.elasticsearch_fields
-    TEXT_SEARCH_FIELDS = [field[0] for field in Azz.elasticsearch_fields_dict]
+    TEXT_SEARCH_FIELDS = [field[0] for field in Azz.elasticsearch_fields]
 
     CONTROLLED_VOCAB_FIELDS = {
         field['field']: [(item['value'], item['label']) for item in field['items']]
