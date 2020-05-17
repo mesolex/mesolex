@@ -19,6 +19,7 @@ const FilterSelector = React.forwardRef((
     ref={ref}
     as="select"
     custom
+    onChange={props.onChange}
     value={props.value}
   >
     {props.controlled || props.textSearch ? null : <option value="begins_with">{`${gettext('empieza con')}`}</option>}

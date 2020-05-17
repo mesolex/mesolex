@@ -72,64 +72,53 @@ const FormsetInitForms = (props: {count: number}): JSX.Element => (
 
 
 // TODO: correct "Any" type here
-const constructInitialFormState = (params: {
-  formsetData: Array<FormDataset>;
-  formsetErrors: Array<QueryBuilderErrorIndex>;
-  extraFieldNames: Array<string>;
-  filterableFields: Array<string>;
-  defaultFilter: string;
-}): Array<QueryBuilderFormStateItem> => {
-  const formDataPairs = _.zip(params.formsetData, params.formsetErrors);
+// const constructInitialFormState = (params: {
+//   formsetData: Array<FormDataset>;
+//   formsetErrors: Array<QueryBuilderErrorIndex>;
+//   extraFieldNames: Array<string>;
+//   filterableFields: Array<string>;
+//   defaultFilter: string;
+// }): Array<QueryBuilderFormStateItem> => {
+//   const formDataPairs = _.zip(params.formsetData, params.formsetErrors);
 
-  return _.map(
-    formDataPairs,
-    ([data, errors]) => ({
-      id: uuid4(),
+//   return _.map(
+//     formDataPairs,
+//     ([data, errors]) => ({
+//       id: uuid4(),
 
-      data: _.defaults(
-        data,
-        ..._.map(params.extraFieldNames, (fieldName) => ({ [fieldName]: !!data[fieldName] })),
-        {
-          query_string: '', // eslint-disable-line @typescript-eslint/camelcase
-          operator: 'and',
-          // eslint-disable-next-line @typescript-eslint/camelcase
-          filter_on: params.filterableFields[0][0],
-          filter: params.defaultFilter,
-        },
-        ..._.map(params.extraFieldNames, (fieldName) => ({ [fieldName]: false })),
-      ),
+//       data: _.defaults(
+//         data,
+//         ..._.map(params.extraFieldNames, (fieldName) => ({ [fieldName]: !!data[fieldName] })),
+//         {
+//           query_string: '', // eslint-disable-line @typescript-eslint/camelcase
+//           operator: 'and',
+//           // eslint-disable-next-line @typescript-eslint/camelcase
+//           filter_on: params.filterableFields[0][0],
+//           filter: params.defaultFilter,
+//         },
+//         ..._.map(params.extraFieldNames, (fieldName) => ({ [fieldName]: false })),
+//       ),
 
-      errors,
-    }),
-  );
-};
-
-const getSetterForFormData = (setFormState) => (i, fieldName, value) => {
-  // TODO
-};
+//       errors,
+//     }),
+//   );
+// };
 
 const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
   const filterableFields = _.concat(props.filterableFields, props.elasticsearchFields);
 
-  const [formState, setFormState] = useState(() => constructInitialFormState({
-    formsetData: props.formsetData,
-    formsetErrors: props.formsetErrors,
-    extraFieldNames: props.extraFieldNames,
-    filterableFields: _.map(filterableFields, ({ field }) => field),
-    defaultFilter: 'begins_with',
-  }));
-
-  // TODO: use in QueryBuilderForm
-  const setterForFormData = getSetterForFormData(setFormState);
+  const [formKeySeqState] = useState(() => _.map(props.formsetData, () => uuid4()));
 
   return (
     <>
       <FormsetInitForms count={props.formsetData.length || 1} />
 
       <Form.Group>
-        { _.map(formState, ({ data }) => (
+        { _.map(formKeySeqState, (key, i) => (
           <QueryBuilderForm
-            dataset={data}
+            initialData={props.formsetData[i]}
+            initialErrors={props.formsetErrors[i]}
+            key={key}
             filterableFields={filterableFields}
           />
         )) }

@@ -13,6 +13,6 @@ export interface FormDataset {
 }
 
 export interface SelectProps {
-  onChange?: (event: React.FormEvent<HTMLSelectElement>) => void;
+  onChange: (event: React.ChangeEvent) => void;
   value: string;
 }

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useCallback, useState } from 'react';
 
 import * as _ from 'lodash';
 
@@ -13,7 +14,8 @@ import { FilterableField, FormDataset, SelectProps } from '../types';
 declare const gettext: (messageId: string) => string;
 
 interface FormProps {
-  dataset: FormDataset;
+  initialData: FormDataset;
+  initialErrors: { [fieldName: string]: Array<string> };
   filterableFields: Array<FilterableField>;
 }
 
@@ -26,6 +28,7 @@ const OperatorSelect = React.forwardRef((props: SelectProps, ref: React.Ref<HTML
     ref={ref}
     as="select"
     custom
+    onChange={props.onChange}
     value={props.value}
   >
     <option value="and">{gettext('y')}</option>
@@ -43,6 +46,7 @@ const FieldSelect = React.forwardRef((
     ref={ref}
     as="select"
     custom
+    onChange={props.onChange}
     value={props.value}
   >
     { _.map(props.fields, ({ field, label }) => <option value={field}>{ label }</option>) }
@@ -53,41 +57,52 @@ const FieldSelect = React.forwardRef((
  * TODO: customize the styles to eliminate the borders
  * in the dropdown select inputs
  */
+const QueryBuilderForm = (props: FormProps): JSX.Element => {
+  const [operator, setOperator] = useState(props.initialData.operator);
+  const [filterOn, setFilterOn] = useState(props.initialData.filter_on);
+  const [filter, setFilter] = useState(props.initialData.filter);
+  const [queryString, setQueryString] = useState(props.initialData.query_string);
+  // const [errorState, setErrorState] = useState(props.initialErrors);
 
-const QueryBuilderForm = (props: FormProps): JSX.Element => (
-  <Form.Group>
-    <Form.Label>
-      (Label of filter input)
-    </Form.Label>
+  return (
+    <Form.Group>
+      <InputGroup>
+        <DropdownButton
+          as={InputGroup.Prepend}
+          id="filter-params"
+          title="Filter params"
+        >
+          <Dropdown.Item
+            as={OperatorSelect}
+            onChange={(event): void => setOperator(event.target.value)}
+            value={operator}
+          />
+          <Dropdown.Item
+            as={FieldSelect}
+            fields={props.filterableFields}
+            onChange={(event): void => setFilterOn(event.target.value)}
+            value={filterOn}
+          />
 
-    <InputGroup>
-      <DropdownButton
-        as={InputGroup.Prepend}
-        id="filter-params"
-        title="Filter params"
-      >
-        <Dropdown.Item
-          as={OperatorSelect}
-          value={props.dataset.operator}
+          {/* TODO: add control and search determination */}
+          <Dropdown.Item
+            as={FilterSelector}
+            controlled={false}
+            onChange={(event): void => setFilter(event.target.value)}
+            textSearch={false}
+            value={filter}
+          />
+        </DropdownButton>
+
+        <Form.Control
+          placeholder="Query string"
+          onChange={(event): void => setQueryString(event.target.value)}
+          type="text"
+          value={queryString}
         />
-        <Dropdown.Item
-          as={FieldSelect}
-          fields={props.filterableFields}
-          value={props.dataset.filter_on}
-        />
-
-        {/* TODO: add control and search determination */}
-        <Dropdown.Item
-          as={FilterSelector}
-          controlled={false}
-          textSearch={false}
-          value={props.dataset.filter}
-        />
-      </DropdownButton>
-
-      <Form.Control placeholder="Query string" />
-    </InputGroup>
-  </Form.Group>
-);
+      </InputGroup>
+    </Form.Group>
+  );
+};
 
 export default QueryBuilderForm;
