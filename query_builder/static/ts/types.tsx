@@ -1,3 +1,13 @@
+interface ControlledVocabFieldItem {
+  label: string;
+  value: string;
+}
+
+export interface ControlledVocabField {
+  field: string;
+  items: Array<ControlledVocabFieldItem>;
+}
+
 export interface FilterableField {
   field: string;
   label: string;

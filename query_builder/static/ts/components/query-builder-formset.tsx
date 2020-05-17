@@ -8,14 +8,9 @@ import Form from 'react-bootstrap/Form';
 
 import QueryBuilderForm from './query-builder-form';
 
-import { FilterableField, FormDataset } from '../types';
+import { ControlledVocabField, FilterableField, FormDataset } from '../types';
 
 // TODO: figure out how to make this global
-
-interface ControlledVocabField {
-  field: string;
-  label: string;
-}
 
 interface QueryBuilderFormSetProps {
   formsetData: Array<FormDataset>;
@@ -116,6 +111,7 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
       <Form.Group>
         { _.map(formKeySeqState, (key, i) => (
           <QueryBuilderForm
+            controlledVocabFields={props.controlledVocabFields}
             initialData={props.formsetData[i]}
             initialErrors={props.formsetErrors[i]}
             key={key}

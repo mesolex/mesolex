@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import * as _ from 'lodash';
 
@@ -9,11 +9,17 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 import FilterSelector from './filter-selector';
-import { FilterableField, FormDataset, SelectProps } from '../types';
+import {
+  ControlledVocabField,
+  FilterableField,
+  FormDataset,
+  SelectProps,
+} from '../types';
 
 declare const gettext: (messageId: string) => string;
 
 interface FormProps {
+  controlledVocabFields: Array<ControlledVocabField>;
   initialData: FormDataset;
   initialErrors: { [fieldName: string]: Array<string> };
   filterableFields: Array<FilterableField>;
@@ -53,6 +59,11 @@ const FieldSelect = React.forwardRef((
   </Form.Control>
 ));
 
+const isControlled = (
+  fieldName: string,
+  controlledVocabFields: Array<ControlledVocabField>,
+): boolean => _.some(controlledVocabFields, ({ field }) => field === fieldName);
+
 /**
  * TODO: customize the styles to eliminate the borders
  * in the dropdown select inputs
@@ -63,6 +74,10 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
   const [filter, setFilter] = useState(props.initialData.filter);
   const [queryString, setQueryString] = useState(props.initialData.query_string);
   // const [errorState, setErrorState] = useState(props.initialErrors);
+
+  const controlledVocabFieldItems = isControlled(filterOn, props.controlledVocabFields)
+    ? _.find(props.controlledVocabFields, ({ field }) => field === filterOn).items
+    : [];
 
   return (
     <Form.Group>
@@ -94,12 +109,31 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
           />
         </DropdownButton>
 
-        <Form.Control
-          placeholder="Query string"
-          onChange={(event): void => setQueryString(event.target.value)}
-          type="text"
-          value={queryString}
-        />
+        {
+          isControlled(filterOn, props.controlledVocabFields)
+            ? (
+              <Form.Control
+                as="select"
+                custom
+                value={_.some(controlledVocabFieldItems, ({ value }) => value === queryString)
+                  ? queryString
+                  : controlledVocabFieldItems[0].value}
+              >
+                {_.map(
+                  controlledVocabFieldItems,
+                  ({ label, value }) => <option value={value}>{ label }</option>,
+                )}
+              </Form.Control>
+            )
+            : (
+              <Form.Control
+                placeholder="Query string"
+                onChange={(event): void => setQueryString(event.target.value)}
+                type="text"
+                value={queryString}
+              />
+            )
+        }
       </InputGroup>
     </Form.Group>
   );
