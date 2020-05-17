@@ -1,3 +1,3 @@
-import QueryBuilderFormset from 'query-builder/components/v2/query-builder-formset';
+import QueryBuilderFormset from 'query-builder/components/query-builder-formset';
 
 export default QueryBuilderFormset;

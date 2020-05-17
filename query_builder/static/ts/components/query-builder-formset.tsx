@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 
 import QueryBuilderForm from './query-builder-form';
 
-import { FilterableField, FormDataset } from './types';
+import { FilterableField, FormDataset } from '../types';
 
 // TODO: figure out how to make this global
 
@@ -70,6 +70,7 @@ const FormsetInitForms = (props: {count: number}): JSX.Element => (
   </>
 );
 
+
 // TODO: correct "Any" type here
 const constructInitialFormState = (params: {
   formsetData: Array<FormDataset>;
@@ -103,16 +104,23 @@ const constructInitialFormState = (params: {
   );
 };
 
+const getSetterForFormData = (setFormState) => (i, fieldName, value) => {
+  // TODO
+};
+
 const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
   const filterableFields = _.concat(props.filterableFields, props.elasticsearchFields);
 
-  const [formState] = useState(() => constructInitialFormState({
+  const [formState, setFormState] = useState(() => constructInitialFormState({
     formsetData: props.formsetData,
     formsetErrors: props.formsetErrors,
     extraFieldNames: props.extraFieldNames,
     filterableFields: _.map(filterableFields, ({ field }) => field),
     defaultFilter: 'begins_with',
   }));
+
+  // TODO: use in QueryBuilderForm
+  const setterForFormData = getSetterForFormData(setFormState);
 
   return (
     <>

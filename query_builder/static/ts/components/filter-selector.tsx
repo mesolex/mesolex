@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import Form from 'react-bootstrap/Form';
 
-import { SelectProps } from './types';
+import { SelectProps } from '../types';
 
 declare const gettext: (messageId: string) => string;
 

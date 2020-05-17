@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 import FilterSelector from './filter-selector';
-import { FilterableField, FormDataset, SelectProps } from './types';
+import { FilterableField, FormDataset, SelectProps } from '../types';
 
 declare const gettext: (messageId: string) => string;
 
