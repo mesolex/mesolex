@@ -102,7 +102,10 @@ const FormsetInitForms = (props: {count: number}): JSX.Element => (
 const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
   const filterableFields = _.concat(props.filterableFields, props.elasticsearchFields);
 
-  const [formKeySeqState] = useState(() => _.map(props.formsetData, () => uuid4()));
+  const [
+    formKeySeqState,
+    setFormKeySeqState,
+  ] = useState(() => _.map(props.formsetData, () => uuid4()));
 
   return (
     <>
@@ -112,10 +115,14 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
         { _.map(formKeySeqState, (key, i) => (
           <QueryBuilderForm
             controlledVocabFields={props.controlledVocabFields}
+            index={i}
             initialData={props.formsetData[i]}
             initialErrors={props.formsetErrors[i]}
             key={key}
             filterableFields={filterableFields}
+            onDelete={(): void => setFormKeySeqState(
+              (prevState) => _.filter(prevState, (k) => k !== key),
+            )}
           />
         )) }
       </Form.Group>

@@ -3,10 +3,12 @@ import { useState } from 'react';
 
 import * as _ from 'lodash';
 
+import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Octicon from 'react-component-octicons';
 
 import FilterSelector from './filter-selector';
 import {
@@ -20,9 +22,11 @@ declare const gettext: (messageId: string) => string;
 
 interface FormProps {
   controlledVocabFields: Array<ControlledVocabField>;
+  index: number;
   initialData: FormDataset;
   initialErrors: { [fieldName: string]: Array<string> };
   filterableFields: Array<FilterableField>;
+  onDelete: () => void;
 }
 
 interface FieldSelectProps extends SelectProps {
@@ -133,6 +137,21 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
                 value={queryString}
               />
             )
+        }
+
+        {
+          props.index !== 0
+            ? (
+              <InputGroup.Append>
+                <Button
+                  onClick={props.onDelete}
+                  variant="outline-secondary"
+                >
+                  <Octicon name="x" />
+                </Button>
+              </InputGroup.Append>
+            )
+            : null
         }
       </InputGroup>
     </Form.Group>
