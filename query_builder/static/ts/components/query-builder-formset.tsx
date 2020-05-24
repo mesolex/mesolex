@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 
 import QueryBuilderForm from './query-builder-form';
 
+import AddRemoveForms from './add-remove-forms';
 import { ControlledVocabField, FilterableField, FormDataset } from '../types';
 
 // TODO: figure out how to make this global
@@ -65,6 +66,13 @@ const FormsetInitForms = (props: {count: number}): JSX.Element => (
   </>
 );
 
+const makeDefaultInitialData = (filterableFields: Array<FilterableField>): FormDataset => ({
+  query_string: '',
+  operator: 'and',
+  filter_on: filterableFields[0].field,
+  filter: 'begins_with',
+});
+
 const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
   const filterableFields = _.concat(props.filterableFields, props.elasticsearchFields);
 
@@ -83,8 +91,8 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
             controlledVocabFields={props.controlledVocabFields}
             elasticsearchFields={props.elasticsearchFields}
             index={i}
-            initialData={props.formsetData[i]}
-            initialErrors={props.formsetErrors[i]}
+            initialData={props.formsetData[i] || makeDefaultInitialData(filterableFields)}
+            initialErrors={props.formsetErrors[i] || {}}
             key={key}
             filterableFields={filterableFields}
             onDelete={(): void => setFormKeySeqState(
@@ -93,6 +101,10 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
           />
         )) }
       </Form.Group>
+
+      <AddRemoveForms
+        onAddFilter={(): void => setFormKeySeqState((prevState) => prevState.concat(uuid4()))}
+      />
     </>
   );
 };
