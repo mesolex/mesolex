@@ -28,7 +28,7 @@ export const initFunction = () => {
       controlledVocabFields={languages.azz.controlled_vocab_fields}
       extraFieldNames={languages.azz.extra_fields}
       filterableFields={languages.azz.filterable_fields}
-      elasticsearchFields={languages.azz.filterable_fields}
+      elasticsearchFields={languages.azz.elasticsearch_fields}
     />,
     document.querySelector('#lexicon-search-form'),
   );
