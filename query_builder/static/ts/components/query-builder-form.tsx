@@ -18,6 +18,8 @@ import {
   SelectProps,
 } from '../types';
 
+import { humanReadableFilters } from '../util';
+
 declare const gettext: (messageId: string) => string;
 
 interface FormProps {
@@ -89,7 +91,13 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
         <DropdownButton
           as={InputGroup.Prepend}
           id="filter-params"
-          title="Filter params"
+          title={humanReadableFilters({
+            i: props.index,
+            operator,
+            filterOn,
+            filter,
+            filterableFields: props.filterableFields,
+          })}
         >
           <Dropdown.Item
             as={OperatorSelect}
