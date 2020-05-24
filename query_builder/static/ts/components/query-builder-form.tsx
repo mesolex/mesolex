@@ -24,6 +24,7 @@ declare const gettext: (messageId: string) => string;
 
 interface FormProps {
   controlledVocabFields: Array<ControlledVocabField>;
+  elasticsearchFields: Array<FilterableField>;
   index: number;
   initialData: FormDataset;
   initialErrors: { [fieldName: string]: Array<string> };
@@ -72,6 +73,26 @@ const isControlled = (
   controlledVocabFields: Array<ControlledVocabField>,
 ): boolean => _.some(controlledVocabFields, ({ field }) => field === fieldName);
 
+const isTextSearch = (
+  fieldName: string,
+  elasticsearchFields: Array<FilterableField>,
+): boolean => _.some(elasticsearchFields, ({ field }) => field === fieldName);
+
+const propagateFilterOnConditions = (
+  filterOn: string,
+  controlledVocabFields: Array<ControlledVocabField>,
+  elasticsearchFields: Array<FilterableField>,
+  setFilter: React.Dispatch<React.SetStateAction<string>>,
+): void => {
+  if (isControlled(filterOn, controlledVocabFields)) {
+    setFilter('exactly_equals');
+  }
+
+  if (isTextSearch(filterOn, elasticsearchFields)) {
+    setFilter('text_search');
+  }
+};
+
 /**
  * TODO: customize the styles to eliminate the borders
  * in the dropdown select inputs
@@ -110,16 +131,24 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
           <Dropdown.Item
             as={FieldSelect}
             fields={props.filterableFields}
-            onChange={(event): void => setFilterOn(event.target.value)}
+            onChange={(event): void => {
+              setFilterOn(event.target.value);
+              propagateFilterOnConditions(
+                event.target.value,
+                props.controlledVocabFields,
+                props.elasticsearchFields,
+                setFilter,
+              );
+            }}
             value={filterOn}
           />
 
           {/* TODO: add control and search determination */}
           <Dropdown.Item
             as={FilterSelector}
-            controlled={false}
+            controlled={isControlled(filterOn, props.controlledVocabFields)}
             onChange={(event): void => setFilter(event.target.value)}
-            textSearch={false}
+            textSearch={isTextSearch(filterOn, props.elasticsearchFields)}
             value={filter}
           />
         </DropdownButton>
@@ -130,6 +159,7 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
               <Form.Control
                 as="select"
                 custom
+                onChange={(event): void => setQueryString(event.target.value)}
                 value={_.some(controlledVocabFieldItems, ({ value }) => value === queryString)
                   ? queryString
                   : controlledVocabFieldItems[0].value}

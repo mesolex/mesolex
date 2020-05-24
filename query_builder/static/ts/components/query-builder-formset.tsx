@@ -81,6 +81,7 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
         { _.map(formKeySeqState, (key, i) => (
           <QueryBuilderForm
             controlledVocabFields={props.controlledVocabFields}
+            elasticsearchFields={props.elasticsearchFields}
             index={i}
             initialData={props.formsetData[i]}
             initialErrors={props.formsetErrors[i]}
