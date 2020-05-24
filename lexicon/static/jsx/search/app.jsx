@@ -20,7 +20,7 @@ export const initFunction = () => {
 
   ReactDOM.render(
     <SearchFormSet
-      formsetName="lexicon"
+      formsetName="azz"
 
       formsetData={formsetData}
       formsetErrors={formsetErrors}

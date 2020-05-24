@@ -94,6 +94,29 @@ const propagateFilterOnConditions = (
 };
 
 /**
+ * Because the values of the items in the dropdown menus that set
+ * the filter parameters are not part of the actual form, we need
+ * to make those values available via hidden inputs.
+ */
+const HiddenInputs = ({
+  i,
+  operator,
+  filterOn,
+  filter,
+}: {
+  i: number;
+  operator: string;
+  filterOn: string;
+  filter: string;
+}): JSX.Element => (
+  <>
+    <input type="hidden" name={`form-${i}-operator`} value={operator} />
+    <input type="hidden" name={`form-${i}-filter_on`} value={filterOn} />
+    <input type="hidden" name={`form-${i}-filter`} value={filter} />
+  </>
+);
+
+/**
  * TODO: customize the styles to eliminate the borders
  * in the dropdown select inputs
  */
@@ -159,6 +182,7 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
               <Form.Control
                 as="select"
                 custom
+                name={`form-${props.index}-query_string`}
                 onChange={(event): void => setQueryString(event.target.value)}
                 value={_.some(controlledVocabFieldItems, ({ value }) => value === queryString)
                   ? queryString
@@ -173,6 +197,7 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
             : (
               <Form.Control
                 placeholder="Query string"
+                name={`form-${props.index}-query_string`}
                 onChange={(event): void => setQueryString(event.target.value)}
                 type="text"
                 value={queryString}
@@ -181,20 +206,25 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
         }
 
         {
-          props.index !== 0
-            ? (
-              <InputGroup.Append>
-                <Button
-                  onClick={props.onDelete}
-                  variant="outline-secondary"
-                >
-                  <Octicon name="x" />
-                </Button>
-              </InputGroup.Append>
-            )
-            : null
+          props.index !== 0 && (
+            <InputGroup.Append>
+              <Button
+                onClick={props.onDelete}
+                variant="outline-secondary"
+              >
+                <Octicon name="x" />
+              </Button>
+            </InputGroup.Append>
+          )
         }
       </InputGroup>
+
+      <HiddenInputs
+        i={props.index}
+        filter={filter}
+        filterOn={filterOn}
+        operator={operator}
+      />
     </Form.Group>
   );
 };

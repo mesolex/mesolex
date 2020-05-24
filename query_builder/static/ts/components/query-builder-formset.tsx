@@ -16,6 +16,7 @@ import { ControlledVocabField, FilterableField, FormDataset } from '../types';
 interface QueryBuilderFormSetProps {
   formsetData: Array<FormDataset>;
   formsetErrors: Array<{ [fieldName: string]: Array<string> }>;
+  formsetName: string;
 
   // from language:
   controlledVocabFields: Array<ControlledVocabField>;
@@ -83,6 +84,12 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
 
   return (
     <>
+      <input
+        type="hidden"
+        name="dataset"
+        value={props.formsetName}
+      />
+
       <FormsetInitForms count={props.formsetData.length || 1} />
 
       <Form.Group>
