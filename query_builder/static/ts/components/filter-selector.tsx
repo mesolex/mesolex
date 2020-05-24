@@ -18,6 +18,7 @@ const FilterSelector = React.forwardRef((
   <Form.Control
     ref={ref}
     as="select"
+    className="search-form__filter-selector"
     custom
     onChange={props.onChange}
     value={props.value}

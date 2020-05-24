@@ -39,6 +39,7 @@ const OperatorSelect = React.forwardRef((props: SelectProps, ref: React.Ref<HTML
   <Form.Control
     ref={ref}
     as="select"
+    className="search-form__filter-selector"
     custom
     onChange={props.onChange}
     value={props.value}
@@ -57,6 +58,7 @@ const FieldSelect = React.forwardRef((
   <Form.Control
     ref={ref}
     as="select"
+    className="search-form__filter-selector"
     custom
     onChange={props.onChange}
     value={props.value}
@@ -90,6 +92,7 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
       <InputGroup>
         <DropdownButton
           as={InputGroup.Prepend}
+          variant="outline-primary"
           id="filter-params"
           title={humanReadableFilters({
             i: props.index,

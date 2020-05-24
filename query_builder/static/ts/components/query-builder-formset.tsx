@@ -65,40 +65,6 @@ const FormsetInitForms = (props: {count: number}): JSX.Element => (
   </>
 );
 
-
-// TODO: correct "Any" type here
-// const constructInitialFormState = (params: {
-//   formsetData: Array<FormDataset>;
-//   formsetErrors: Array<QueryBuilderErrorIndex>;
-//   extraFieldNames: Array<string>;
-//   filterableFields: Array<string>;
-//   defaultFilter: string;
-// }): Array<QueryBuilderFormStateItem> => {
-//   const formDataPairs = _.zip(params.formsetData, params.formsetErrors);
-
-//   return _.map(
-//     formDataPairs,
-//     ([data, errors]) => ({
-//       id: uuid4(),
-
-//       data: _.defaults(
-//         data,
-//         ..._.map(params.extraFieldNames, (fieldName) => ({ [fieldName]: !!data[fieldName] })),
-//         {
-//           query_string: '', // eslint-disable-line @typescript-eslint/camelcase
-//           operator: 'and',
-//           // eslint-disable-next-line @typescript-eslint/camelcase
-//           filter_on: params.filterableFields[0][0],
-//           filter: params.defaultFilter,
-//         },
-//         ..._.map(params.extraFieldNames, (fieldName) => ({ [fieldName]: false })),
-//       ),
-
-//       errors,
-//     }),
-//   );
-// };
-
 const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
   const filterableFields = _.concat(props.filterableFields, props.elasticsearchFields);
 
