@@ -14,6 +14,12 @@ export interface FilterableField {
   terms: Array<string>;
 }
 
+export interface ExtraField {
+  field: string;
+  label: string;
+  constraints: Array<string>;
+}
+
 export interface FormDataset {
   query_string: string;
   operator: string;

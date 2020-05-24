@@ -3,9 +3,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Plyr from 'plyr';
+
 import SearchFormSet from './v2/search-formset.tsx';
 
-// const AUDIO_PLAYER_SELECTOR = 'lexical-entry-audio';
+const AUDIO_PLAYER_SELECTOR = 'lexical-entry-audio';
+const LANGUAGE_CODE = 'azz';
 
 export const initFunction = () => {
   const init = JSON.parse(document.getElementById('js-init').text);
@@ -20,34 +23,20 @@ export const initFunction = () => {
 
   ReactDOM.render(
     <SearchFormSet
-      formsetName="azz"
+      formsetName={LANGUAGE_CODE}
 
       formsetData={formsetData}
       formsetErrors={formsetErrors}
 
-      controlledVocabFields={languages.azz.controlled_vocab_fields}
-      extraFieldNames={languages.azz.extra_fields}
-      filterableFields={languages.azz.filterable_fields}
-      elasticsearchFields={languages.azz.elasticsearch_fields}
+      controlledVocabFields={languages[LANGUAGE_CODE].controlled_vocab_fields}
+      extraFields={languages[LANGUAGE_CODE].extra_fields}
+      filterableFields={languages[LANGUAGE_CODE].filterable_fields}
+      elasticsearchFields={languages[LANGUAGE_CODE].elasticsearch_fields}
     />,
     document.querySelector('#lexicon-search-form'),
   );
 
-
-  // ReactDOM.render(
-  //   <SearchFormSet
-  //     formsetConfig={formsetConfig}
-  //     formsetData={formsetData}
-  //     formsetDatasetsFormData={formsetDatasetsFormData}
-  //     formsetName="lexicon"
-  //     formsetErrors={formsetErrors}
-  //     formsetGlobalFiltersData={formsetGlobalFiltersData}
-  //     languages={languages}
-  //   />,
-  //   document.querySelector('#lexicon-search-form'),
-  // );
-
-  // Plyr.setup(`.${AUDIO_PLAYER_SELECTOR}`, {
-  //   controls: ['play'],
-  // });
+  Plyr.setup(`.${AUDIO_PLAYER_SELECTOR}`, {
+    controls: ['play'],
+  });
 };

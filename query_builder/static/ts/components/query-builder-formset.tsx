@@ -9,7 +9,12 @@ import Form from 'react-bootstrap/Form';
 import QueryBuilderForm from './query-builder-form';
 
 import AddRemoveForms from './add-remove-forms';
-import { ControlledVocabField, FilterableField, FormDataset } from '../types';
+import {
+  ControlledVocabField,
+  ExtraField,
+  FilterableField,
+  FormDataset,
+} from '../types';
 
 // TODO: figure out how to make this global
 
@@ -20,7 +25,7 @@ interface QueryBuilderFormSetProps {
 
   // from language:
   controlledVocabFields: Array<ControlledVocabField>;
-  extraFieldNames: Array<string>;
+  extraFields: Array<ExtraField>;
   filterableFields: Array<FilterableField>;
   elasticsearchFields: Array<FilterableField>;
 }
@@ -97,6 +102,7 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
           <QueryBuilderForm
             controlledVocabFields={props.controlledVocabFields}
             elasticsearchFields={props.elasticsearchFields}
+            extraFields={props.extraFields}
             index={i}
             initialData={props.formsetData[i] || makeDefaultInitialData(filterableFields)}
             initialErrors={props.formsetErrors[i] || {}}

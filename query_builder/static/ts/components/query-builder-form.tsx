@@ -13,6 +13,7 @@ import Octicon from 'react-component-octicons';
 import FilterSelector from './filter-selector';
 import {
   ControlledVocabField,
+  ExtraField,
   FilterableField,
   FormDataset,
   SelectProps,
@@ -25,6 +26,7 @@ declare const gettext: (messageId: string) => string;
 interface FormProps {
   controlledVocabFields: Array<ControlledVocabField>;
   elasticsearchFields: Array<FilterableField>;
+  extraFields: Array<ExtraField>;
   index: number;
   initialData: FormDataset;
   initialErrors: { [fieldName: string]: Array<string> };
@@ -68,6 +70,9 @@ const FieldSelect = React.forwardRef((
   </Form.Control>
 ));
 
+/**
+ * TODO: merge these two functions.
+ */
 const isControlled = (
   fieldName: string,
   controlledVocabFields: Array<ControlledVocabField>,
@@ -78,6 +83,12 @@ const isTextSearch = (
   elasticsearchFields: Array<FilterableField>,
 ): boolean => _.some(elasticsearchFields, ({ field }) => field === fieldName);
 
+/**
+ * When "filter on" changes, it may be necessary to set the value of
+ * certain other fields. If the "filter on" has become a controlled vocab
+ * field, the "filter" value can only be "is exactly"; if it has
+ * become a text search field, it can only be "matches"; etc.
+ */
 const propagateFilterOnConditions = (
   filterOn: string,
   controlledVocabFields: Array<ControlledVocabField>,
@@ -103,28 +114,51 @@ const HiddenInputs = ({
   operator,
   filterOn,
   filter,
+  extra,
 }: {
   i: number;
   operator: string;
   filterOn: string;
   filter: string;
+  extra: Array<{ [extraFieldName: string]: boolean }>;
 }): JSX.Element => (
   <>
     <input type="hidden" name={`form-${i}-operator`} value={operator} />
     <input type="hidden" name={`form-${i}-filter_on`} value={filterOn} />
     <input type="hidden" name={`form-${i}-filter`} value={filter} />
+
+    {
+      _.map(extra, ({ fieldName, value }) => (
+        <input type="hidden" name={`form-${i}-${fieldName}`} value={value ? 'on' : 'off'} />
+      ))
+    }
   </>
 );
 
-/**
- * TODO: customize the styles to eliminate the borders
- * in the dropdown select inputs
- */
+const labelForExtraField = (
+  extraFields: Array<ExtraField>,
+  key: string,
+): string => _.find(extraFields, ({ field }) => field === key).label || '';
+
 const QueryBuilderForm = (props: FormProps): JSX.Element => {
   const [operator, setOperator] = useState(props.initialData.operator);
   const [filterOn, setFilterOn] = useState(props.initialData.filter_on);
   const [filter, setFilter] = useState(props.initialData.filter);
   const [queryString, setQueryString] = useState(props.initialData.query_string);
+
+  /**
+   * "Extra" fields are boolean-typed values that determine various filters
+   * to be applied to the search, e.g. vowel length neutralization or
+   * flexible orthography.
+   *
+   * TODO: figure out how to get `value` to typecheck better here!
+   */
+  const [extra, setExtra] = useState(
+    _.chain(props.extraFields)
+      .map(({ field }) => ({ [field]: props.initialData[field] || false }))
+      .reduce((acc, next) => ({ ...acc, ...next }), {})
+      .value(),
+  );
   // const [errorState, setErrorState] = useState(props.initialErrors);
 
   const controlledVocabFieldItems = isControlled(filterOn, props.controlledVocabFields)
@@ -174,6 +208,20 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
             textSearch={isTextSearch(filterOn, props.elasticsearchFields)}
             value={filter}
           />
+
+          { _.map(extra, (value, key) => (
+            <Dropdown.Item
+              as={Form.Check}
+              checked={value}
+              label={labelForExtraField(props.extraFields, key)}
+              onChange={(event): void => {
+                setExtra((prevExtra) => ({
+                  ...prevExtra,
+                  [key]: event.target.checked,
+                }));
+              }}
+            />
+          ))}
         </DropdownButton>
 
         {
@@ -224,6 +272,7 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
         filter={filter}
         filterOn={filterOn}
         operator={operator}
+        extra={extra as Array<{ [extraFieldName: string]: boolean }>}
       />
     </Form.Group>
   );
