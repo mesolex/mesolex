@@ -17,7 +17,7 @@ export interface FilterableField {
 export interface ExtraField {
   field: string;
   label: string;
-  constraints: Array<string>;
+  constraints?: Array<string>;
 }
 
 export interface FormDataset {

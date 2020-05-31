@@ -16,7 +16,7 @@ import {
   FormDataset,
 } from '../types';
 
-// TODO: figure out how to make this global
+declare const gettext: (messageId: string) => string;
 
 interface QueryBuilderFormSetProps {
   formsetData: Array<FormDataset>;
@@ -28,19 +28,10 @@ interface QueryBuilderFormSetProps {
   extraFields: Array<ExtraField>;
   filterableFields: Array<FilterableField>;
   elasticsearchFields: Array<FilterableField>;
-}
 
-/**
- * See https://docs.djangoproject.com/en/3.0/ref/forms/api/#django.forms.Form.errors
- */
-interface QueryBuilderErrorIndex {
-  [fieldName: string]: Array<string>;
-}
-
-interface QueryBuilderFormStateItem {
-  id: string;
-  data: FormDataset;
-  errors: QueryBuilderErrorIndex;
+  // from app initialization:
+  formsetGlobalFiltersData: { [field: string]: boolean };
+  globalExtraFields: Array<ExtraField>;
 }
 
 const FormsetInitForms = (props: {count: number}): JSX.Element => (
@@ -79,6 +70,11 @@ const makeDefaultInitialData = (filterableFields: Array<FilterableField>): FormD
   filter: 'begins_with',
 });
 
+const labelForGlobalFilter = (
+  globalFilters: Array<ExtraField>,
+  key: string,
+): string => gettext(_.find(globalFilters, ({ field }) => field === key).label || '');
+
 const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
   const filterableFields = _.concat(props.filterableFields, props.elasticsearchFields);
 
@@ -86,6 +82,13 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
     formKeySeqState,
     setFormKeySeqState,
   ] = useState(() => _.map(props.formsetData, () => uuid4()));
+
+  const [globalFilters, setGlobalFilters] = useState(
+    _.chain(props.globalExtraFields)
+      .map(({ field }) => ({ [field]: props.formsetGlobalFiltersData[field] || false }))
+      .reduce((acc, next) => ({ ...acc, ...next }), {})
+      .value(),
+  );
 
   return (
     <>
@@ -113,6 +116,21 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
             )}
           />
         )) }
+      </Form.Group>
+
+      <Form.Group>
+        { _.map(globalFilters, (value, key) => (
+          <Form.Check
+            checked={value}
+            label={labelForGlobalFilter(props.globalExtraFields, key)}
+            onChange={(event): void => {
+              setGlobalFilters((prevGlobalFilters) => ({
+                ...prevGlobalFilters,
+                [key]: event.target.checked,
+              }));
+            }}
+          />
+        ))}
       </Form.Group>
 
       <AddRemoveForms
