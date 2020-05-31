@@ -105,6 +105,38 @@ const propagateFilterOnConditions = (
 };
 
 /**
+ * Certain extra fields cannot be activated if certain values
+ * are present in the form. For example, "neutralize vowel length"
+ * cannot be active if the filter is in regular expression mode.
+ *
+ * This simple function returns `true` if any of the contraints
+ * apply. Otherwise it returns `false`.
+ */
+const applyConstraints = ({
+  filter,
+  extraFields,
+  extraFieldKey,
+}: {
+  filter: string;
+  extraFields: Array<ExtraField>;
+  extraFieldKey: string;
+}): boolean => {
+  const config = _.find(extraFields, ({ field }) => field === extraFieldKey);
+
+  if (_.isEmpty(config)) {
+    return false;
+  }
+
+  const { constraints } = config;
+
+  if (_.includes(constraints, 'no_regex') && filter === 'regex') {
+    return true;
+  }
+
+  return false;
+};
+
+/**
  * Because the values of the items in the dropdown menus that set
  * the filter parameters are not part of the actual form, we need
  * to make those values available via hidden inputs.
@@ -213,6 +245,11 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
             <Dropdown.Item
               as={Form.Check}
               checked={value}
+              disabled={applyConstraints({
+                filter,
+                extraFields: props.extraFields,
+                extraFieldKey: key,
+              })}
               label={labelForExtraField(props.extraFields, key)}
               onChange={(event): void => {
                 setExtra((prevExtra) => ({
