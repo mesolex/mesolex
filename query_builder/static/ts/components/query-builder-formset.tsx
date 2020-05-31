@@ -34,7 +34,10 @@ interface QueryBuilderFormSetProps {
   globalExtraFields: Array<ExtraField>;
 }
 
-const FormsetInitForms = (props: {count: number}): JSX.Element => (
+const FormsetInitForms = (props: {
+  count: number;
+  initialCount: number;
+}): JSX.Element => (
   <>
     <input
       name="form-TOTAL_FORMS"
@@ -44,7 +47,7 @@ const FormsetInitForms = (props: {count: number}): JSX.Element => (
     />
     <input
       name="form-INITIAL_FORMS"
-      value="0"
+      value={props.initialCount}
       id="id_form-INITIAL_FORMS"
       type="hidden"
     />
@@ -120,7 +123,10 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
         value={props.formsetName}
       />
 
-      <FormsetInitForms count={props.formsetData.length || 1} />
+      <FormsetInitForms
+        count={formKeySeqState.length || 1}
+        initialCount={props.formsetData.length || 1}
+      />
 
       <Form.Group>
         { _.map(formKeySeqState, (key, i) => (
