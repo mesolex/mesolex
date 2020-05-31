@@ -75,6 +75,28 @@ const labelForGlobalFilter = (
   key: string,
 ): string => gettext(_.find(globalFilters, ({ field }) => field === key).label || '');
 
+const GlobalFilters = (props: {
+  globalExtraFields: Array<ExtraField>;
+  globalFilters: { [fieldName: string]: boolean };
+  setGlobalFilters: React.Dispatch<React.SetStateAction<{ [fieldName: string]: boolean}>>;
+}): JSX.Element => (
+  <Form.Group>
+    { _.map(props.globalFilters, (value, key) => (
+      <Form.Check
+        checked={value}
+        label={labelForGlobalFilter(props.globalExtraFields, key)}
+        name={key}
+        onChange={(event): void => {
+          props.setGlobalFilters((prevGlobalFilters) => ({
+            ...prevGlobalFilters,
+            [key]: event.target.checked,
+          }));
+        }}
+      />
+    ))}
+  </Form.Group>
+);
+
 const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
   const filterableFields = _.concat(props.filterableFields, props.elasticsearchFields);
 
@@ -118,20 +140,11 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
         )) }
       </Form.Group>
 
-      <Form.Group>
-        { _.map(globalFilters, (value, key) => (
-          <Form.Check
-            checked={value}
-            label={labelForGlobalFilter(props.globalExtraFields, key)}
-            onChange={(event): void => {
-              setGlobalFilters((prevGlobalFilters) => ({
-                ...prevGlobalFilters,
-                [key]: event.target.checked,
-              }));
-            }}
-          />
-        ))}
-      </Form.Group>
+      <GlobalFilters
+        globalExtraFields={props.globalExtraFields}
+        globalFilters={globalFilters}
+        setGlobalFilters={setGlobalFilters}
+      />
 
       <AddRemoveForms
         onAddFilter={(): void => setFormKeySeqState((prevState) => prevState.concat(uuid4()))}

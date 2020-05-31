@@ -152,7 +152,7 @@ const HiddenInputs = ({
   operator: string;
   filterOn: string;
   filter: string;
-  extra: Array<{ [extraFieldName: string]: boolean }>;
+  extra: { [extraFieldName: string]: boolean };
 }): JSX.Element => (
   <>
     <input type="hidden" name={`form-${i}-operator`} value={operator} />
@@ -160,8 +160,8 @@ const HiddenInputs = ({
     <input type="hidden" name={`form-${i}-filter`} value={filter} />
 
     {
-      _.map(extra, ({ fieldName, value }) => (
-        <input type="hidden" name={`form-${i}-${fieldName}`} value={value ? 'on' : 'off'} />
+      _.map(extra, (value, fieldName) => (
+        <input type="checkbox" checked={value} name={`form-${i}-${fieldName}`} style={{ display: 'none' }} />
       ))
     }
   </>
@@ -309,7 +309,7 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
         filter={filter}
         filterOn={filterOn}
         operator={operator}
-        extra={extra as Array<{ [extraFieldName: string]: boolean }>}
+        extra={extra}
       />
     </Form.Group>
   );
