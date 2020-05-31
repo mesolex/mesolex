@@ -138,7 +138,7 @@ const HiddenInputs = ({
 const labelForExtraField = (
   extraFields: Array<ExtraField>,
   key: string,
-): string => _.find(extraFields, ({ field }) => field === key).label || '';
+): string => gettext(_.find(extraFields, ({ field }) => field === key).label || '');
 
 const QueryBuilderForm = (props: FormProps): JSX.Element => {
   const [operator, setOperator] = useState(props.initialData.operator);
