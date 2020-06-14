@@ -11,20 +11,9 @@ from .forms import formset_for_lg
 from .models import LexicalEntry
 from mesolex.config import DEFAULT_LANGUAGE, LANGUAGES
 from mesolex.utils import (
+    get_default_data_for_lg,
     ForceProxyEncoder,
 )
-
-
-def get_default_data_for_lg(language):
-    if language is None:
-        language = LANGUAGES[DEFAULT_LANGUAGE]
-    
-    return [{
-        'filter': 'begins_with',
-        'filter_on': language['filterable_fields'][0]['field'],
-        'operator': 'and',
-        'query_string': '',
-    }]
 
 
 def _search_query_data(
