@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 
 import Plyr from 'plyr';
 
-import SearchFormSet from './v2/search-formset.tsx';
+import QueryBuilderFormset from 'query-builder/components/query-builder-formset';
 
 const AUDIO_PLAYER_SELECTOR = 'lexical-entry-audio';
 const LANGUAGE_CODE = 'azz';
@@ -13,16 +13,14 @@ const LANGUAGE_CODE = 'azz';
 export const initFunction = () => {
   const init = JSON.parse(document.getElementById('js-init').text);
   const {
-    // formset_config: formsetConfig,
     formset_data: formsetData,
-    // formset_datasets_form_data: formsetDatasetsFormData,
-    formset_global_filters_form_data: formsetGlobalFiltersData,
     formset_errors: formsetErrors,
+    formset_global_filters_form_data: formsetGlobalFiltersData,
   } = init.lexicon;
   const { languages } = init;
 
   ReactDOM.render(
-    <SearchFormSet
+    <QueryBuilderFormset
       formsetName={LANGUAGE_CODE}
 
       formsetData={formsetData}

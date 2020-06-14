@@ -153,7 +153,7 @@ azz:
             - value: Oblig        
               label: Obligatoriamente posesionado
 trq:
-    label: Triqui
+    label: Triqui de San Martín Itunyoso
     code: trq
     filterable_fields:
         - field: lemma
@@ -172,3 +172,270 @@ trq:
             - quotations_trq
             - quotations_es
     controlled_vocab_fields: []
+narratives:
+    label: Narrativas mesoamericanas
+    code: narratives
+    global_filters: []
+    controlled_vocab_fields:
+        - field: village_of_recording
+          items:
+            - value: Atemolon
+              label: Atemolon
+            - value: Ayotzinapa
+              label: Ayotzinapa
+            - value: Chilcuauhta, dependencia de San Miguel Tzinacapan
+              label: Chilcuauhta, dependencia de San Miguel Tzinacapan
+            - value: Cuauhtamazaco
+              label: Cuauhtamazaco
+            - value: Cuauhtapanaloyan
+              label: Cuauhtapanaloyan
+            - value: Huitziquitepec
+              label: Huitziquitepec
+            - value: Ixtahuata
+              label: Ixtahuata
+            - value: Limonco
+              label: Limonco
+            - value: San Miguel Tzinacapan
+              label: San Miguel Tzinacapan
+            - value: Santiago Yancuitlapan
+              label: Santiago Yancuitlapan
+            - value: Tecolapan
+              label: Tecolapan
+            - value: Tecoltepec
+              label: Tecoltepec
+            - value: Tepango, dependencia de Zacatipan
+              label: Tepango, dependencia de Zacatipan
+            - value: Xalcuauhta
+              label: Xalcuauhta
+            - value: Xalpantzingo
+              label: Xalpantzingo
+            - value: Xaltipan
+              label: Xaltipan
+            - value: Yohualichan
+              label: Yohualichan
+            - value: Zacatipan
+              label: Zacatipan
+            - value: Ziltepec
+              label: Ziltepec
+            - value: Zuapilaco
+              label: Zuapilaco
+        - field: subgenre
+          items:
+            - value: "Agriculture"
+              label: "Agriculture"
+            - value: "Botany : general"
+              label: "Botany : general"
+            - value: "Botany : plants"
+              label: "Botany : plants"
+            - value: "Botany : trees"
+              label: "Botany : trees"
+            - value: "Comida"
+              label: "Comida"
+            - value: "Customs: Marriage"
+              label: "Customs: Marriage"
+            - value: "Fiestas :"
+              label: "Fiestas :"
+            - value: "Food"
+              label: "Food"
+            - value: "Guitarra y cuerdas"
+              label: "Guitarra y cuerdas"
+            - value: "Hunting and fishing"
+              label: "Hunting and fishing"
+            - value: "Life history"
+              label: "Life history"
+            - value: "Life history : childhood"
+              label: "Life history : childhood"
+            - value: "Life history : general"
+              label: "Life history : general"
+            - value: "Material culture"
+              label: "Material culture"
+            - value: "Medicina"
+              label: "Medicina"
+            - value: "Medicine"
+              label: "Medicine"
+            - value: "Rituals"
+              label: "Rituals"
+            - value: "Stories : animals"
+              label: "Stories : animals"
+            - value: "Stories : general"
+              label: "Stories : general"
+            - value: "Traditional beliefs"
+              label: "Traditional beliefs"
+            - value: "Traditions"
+              label: "Traditions"
+            - value: "Zoology : arthropods"
+              label: "Zoology : arthropods"
+            - value: "Zoology : birds"
+              label: "Zoology : birds"
+            - value: "Zoology : fish"
+              label: "Zoology : fish"
+            - value: "Zoology : invertebrates"
+              label: "Zoology : invertebrates"
+            - value: "Zoology : reptiles"
+              label: "Zoology : reptiles"
+        - field: consultant_name
+          items:
+            - value: Alarcón Calderón, Herminio
+              label: Alarcón Calderón, Herminio
+            - value: Alcántara Fuentecilla, Josefina
+              label: Alcántara Fuentecilla, Josefina
+            - value: Amith, Jonathan D
+              label: Amith, Jonathan D
+            - value: Amith, Jonathan D.
+              label: Amith, Jonathan D.
+            - value: Bautista Bautista, Lucía
+              label: Bautista Bautista, Lucía
+            - value: Becerra Nazario, Martín
+              label: Becerra Nazario, Martín
+            - value: Cabrera Ortiz, Jeremías
+              label: Cabrera Ortiz, Jeremías
+            - value: Domínguez Alcántara, Amelia
+              label: Domínguez Alcántara, Amelia
+            - value: Domínguez Alcántara, Amelia; Gorostiza Salazar, Eleuterio (two individuals on right track)
+              label: Domínguez Alcántara, Amelia; Gorostiza Salazar, Eleuterio (two individuals on right track)
+            - value: Esteva Lucas, Juan
+              label: Esteva Lucas, Juan
+            - value: Felix Becedas, Lauro
+              label: Felix Becedas, Lauro
+            - value: Felix Diego, José Pedro
+              label: Felix Diego, José Pedro
+            - value: Felix Fuentecilla, María Felicitas
+              label: Felix Fuentecilla, María Felicitas
+            - value: Felix Mirón, Miguel
+              label: Felix Mirón, Miguel
+            - value: Fermín Cabrera, María Ocotlán
+              label: Fermín Cabrera, María Ocotlán
+            - value: Flores Flores, Lucio
+              label: Flores Flores, Lucio
+            - value: Francisco Amador, José
+              label: Francisco Amador, José
+            - value: Francisco Cruz, Miguel
+              label: Francisco Cruz, Miguel
+            - value: Francisco Pablo, Pedro Antonio
+              label: Francisco Pablo, Pedro Antonio
+            - value: Galicia Ramos, Martín and other musicians from Atemolón
+              label: Galicia Ramos, Martín and other musicians from Atemolón
+            - value: García Chichilapan, María Ofelia
+              label: García Chichilapan, María Ofelia
+            - value: García, José Epifanio
+              label: García, José Epifanio
+            - value: García, María Ofelia
+              label: García, María Ofelia
+            - value: González Carrillo, Paula
+              label: González Carrillo, Paula
+            - value: González Nazario, Celina
+              label: González Nazario, Celina
+            - value: González Álvarez, Aldegundo
+              label: González Álvarez, Aldegundo
+            - value: González Álvarez, Aldegundo; Amith, Jonathan D.
+              label: González Álvarez, Aldegundo; Amith, Jonathan D.
+            - value: Gorostiza Gabrioto, José Miguel
+              label: Gorostiza Gabrioto, José Miguel
+            - value: Gorostiza Salazar, Eleuterio
+              label: Gorostiza Salazar, Eleuterio
+            - value: Hernández Rosario, Filiberto
+              label: Hernández Rosario, Filiberto
+            - value: Hernández, Martha
+              label: Hernández, Martha
+            - value: Huerta Ocotlán, María Nicolasa
+              label: Huerta Ocotlán, María Nicolasa
+            - value: Jiménez, María Ocotlán
+              label: Jiménez, María Ocotlán
+            - value: Julián Ventura, Ocotlán
+              label: Julián Ventura, Ocotlán
+            - value: Juárez Arrieta, María Victoria
+              label: Juárez Arrieta, María Victoria
+            - value: Juárez Arteaga, Emiliano
+              label: Juárez Arteaga, Emiliano
+            - value: Juárez Galván, Fidel
+              label: Juárez Galván, Fidel
+            - value: Juárez Hernández, Andrés Martín
+              label: Juárez Hernández, Andrés Martín
+            - value: Juárez Salgado, María
+              label: Juárez Salgado, María
+            - value: Labastida Bonilla, Ocotlán
+              label: Labastida Bonilla, Ocotlán
+            - value: Lucas González, Francisco
+              label: Lucas González, Francisco
+            - value: López Xilot, María Antonia
+              label: López Xilot, María Antonia
+            - value: López, Pedro Antonio
+              label: López, Pedro Antonio
+            - value: Macario Martínez, Rubén
+              label: Macario Martínez, Rubén
+            - value: Martín Juárez, Andrés
+              label: Martín Juárez, Andrés
+            - value: Martín Molina, Francisco
+              label: Martín Molina, Francisco
+            - value: Martín Xala García, Pedro
+              label: Martín Xala García, Pedro
+            - value: Martínez Clemente, Manuel
+              label: Martínez Clemente, Manuel
+            - value: Millán Diego, María Modesta
+              label: Millán Diego, María Modesta
+            - value: Morales Muñoz, Mariano
+              label: Morales Muñoz, Mariano
+            - value: Méndez de Jesus, Lucia
+              label: Méndez de Jesus, Lucia
+            - value: Nicolás Damián, Anastacio
+              label: Nicolás Damián, Anastacio
+            - value: Osollo Segura, Leonor
+              label: Osollo Segura, Leonor
+            - value: Petrona Méndez, Juana María
+              label: Petrona Méndez, Juana María
+            - value: Rivera Pérez, Francisca
+              label: Rivera Pérez, Francisca
+            - value: Salazar Osollo, Hermelindo
+              label: Salazar Osollo, Hermelindo
+            - value: Salazar Osollo, María
+              label: Salazar Osollo, María
+            - value: Salgado Castañeda, Ceferino
+              label: Salgado Castañeda, Ceferino
+            - value: Salgado Isabel, José Antonio
+              label: Salgado Isabel, José Antonio
+            - value: Samites Lucas, Eugenia
+              label: Samites Lucas, Eugenia
+            - value: Santiago García, Martín
+              label: Santiago García, Martín
+            - value: Vázquez Chanico, José Ernesto
+              label: Vázquez Chanico, José Ernesto
+            - value: Vázquez Hernández, Cristina
+              label: Vázquez Hernández, Cristina
+            - value: Vázquez Jiménez, Guadalupe
+              label: Vázquez Jiménez, Guadalupe
+            - value: Vázquez, María Guadalupe
+              label: Vázquez, María Guadalupe
+            - value: Xala García, Pedro Martín
+              label: Xala García, Pedro Martín
+            - value: Zorrilla Damián, Dionila
+              label: Zorrilla Damián, Dionila
+            - value: de Jesús Tecuaco, María
+              label: de Jesús Tecuaco, María
+            - value: de los Santos Castañeda, Pedro
+              label: de los Santos Castañeda, Pedro
+            - value: de los Santos Dionicio, Juan
+              label: de los Santos Dionicio, Juan
+            - value: de los Santos Medina, José Santiago
+              label: de los Santos Medina, José Santiago
+    filterable_fields:
+        - field: title
+          label: Título
+          terms:
+            - title
+        - field: subgenre
+          label: Subgénero
+          terms:
+            - subgenre
+        - field: consultant_name
+          label: Nombre del contribuidor
+          terms:
+            - consultant_name
+        - field: village_of_recording
+          label: Pueblo de grabacion
+          terms:
+            - village_of_recording
+    elasticsearch_fields:
+        - field: description
+          label: Descripción
+          terms:
+            - description
