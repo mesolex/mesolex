@@ -1,5 +1,8 @@
 {
-  "extends": "airbnb",
+  "extends": [
+    "airbnb-typescript",
+    "plugin:@typescript-eslint/recommended",
+  ],
 
   "env": {
     "browser": true
@@ -9,15 +12,32 @@
     "import",
     "react"
   ],
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
   "settings": {
     "import/resolver": "webpack"
   },
   "rules": {
+    "import/extensions": 0,
     "react/destructuring-assignment": 0,
     "react/static-property-placement": 0,
     "import/prefer-default-export": 0,
     "jsx-a11y/interactive-supports-focus": 0,
-    "jsx-a11y/click-events-have-key-events": 0
+    "jsx-a11y/click-events-have-key-events": 0,
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    ]
   }
 }

@@ -3,6 +3,7 @@ import yaml
 
 from django.utils.translation import ugettext_lazy
 
+DEFAULT_LANGUAGE = 'azz'
 LANGUAGES = {}
 
 

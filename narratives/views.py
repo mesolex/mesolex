@@ -8,7 +8,9 @@ from .forms import (
     SoundMetadataQueryComposerFormset,
 )
 from .models import SoundMetadata
+from mesolex.config import LANGUAGES
 from mesolex.utils import (
+    get_default_data_for_lg,
     ForceProxyEncoder,
 )
 
@@ -48,6 +50,11 @@ def narratives_search_view(request, *args, **kwargs):
             'num_entries': metadatas.count() if metadatas else 0,
             'page': page,
             'query': True,
+            'languages': json.dumps(
+                LANGUAGES,
+                ensure_ascii=False,
+                cls=ForceProxyEncoder,
+            ),
             'narratives': {
                 'formset': formset,
                 'formset_data': json.dumps([form.cleaned_data for form in formset.forms]),
@@ -57,9 +64,14 @@ def narratives_search_view(request, *args, **kwargs):
 
     formset = SoundMetadataQueryComposerFormset()
     return render(request, template_name, {
+        'languages': json.dumps(
+            LANGUAGES,
+            ensure_ascii=False,
+            cls=ForceProxyEncoder,
+        ),
         'narratives': {
             'formset': formset,
-            'formset_data': json.dumps(formset.data),
+            'formset_data': json.dumps(get_default_data_for_lg(LANGUAGES['narratives'])),
             'formset_errors': json.dumps(formset.errors),
         }
     })

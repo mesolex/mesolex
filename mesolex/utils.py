@@ -5,7 +5,19 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.encoding import force_text
 from django.utils.functional import Promise
 
-from mesolex.config import LANGUAGES
+from mesolex.config import DEFAULT_LANGUAGE, LANGUAGES
+
+
+def get_default_data_for_lg(language):
+    if language is None:
+        language = LANGUAGES[DEFAULT_LANGUAGE]
+    
+    return [{
+        'filter': 'begins_with',
+        'filter_on': language['filterable_fields'][0]['field'],
+        'operator': 'and',
+        'query_string': '',
+    }]
 
 
 def contains_word_to_regex(filter_name, filter_action, query_string, _form_data):

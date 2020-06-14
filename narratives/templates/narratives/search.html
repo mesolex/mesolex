@@ -133,6 +133,7 @@
 {% block js-init %}
   {{ block.super }}
   "csrfToken": "{{ csrf_token }}",
+  "languages": {{ languages|safe }},
   "narratives": {
     "formset_config": {{ narratives.formset.configuration_data_as_json|safe }},
     "formset_data": {{ narratives.formset_data|safe }},

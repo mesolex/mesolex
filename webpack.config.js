@@ -6,6 +6,15 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.ts(x?)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'ts-loader',
+          },
+        ],
+      },
+      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
@@ -34,19 +43,10 @@ module.exports = {
     ],
   },
   entry: {
-    home: [
-      '@babel/polyfill',
-      path.join(__dirname, 'mesolex/static/js/index.js'),
-    ],
-    search: [
-      '@babel/polyfill',
-      path.join(__dirname, 'lexicon/static/jsx/search/index.jsx'),
-    ],
-    narratives: [
-      '@babel/polyfill',
-      path.join(__dirname, 'narratives/static/jsx/index.jsx'),
-    ],
+    home: path.join(__dirname, 'mesolex/static/js/index.js'),
+    search: path.join(__dirname, 'lexicon/static/jsx/search/index.jsx'),
     lexicon_scss: path.join(__dirname, 'lexicon/static/scss/index.scss'),
+    narratives: path.join(__dirname, 'narratives/static/jsx/index.jsx'),
   },
   output: {
     path: path.join(__dirname, 'mesolex/static/dist'),
@@ -65,11 +65,11 @@ module.exports = {
     },
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.scss'],
+    extensions: ['.js', '.jsx', '.scss', '.ts', '.tsx'],
     alias: {
       lexicon: path.resolve(__dirname, 'lexicon/static/jsx/search/'),
       narratives: path.resolve(__dirname, 'narratives/static/jsx/'),
-      'query-builder': path.resolve(__dirname, 'query_builder/static/jsx/'),
+      'query-builder': path.resolve(__dirname, 'query_builder/static/ts/'),
       'plyr-src': path.resolve(__dirname, 'node_modules/plyr/src/'),
     },
   },
