@@ -33,6 +33,10 @@ INSTALLED_APPS = [
     'wagtail.search',
     'wagtail.admin',
     'wagtail.core',
+    
+    'wagtail.contrib.modeladmin',
+    'wagtail.contrib.settings',
+    'wagtailtrans',
 
     'modelcluster',
     'taggit',
@@ -43,6 +47,7 @@ INSTALLED_APPS = [
     'robots',
 
     'lexicon',
+    'mesolex_site',
     'narratives',
     'query_builder',
     'util',
@@ -51,7 +56,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -59,6 +63,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+
+    'wagtail.core.middleware.SiteMiddleware',
+    'wagtailtrans.middleware.TranslationMiddleware',
 ]
 
 ROOT_URLCONF = 'mesolex.urls'

@@ -1,0 +1,70 @@
+{% load static %}
+{% load util_tags %}
+
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <title>Mesolex</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block meta-description %}Recursos lexicosemánticos para lenguas mesoamericanas{% endblock %}">
+    <meta name="author" content="{% block meta-author %}El Grupo Mesolex{% endblock %}">
+    <meta name="keywords" content="Náhuat,Nahuatl,Mixtec,México,lenguas mesoamericanas,lenguas indigenas,léxico,diccionario{% block meta-keywords %}{% endblock %}">
+
+    <meta itemprop="name" content="{% block meta-name %}Mesolex{% endblock %}" />
+    <meta itemprop="description" content="{% block meta-description-itemprop %}Recursos lexicosemánticos para lenguas mesoamericanas{% endblock %}" />
+
+    <meta property="og:title" content="{% block og_title %}Mesolex{% endblock %}" />
+    <meta property="og:type" content="{% block og_type %}article{% endblock %}" />
+    <meta property="og:description" content="{% block og_description %}Recursos lexicosemánticos para lenguas mesoamericanas{% endblock %}" />
+    <meta property="og:site_name" content="Mesolex" />
+    <meta property="og:image" content="{% block og-image %}{% static 'img/ATC.jpg' as og_image %}{% build_absolute_uri og_image %}{% endblock og-image %}" />
+
+    <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}"/>
+    {% block extra-head %}
+    {% endblock extra-head %}
+</head>
+<body>
+    {% include 'mesolex_site/includes/header.html' %}
+    <main class="container py-3">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {% include 'mesolex_site/includes/footer.html' %}
+
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+    <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+
+    <script id="js-init" type="text/json">
+    {
+      {% block js-init %}
+      {% endblock js-init %}
+    }
+    </script>
+    {% block extra-js %}{% endblock extra-js %}
+
+    <script>
+    /**
+     Ensure that the language selector links redirect to the appropriate translation
+     for the active page.
+     */
+    jQuery(function($) {
+        $('#language-select button').on('click', function(e) {
+            e.preventDefault();
+
+            var $this = $(this);
+            var translationUrl = $this.data('translation-url');
+            var $form = $this.closest('form');
+            var $next = $form.find('input[name="next"]');
+
+            $next.val(translationUrl);
+            $form.submit();
+        });
+    });
+    </script>
+</body>
+</html>
