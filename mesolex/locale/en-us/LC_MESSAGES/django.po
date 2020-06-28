@@ -146,8 +146,6 @@ msgid "español"
 msgstr "Spanish"
 
 #: mesolex/settings/base.py:157
-#, fuzzy
-#| msgid "inglés (EE.UU.)"
 msgid "inglés"
 msgstr "English"
 

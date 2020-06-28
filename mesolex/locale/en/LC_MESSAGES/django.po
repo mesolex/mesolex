@@ -146,8 +146,6 @@ msgid "español"
 msgstr "Spanish"
 
 #: mesolex/settings/base.py:157
-#, fuzzy
-#| msgid "inglés"
 msgid "inglés"
 msgstr "English"
 
@@ -488,9 +486,6 @@ msgstr "Add filter"
 
 #~ msgid "Incluye"
 #~ msgstr "Contains"
-
-#~ msgid "inglés (EE.UU.)"
-#~ msgstr "English"
 
 #~ msgid "Idioma"
 #~ msgstr "Language"

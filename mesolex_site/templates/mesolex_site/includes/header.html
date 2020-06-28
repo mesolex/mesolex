@@ -53,7 +53,9 @@
                                 value="{{ language.code }}"
                                 data-translation-url="{{ page.url }}"
                             >
-                                {{ language }} ({{ language.code }})
+                                {% with lg_name=language|stringformat:"s" %}
+                                    {{ lg_name }} ({{ language.code }})
+                                {% endwith %}
                             </button>
                         {% endfor %}
                     </form>
