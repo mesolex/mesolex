@@ -47,6 +47,7 @@ module.exports = {
     search: path.join(__dirname, 'lexicon/static/jsx/search/index.jsx'),
     lexicon_scss: path.join(__dirname, 'lexicon/static/scss/index.scss'),
     narratives: path.join(__dirname, 'narratives/static/jsx/index.jsx'),
+    dataSearch: path.join(__dirname, 'mesolex_site/static/mesolex_site/ts/search.tsx'),
   },
   output: {
     path: path.join(__dirname, 'mesolex/static/dist'),

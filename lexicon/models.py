@@ -1,6 +1,13 @@
+from django import forms
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext as _
+
+from wagtail.admin.edit_handlers import FieldPanel
+from wagtail.core.models import Page
+from wagtailtrans.models import TranslatablePage
+
+from mesolex.config import DEFAULT_LANGUAGE, LANGUAGES
 
 
 class ValidEntryManager(models.Manager):
@@ -266,3 +273,4 @@ class Quote(models.Model):
     text = models.TextField(
         blank=True,
     )
+
