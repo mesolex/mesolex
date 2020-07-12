@@ -53,7 +53,7 @@
      for the active page.
      */
     jQuery(function($) {
-        $('#language-select button').on('click', function(e) {
+        $('#language-select button').one('click', function(e) {
             e.preventDefault();
 
             var $this = $(this);
@@ -62,7 +62,7 @@
             var $next = $form.find('input[name="next"]');
 
             $next.val(translationUrl);
-            $form.submit();
+            $this.click();
         });
     });
     </script>
