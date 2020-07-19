@@ -1,0 +1,14 @@
+{% extends 'mesolex_site/base.html' %}
+
+{% load i18n %}
+{% load menu_tags %}
+{% load static %}
+{% load wagtailcore_tags %}
+
+{% block extra-head %}
+<link rel="stylesheet" href="{% static 'dist/lexicon_scss.bundle.css' %}" />
+{% endblock extra-head %}
+
+{% block content %}
+{{ page.body|richtext }}
+{% endblock content %}

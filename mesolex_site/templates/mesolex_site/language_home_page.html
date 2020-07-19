@@ -1,0 +1,80 @@
+{% extends 'mesolex_site/base.html' %}
+
+{% load i18n %}
+{% load static %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+{% block extra-head %}
+<link rel="stylesheet" href="{% static 'dist/lexicon_scss.bundle.css' %}" />
+{% endblock extra-head %}
+
+{% block header %}
+  {% include 'mesolex_site/includes/language_home_page_header.html' %}
+{% endblock header%}
+
+{% block content %}
+{% image page.header_img max-1024x768 as header_img %}
+<div class="jumbotron lexicon-jumbotron mt-2 mb-2" style="background-image: url({{ header_img.url }})">
+  <div class="lexicon-jumbotron__inner">
+    <h1 class="display-4 lexicon-jumbotron__headline">
+      {{ page.headline }}
+    </h1>
+    <p class="lead">
+      {{ page.sub_headline }}
+    </p>
+    
+    {% if page.lexicons or page.corpora or page.grammar or page.search or page.about %}
+      <nav class="navbar navbar-light navbar-expand-sm">
+        <div class="collapse navbar-collapse" id="languageNavLinks">
+          <ul class="navbar-nav mr-auto w-100">
+            {% if page.lexicons %}
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  Lexicons
+                </a>
+              </li>
+            {% endif %}
+            {% if page.corpora %}
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  Corpora
+                </a>
+              </li>
+            {% endif %}
+            {% if page.grammar %}
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  Grammar
+                </a>
+              </li>
+            {% endif %}
+            {% if page.search %}
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  Search
+                </a>
+              </li>
+            {% endif %}
+            {% if page.about %}
+              <div class="dropdown-divider"></div>
+              <li class="nav-item ml-auto">
+                <a href="#" class="nav-link">
+                  About
+                </a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+    {% endif %}
+  </div>
+</div>
+
+<p class="small mt-2 text-right">
+  {% trans 'Crédito: Ilustración por Inocencio Jiménez Chino' %}
+</p>
+
+{{ page.body|richtext }}
+
+{% endblock content %}

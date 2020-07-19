@@ -8,7 +8,7 @@ from django.db.models.functions import Lower
 from django.db import models
 # from django.utils.translation import gettext as _
 
-from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, PageChooserPanel
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -24,22 +24,28 @@ from mesolex.utils import (
 )
 
 
-class HomePage(TranslatablePage):
-    # hero image fields
+class AbstractHomePage(TranslatablePage):
+    """
+    A base class for 'homepage-like' pages, which include the site
+    homepage and the landing page for each individual language.
+    """
+    class Meta:
+        abstract = True
+    
     headline = models.CharField(max_length=255)
     sub_headline = models.CharField(max_length=255)
     header_img = models.ForeignKey(
         'wagtailimages.Image',
-        null=True,
         blank=True,
+        null=True,
         on_delete=models.SET_NULL,
         related_name='+'
     )
 
-    body = RichTextField()
+    body = RichTextField(blank=True, null=True)
 
     # panels
-    content_panels = Page.content_panels + [
+    content_panels = TranslatablePage.content_panels + [
         MultiFieldPanel([
             # TODO: translate
             FieldPanel('headline'),
@@ -47,6 +53,110 @@ class HomePage(TranslatablePage):
             ImageChooserPanel('header_img', 'Header image'),
         ]),
 
+        FieldPanel('body', classname='full'),
+    ]
+
+
+
+class HomePage(AbstractHomePage):
+    """
+    The overall homepage for the site, which exists mainly
+    to link out to individual language resource sections and
+    host the main menu.
+    """
+    pass
+
+
+class LanguageHomePage(AbstractHomePage):
+    """
+    The landing page for each individual language site, which
+    links to the language's resources.
+    """
+    language_code = models.CharField(max_length=255)
+
+    settings_panels = TranslatablePage.settings_panels + [
+        FieldPanel('language_code'),
+    ]
+
+    # Dedicated links to the core language resource types.
+    lexicons = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    corpora = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    grammar = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    search = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+    about = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    content_panels = TranslatablePage.content_panels + [
+        MultiFieldPanel([
+            # TODO: translate
+            FieldPanel('headline'),
+            FieldPanel('sub_headline', 'Sub-Headline'),
+            ImageChooserPanel('header_img', 'Header image'),
+        ]),
+
+        MultiFieldPanel([
+            PageChooserPanel('lexicons', 'mesolex_site.LanguageResourcePage'),
+            PageChooserPanel('corpora', 'mesolex_site.LanguageResourcePage'),
+            PageChooserPanel('grammar', 'mesolex_site.LanguageResourcePage'),
+            PageChooserPanel('search', 'mesolex_site.SearchPage'),
+            PageChooserPanel('about', 'mesolex_site.LanguageResourcePage'),
+        ]),
+
+        FieldPanel('body', classname='full'),
+    ]
+
+    subpage_types = [
+        'LanguageResourcePage',
+        'SearchPage',
+    ]
+
+    parent_page_types = [
+        HomePage,
+    ]
+
+
+class LanguageResourcePage(TranslatablePage):
+    """
+    A basic page with a freeform body field for adding
+    language resources.
+    """
+    body = RichTextField(blank=True, null=True)
+
+    parent_page_types = [
+        LanguageHomePage,
+        'LanguageResourcePage',
+    ]
+
+    content_panels = TranslatablePage.content_panels + [
         FieldPanel('body', classname='full'),
     ]
 

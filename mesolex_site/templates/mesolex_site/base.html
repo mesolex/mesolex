@@ -26,7 +26,9 @@
     {% endblock extra-head %}
 </head>
 <body>
-    {% include 'mesolex_site/includes/header.html' %}
+    {% block header %}
+        {% include 'mesolex_site/includes/header.html' %}
+    {% endblock header%}
     <main class="container py-3">
         {% block content %}
         {% endblock %}
