@@ -1,0 +1,69 @@
+{% load i18n %}
+{% load wagtailtrans_tags %}
+
+<header class="bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top container">
+        <a class="navbar-brand" href="/">Mesolex</a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbar-collapse"
+            aria-controls="navbar-collapse"
+            aria-expanded="false"
+            aria-label="{% trans 'Activar la navegación' %}"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                {% block extra-nav %}{% endblock extra-nav %}
+                <li class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        id="language-dropdown"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                    >
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {{ LANGUAGE_CODE }}
+                    </a>
+                    <form
+                        method="post"
+                        action="{% url 'set_language' %}"
+                        class="dropdown-menu"
+                        aria-labelledby="language-dropdown"
+                        id="language-select"
+                    >
+                        {% csrf_token %}
+                        {% get_translations page homepage_fallback=True include_self=True as translations %}
+                        {% get_available_languages as LANGUAGES %}
+
+                        <input name="next" type="hidden" value="">
+
+                        {% for language, page in translations.items %}
+                            <button
+                                type="submit"
+                                class="dropdown-item{% if language.code == LANGUAGE_CODE %} active{% endif %}"
+                                name="language"
+                                value="{{ language.code }}"
+                                data-translation-url="{{ page.url }}"
+                            >
+                                {% with lg_name=language|stringformat:"s" %}
+                                    {{ lg_name }} ({{ language.code }})
+                                {% endwith %}
+                            </button>
+                        {% endfor %}
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    {% block extra_header %}{% endblock %}
+</header>

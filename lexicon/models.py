@@ -266,3 +266,4 @@ class Quote(models.Model):
     text = models.TextField(
         blank=True,
     )
+

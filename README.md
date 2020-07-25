@@ -17,7 +17,7 @@ simple provisioning of and deployment to new instances.
 Before installing, make sure you have the following prerequisites installed:
 
 - Python 3.7
-- Node 10.x
+- Node 12.x
 - Postgres >= 11
 - Elasticsearch 6.x
 
@@ -68,10 +68,11 @@ To get started, create the database and run the initial migrations:
 (mesolex)$ python manage.py migrate
 ```
 
-You will now be able to load initial data via a management command:
+You will now be able to load initial data via a management command, for example
+(using the Nahuatl importer):
 
 ```
-(mesolex)$ python manage.py load_data the_name_of_your_xml_file.xml
+(mesolex)$ python manage.py import_data azz the_name_of_your_xml_file.xml
 ```
 
 ### Run the server
