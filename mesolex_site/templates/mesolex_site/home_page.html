@@ -9,58 +9,72 @@
 <link rel="stylesheet" href="{% static 'dist/lexicon_scss.bundle.css' %}" />
 {% endblock extra-head %}
 
+{% block header %}
+  {% include 'mesolex_site/includes/home_page_header.html' %}
+{% endblock header%}
+
 {% block content %}
-
 {% if page.language_links.exists %}
-  <div
-    id="language-links-carousel"
-    class="carousel slide"
-    data-ride="carousel"
-    data-interval="7500"
-  >
-    <ol class="carousel-indicators">
-      {% for language_link in page.language_links.all %}
-        <li
-          data-target="#language-links-carousel"
-          data-slide-to="{{ forloop.counter0 }}"
-          {% if forloop.first %}class="active"{% endif %}
-        ></li>
-      {% endfor %}
-    </ol>
+  <div>
+    {% with language_links=page.language_links.all|slice:":5" %}
+      <div
+        id="language-links-carousel"
+        class="carousel slide"
+        data-ride="carousel"
+        data-interval="7500"
+      >
+        {% if language_links|length > 1 %}
+          <ol class="carousel-indicators">
+            {% for language_link in language_links %}
+              <li
+                data-target="#language-links-carousel"
+                data-slide-to="{{ forloop.counter0 }}"
+                class="bg-dark{% if forloop.first %} active{% endif %}"
+              ></li>
+            {% endfor %}
+          </ol>
+        {% endif %}
 
-    <div class="carousel-inner">
-      {% for language_link in page.language_links.all %}
-        <div class="carousel-item{% if forloop.first %} active{% endif %}">
-          {% if language_link.header_img %}
-            {% image language_link.header_img max-1024x768 as header_img %}
-          {% else %}
-            {% image language_link.language_page.header_img max-1024x768 as header_img %}
-          {% endif %}
-          
-          <div class="jumbotron lexicon-jumbotron mt-2 mb-2" style="background-image: url({{ header_img.url }})">
-            <div class="lexicon-jumbotron__inner">
-              <h1 class="display-4 lexicon-jumbotron__headline">
-                <a class="carousel-link stretched-link text-reset" href="{{ language_link.language_page.url }}">
-                  {% firstof language_link.headline language_link.language_page.headline%}
-                </a>
-              </h1>
-              <p class="lead">
-                {% firstof language_link.sub_headline language_link.language_page.sub_headline%}
-              </p>
+        <div class="carousel-inner">
+          {% for language_link in language_links %}
+            <div class="carousel-item{% if forloop.first %} active{% endif %}">
+              {% if language_link.header_img %}
+                {% image language_link.header_img max-1024x768 as header_img %}
+              {% else %}
+                {% image language_link.language_page.header_img max-1024x768 as header_img %}
+              {% endif %}
+              
+              <div class="jumbotron lexicon-jumbotron mt-2 mb-2" style="background-image: url({{ header_img.url }})">
+                <div class="lexicon-jumbotron__inner">
+                  <h1 class="display-4 lexicon-jumbotron__headline">
+                    <a class="carousel-link stretched-link text-reset" href="{{ language_link.language_page.url }}">
+                      {% firstof language_link.headline language_link.language_page.headline%}
+                    </a>
+                  </h1>
+                  <p class="lead">
+                    {% firstof language_link.sub_headline language_link.language_page.sub_headline%}
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
+          {% endfor %}
         </div>
-      {% endfor %}
-    </div>
+      </div>
+    {% endwith %}
 
-    <a class="carousel-control-prev" href="#language-links-carousel" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#language-links-carousel" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
+    <nav class="navbar navbar-light navbar-expand-sm">
+      <div class="collapse navbar-collapse" id="languageNavLinks">
+        <ul class="navbar-nav mr-auto w-100">
+          {% for language_link in page.language_links.all %}
+            <li class="nav-item">
+              <a href="{{ language_link.language_page.url }}" class="nav-link">
+                {% firstof language_link.short_name language_link.headline language_link.language_page.headline %}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </nav>
   </div>
 {% else %}
   {% image page.header_img max-1024x768 as header_img %}

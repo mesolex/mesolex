@@ -1,0 +1,28 @@
+{% extends "mesolex_site/includes/header.html" %}
+
+{% load i18n %}
+
+{% block extra-nav %}
+  {% if page.language_links.exists %}
+    <li class="nav-item dropdown d-block d-sm-none">
+      <a
+        class="nav-link dropdown-toggle"
+        href="#"
+        role="button"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        {% trans "Lenguas" %}
+      </a>
+
+      <div class="dropdown-menu">
+        {% for language_link in page.language_links.all %}
+          <a href="{{ language_link.language_page.url }}" class="dropdown-item">
+            {% firstof language_link.short_name language_link.headline language_link.language_page.headline %}
+          </a>
+        {% endfor %}
+      </div>
+    </li>
+  {% endif %}
+{% endblock %}

@@ -30,28 +30,28 @@
           <ul class="navbar-nav mr-auto w-100">
             {% if page.lexicons %}
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ page.lexicons.url }}" class="nav-link">
                   Lexicons
                 </a>
               </li>
             {% endif %}
             {% if page.corpora %}
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ page.corpora.url }}" class="nav-link">
                   Corpora
                 </a>
               </li>
             {% endif %}
             {% if page.grammar %}
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ page.grammar.url }}" class="nav-link">
                   Grammar
                 </a>
               </li>
             {% endif %}
             {% if page.search %}
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ page.search.url }}" class="nav-link">
                   Search
                 </a>
               </li>
@@ -59,7 +59,7 @@
             {% if page.about %}
               <div class="dropdown-divider"></div>
               <li class="nav-item ml-auto">
-                <a href="#" class="nav-link">
+                <a href="{{ page.about.url }}" class="nav-link">
                   About
                 </a>
               </li>

@@ -17,27 +17,27 @@
     </a>
     <div class="dropdown-menu">
       {% if page.lexicons %}
-        <a href="#" class="dropdown-item">
+        <a href="{{ page.lexicons.url }}" class="dropdown-item">
           Lexicons
         </a>
       {% endif %}
       {% if page.corpora %}
-        <a href="#" class="dropdown-item">
+        <a href="{{ page.corpora.url }}" class="dropdown-item">
           Corpora
         </a>
       {% endif %}
       {% if page.grammar %}
-        <a href="#" class="dropdown-item">
+        <a href="{{ page.grammar.url }}" class="dropdown-item">
           Grammar
         </a>
       {% endif %}
       {% if page.search %}
-        <a href="#" class="dropdown-item">
+        <a href="{{ page.search.url }}" class="dropdown-item">
           Search
         </a>
       {% endif %}
       {% if page.about %}
-        <a href="#" class="dropdown-item">
+        <a href="{{ page.about.url }}" class="dropdown-item">
           About
         </a>
       {% endif %}
