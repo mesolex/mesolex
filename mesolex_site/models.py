@@ -8,10 +8,13 @@ from django.db.models.functions import Lower
 from django.db import models
 # from django.utils.translation import gettext as _
 
-from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, PageChooserPanel
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
 from wagtail.core.fields import RichTextField
-from wagtail.core.models import Page
+from wagtail.core.models import Orderable, Page
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.snippets.models import register_snippet
+
+from modelcluster.fields import ParentalKey
 
 from wagtailtrans.models import TranslatablePage
 
@@ -64,7 +67,9 @@ class HomePage(AbstractHomePage):
     to link out to individual language resource sections and
     host the main menu.
     """
-    pass
+    content_panels = AbstractHomePage.content_panels + [
+        InlinePanel('language_links', label='Language links'),
+    ]
 
 
 class LanguageHomePage(AbstractHomePage):
@@ -276,3 +281,40 @@ class SearchPage(TranslatablePage):
         }
 
         return context
+
+
+class HomePageLanguageLink(Orderable):
+    home_page = ParentalKey(
+        'mesolex_site.HomePage',
+        blank=False,
+        on_delete=models.CASCADE,
+        related_name='language_links',
+    )
+    language_page = models.ForeignKey(
+        'mesolex_site.LanguageHomePage',
+        blank=False,
+        on_delete=models.CASCADE,
+        related_name='+',
+    )
+
+    short_name = models.CharField(max_length=128, blank=True)
+    headline = models.CharField(max_length=255, blank=True)
+    sub_headline = models.CharField(max_length=255, blank=True)
+    header_img = models.ForeignKey(
+        'wagtailimages.Image',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    panels = [
+        PageChooserPanel('language_page', 'mesolex_site.LanguageHomePage'),
+        MultiFieldPanel([
+            # TODO: translate
+            FieldPanel('short_name'),
+            FieldPanel('headline'),
+            FieldPanel('sub_headline', 'Sub-Headline'),
+            ImageChooserPanel('header_img', 'Header image'),
+        ]),
+    ]

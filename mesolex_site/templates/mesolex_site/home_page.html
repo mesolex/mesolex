@@ -10,17 +10,71 @@
 {% endblock extra-head %}
 
 {% block content %}
-{% image page.header_img max-1024x768 as header_img %}
-<div class="jumbotron lexicon-jumbotron mt-2 mb-2" style="background-image: url({{ header_img.url }})">
-  <div class="lexicon-jumbotron__inner">
-    <h1 class="display-4 lexicon-jumbotron__headline">
-      {{ page.headline }}
-    </h1>
-    <p class="lead">
-      {{ page.sub_headline }}
-    </p>
+
+{% if page.language_links.exists %}
+  <div
+    id="language-links-carousel"
+    class="carousel slide"
+    data-ride="carousel"
+    data-interval="7500"
+  >
+    <ol class="carousel-indicators">
+      {% for language_link in page.language_links.all %}
+        <li
+          data-target="#language-links-carousel"
+          data-slide-to="{{ forloop.counter0 }}"
+          {% if forloop.first %}class="active"{% endif %}
+        ></li>
+      {% endfor %}
+    </ol>
+
+    <div class="carousel-inner">
+      {% for language_link in page.language_links.all %}
+        <div class="carousel-item{% if forloop.first %} active{% endif %}">
+          {% if language_link.header_img %}
+            {% image language_link.header_img max-1024x768 as header_img %}
+          {% else %}
+            {% image language_link.language_page.header_img max-1024x768 as header_img %}
+          {% endif %}
+          
+          <div class="jumbotron lexicon-jumbotron mt-2 mb-2" style="background-image: url({{ header_img.url }})">
+            <div class="lexicon-jumbotron__inner">
+              <h1 class="display-4 lexicon-jumbotron__headline">
+                <a class="carousel-link stretched-link text-reset" href="{{ language_link.language_page.url }}">
+                  {% firstof language_link.headline language_link.language_page.headline%}
+                </a>
+              </h1>
+              <p class="lead">
+                {% firstof language_link.sub_headline language_link.language_page.sub_headline%}
+              </p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <a class="carousel-control-prev" href="#language-links-carousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#language-links-carousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
   </div>
-</div>
+{% else %}
+  {% image page.header_img max-1024x768 as header_img %}
+  <div class="jumbotron lexicon-jumbotron mt-2 mb-2" style="background-image: url({{ header_img.url }})">
+    <div class="lexicon-jumbotron__inner">
+      <h1 class="display-4 lexicon-jumbotron__headline">
+        {{ page.headline }}
+      </h1>
+      <p class="lead">
+        {{ page.sub_headline }}
+      </p>
+    </div>
+  </div>
+{% endif%}
 
 <p class="small mt-2 text-right">
   {% trans 'Crédito: Ilustración por Inocencio Jiménez Chino' %}
