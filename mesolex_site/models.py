@@ -6,7 +6,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.db.models.functions import Lower
 from django.db import models
-# from django.utils.translation import gettext as _
 
 from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
 from wagtail.core.fields import RichTextField
