@@ -4,6 +4,7 @@ from django import template
 from django.conf import settings
 from django.urls import reverse
 from django.utils.http import urlquote
+from django.utils.safestring import mark_safe
 
 from mesolex.config import LANGUAGES
 
@@ -66,11 +67,11 @@ def _get_human_readable(language, category, item):
 
 
 @register.filter()
-def link_vnawa(text):
+def link_vnawa(text, base_url):
     return re.sub(
         r'<vnawa>(.+?)</vnawa>',
         r'<a href="%s%s" class="vnawa">\1</a>' % (
-            reverse('lexicon_search'),
+            base_url,
             _get_querystring(r'\1'),
         ),
         text,
@@ -78,36 +79,36 @@ def link_vnawa(text):
 
 
 @register.filter()
-def link_raiz(raiz):
+def link_raiz(raiz, base_url):
     return '<a href="%s%s" class="raiz">%s</a>' % (
-        reverse('lexicon_search'),
+        base_url,
         _get_querystring(urlquote(raiz), filter_on='root'),
         raiz,
     )
 
 
 @register.filter()
-def link_category(category):
+def link_category(category, base_url):
     return '<a href="%s%s" class="category">%s</a>' % (
-        reverse('lexicon_search'),
+        base_url,
         _get_querystring(urlquote(category), filter_on='category'),
         category,
     )
 
 
-@register.filter()
-def link_part_of_speech(pos, language='azz'):
-    return '<a href="%s%s" class="pos">%s</a>' % (
-        reverse('lexicon_search'),
+@register.simple_tag
+def link_part_of_speech(pos, base_url, language='azz'):
+    return mark_safe('<a href="%s%s" class="pos">%s</a>' % (
+        base_url,
         _get_querystring(urlquote(pos), filter_on='part_of_speech'),
         _get_human_readable(language, 'part_of_speech', pos),
-    )
+    ))
 
 
-@register.filter()
-def link_inflectional_type(it, language='azz'):
-    return '<a href="%s%s" class="it">%s</a>' % (
-        reverse('lexicon_search'),
+@register.simple_tag
+def link_inflectional_type(it, base_url, language='azz'):
+    return mark_safe('<a href="%s%s" class="it">%s</a>' % (
+        base_url,
         _get_querystring(urlquote(it), filter_on='inflectional_type'),
         _get_human_readable(language, 'inflectional_type', it),
-    )
+    ))

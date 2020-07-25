@@ -39,12 +39,12 @@
 
                     {% if lexical_entry.grammargroup_set.exists %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Categoría gramatical' %}:</i> {% for grammar_group in lexical_entry.grammargroup_set.all %}{{ grammar_group.part_of_speech|link_part_of_speech:language|safe }}{% if grammar_group.inflectional_type %}; <i>{% trans 'Inflexión' %}:</i> {{ grammar_group.inflectional_type|link_inflectional_type:language|safe }}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Categoría gramatical' %}:</i> {% for grammar_group in lexical_entry.grammargroup_set.all %}{% link_part_of_speech grammar_group.part_of_speech request.path language %}{% if grammar_group.inflectional_type %}; <i>{% trans 'Inflexión' %}:</i> {% link_inflectional_type grammar_group.inflectional_type request.path language %}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
                     {% if lexical_entry.category_set.exists %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Campo semántico' %}:</i> {% for category in lexical_entry.category_set.all %}{{ category.value|link_category|safe }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Campo semántico' %}:</i> {% for category in lexical_entry.category_set.all %}{{ category.value|link_category:request.path|safe }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
                     {# {% if data.raiz or data.raiz2 %} #}
@@ -55,7 +55,7 @@
                         {% for root in lexical_entry.simple_roots %}
                         {% if forloop.first %}
                         <i>{% blocktrans count counter=lexical_entry.simple_roots|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>{% endif %}
-                        {{ root.value|link_raiz|safe }}{% if not forloop.last %}; {% endif %}
+                        {{ root.value|link_raiz:request.path|safe }}{% if not forloop.last %}; {% endif %}
                         {% endfor %}
 
                         {% for root in lexical_entry.compound_roots %}
@@ -65,7 +65,7 @@
 
                         {% for non_native_etymology in lexical_entry.nonnativeetymology_set.all %}
                         {% if forloop.first %}&nbsp;|&nbsp;
-                        <i>{% blocktrans count counter=lexical_entry.nonnativeetymology_set.all|length %}Palabra con elementos no de náhuat{% plural %}Palabras con elementos no de náhuat{% endblocktrans %}:</i> {% endif %}{{ non_native_etymology.value|link_vnawa|safe }}{% if not forloop.last %}; {% endif %}
+                        <i>{% blocktrans count counter=lexical_entry.nonnativeetymology_set.all|length %}Palabra con elementos no de náhuat{% plural %}Palabras con elementos no de náhuat{% endblocktrans %}:</i> {% endif %}{{ non_native_etymology.value|link_vnawa:request.path|safe }}{% if not forloop.last %}; {% endif %}
                         {% endfor %}
                     {% endif %}
                 </div>
@@ -74,7 +74,7 @@
                         {% for sense in lexical_entry.senses %}
                         <li>
                             <div class="card-text">
-                                <p>{{ sense.definition|link_vnawa|safe }}{% if sense.ostentive %} ({{ sense.ostentive|link_vnawa|safe }}){% endif %}</p>
+                                <p>{{ sense.definition|link_vnawa:request.path|safe }}{% if sense.ostentive %} ({{ sense.ostentive|link_vnawa:request.path|safe }}){% endif %}</p>
                             </div>
                             {% for example in sense.examples %}
                                 {% for quote in example.original_quotes %}
@@ -82,7 +82,7 @@
                                         <p>
                                             {{ quote.text|safe }}
                                             {% if quote.translations.exists %}
-                                                <i>({{ quote.translations.first.text|link_vnawa|safe }})</i>
+                                                <i>({{ quote.translations.first.text|link_vnawa:request.path|safe }})</i>
                                             {% endif %}
                                         </p>
                                     </blockquote>
@@ -97,19 +97,19 @@
                 <div class="card-footer">
                     {% for note in lexical_entry.notes_semantics %}
                     <p class="notes nsem">
-                        <strong>{% trans 'Notas semánticas' %}:</strong> {{ note.value|link_vnawa|safe }}
+                        <strong>{% trans 'Notas semánticas' %}:</strong> {{ note.value|link_vnawa:request.path|safe }}
                     </p>
                     {% endfor %}
 
                     {% for note in lexical_entry.notes_morphology %}
                     <p class="notes nmorf">
-                        <strong>{% trans 'Notas morfológicas' %}:</strong> {{ note.value|link_vnawa|safe }}
+                        <strong>{% trans 'Notas morfológicas' %}:</strong> {{ note.value|link_vnawa:request.path|safe }}
                     </p>
                     {% endfor %}
 
                     {% for note in lexical_entry.notes_general %}
                     <p class="notes ngram">
-                        <strong>{% trans 'Notas gramaticales' %}:</strong> {{ note.value|link_vnawa|safe }}
+                        <strong>{% trans 'Notas gramaticales' %}:</strong> {{ note.value|link_vnawa:request.path|safe }}
                     </p>
                     {% endfor %}
                 </div>

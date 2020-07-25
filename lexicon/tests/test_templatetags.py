@@ -28,7 +28,7 @@ class LinkVnawaTestCase(TestCase):
 
         self.assertEqual(
             expected_text,
-            lexeme_tags.link_vnawa(test_text),
+            lexeme_tags.link_vnawa(test_text, '/search/'),
         )
 
     def test_ignores_unclosed_tags(self):
@@ -42,12 +42,12 @@ class LinkVnawaTestCase(TestCase):
 
         self.assertEqual(
             test_text,
-            lexeme_tags.link_vnawa(test_text),
+            lexeme_tags.link_vnawa(test_text, '/search/'),
         )
 
         self.assertEqual(
             test_text_2,
-            lexeme_tags.link_vnawa(test_text_2),
+            lexeme_tags.link_vnawa(test_text_2, '/search/'),
         )
 
 
@@ -64,7 +64,7 @@ class LinkPartOfSpeechTestCase(TestCase):
         )
         self.assertEqual(
             expected,
-            lexeme_tags.link_part_of_speech(input, language='foo'),
+            lexeme_tags.link_part_of_speech(input, '/search/', language='foo'),
         )
 
     def test_returns_input_where_not_present(self):
@@ -78,7 +78,7 @@ class LinkPartOfSpeechTestCase(TestCase):
         )
         self.assertEqual(
             expected,
-            lexeme_tags.link_part_of_speech(input, language='foo'),
+            lexeme_tags.link_part_of_speech(input, '/search/', language='foo'),
         )
 
 
@@ -95,7 +95,7 @@ class LinkInflectionalTypeTestCase(TestCase):
         )
         self.assertEqual(
             expected,
-            lexeme_tags.link_inflectional_type(input, language='foo'),
+            lexeme_tags.link_inflectional_type(input, '/search/', language='foo'),
         )
 
     def test_returns_input_where_not_present(self):
@@ -109,5 +109,5 @@ class LinkInflectionalTypeTestCase(TestCase):
         )
         self.assertEqual(
             expected,
-            lexeme_tags.link_inflectional_type(input, language='foo'),
+            lexeme_tags.link_inflectional_type(input, '/search/', language='foo'),
         )
