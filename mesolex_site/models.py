@@ -231,8 +231,7 @@ class SearchPage(TranslatablePage):
         lexical_entries = (
             LexicalEntry.valid_entries
             .filter(query)
-            .annotate(lower_lemma=Lower('lemma'))
-            .order_by('lower_lemma')
+            .order_by('lemma')
         )
         paginator = Paginator(lexical_entries, 25)
         result_page = request.GET.get('page', 1)

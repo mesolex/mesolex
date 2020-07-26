@@ -7,16 +7,6 @@ class ValidEntryManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().exclude(
             sense__isnull=True
-        ).prefetch_related(
-            'variant_set',
-            'media_set',
-            'gloss_set',
-            'grammargroup_set',
-            'category_set',
-            'root_set',
-            'nonnativeetymology_set',
-            'note_set',
-            'sense_set__example_set__quote_set__translations',
         )
 
 
