@@ -1,8 +1,8 @@
-from django.test import TestCase
 from unittest.mock import patch
 
-from lexicon.templatetags import lexeme_tags
+from django.test import TestCase
 
+from lexicon.templatetags import lexeme_tags
 
 DUMMY_LANGUAGE_CONFIG = {
     'foo': {

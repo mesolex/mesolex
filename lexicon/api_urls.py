@@ -1,9 +1,7 @@
+from django.conf.urls import include, url
 from rest_framework import routers
 
-from django.conf.urls import url, include
-
 from . import api_views
-
 
 router = routers.DefaultRouter()
 router.register(r'lexicalentries', api_views.LexicalEntryViewSet)

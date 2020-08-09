@@ -15,7 +15,7 @@ class OrthographyTransformTestCase(TestCase):
             out_string,
             nahuat_orthography._original_fn(in_string),
         )
-    
+
     def test_respects_s_contexts(self):
         """
         The consonant 'ts' should not be subject to
@@ -27,7 +27,7 @@ class OrthographyTransformTestCase(TestCase):
             out_string,
             nahuat_orthography._original_fn(in_string),
         )
-    
+
     def test_handles_multichar_consonants(self):
         """
         Multi-character consonants are handled correctly.

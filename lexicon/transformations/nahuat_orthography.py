@@ -2,7 +2,6 @@ import re
 
 from mesolex.utils import transformation
 
-
 OTHER = [
     '\(', '\)',
 ]
@@ -102,9 +101,8 @@ def nahuat_orthography(query_string):
 
     for equivalences in EQUIVALENCE_SETS:
         new_string = transform_equivalences(new_string, equivalences)
-    
+
     for equivalences in CONTEXTUAL_EQUIVALENCE_SETS:
         new_string = transform_equivalences_with_context(new_string, equivalences)
 
     return new_string
-    

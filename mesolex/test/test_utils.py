@@ -14,7 +14,7 @@ class ContainsWordToRegexTestCase(TestCase):
         )
         self.assertEqual('__iregex', new_form_action)
         self.assertEqual(expected_output, new_qstring)
-    
+
     def test_ignores_everything_other_than_contains_word(self):
         input = 'foo:bar'
         (new_form_action, new_qstring) = utils.contains_word_to_regex(
@@ -51,7 +51,7 @@ class ToVLNTestCase(TestCase):
 
         (_, unchanged_qst) = utils.to_vln('regex', '', input, form_data)
         self.assertEqual(unchanged_qst, input)
-    
+
     def test_ignores_if_not_vln(self):
         input = 'tani'
         form_data = {'vln': False}

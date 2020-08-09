@@ -1,7 +1,6 @@
 import csv
 import io
 import logging
-from prettyjson import PrettyJSONWidget
 
 from django import forms
 from django.contrib import admin, messages
@@ -9,9 +8,9 @@ from django.contrib.postgres.fields import JSONField
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
+from prettyjson import PrettyJSONWidget
 
 from lexicon import models
-
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +52,7 @@ class MediaAdmin(admin.ModelAdmin):
             path('csv/', self.admin_site.admin_view(self.csv_view), name='media_csv_upload')
         ]
         return citation_urls + urls
-    
+
     def csv_view(self, request):
         if request.method == 'POST':
             form = MediaCSVUploadForm(request.POST, request.FILES)
@@ -79,7 +78,7 @@ class MediaAdmin(admin.ModelAdmin):
                     except:
                         logger.exception("Error adding media file with UID {uid}".format(uid=item['UID']))
                         errors += 1
-                
+
                 messages.add_message(
                     request,
                     messages.INFO,
@@ -89,7 +88,7 @@ class MediaAdmin(admin.ModelAdmin):
                         errors=errors,
                     )
                 )
-                    
+
                 return HttpResponseRedirect(reverse('admin:lexicon_media_changelist'))
 
             return TemplateResponse(request, 'admin/citation_media_csv.html', {
@@ -102,7 +101,7 @@ class MediaAdmin(admin.ModelAdmin):
 
 
 class LexicalEntryAdmin(admin.ModelAdmin):
-    list_display = ('lemma', 'language', 'date',  '_id', )
+    list_display = ('lemma', 'language', 'date', '_id', )
     formfield_overrides = {
         JSONField: {'widget': PrettyJSONWidget(attrs={'initial': 'parsed'})}
     }

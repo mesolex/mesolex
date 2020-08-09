@@ -4,7 +4,6 @@ import sys
 
 from mesolex.load_env import load_env
 
-
 load_env()
 
 if __name__ == "__main__":

@@ -1,14 +1,8 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-
-from query_builder.forms import (
-    QueryBuilderForm,
-    QueryBuilderBaseFormset,
-)
-
-from narratives import models, documents
-
+from narratives import documents, models
+from query_builder.forms import QueryBuilderBaseFormset, QueryBuilderForm
 
 FILTERABLE_FIELDS = [
     ('subgenre', _('Subgénero')),
@@ -63,6 +57,7 @@ class BaseSoundMetadataQueryComposerFormset(QueryBuilderBaseFormset):
             'subgenre': [(x, x) for x in sorted(subgenres) if x],
             'village_of_recording': [(x, x) for x in sorted(villages) if x],
         }
+
 
 SoundMetadataQueryComposerFormset = forms.formset_factory(
     SoundMetadataSearchFilterForm,

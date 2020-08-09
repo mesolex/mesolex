@@ -1,3 +1,3 @@
-from mesolex.settings.dev import *   # noqa
+from mesolex.settings.dev import *  # noqa
 
 # Override settings here

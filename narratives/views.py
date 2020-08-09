@@ -1,18 +1,14 @@
 import json
 
 from django.conf import settings
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 
-from .forms import (
-    SoundMetadataQueryComposerFormset,
-)
-from .models import SoundMetadata
 from mesolex.config import LANGUAGES
-from mesolex.utils import (
-    get_default_data_for_lg,
-    ForceProxyEncoder,
-)
+from mesolex.utils import ForceProxyEncoder, get_default_data_for_lg
+
+from .forms import SoundMetadataQueryComposerFormset
+from .models import SoundMetadata
 
 
 def narratives_search_view(request, *args, **kwargs):

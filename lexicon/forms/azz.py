@@ -1,14 +1,11 @@
 from django import forms
 
-from query_builder.forms import QueryBuilderForm, QueryBuilderBaseFormset
-
-from mesolex.config import LANGUAGES
-from mesolex.utils import Language, to_vln
-
 from lexicon.documents import LexicalEntryDocument
 from lexicon.forms.base import LexiconQueryBuilderGlobalFiltersForm
 from lexicon.transformations.nahuat_orthography import nahuat_orthography
-
+from mesolex.config import LANGUAGES
+from mesolex.utils import Language, to_vln
+from query_builder.forms import QueryBuilderBaseFormset, QueryBuilderForm
 
 Azz = Language('azz')
 

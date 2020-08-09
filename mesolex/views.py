@@ -4,12 +4,9 @@ from django.conf import settings
 from django.shortcuts import render
 
 from lexicon.forms import formset_for_lg
-from narratives.forms import SoundMetadataQueryComposerFormset
 from mesolex.config import LANGUAGES
-from mesolex.utils import (
-    get_default_data_for_lg,
-    ForceProxyEncoder,
-)
+from mesolex.utils import ForceProxyEncoder, get_default_data_for_lg
+from narratives.forms import SoundMetadataQueryComposerFormset
 
 
 def home(request, *args, **kwargs):
@@ -37,4 +34,3 @@ def home(request, *args, **kwargs):
             'form_captions': True,
         },
     })
-

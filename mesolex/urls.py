@@ -18,15 +18,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views.i18n import JavaScriptCatalog
-
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
 import lexicon.urls
 import lexicon.views
-import narratives.urls
 import mesolex.views
+import narratives.urls
 
 urlpatterns = [
     path('robots.txt', include('robots.urls')),

@@ -11,7 +11,7 @@ from mesolex.config import DEFAULT_LANGUAGE, LANGUAGES
 def get_default_data_for_lg(language):
     if language is None:
         language = LANGUAGES[DEFAULT_LANGUAGE]
-    
+
     return [{
         'filter': 'begins_with',
         'filter_on': language['filterable_fields'][0]['field'],
@@ -46,9 +46,9 @@ def transformation(data_field=None):
         ):
             if not form_data.get(data_field, None):
                 return (filter_action, query_string)
-            
+
             transformed_qstring = transformer_fn(query_string)
-            
+
             if filter_name in ['begins_with', 'exactly_equals']:
                 transformed_qstring = '^' + transformed_qstring
 
@@ -112,13 +112,13 @@ class Language(object):
             raise KeyError(f'Language key "{language_key} not found in languages config.')
 
         self.language_key = language_key
-    
+
     def _fields(self, key):
         return [
             (field['field'], field['label'])
             for field in LANGUAGES[self.language_key][key]
         ]
-    
+
     def _dict(self, key):
         return {
             field['field']: field['terms']
@@ -128,7 +128,7 @@ class Language(object):
     @property
     def filterable_fields(self):
         return self._fields('filterable_fields')
-    
+
     @property
     def filterable_fields_dict(self):
         return self._dict('filterable_fields')
@@ -136,7 +136,7 @@ class Language(object):
     @property
     def elasticsearch_fields(self):
         return self._fields('elasticsearch_fields')
-    
+
     @property
     def elasticsearch_fields_dict(self):
         return self._dict('elasticsearch_fields')

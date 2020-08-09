@@ -1,20 +1,19 @@
 import logging
-
-from dateutil.parser import parse
 import xml.etree.ElementTree as ET
 
+from dateutil.parser import parse
 from django.core.management.base import BaseCommand
 from django.utils.translation import gettext as _
 
 from lexicon import models
 
-
 logger = logging.getLogger(__name__)
+
 
 class Importer(object):
     def __init__(self, input):
         self.input = input
-    
+
     def _handle_root(self, root):
         raise NotImplementedError()
 
@@ -22,6 +21,7 @@ class Importer(object):
         tree = ET.parse(self.input)
         root = tree.getroot()
         return self._handle_root(root)
+
 
 class AzzImporter(Importer):
     def create_simple_string_instances(
@@ -54,7 +54,7 @@ class AzzImporter(Importer):
                     lx=lexical_entry.lemma,
                 )
             )
-    
+
     def _handle_root(self, root):
         updated_entries = 0
         added_entries = 0
@@ -71,7 +71,7 @@ class AzzImporter(Importer):
             if ref is None:
                 logger.error('No ref found for lxGroup at index {i}'.format(i=i))
                 continue
-            
+
             try:
                 entry_kwargs['_id'] = int(ref.text)
             except ValueError:
@@ -282,7 +282,7 @@ class AzzImporter(Importer):
                 sig_var = sig_group.find('sig_var')
                 if sig_var is not None:
                     sig_group_kwargs['geo'] = sig_var.text
-                
+
                 ostens = sig_group.findall('osten')
                 if ostens is not None:
                     osten_string = '; '.join([osten.text for osten in ostens])
@@ -405,21 +405,22 @@ class TrqImporter(Importer):
             # get ID for entry
             id_ = entry_element.attrib.get('guid')
             entry_kwargs['_id'] = id_
-            
+
             # get date
             try:
-                defaults['date'] = parse(entry_element.attrib.get('dateModified') or entry_element.attrib.get('dateCreated'))
+                defaults['date'] = parse(entry_element.attrib.get('dateModified')
+                                         or entry_element.attrib.get('dateCreated'))
             except:
                 logger.exception(f"Failed to parse date in entry with id {id_}")
                 continue
-            
+
             # get headword
             try:
                 defaults['lemma'] = entry_element.find('./lexical-unit/form[@lang="trq"]/text').text
             except:
                 logger.Exception(f"Failed to find headword in entry with id {id_}")
                 continue
-            
+
             # create entry
             try:
                 (lexical_entry, created, ) = models.LexicalEntry.objects.update_or_create(
@@ -433,7 +434,7 @@ class TrqImporter(Importer):
                 # If we don't have a lexical entry, we can't do a whole
                 # heck of a lot from hereon in
                 continue
-            
+
             # create citation forms
             self.create_simple_string_instances(
                 entry_element,
@@ -472,7 +473,7 @@ class TrqImporter(Importer):
                     sense_kwargs['definition'] = definition_element.text
                 else:
                     continue
-                
+
                 try:
                     sense = models.Sense.objects.create(
                         entry=lexical_entry,
@@ -484,7 +485,7 @@ class TrqImporter(Importer):
                         f"Failed to create {models.Sense._meta.verbose_name} for lexical entry with ID {lexical_entry._id}, lemma {lexical_entry.lemma}",
                     )
                     continue
-                
+
                 examples = sense_element.findall('example')
                 for j, example_element in enumerate(examples):
                     example = models.Example.objects.create(
@@ -501,7 +502,8 @@ class TrqImporter(Importer):
                                 text=ex_text.text,
                             )
                         except:
-                            logger.exception(f"Failed to create {models.Quote._meta.verbose_name} for lexical entry with ID {lexical_entry._id}, lemma {lexical_entry.lemma}")
+                            logger.exception(
+                                f"Failed to create {models.Quote._meta.verbose_name} for lexical entry with ID {lexical_entry._id}, lemma {lexical_entry.lemma}")
                             continue
 
                     ex_translation = example_element.find('./translation/form[@lang="es"]/text')
@@ -514,16 +516,16 @@ class TrqImporter(Importer):
                                 text=ex_translation.text,
                             )
                         except:
-                            logger.exception(f"Failed to create {models.Quote._meta.verbose_name} for lexical entry with ID {lexical_entry._id}, lemma {lexical_entry.lemma}")
+                            logger.exception(
+                                f"Failed to create {models.Quote._meta.verbose_name} for lexical entry with ID {lexical_entry._id}, lemma {lexical_entry.lemma}")
                             continue
-            
+
             if created:
                 added_entries += 1
             else:
                 updated_entries += 1
 
         return (added_entries, updated_entries, total)
-
 
 
 class Command(BaseCommand):
@@ -545,7 +547,7 @@ class Command(BaseCommand):
         importer = self._importer_for(language)
 
         (added_entries, updated_entries, total) = importer(input).run() if importer is not None else (0, 0, 0)
-        
+
         self.stdout.write('\n\nTOTAL: {add} added, {up} updated, {miss} missed'.format(
             add=added_entries,
             up=updated_entries,

@@ -21,12 +21,12 @@ class MediaCSVUploadFormTest(TestCase):
         post_data = {'csv_file': self._create_file('misspelled-cols.csv')}
         form = MediaCSVUploadForm({}, post_data)
         self.assertFalse(form.is_valid())
-    
+
     def test_rejects_csv_with_no_headers(self):
         post_data = {'csv_file': self._create_file('no-header.csv')}
         form = MediaCSVUploadForm({}, post_data)
         self.assertFalse(form.is_valid())
-    
+
     def test_accepts_csv_with_correct_headers(self):
         # even if there are excess cols ...
         post_data = {'csv_file': self._create_file('excess-cols.csv')}

@@ -1,0 +1,8 @@
+[MASTER]
+load-plugins=pylint_django
+ignore=migrations
+
+disable=missing-class-docstring,
+        missing-module-docstring,
+        missing-function-docstring,
+        too-few-public-methods

@@ -1,6 +1,6 @@
 import os
-import yaml
 
+import yaml
 from django.utils.translation import ugettext_lazy
 
 DEFAULT_LANGUAGE = 'azz'

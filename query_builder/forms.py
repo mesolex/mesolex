@@ -1,18 +1,15 @@
-from typing import List
 import json
 import operator
 import re
 from collections import namedtuple
 from functools import reduce
+from typing import List
 
 from django import forms
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
-from mesolex.utils import (
-    contains_word_to_regex,
-    ForceProxyEncoder,
-)
+from mesolex.utils import ForceProxyEncoder, contains_word_to_regex
 
 
 class CombiningQuery(namedtuple(
@@ -32,9 +29,10 @@ class QueryGrouper(object):
     respects operator precedence. Add queries to the sequence
     to be composed together by calling 
     """
+
     def __init__(self, queries=None):
         self._queries = [] if queries is None else queries
-    
+
     def append(self, val: CombiningQuery):
         self._queries.append(val)
 
@@ -53,7 +51,7 @@ class QueryGrouper(object):
             queries = queries + [and_tree]
             and_tree = next.query
         return (queries, and_tree)
-    
+
     @staticmethod
     def _group_ands(queries: List[CombiningQuery]):
         (queries, and_tree) = reduce(
@@ -67,7 +65,7 @@ class QueryGrouper(object):
     def _group_queries(queries: List[CombiningQuery]):
         with_grouped_ands = QueryGrouper._group_ands(queries)
         return reduce(operator.or_, with_grouped_ands)
-    
+
     @property
     def combined_query(self):
         return QueryGrouper._group_queries(self._queries)
@@ -241,11 +239,13 @@ class QueryBuilderGlobalFiltersForm(forms.Form):
     # of the query-composition process.
     pass
 
+
 class QueryBuilderDatasetsForm(forms.Form):
     dataset = forms.ChoiceField(
         choices=[],
         widget=forms.Select(attrs={'class': 'custom-select'}),
     )
+
 
 class QueryBuilderBaseFormset(forms.BaseFormSet):
     global_filters_class = QueryBuilderGlobalFiltersForm
@@ -285,7 +285,7 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
             'text_search_fields': self.text_search_fields,
         }
         return config
-    
+
     @property
     def configuration_data_as_json(self):
         return json.dumps(
@@ -309,7 +309,7 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
                 if operator == 'and_n' or operator == 'or_n':
                     form_q = ~form_q
                     operator = operator.replace('_n', '')
-                
+
                 if self.global_filters_form.is_valid() and form_q:
                     for (_name, global_filter,) in self.global_filters_form.cleaned_data.items():
                         form_q &= global_filter

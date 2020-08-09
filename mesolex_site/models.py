@@ -2,28 +2,23 @@ import json
 
 from django import forms
 from django.core.exceptions import ValidationError
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db import models
 from django.db.models import Q
 from django.db.models.functions import Lower
-from django.db import models
-
-from wagtail.admin.edit_handlers import FieldPanel, InlinePanel, MultiFieldPanel, PageChooserPanel
+from modelcluster.fields import ParentalKey
+from wagtail.admin.edit_handlers import (FieldPanel, InlinePanel,
+                                         MultiFieldPanel, PageChooserPanel)
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Orderable, Page
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
-
-from modelcluster.fields import ParentalKey
-
 from wagtailtrans.models import TranslatablePage
 
 from lexicon.forms import formset_for_lg
 from lexicon.models import LexicalEntry
 from mesolex.config import DEFAULT_LANGUAGE, LANGUAGES
-from mesolex.utils import (
-    get_default_data_for_lg,
-    ForceProxyEncoder,
-)
+from mesolex.utils import ForceProxyEncoder, get_default_data_for_lg
 
 
 class AbstractHomePage(TranslatablePage):
@@ -33,7 +28,7 @@ class AbstractHomePage(TranslatablePage):
     """
     class Meta:
         abstract = True
-    
+
     headline = models.CharField(max_length=255)
     sub_headline = models.CharField(max_length=255)
     header_img = models.ForeignKey(
@@ -57,7 +52,6 @@ class AbstractHomePage(TranslatablePage):
 
         FieldPanel('body', classname='full'),
     ]
-
 
 
 class HomePage(AbstractHomePage):
@@ -186,11 +180,11 @@ class SearchPage(TranslatablePage):
     def _search_query_data(
         self,
         formset,
-        lexical_entries = None,
-        display_entries = None,
-        query = None,
-        paginator = None,
-        result_page = 1,
+        lexical_entries=None,
+        display_entries=None,
+        query=None,
+        paginator=None,
+        result_page=1,
     ):
         return {
             'lexical_entries': display_entries,
@@ -217,7 +211,7 @@ class SearchPage(TranslatablePage):
 
     def _search_context(self, request, context):
         formset_class = formset_for_lg(request.GET.get('dataset'))
-        formset = formset_class(request.GET)        
+        formset = formset_class(request.GET)
 
         try:
             query = formset.get_full_query()

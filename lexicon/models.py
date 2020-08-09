@@ -66,8 +66,8 @@ class LexicalEntry(models.Model):
         return sorted(list(self.sense_set.all()), key=lambda x: x.order)
 
     def __str__(self):
-        return self.lemma or self.ref or 'Word #%s' % (self.id)
-    
+        return self.lemma or 'Word #%s' % (self.id)
+
     class Meta:
         verbose_name = 'Lexical entry'
         verbose_name_plural = 'Lexical entries'
@@ -233,7 +233,7 @@ class Example(models.Model):
 
     @property
     def original_quotes(self):
-        return [quote for quote in self.quote_set.filter(translation_of__isnull=True)]
+        return list(self.quote_set.filter(translation_of__isnull=True))
 
 
 class Quote(models.Model):
@@ -256,4 +256,3 @@ class Quote(models.Model):
     text = models.TextField(
         blank=True,
     )
-

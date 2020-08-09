@@ -1,13 +1,11 @@
 import logging
-
-from dateutil.parser import parse
 import xml.etree.ElementTree as ET
 
+from dateutil.parser import parse
 from django.core.management.base import BaseCommand
 from django.utils.translation import gettext as _
 
 from narratives import models
-
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +21,7 @@ class Command(BaseCommand):
         if len(sub_els) > 0:
             return sub_els[0].text
         return ''
-    
+
     def _dt_opt(self, el, tags):
         tx = self._tx_opt(el, tags)
         if tx:

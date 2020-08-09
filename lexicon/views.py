@@ -2,27 +2,25 @@ import json
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Q
 from django.db.models.functions import Lower
 from django.shortcuts import render
 
+from mesolex.config import DEFAULT_LANGUAGE, LANGUAGES
+from mesolex.utils import ForceProxyEncoder, get_default_data_for_lg
+
 from .forms import formset_for_lg
 from .models import LexicalEntry
-from mesolex.config import DEFAULT_LANGUAGE, LANGUAGES
-from mesolex.utils import (
-    get_default_data_for_lg,
-    ForceProxyEncoder,
-)
 
 
 def _search_query_data(
     formset,
-    lexical_entries = None,
-    display_entries = None,
-    query = None,
-    paginator = None,
-    page = 1,
+    lexical_entries=None,
+    display_entries=None,
+    query=None,
+    paginator=None,
+    page=1,
 ):
     return {
         'lexical_entries': display_entries,
@@ -50,7 +48,7 @@ def _search_query_data(
 
 def _search_query(request, template_name):
     formset_class = formset_for_lg(request.GET.get('dataset'))
-    formset = formset_class(request.GET)        
+    formset = formset_class(request.GET)
 
     try:
         query = formset.get_full_query()

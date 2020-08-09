@@ -69,6 +69,7 @@ class QueryBuilderFormTestCase(TestCase):
         """
         fake_transformation = MagicMock(return_value=('__something_else', 'baz'))
         fake_transformation_two = MagicMock(return_value=('__icontains', 'foo'))
+
         class TestFormSubclass(forms.QueryBuilderForm):
             FILTERABLE_FIELDS = [
                 ('bar', 'Bar',),
@@ -89,7 +90,7 @@ class QueryBuilderFormTestCase(TestCase):
 
         instance = TestFormSubclass(data=data)
         self.assertTrue(instance.is_valid())
-        
+
         instance.get_filter_action_and_query()  # value not needed!
         self.assertTrue(fake_transformation.called)
         self.assertTrue(fake_transformation_two.called)
@@ -101,7 +102,7 @@ class QueryBuilderFormTestCase(TestCase):
             ('contains', '__something_else', 'baz', data),
             fake_transformation_two.call_args[0],
         )
-    
+
 
 class QueryBuilderBaseFormsetTestCase(TestCase):
     def test_respects_operator_predence(self):
@@ -132,7 +133,7 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
             "form-0-operator": "and",
             "form-0-filter": "begins_with",
             "form-0-filter_on": "bar",
-            
+
             "form-1-query_string": "foo2",
             "form-1-operator": "and",
             "form-1-filter": "begins_with",
@@ -224,7 +225,7 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
         bound_formset = test_formset(formset_data)
 
         self.assertTrue(bound_formset.is_valid())
-        
+
         query = bound_formset.get_full_query()
 
         self.assertEqual(
@@ -244,7 +245,7 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
         class TestGlobalFilter(forms.QueryBuilderGlobalFiltersForm):
             foo_bar = django.forms.BooleanField(required=False)
             baz_qux = django.forms.BooleanField(required=False)
-            
+
             def clean_foo_bar(self):
                 foo_bar = self.cleaned_data['foo_bar']
                 return Q(baz__isnull=(not foo_bar))
@@ -255,7 +256,7 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
 
         class TestFormset(forms.QueryBuilderBaseFormset):
             global_filters_class = TestGlobalFilter
-        
+
         test_formset = django.forms.formset_factory(
             TestForm,
             formset=TestFormset,
@@ -277,7 +278,7 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
         bound_formset = test_formset(formset_data)
 
         self.assertTrue(bound_formset.is_valid())
-        
+
         query = bound_formset.get_full_query()
 
         self.assertEqual(3, len(query.children))

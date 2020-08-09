@@ -1,9 +1,8 @@
 from django import forms
 from django.db.models import Q
 
-from query_builder.forms import QueryBuilderGlobalFiltersForm
-
 from mesolex.config import LANGUAGES
+from query_builder.forms import QueryBuilderGlobalFiltersForm
 
 
 class LexiconQueryBuilderGlobalFiltersForm(QueryBuilderGlobalFiltersForm):
@@ -18,10 +17,9 @@ class LexiconQueryBuilderGlobalFiltersForm(QueryBuilderGlobalFiltersForm):
         if only_with_sound:
             return Q(media__isnull=(not only_with_sound))
         return Q()
-      
+
     def clean_dataset(self):
         dataset = self.cleaned_data['dataset']
         if dataset:
             return Q(language=dataset)
         return Q()
-

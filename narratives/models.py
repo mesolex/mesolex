@@ -31,7 +31,7 @@ class SoundMetadata(models.Model):
     tracks = models.CharField(max_length=256, blank=True)
 
     rec_format = models.CharField(max_length=256, blank=True)
-    rec_orig = models.CharField(max_length=256, blank=True) # NOTE: also recorig
+    rec_orig = models.CharField(max_length=256, blank=True)  # NOTE: also recorig
     rec_machine = models.CharField(max_length=256, blank=True)
     rec_mike = models.CharField(max_length=256, blank=True)
     rec_power = models.CharField(max_length=256, blank=True)
@@ -54,10 +54,10 @@ class SoundMetadata(models.Model):
     titspn = models.CharField(max_length=512, blank=True)
     titeng = models.CharField(max_length=512, blank=True)
     descrip = models.TextField(blank=True)
-    native_prim = models.CharField(max_length=256, blank=True) # native-prim
-    native_second = models.CharField(max_length=256, blank=True) # native-second
-    sci_prim = models.CharField(max_length=256, blank=True) # sci-prim
-    sci_second = models.CharField(max_length=256, blank=True) # sci-second
+    native_prim = models.CharField(max_length=256, blank=True)  # native-prim
+    native_second = models.CharField(max_length=256, blank=True)  # native-second
+    sci_prim = models.CharField(max_length=256, blank=True)  # sci-prim
+    sci_second = models.CharField(max_length=256, blank=True)  # sci-second
     transby = models.CharField(max_length=256, blank=True)
     status = models.CharField(max_length=256, blank=True)
     rights = models.CharField(max_length=256, blank=True)
