@@ -1,13 +1,11 @@
 import json
 
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.db.models import Q
 from django.db.models.functions import Lower
 from django.shortcuts import render
 
-from mesolex.config import DEFAULT_LANGUAGE, LANGUAGES
+from mesolex.config import LANGUAGES
 from mesolex.utils import ForceProxyEncoder, get_default_data_for_lg
 
 from .forms import formset_for_lg
@@ -15,12 +13,11 @@ from .models import LexicalEntry
 
 
 def _search_query_data(
-    formset,
-    lexical_entries=None,
-    display_entries=None,
-    query=None,
-    paginator=None,
-    page=1,
+        formset,
+        lexical_entries=None,
+        display_entries=None,
+        paginator=None,
+        page=1,
 ):
     return {
         'lexical_entries': display_entries,
@@ -80,13 +77,12 @@ def _search_query(request, template_name):
         formset,
         lexical_entries=lexical_entries,
         display_entries=display_entries,
-        query=query,
         paginator=paginator,
         page=page,
     ))
 
 
-def lexicon_search_view(request, *args, **kwargs):
+def lexicon_search_view(request):
     template_name = 'search/search.html'
 
     if request.GET:

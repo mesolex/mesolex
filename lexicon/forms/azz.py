@@ -7,14 +7,14 @@ from mesolex.config import LANGUAGES
 from mesolex.utils import Language, to_vln
 from query_builder.forms import QueryBuilderBaseFormset, QueryBuilderForm
 
-Azz = Language('azz')
+AZZ = Language('azz')
 
 
 class AzzLexicalSearchFilterForm(QueryBuilderForm):
-    FILTERABLE_FIELDS = Azz.filterable_fields
-    FILTERABLE_FIELDS_DICT = Azz.filterable_fields_dict
-    ELASTICSEARCH_FIELDS = Azz.elasticsearch_fields
-    ELASTICSEARCH_FIELDS_DICT = Azz.elasticsearch_fields_dict
+    FILTERABLE_FIELDS = AZZ.filterable_fields
+    FILTERABLE_FIELDS_DICT = AZZ.filterable_fields_dict
+    ELASTICSEARCH_FIELDS = AZZ.elasticsearch_fields
+    ELASTICSEARCH_FIELDS_DICT = AZZ.elasticsearch_fields_dict
 
     DocumentClass = LexicalEntryDocument
 
@@ -32,8 +32,8 @@ class AzzLexicalSearchFilterForm(QueryBuilderForm):
 class BaseAzzLexiconQueryComposerFormset(QueryBuilderBaseFormset):
     global_filters_class = LexiconQueryBuilderGlobalFiltersForm
 
-    FILTERABLE_FIELDS = Azz.filterable_fields + Azz.elasticsearch_fields
-    TEXT_SEARCH_FIELDS = [field[0] for field in Azz.elasticsearch_fields]
+    FILTERABLE_FIELDS = AZZ.filterable_fields + AZZ.elasticsearch_fields
+    TEXT_SEARCH_FIELDS = [field[0] for field in AZZ.elasticsearch_fields]
 
     CONTROLLED_VOCAB_FIELDS = {
         field['field']: [(item['value'], item['label']) for item in field['items']]

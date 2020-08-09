@@ -3,12 +3,12 @@ from rest_framework import routers
 
 from . import api_views
 
-router = routers.DefaultRouter()
-router.register(r'lexicalentries', api_views.LexicalEntryViewSet)
+ROUTER = routers.DefaultRouter()
+ROUTER.register(r'lexicalentries', api_views.LexicalEntryViewSet)
 
 
 urlpatterns = [
-    url(r'', include(router.urls)),
+    url(r'', include(ROUTER.urls)),
     url(
         r'api-auth/',
         include('rest_framework.urls', namespace='rest_framework')
