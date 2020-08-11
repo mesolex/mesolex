@@ -1,6 +1,7 @@
 .DS_Store
 *.sw[po]
 *.py[co]
+__pycache__/
 .env
 deployment/roles/
 node_modules/
