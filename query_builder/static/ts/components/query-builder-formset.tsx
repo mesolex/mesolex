@@ -86,6 +86,7 @@ const GlobalFilters = (props: {
   <Form.Group>
     { _.map(props.globalFilters, (value, key) => (
       <Form.Check
+        key={key}
         checked={value}
         label={labelForGlobalFilter(props.globalExtraFields, key)}
         name={key}

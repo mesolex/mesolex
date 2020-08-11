@@ -66,7 +66,12 @@ const FieldSelect = React.forwardRef((
     onChange={props.onChange}
     value={props.value}
   >
-    { _.map(props.fields, ({ field, label }) => <option value={field}>{ label }</option>) }
+    {
+      _.map(
+        props.fields,
+        ({ field, label }) => <option value={field} key={field}>{ label }</option>,
+      )
+    }
   </Form.Control>
 ));
 
@@ -161,7 +166,14 @@ const HiddenInputs = ({
 
     {
       _.map(extra, (value, fieldName) => (
-        <input type="checkbox" checked={value} name={`form-${i}-${fieldName}`} style={{ display: 'none' }} />
+        <input
+          key={fieldName}
+          type="checkbox"
+          checked={value}
+          name={`form-${i}-${fieldName}`}
+          style={{ display: 'none' }}
+          readOnly
+        />
       ))
     }
   </>
@@ -212,11 +224,18 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
             filterableFields: props.filterableFields,
           })}
         >
-          <Dropdown.Item
-            as={OperatorSelect}
-            onChange={(event): void => setOperator(event.target.value)}
-            value={operator}
-          />
+          {
+            props.index !== 0
+              ? (
+                <Dropdown.Item
+                  as={OperatorSelect}
+                  onChange={(event): void => setOperator(event.target.value)}
+                  value={operator}
+                />
+              )
+              : null
+          }
+
           <Dropdown.Item
             as={FieldSelect}
             fields={props.filterableFields}
@@ -243,6 +262,7 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
 
           { _.map(extra, (value, key) => (
             <Dropdown.Item
+              key={key}
               as={Form.Check}
               checked={value}
               disabled={applyConstraints({
@@ -275,7 +295,7 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
               >
                 {_.map(
                   controlledVocabFieldItems,
-                  ({ label, value }) => <option value={value}>{ label }</option>,
+                  ({ label, value }) => <option key={label} value={value}>{ label }</option>,
                 )}
               </Form.Control>
             )
