@@ -44,7 +44,6 @@ module.exports = {
   },
   entry: {
     site: path.join(__dirname, 'mesolex/static/scss/index.scss'),
-    narratives: path.join(__dirname, 'narratives/static/jsx/index.jsx'),
     dataSearch: path.join(__dirname, 'mesolex_site/static/mesolex_site/ts/search.tsx'),
   },
   output: {
@@ -67,7 +66,6 @@ module.exports = {
     extensions: ['.js', '.jsx', '.scss', '.ts', '.tsx'],
     alias: {
       lexicon: path.resolve(__dirname, 'lexicon/static/jsx/search/'),
-      narratives: path.resolve(__dirname, 'narratives/static/jsx/'),
       'query-builder': path.resolve(__dirname, 'query_builder/static/ts/'),
       'plyr-src': path.resolve(__dirname, 'node_modules/plyr/src/'),
     },

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-13 22:44+0000\n"
+"POT-Creation-Date: 2020-08-15 11:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,90 +17,85 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lexicon/forms.py:23 lexicon/models.py:32
-msgid "Entrada"
-msgstr "Headword"
-
-#: lexicon/forms.py:24 lexicon/templates/search/search.html:47
-msgid "Glosa"
-msgstr "Gloss"
-
-#: lexicon/forms.py:25
-msgid "Raiz"
-msgstr "Root"
-
-#: lexicon/forms.py:26 lexicon/templates/search/search.html:57
-msgid "Campo semántico"
-msgstr "Semantic field"
-
-#: lexicon/forms.py:27 lexicon/templates/search/search.html:52
-msgid "Categoría gramatical"
-msgstr "Grammatical category"
-
-#: lexicon/forms.py:28 lexicon/templates/search/search.html:52
-msgid "Inflexión"
-msgstr "Inflection"
-
-#: lexicon/forms.py:41
-msgid "Significado preciso"
-msgstr "Precise meaning"
-
-#: lexicon/forms.py:42
-msgid "Significado extendido"
-msgstr "Extended meaning"
-
-#: lexicon/forms.py:43
-msgid "Frase ilustrativas"
-msgstr "Illustrative phrases"
-
-#: lexicon/forms.py:44
-msgid "Búsqueda exhaustiva"
-msgstr "Complete search"
-
-#: lexicon/management/commands/import_data.py:16
-#: narratives/management/commands/import_narratives.py:16
+#: lexicon/management/commands/import_data.py:532
 msgid "Lee una fuente de datos en XML y actualiza la base de datos."
 msgstr "Reads an XML data source file and updates the database."
 
-#: lexicon/models.py:28
+#: lexicon/models.py:18
 msgid "Identificación única"
 msgstr "Unique ID"
 
-#: lexicon/templates/search/search.html:13 mesolex/templates/home.html:27
-#: narratives/templates/narratives/search.html:13
-msgid "Náhuat de la Sierra Nororiental de Puebla: Diccionario"
-msgstr "Nahuatl of the Sierra Nororiental de Puebla: Dictionary"
+#: lexicon/models.py:23
+msgid "Entrada"
+msgstr "Headword"
 
-#: lexicon/templates/search/search.html:13 mesolex/templates/home.html:27
-#: narratives/templates/narratives/search.html:13
-msgid "Última actualización"
-msgstr "Last updated"
+#: mesolex/settings/base.py:163
+msgid "español"
+msgstr "Spanish"
 
-#: lexicon/templates/search/search.html:27
-#: narratives/templates/narratives/search.html:27
-#, python-format
-msgid "%(num_entries)s resultados (página %(page)s de %(num_pages)s)"
+#: mesolex/settings/base.py:164
+msgid "inglés"
+msgstr "English"
+
+#: mesolex/templates/includes/header.html:14
+#: mesolex_site/templates/mesolex_site/includes/header.html:15
+msgid "Activar la navegación"
+msgstr "Toggle navigation"
+
+#: mesolex_site/templates/mesolex_site/home_page.html:94
+#: mesolex_site/templates/mesolex_site/language_home_page.html:75
+msgid "Crédito: Ilustración por Inocencio Jiménez Chino"
+msgstr "Credit: Illustration by Inocencio Jiménez Chino"
+
+#: mesolex_site/templates/mesolex_site/includes/home_page_header.html:16
+msgid "Lenguas"
+msgstr ""
+
+#: mesolex_site/templates/mesolex_site/includes/language_home_page_header.html:16
+msgid "Recursos"
+msgstr ""
+
+#: mesolex_site/templates/mesolex_site/search_page.html:21
+#, fuzzy, python-format
+#| msgid "%(num_entries)s resultados (página %(page)s de %(num_pages)s)"
+msgid "%(num_entries)s resultados (página %(result_page)s de %(num_pages)s)"
 msgstr "%(num_entries)s results (page %(page)s of %(num_pages)s)"
 
-#: lexicon/templates/search/search.html:47
+#: mesolex_site/templates/mesolex_site/search_page.html:41
 msgid "Citación"
 msgstr "Citation"
 
-#: lexicon/templates/search/search.html:47
+#: mesolex_site/templates/mesolex_site/search_page.html:41
 msgid "Formas alt."
 msgstr "Alt. forms"
 
-#: lexicon/templates/search/search.html:63
+#: mesolex_site/templates/mesolex_site/search_page.html:41
+msgid "Glosa"
+msgstr "Gloss"
+
+#: mesolex_site/templates/mesolex_site/search_page.html:46
+msgid "Categoría gramatical"
+msgstr "Grammatical category"
+
+#: mesolex_site/templates/mesolex_site/search_page.html:46
+msgid "Inflexión"
+msgstr "Inflection"
+
+#: mesolex_site/templates/mesolex_site/search_page.html:51
+msgid "Campo semántico"
+msgstr "Semantic field"
+
+#: mesolex_site/templates/mesolex_site/search_page.html:57
 msgid "Etimología"
 msgstr "Etymology"
 
-#: lexicon/templates/search/search.html:67
+#: mesolex_site/templates/mesolex_site/search_page.html:61
 msgid "Raíz"
 msgid_plural "Raízes"
 msgstr[0] "Root"
 msgstr[1] "Roots"
 
-#: lexicon/templates/search/search.html:73
+#: mesolex_site/templates/mesolex_site/search_page.html:67
 #, fuzzy
 #| msgid "Raíz compuesta"
 msgid "Raíz compuesta"
@@ -108,384 +103,64 @@ msgid_plural "Raízes compuestas"
 msgstr[0] "Compound stem"
 msgstr[1] "Compound stems"
 
-#: lexicon/templates/search/search.html:78
+#: mesolex_site/templates/mesolex_site/search_page.html:72
 msgid "Palabra con elementos no de náhuat"
 msgid_plural "Palabras con elementos no de náhuat"
 msgstr[0] "Word with non-Nahuat elements"
 msgstr[1] "Words with non-Nahuat elements"
 
-#: lexicon/templates/search/search.html:108
+#: mesolex_site/templates/mesolex_site/search_page.html:104
 msgid "Notas semánticas"
 msgstr "Semantic notes"
 
-#: lexicon/templates/search/search.html:114
+#: mesolex_site/templates/mesolex_site/search_page.html:110
 msgid "Notas morfológicas"
 msgstr "Morphological notes"
 
-#: lexicon/templates/search/search.html:120
+#: mesolex_site/templates/mesolex_site/search_page.html:116
 msgid "Notas gramaticales"
 msgstr "Grammatical notes"
 
-#: lexicon/templates/search/search.html:137
-#: narratives/templates/narratives/search.html:100
+#: mesolex_site/templates/mesolex_site/search_page.html:133
 msgid "Anterior"
 msgstr "Previous"
 
-#: lexicon/templates/search/search.html:150
-#: narratives/templates/narratives/search.html:113
+#: mesolex_site/templates/mesolex_site/search_page.html:146
 msgid "Siguiente"
 msgstr "Next"
 
-#: lexicon/templates/search/search.html:162
-#: narratives/templates/narratives/search.html:125
+#: mesolex_site/templates/mesolex_site/search_page.html:158
 msgid "Resultado no encontrado."
 msgstr "No results found."
 
-#: mesolex/settings/base.py:156
-msgid "español"
-msgstr "Spanish"
-
-#: mesolex/settings/base.py:157
-msgid "inglés"
-msgstr "English"
-
-#: mesolex/settings/languages.py:8
-msgid "Adjetivo"
-msgstr "Adjective"
-
-#: mesolex/settings/languages.py:12
-msgid "Adverbio"
-msgstr "Adverb"
-
-#: mesolex/settings/languages.py:16
-msgid "Auxiliar"
-msgstr "Auxiliary"
-
-#: mesolex/settings/languages.py:20
-msgid "Habla-de-niños"
-msgstr "Baby-talk"
-
-#: mesolex/settings/languages.py:24
-msgid "Clítico"
-msgstr "Clitic"
-
-#: mesolex/settings/languages.py:28
-msgid "Conjunción"
-msgstr "Conjunction"
-
-#: mesolex/settings/languages.py:32
-msgid "Cópula"
-msgstr "Copula"
-
-#: mesolex/settings/languages.py:36
-msgid "Demostrativo"
-msgstr "Demonstrative"
-
-#: mesolex/settings/languages.py:40
-msgid "Direccional"
-msgstr "Directional"
-
-#: mesolex/settings/languages.py:44
-msgid "Estativo"
-msgstr "Stative"
-
-#: mesolex/settings/languages.py:48
-msgid "Interjección"
-msgstr "Interjection"
-
-#: mesolex/settings/languages.py:52
-msgid "Interrogativo"
-msgstr "Interrogative"
-
-#: mesolex/settings/languages.py:56
-msgid "Locativo"
-msgstr "Locative"
-
-#: mesolex/settings/languages.py:60
-msgid "Modal"
-msgstr "Modal"
-
-#: mesolex/settings/languages.py:64
-msgid "Muletilla"
-msgstr "Discourse-pause"
-
-#: mesolex/settings/languages.py:68
-msgid "Negación"
-msgstr "Negation"
-
-#: mesolex/settings/languages.py:72
-msgid "Prefijo"
-msgstr "Prefix"
-
-#: mesolex/settings/languages.py:76
-msgid "Preposición"
-msgstr "Preposition"
-
-#: mesolex/settings/languages.py:80
-msgid "Pronombre"
-msgstr "Pronoun"
-
-#: mesolex/settings/languages.py:84
-msgid "Saludo"
-msgstr "Salutation"
-
-#: mesolex/settings/languages.py:88
-msgid "Subordinador"
-msgstr "Subordinator"
-
-#: mesolex/settings/languages.py:92
-msgid "Sufijo"
-msgstr "Suffix"
-
-#: mesolex/settings/languages.py:96
-msgid "Sustantivo"
-msgstr "Noun"
-
-#: mesolex/settings/languages.py:100
-msgid "Terminación-aspectual"
-msgstr "Aspectual-ending"
-
-#: mesolex/settings/languages.py:104
-msgid "Topónimo"
-msgstr "Toponym"
-
-#: mesolex/settings/languages.py:108
-msgid "Verbo-impersonal"
-msgstr "Verb-impersonal"
-
-#: mesolex/settings/languages.py:112
-msgid "Verbo-intransitivo"
-msgstr "Verb-intransitive"
-
-#: mesolex/settings/languages.py:116
-msgid "Verbo-transitivo"
-msgstr "Verb-transitive"
-
-#: mesolex/settings/languages.py:120
-msgid "Verbo-bitransitivo"
-msgstr "Verb-bitransitive"
-
-#: mesolex/settings/languages.py:124
-msgid "Verbo-tritransitivo"
-msgstr "Verb-tritransitive"
-
-#: mesolex/settings/languages.py:128
-msgid "Vocativo"
-msgstr "Vocative"
-
-#: mesolex/settings/languages.py:134
-msgid "Verbo clase 1 (kwa)"
-msgstr "Class 1 verb (kwa)"
-
-#: mesolex/settings/languages.py:138
-msgid "Verbo clase 2a (pale:wia)"
-msgstr "Class 2a verb (pale:wia)"
-
-#: mesolex/settings/languages.py:142
-msgid "Verbo clase 2b (polowa)"
-msgstr "Class 2b verb (polowa)"
-
-#: mesolex/settings/languages.py:146
-msgid "Verbo clase 3 (kalaki)"
-msgstr "Class 3 verb (kalaki)"
-
-#: mesolex/settings/languages.py:150
-msgid "Verbo clase 4 (cho:ka)"
-msgstr "Class 4 verb (cho:ka)"
-
-#: mesolex/settings/languages.py:154
-msgid "Verbo clase 4-3 (ki:sa)"
-msgstr "Class 4-3 verb (ki:sa)"
-
-#: mesolex/settings/languages.py:158
-msgid "Verbo clase 4-3/3 (pata:ni)"
-msgstr "Class 4-3/3 verb (pata:ni)"
-
-#: mesolex/settings/languages.py:162
-msgid "Solamente no posesionado"
-msgstr "Only unpossessed"
-
-#: mesolex/settings/languages.py:166
-msgid "Posesión enajenable y no enajenable"
-msgstr "Either possessed or inalienably possessed"
-
-#: mesolex/settings/languages.py:170
-msgid "Posesión enajenable y no enajenable (no cambio de raíz)"
-msgstr "Either possessed or inalienably possessed (no change in stem)"
-
-#: mesolex/settings/languages.py:174
-msgid "Obligatoriamente posesionado"
-msgstr "Obligatorily possessed"
-
-#: mesolex/templates/home.html:12
-msgid "Bienvenido a Mesolex"
-msgstr "Welcome to Mesolex"
-
-#: mesolex/templates/home.html:14
-msgid "Recursos lexicosemánticos para lenguas mesoamericanas (en desarrollo)"
-msgstr "Lexicosemantic resources for Mesoamerican languages (under construction)"
-
-#: mesolex/templates/home.html:20
-msgid "Crédito: Ilustración por Inocencio Jiménez Chino"
-msgstr "Credit: Illustration by Inocencio Jiménez Chino"
-
-#: mesolex/templates/home.html:33
-msgid "Narrativas mesoamericanas"
-msgstr "Mesoamerican narratives"
-
-#: mesolex/templates/includes/header.html:14
-msgid "Activar la navegación"
-msgstr "Toggle navigation"
-
-#: narratives/forms.py:14
-msgid "Subgénero"
-msgstr "Subgenre"
-
-#: narratives/forms.py:15
-msgid "Nombre del contribuidor"
-msgstr "Contributor name"
-
-#: narratives/forms.py:16
-msgid "Pueblo de grabacion"
-msgstr "Recording village"
-
-#: narratives/forms.py:17
-msgid "Título"
-msgstr "Title"
-
-#: narratives/forms.py:27 narratives/templates/narratives/search.html:69
-msgid "Descripción"
-msgstr "Description"
-
-#: narratives/templates/narratives/search.html:34
-msgid "Metadatos basicos"
-msgstr "Basic metadata"
-
-#: narratives/templates/narratives/search.html:36
-msgid "Nombre de archivo"
-msgstr "Filename"
-
-#: narratives/templates/narratives/search.html:37
-msgid "Duración"
-msgstr "Duration"
-
-#: narratives/templates/narratives/search.html:38
-msgid "Tamaño"
-msgstr "Size"
-
-#: narratives/templates/narratives/search.html:39
-msgid "ISO 639-3 o Glottocode"
-msgstr "ISO 639-3 o Glottocode"
-
-#: narratives/templates/narratives/search.html:40
-msgid "Lugar de grabación"
-msgstr "Recording location"
-
-#: narratives/templates/narratives/search.html:41
-msgid "Fecha de grabación"
-msgstr "Recording date"
-
-#: narratives/templates/narratives/search.html:42
-msgid "Grabado por"
-msgstr "Recorded by"
-
-#: narratives/templates/narratives/search.html:43
-msgid "Formato de grabación"
-msgstr "Recording format"
-
-#: narratives/templates/narratives/search.html:44
-msgid "Grabadora"
-msgstr "Recorder"
-
-#: narratives/templates/narratives/search.html:45
-msgid "Micrófono"
-msgstr "Microphone"
-
-#: narratives/templates/narratives/search.html:48
-msgid "Contribuidores"
-msgstr "Contributors"
-
-#: narratives/templates/narratives/search.html:52
-#: narratives/templates/narratives/search.html:58
-msgid "Contribuidor"
-msgstr "Contributor"
-
-#: narratives/templates/narratives/search.html:63
-msgid "Título y descripción"
-msgstr "Title and description"
-
-#: narratives/templates/narratives/search.html:66
-msgid "Título indígena"
-msgstr "Indigenous title"
-
-#: narratives/templates/narratives/search.html:66
-msgid "Título inglés"
-msgstr "English title"
-
-#: narratives/templates/narratives/search.html:82
-msgid "Archivos"
-msgstr "Archives"
-
-#: query_builder/forms.py:23
+#: query_builder/forms.py:83
 msgid "Empieza con"
 msgstr "Begins with"
 
-#: query_builder/forms.py:24
+#: query_builder/forms.py:84
 msgid "Termina con"
 msgstr "Ends with"
 
-#: query_builder/forms.py:25
+#: query_builder/forms.py:85
 msgid "Contiene secuencia"
 msgstr "Contains sequence"
 
-#: query_builder/forms.py:26
+#: query_builder/forms.py:86
 msgid "Contiene palabra"
 msgstr "Contains word"
 
-#: query_builder/forms.py:27
+#: query_builder/forms.py:87
 msgid "Es exactamente igual a"
 msgstr "Equal to"
 
-#: query_builder/forms.py:28
+#: query_builder/forms.py:88
 msgid "Expresión regular"
 msgstr "Regular expression"
 
-#: query_builder/forms.py:29
+#: query_builder/forms.py:89
 msgid "Coincide con"
 msgstr "Matches"
 
-#: query_builder/forms.py:170
+#: query_builder/forms.py:230
 msgid "Expresión regular no válida."
 msgstr "Invalid regular expression."
-
-#: query_builder/templates/query_builder/includes/query_builder.html:24
-msgid "Buscar"
-msgstr "Search"
-
-#: query_builder/templates/query_builder/includes/query_builder.html:27
-msgid "Agrega filtro"
-msgstr "Add filter"
-
-#~ msgid "Significado definicional"
-#~ msgstr "Definitional meaning"
-
-#~ msgid "Significado contextual"
-#~ msgstr "Contextual meaning"
-
-#~ msgid "Todos significados"
-#~ msgstr "All meanings"
-
-#~ msgid "Citas"
-#~ msgstr "Examples"
-
-#~ msgid "Entrada léxica"
-#~ msgstr "Lexical entry"
-
-#~ msgid "Entradas léxicas"
-#~ msgstr "Lexical entries"
-
-#~ msgid "Incluye"
-#~ msgstr "Contains"
-
-#~ msgid "Idioma"
-#~ msgstr "Language"

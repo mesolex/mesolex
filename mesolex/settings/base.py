@@ -49,7 +49,6 @@ INSTALLED_APPS = [
 
     'lexicon',
     'mesolex_site',
-    'narratives',
     'query_builder',
     'util',
 ]

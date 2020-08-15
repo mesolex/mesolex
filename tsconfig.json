@@ -10,7 +10,6 @@
     "baseUrl": "./",
     "paths": {
       "lexicon/*": ["lexicon/static/jsx/search/*"],
-      "narratives/*": ["narratives/static/jsx/*"],
       "query-builder/*": ["query_builder/static/ts/*"],
       "plyr-src/*": ["node_modules/plyr/src/*"],
     }
