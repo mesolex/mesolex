@@ -2,6 +2,7 @@
 *.sw[po]
 *.py[co]
 __pycache__/
+.venv/
 .env
 deployment/roles/
 node_modules/
