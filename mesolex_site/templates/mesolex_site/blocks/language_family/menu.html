@@ -1,0 +1,7 @@
+{% load wagtailcore_tags %}
+
+<ul class="list-group list-group-flush">
+  {% for family in value.language_families %}
+    {% include_block family %}
+  {% endfor %}
+</ul>

@@ -7,9 +7,14 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.functions import Lower
 from modelcluster.fields import ParentalKey
-from wagtail.admin.edit_handlers import (FieldPanel, InlinePanel,
-                                         MultiFieldPanel, PageChooserPanel)
-from wagtail.core.fields import RichTextField
+from wagtail.admin.edit_handlers import (
+    FieldPanel,
+    InlinePanel,
+    MultiFieldPanel,
+    PageChooserPanel,
+    StreamFieldPanel,
+)
+from wagtail.core.fields import RichTextField, StreamField
 from wagtail.core.models import Orderable, Page
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
@@ -19,6 +24,7 @@ from lexicon.forms import formset_for_lg
 from lexicon.models import LexicalEntry
 from mesolex.config import DEFAULT_LANGUAGE, LANGUAGES
 from mesolex.utils import ForceProxyEncoder, get_default_data_for_lg
+from mesolex_site.blocks import LanguageFamilyMenuBlock
 
 
 class AbstractHomePage(TranslatablePage):
@@ -60,8 +66,13 @@ class HomePage(AbstractHomePage):
     to link out to individual language resource sections and
     host the main menu.
     """
+    language_family_menu = StreamField(
+        [('language_families', LanguageFamilyMenuBlock())],
+        blank=True,
+    )
     content_panels = AbstractHomePage.content_panels + [
-        InlinePanel('language_links', label='Language links'),
+        InlinePanel('language_links', label='Carousel language links'),
+        StreamFieldPanel('language_family_menu'),
     ]
 
 
@@ -98,13 +109,6 @@ class LanguageHomePage(AbstractHomePage):
         on_delete=models.SET_NULL,
         related_name='+',
     )
-    search = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-    )
     about = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
@@ -125,7 +129,6 @@ class LanguageHomePage(AbstractHomePage):
             PageChooserPanel('lexicons', 'mesolex_site.LanguageResourcePage'),
             PageChooserPanel('corpora', 'mesolex_site.LanguageResourcePage'),
             PageChooserPanel('grammar', 'mesolex_site.LanguageResourcePage'),
-            PageChooserPanel('search', 'mesolex_site.SearchPage'),
             PageChooserPanel('about', 'mesolex_site.LanguageResourcePage'),
         ]),
 
@@ -178,13 +181,13 @@ class SearchPage(TranslatablePage):
     ]
 
     def _search_query_data(
-        self,
-        formset,
-        lexical_entries=None,
-        display_entries=None,
-        query=None,
-        paginator=None,
-        result_page=1,
+            self,
+            formset,
+            lexical_entries=None,
+            display_entries=None,
+            query=None,
+            paginator=None,
+            result_page=1,
     ):
         return {
             'lexical_entries': display_entries,

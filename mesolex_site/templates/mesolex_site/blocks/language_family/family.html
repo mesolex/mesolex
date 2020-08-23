@@ -1,0 +1,11 @@
+{% load wagtailcore_tags %}
+
+<li class="list-group-item">
+  <h5>{{ value.name }}</h5>
+
+  <ul>
+    {% for block in value.languages %}
+      {% include_block block %}
+    {% endfor %}
+  </ul>
+</li>
