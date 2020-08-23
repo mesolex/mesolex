@@ -126,7 +126,7 @@ class LanguageHomePage(AbstractHomePage):
         ]),
 
         MultiFieldPanel([
-            PageChooserPanel('lexicons', 'mesolex_site.LanguageResourcePage'),
+            PageChooserPanel('lexicons', 'mesolex_site.SearchPage'),
             PageChooserPanel('corpora', 'mesolex_site.LanguageResourcePage'),
             PageChooserPanel('grammar', 'mesolex_site.LanguageResourcePage'),
             PageChooserPanel('about', 'mesolex_site.LanguageResourcePage'),
@@ -163,6 +163,8 @@ class LanguageResourcePage(TranslatablePage):
 
 
 class SearchPage(TranslatablePage):
+    body = RichTextField(blank=True, null=True)
+
     language_code = models.CharField(
         max_length=255,
         default=DEFAULT_LANGUAGE,
