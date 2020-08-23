@@ -80,20 +80,6 @@
       </div>
     </div>
   {% endwith %}
-
-  <nav class="navbar navbar-light navbar-expand-sm">
-    <div class="collapse navbar-collapse" id="languageNavLinks">
-      <ul class="navbar-nav mr-auto w-100">
-        {% for language_link in page.language_links.all %}
-          <li class="nav-item">
-            <a href="{{ language_link.language_page.url }}" class="nav-link">
-              {% firstof language_link.short_name language_link.headline language_link.language_page.headline %}
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
-  </nav>
 </div>
 
 <p class="small mt-2 text-right">
