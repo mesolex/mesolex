@@ -23,7 +23,7 @@
       data-ride="carousel"
       data-interval="7500"
     >
-      {% if language_links|length > 1 %}
+      {% if language_links|length > 0 %}
         <ol class="carousel-indicators">
           <li
             data-target="#language-links-carousel"
@@ -48,7 +48,7 @@
               <h1 class="display-4 lexicon-jumbotron__headline">
                 {{ page.headline }}
               </h1>
-              <p class="lead">
+              <p class="lead{% if language_links|length > 0 %} mb-5{% endif %}">
                 {{ page.sub_headline }}
               </p>
             </div>
@@ -70,7 +70,7 @@
                     {% firstof language_link.headline language_link.language_page.headline%}
                   </a>
                 </h1>
-                <p class="lead">
+                <p class="lead{% if language_links|length > 0 %} mb-5{% endif %}">
                   {% firstof language_link.sub_headline language_link.language_page.sub_headline%}
                 </p>
               </div>
