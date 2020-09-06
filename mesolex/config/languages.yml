@@ -1,6 +1,91 @@
 # Configuration for the languages supported by Mesolex.
 # Used to set up Django forms and front-end components.
 ---
+# Mayan languages :: maya1287
+chol1282:
+    label: Chol
+    code: chol1282
+    filterable_fields: []
+    global_filters: []
+    elasticsearch_fields: []
+    controlled_vocab_fields: []
+chuj1250:
+    label: Chuj
+    code: chuj1250
+    filterable_fields: []
+    global_filters: []
+    elasticsearch_fields: []
+    controlled_vocab_fields: []
+
+# Amuzgo-Mixtecan languages :: amuz1253
+## Mixtec
+yolo1241:
+    label: Mixteco de Yoloxóchitl
+    code: yolo1241
+    filterable_fields: []
+    global_filters: []
+    elasticsearch_fields: []
+    controlled_vocab_fields: []
+juxt1241:
+    label: Mixteco de San Martín Duraznos
+    code: juxt1241
+    filterable_fields: []
+    global_filters: []
+    elasticsearch_fields: []
+    controlled_vocab_fields: []
+magd1235:
+    label: Mixteco de Magdalena Peñascos
+    code: magd1235
+    filterable_fields: []
+    global_filters: []
+    elasticsearch_fields: []
+    controlled_vocab_fields: []
+mixt1247:
+    label: La reconstrucción del mixteco
+    code: mixt1247
+    filterable_fields: []
+    global_filters: []
+    elasticsearch_fields: []
+    controlled_vocab_fields: []
+xoch1238:
+    label: Mixteco de Xochapan
+    code: xoch1238
+    filterable_fields: []
+    global_filters: []
+    elasticsearch_fields: []
+    controlled_vocab_fields: []
+
+## Triqui
+trq:
+    label: Triqui de San Martín Itunyoso
+    code: sanm1298
+    filterable_fields:
+        - field: lemma
+          label: Entrada
+          terms:
+            - lemma
+    global_filters: []
+    elasticsearch_fields:
+        - field: precise_meaning
+          label: Significado preciso
+          terms:
+            - definitions_es
+        - field: illustrative_phrases
+          label: Frase ilustrativas
+          terms:
+            - quotations_trq
+            - quotations_es
+    controlled_vocab_fields: []
+chic1273:
+    label: Triqui de Chicahuaxtla
+    code: chic1273
+    filterable_fields: []
+    global_filters: []
+    elasticsearch_fields: []
+    controlled_vocab_fields: []
+
+# Uto-Aztecan :: utoa1244
+## Nahuatl
 azz:
     label: Náhuat de la Sierra Nororiental de Puebla
     code: azz
@@ -152,23 +237,26 @@ azz:
               label: Posesión enajenable y no enajenable (no cambio de raíz)
             - value: Oblig        
               label: Obligatoriamente posesionado
-trq:
-    label: Triqui de San Martín Itunyoso
-    code: trq
-    filterable_fields:
-        - field: lemma
-          label: Entrada
-          terms:
-            - lemma
+isth1242:
+    label: Náhuatl de Mecayapan
+    code: isth1242
+    filterable_fields: []
     global_filters: []
-    elasticsearch_fields:
-        - field: precise_meaning
-          label: Significado preciso
-          terms:
-            - definitions_es
-        - field: illustrative_phrases
-          label: Frase ilustrativas
-          terms:
-            - quotations_trq
-            - quotations_es
+    elasticsearch_fields: []
+    controlled_vocab_fields: []
+pipi1250:
+    label: Pipil (Nawat)
+    code: pipi1250
+    filterable_fields: []
+    global_filters: []
+    elasticsearch_fields: []
+    controlled_vocab_fields: []
+
+# Totonacan
+high1243:
+    label: Totonaco de Zongozotla
+    code: high1243
+    filterable_fields: []
+    global_filters: []
+    elasticsearch_fields: []
     controlled_vocab_fields: []
