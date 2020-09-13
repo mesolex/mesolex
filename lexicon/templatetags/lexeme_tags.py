@@ -35,6 +35,9 @@ def _get_querystring(form, filter_on='lemma'):
     """
     Generates the query string for a one-form LexicalSearchFilterFormset
     searching for ``form`` in the field ``filter_on``.
+
+    TODO: generate this by means of an actual instance of the mechanism
+    that generates URLs (as of Sept 13 2020, the formsets).
     """
     return (
         "?form-TOTAL_FORMS=1"
@@ -68,32 +71,26 @@ def _get_human_readable(language, category, item):
 
 @register.filter()
 def link_vnawa(text, base_url):
-    return re.sub(
+    return mark_safe(re.sub(
         r'<vnawa>(.+?)</vnawa>',
         r'<a href="%s%s" class="vnawa">\1</a>' % (
             base_url,
-            _get_querystring(r'\1'),
+            _get_querystring(urlquote(r'\1')),
         ),
         text,
-    )
+    ))
 
 
 @register.filter()
 def link_raiz(raiz, base_url):
-    return '<a href="%s%s" class="raiz">%s</a>' % (
-        base_url,
-        _get_querystring(urlquote(raiz), filter_on='root'),
-        raiz,
-    )
+    qs = _get_querystring(urlquote(raiz), filter_on='root')
+    return mark_safe(f'<a href="{base_url}{qs}" class="raiz">{raiz}</a>')
 
 
 @register.filter()
 def link_category(category, base_url):
-    return '<a href="%s%s" class="category">%s</a>' % (
-        base_url,
-        _get_querystring(urlquote(category), filter_on='category'),
-        category,
-    )
+    qs = _get_querystring(urlquote(category), filter_on='category')
+    return mark_safe(f'<a href="{base_url}{qs}" class="category">{category}</a>')
 
 
 @register.simple_tag
