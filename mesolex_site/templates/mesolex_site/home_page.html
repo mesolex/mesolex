@@ -27,7 +27,7 @@
         {% image page.header_img max-1024x768 as header_img %}
         <div class="carousel-item active">
           <div class="jumbotron lexicon-jumbotron mt-2 mb-2" style="background-image: url({{ header_img.url }})">
-            <div class="lexicon-jumbotron__inner">
+            <div class="lexicon-jumbotron__inner lexicon-jumbotron__inner--home">
               <h1 class="display-4 lexicon-jumbotron__headline">
                 {{ page.headline }}
               </h1>
@@ -47,7 +47,7 @@
             {% endif %}
             
             <div class="jumbotron lexicon-jumbotron mt-2 mb-2" style="background-image: url({{ header_img.url }})">
-              <div class="lexicon-jumbotron__inner">
+              <div class="lexicon-jumbotron__inner lexicon-jumbotron__inner--home">
                 <h1 class="display-4 lexicon-jumbotron__headline">
                   <a class="carousel-link stretched-link text-reset" href="{{ language_link.language_page.url }}">
                     {% firstof language_link.headline language_link.language_page.headline%}

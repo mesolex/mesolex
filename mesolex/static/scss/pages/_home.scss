@@ -39,8 +39,10 @@
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 
-  @include media-breakpoint-up(lg) {
-    padding-bottom: 3rem;
+  &--home {
+    @include media-breakpoint-up(lg) {
+      padding-bottom: 3rem;
+    }
   }
 }
 

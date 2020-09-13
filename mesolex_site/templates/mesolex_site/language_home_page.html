@@ -28,42 +28,32 @@
       <nav class="navbar navbar-light navbar-expand-sm">
         <div class="collapse navbar-collapse" id="languageNavLinks">
           <ul class="navbar-nav mr-auto w-100">
-            {% if page.lexicons %}
               <li class="nav-item">
-                <a href="{{ page.lexicons.url }}" class="nav-link">
+                <a href="{% firstof page.lexicons.url '#' %}" class="nav-link{% if not page.lexicons.url %} disabled{% endif %}">
                   Lexicons
                 </a>
               </li>
-            {% endif %}
-            {% if page.corpora %}
               <li class="nav-item">
-                <a href="{{ page.corpora.url }}" class="nav-link">
+                <a href="{% firstof page.corpora.url '#' %}" class="nav-link{% if not page.corpora.url %} disabled{% endif %}">
                   Corpora
                 </a>
               </li>
-            {% endif %}
-            {% if page.grammar %}
               <li class="nav-item">
-                <a href="{{ page.grammar.url }}" class="nav-link">
+                <a href="{% firstof page.grammar.url '#' %}" class="nav-link{% if not page.grammar.url %} disabled{% endif %}">
                   Grammar
                 </a>
               </li>
-            {% endif %}
-            {% if page.search %}
               <li class="nav-item">
-                <a href="{{ page.search.url }}" class="nav-link">
+                <a href="{% firstof page.search.url '#' %}" class="nav-link{% if not page.search.url %} disabled{% endif %}">
                   Search
                 </a>
               </li>
-            {% endif %}
-            {% if page.about %}
               <div class="dropdown-divider"></div>
               <li class="nav-item ml-auto">
-                <a href="{{ page.about.url }}" class="nav-link">
+                <a href="{% firstof page.about.url '#' %}" class="nav-link{% if not page.about.url %} disabled{% endif %}">
                   About
                 </a>
               </li>
-            {% endif %}
           </ul>
         </div>
       </nav>
