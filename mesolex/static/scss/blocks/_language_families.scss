@@ -1,0 +1,9 @@
+.block-language_families {
+  @include media-breakpoint-up(lg) {
+    position: absolute;
+    z-index: 1;
+    bottom: 1rem;
+    left: 0;
+    width: 100%;
+  }
+}
