@@ -24,40 +24,38 @@
       {{ page.sub_headline }}
     </p>
     
-    {% if page.lexicons or page.corpora or page.grammar or page.search or page.about %}
-      <nav class="navbar navbar-light navbar-expand-sm">
-        <div class="collapse navbar-collapse" id="languageNavLinks">
-          <ul class="navbar-nav mr-auto w-100">
-              <li class="nav-item">
-                <a href="{% firstof page.lexicons.url '#' %}" class="nav-link{% if not page.lexicons.url %} disabled{% endif %}">
-                  Lexicons
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% firstof page.corpora.url '#' %}" class="nav-link{% if not page.corpora.url %} disabled{% endif %}">
-                  Corpora
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% firstof page.grammar.url '#' %}" class="nav-link{% if not page.grammar.url %} disabled{% endif %}">
-                  Grammar
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% firstof page.search.url '#' %}" class="nav-link{% if not page.search.url %} disabled{% endif %}">
-                  Search
-                </a>
-              </li>
-              <div class="dropdown-divider"></div>
-              <li class="nav-item ml-auto">
-                <a href="{% firstof page.about.url '#' %}" class="nav-link{% if not page.about.url %} disabled{% endif %}">
-                  About
-                </a>
-              </li>
-          </ul>
-        </div>
-      </nav>
-    {% endif %}
+    <nav class="navbar navbar-light navbar-expand-sm">
+      <div class="collapse navbar-collapse" id="languageNavLinks">
+        <ul class="navbar-nav mr-auto w-100">
+            <li class="nav-item">
+              <a href="{% firstof page.lexicons.url '#' %}" class="nav-link{% if not page.lexicons.url %} disabled{% endif %}">
+                Lexicons
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% firstof page.corpora.url '#' %}" class="nav-link{% if not page.corpora.url %} disabled{% endif %}">
+                Corpora
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% firstof page.grammar.url '#' %}" class="nav-link{% if not page.grammar.url %} disabled{% endif %}">
+                Grammar
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% firstof page.search.url '#' %}" class="nav-link{% if not page.search.url %} disabled{% endif %}">
+                Search
+              </a>
+            </li>
+            <div class="dropdown-divider"></div>
+            <li class="nav-item ml-auto">
+              <a href="{% firstof page.about.url '#' %}" class="nav-link{% if not page.about.url %} disabled{% endif %}">
+                About
+              </a>
+            </li>
+        </ul>
+      </div>
+    </nav>
   </div>
 </div>
 
