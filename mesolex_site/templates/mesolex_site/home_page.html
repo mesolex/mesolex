@@ -15,7 +15,7 @@
 
 {% block content %}
 
-<div>
+<div class="language-links-container">
   {% with language_links=page.language_links.all|slice:":5" %}
     <div
       id="language-links-carousel"
@@ -23,23 +23,6 @@
       data-ride="carousel"
       data-interval="7500"
     >
-      {% if language_links|length > 0 %}
-        <ol class="carousel-indicators">
-          <li
-            data-target="#language-links-carousel"
-            data-slide-to="0"
-            class="bg-dark active"
-          ></li>
-          {% for language_link in language_links %}
-            <li
-              data-target="#language-links-carousel"
-              data-slide-to="{{ forloop.counter }}"
-              class="bg-dark"
-            ></li>
-          {% endfor %}
-        </ol>
-      {% endif %}
-
       <div class="carousel-inner">
         {% image page.header_img max-1024x768 as header_img %}
         <div class="carousel-item active">
@@ -48,7 +31,7 @@
               <h1 class="display-4 lexicon-jumbotron__headline">
                 {{ page.headline }}
               </h1>
-              <p class="lead{% if language_links|length > 0 %} mb-5{% endif %}">
+              <p class="lead">
                 {{ page.sub_headline }}
               </p>
             </div>
@@ -70,7 +53,7 @@
                     {% firstof language_link.headline language_link.language_page.headline%}
                   </a>
                 </h1>
-                <p class="lead{% if language_links|length > 0 %} mb-5{% endif %}">
+                <p class="lead">
                   {% firstof language_link.sub_headline language_link.language_page.sub_headline%}
                 </p>
               </div>
@@ -80,13 +63,13 @@
       </div>
     </div>
   {% endwith %}
+
+  {% include_block page.language_family_menu %}
 </div>
 
 <p class="small mt-2 text-right">
     {% trans 'Crédito: Ilustración por Inocencio Jiménez Chino' %}
 </p>
-
-{% include_block page.language_family_menu %}
 
 {{ page.body|richtext }}
 

@@ -1,5 +1,8 @@
 {% load wagtailcore_tags %}
 
-<li>
-  <a href="{{ value.language_page.url }}">{% firstof value.name value.language_page.title %}</a>
-</li>
+<a
+  href="{{ value.language_page.url }}"
+  class="dropdown-item"
+>
+  {% firstof value.name value.language_page.title %}
+</a>

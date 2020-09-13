@@ -1,6 +1,6 @@
 {% load wagtailcore_tags %}
 
-<ul class="list-group list-group-flush">
+<ul class="language-links-nav nav justify-content-left flex-column flex-lg-row">
   {% for family in value.language_families %}
     {% include_block family %}
   {% endfor %}
