@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-20 14:15+0000\n"
+"POT-Creation-Date: 2020-09-20 15:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,281 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:3
+msgid "Chol"
+msgstr "Chol"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:4
+msgid "Chuj"
+msgstr "Chuj"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:5
+msgid "Mixteco de Yoloxóchitl"
+msgstr "Yoloxóchitl Mixtec"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:6
+msgid "Mixteco de San Martín Duraznos"
+msgstr "San Martín Duraznos Mixtec"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:7
+msgid "Mixteco de Magdalena Peñascos"
+msgstr "Magdalena Peñascos Mixtec"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:8
+msgid "La reconstrucción del mixteco"
+msgstr "Historical Mixtec"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:9
+msgid "Mixteco de Xochapan"
+msgstr "Xochapan Mixtec"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:10
+msgid "Triqui de San Martín Itunyoso"
+msgstr "San Martín Itunyoso Triqui"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:11
+#: mesolex_site/templates/mesolex_site/language_messages.js:19
+msgid "Entrada"
+msgstr "headword"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:12
+#: mesolex_site/templates/mesolex_site/language_messages.js:25
+msgid "Significado preciso"
+msgstr "Exact meaning"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:13
+#: mesolex_site/templates/mesolex_site/language_messages.js:27
+msgid "Frase ilustrativas"
+msgstr "Illustrative phrases"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:14
+msgid "Triqui de Chicahuaxtla"
+msgstr "Chicahuaxtla Triqui"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:15
+msgid "Náhuat de la Sierra Nororiental de Puebla"
+msgstr "Sierra Nororiental de Puebla Nahuat"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:16
+msgid "Neutralizar cantidad vocálica"
+msgstr "Neutralize vowel length"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:17
+msgid "Activar flexibilidad ortográfica"
+msgstr "Activate flexible orthography"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:18
+msgid "Sólo mostrar entradas con sonidos"
+msgstr "Only show entries with accompanying sounds"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:20
+msgid "Glosa"
+msgstr "Gloss"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:21
+msgid "Raiz"
+msgstr "Root"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:22
+msgid "Campo semántico"
+msgstr "semantic field"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:23
+msgid "Categoría gramatical"
+msgstr "grammatical category"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:24
+msgid "Inflexión"
+msgstr "inflection"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:26
+msgid "Significado extendido"
+msgstr "Extended meaning"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:28
+msgid "Búsqueda exhaustiva"
+msgstr "Full search"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:29
+msgid "Adjetivo"
+msgstr "Adjective"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:30
+msgid "Adverbio"
+msgstr "Adverb"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:31
+msgid "Auxiliar"
+msgstr "Auxiliary"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:32
+msgid "Habla-de-niños"
+msgstr "Baby talk"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:33
+msgid "Clítico"
+msgstr "Clitic"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:34
+msgid "Conjunción"
+msgstr "Conjunction"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:35
+msgid "Cópula"
+msgstr "Copula"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:36
+msgid "Demostrativo"
+msgstr "Demonstrative"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:37
+msgid "Direccional"
+msgstr "Directional"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:38
+msgid "Estativo"
+msgstr "Stative"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:39
+msgid "Interjección"
+msgstr "Interjection"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:40
+msgid "Interrogativo"
+msgstr "Interrogative"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:41
+msgid "Locativo"
+msgstr "Locative"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:42
+msgid "Modal"
+msgstr "Modal"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:43
+msgid "Muletilla"
+msgstr "Tag"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:44
+msgid "Negación"
+msgstr "Negation"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:45
+msgid "Prefijo"
+msgstr "Prefix"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:46
+msgid "Preposición"
+msgstr "Preposition"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:47
+msgid "Pronombre"
+msgstr "Pronoun"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:48
+msgid "Saludo"
+msgstr "Greeting"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:49
+msgid "Subordinador"
+msgstr "Subordinator"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:50
+msgid "Sufijo"
+msgstr "Suffix"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:51
+msgid "Sustantivo"
+msgstr "Substantive"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:52
+msgid "Terminación-aspectual"
+msgstr "Aspectual ending"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:53
+msgid "Topónimo"
+msgstr "Toponym"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:54
+msgid "Verbo-impersonal"
+msgstr "Impersonal verb"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:55
+msgid "Verbo-intransitivo"
+msgstr "Intransitive verb"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:56
+msgid "Verbo-transitivo"
+msgstr "Transitive verb"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:57
+msgid "Verbo-bitransitivo"
+msgstr "Bitransitive verb"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:58
+msgid "Verbo-tritransitivo"
+msgstr "Tritransitive verb"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:59
+msgid "Vocativo"
+msgstr "Vocative"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:60
+msgid "Verbo clase 1 (kwa)"
+msgstr "Class 1 verb (kwa)"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:61
+msgid "Verbo clase 2a (pale:wia)"
+msgstr "Class 2a verb (pale:wia)"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:62
+msgid "Verbo clase 2b (polowa)"
+msgstr "Class 2b verb (polowa)"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:63
+msgid "Verbo clase 3 (kalaki)"
+msgstr "Class 3 verb (kalaki)"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:64
+msgid "Verbo clase 4 (cho:ka)"
+msgstr "Class 4 verb (cho:ka)"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:65
+msgid "Verbo clase 4-3 (ki:sa)"
+msgstr "Class 4-3 verb (ki:sa)"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:66
+msgid "Verbo clase 4-3/3 (pata:ni)"
+msgstr "Class 4-3/3 verb (pata:ni)"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:67
+msgid "Solamente no posesionado"
+msgstr "Only unpossessed"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:68
+msgid "Posesión enajenable y no enajenable"
+msgstr "Alienable and non-alienable possession"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:69
+msgid "Posesión enajenable y no enajenable (no cambio de raíz)"
+msgstr "Alienable and non-alienable possession (no change of root)"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:70
+msgid "Obligatoriamente posesionado"
+msgstr "Intrinsically possessed"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:71
+msgid "Náhuatl de Mecayapan"
+msgstr "Mecayapan Nahuatl"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:72
+msgid "Pipil (Nawat)"
+msgstr "Pipil (Nawat)"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:73
+msgid "Totonaco de Zongozotla"
+msgstr "Zongozotla Totonac"
 
 #: query_builder/static/jsx/components/filter-selector.jsx:30
 #: query_builder/static/jsx/util.jsx:43
@@ -119,32 +394,9 @@ msgstr "flex. orth."
 msgid "ítem"
 msgstr "item"
 
-#~ msgid "Activar flexibilidad ortográfica"
-#~ msgstr "Activate flexible orthography"
-
-#~ msgid "Sólo mostrar entradas con sonidos"
-#~ msgstr "Only show entries with accompanying sounds"
-
-#~ msgid "Neutralizar cantidad vocálica"
-#~ msgstr "Neutralize vowel length"
-
-#~ msgid "Diccionario"
-#~ msgstr "Dictionary"
-
-#~ msgid "entrada"
-#~ msgstr "headword"
-
-#~ msgid "glosa"
-#~ msgstr "gloss"
+#: query_builder/static/ts/components/query-builder-form.tsx:304
+msgid "Ingrese la consulta aquí"
+msgstr "Enter query here"
 
 #~ msgid "raiz"
 #~ msgstr "root"
-
-#~ msgid "campo semántico"
-#~ msgstr "semantic field"
-
-#~ msgid "categoría gramatical"
-#~ msgstr "grammatical category"
-
-#~ msgid "inflexión"
-#~ msgstr "inflection"

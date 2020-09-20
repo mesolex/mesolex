@@ -46,7 +46,7 @@ export const humanReadableFilters = ({
   };
 
   const filterableFieldsDict: { [fieldName: string]: string } = _.chain(filterableFields)
-    .map(({ field, label }) => [field, label])
+    .map(({ field, label }) => [field, gettext(label)])
     .fromPairs()
     .value();
 

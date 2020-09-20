@@ -1,0 +1,3 @@
+/* global gettext */
+{% for s in translation_strings %}
+gettext('{{ s }}');{% endfor %}

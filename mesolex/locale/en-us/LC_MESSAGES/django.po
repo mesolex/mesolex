@@ -101,7 +101,7 @@ msgstr "Illustrative phrases"
 
 #: mesolex_site/templates/mesolex_site/language_messages.txt:14
 msgid "Triqui de Chicahuaxtla"
-msgstr ""
+msgstr "Chicahuaxtla Triqui"
 
 #: mesolex_site/templates/mesolex_site/language_messages.txt:15
 msgid "Náhuat de la Sierra Nororiental de Puebla"
@@ -189,7 +189,7 @@ msgstr "Directional"
 
 #: mesolex_site/templates/mesolex_site/language_messages.txt:38
 msgid "Estativo"
-msgstr "Static"
+msgstr "Stative"
 
 #: mesolex_site/templates/mesolex_site/language_messages.txt:39
 msgid "Interjección"
@@ -205,7 +205,7 @@ msgstr "Locative"
 
 #: mesolex_site/templates/mesolex_site/language_messages.txt:42
 msgid "Modal"
-msgstr "Model"
+msgstr "Modal"
 
 #: mesolex_site/templates/mesolex_site/language_messages.txt:43
 msgid "Muletilla"

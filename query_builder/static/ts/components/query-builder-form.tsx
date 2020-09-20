@@ -69,7 +69,7 @@ const FieldSelect = React.forwardRef((
     {
       _.map(
         props.fields,
-        ({ field, label }) => <option value={field} key={field}>{ label }</option>,
+        ({ field, label }) => <option value={field} key={field}>{ gettext(label) }</option>,
       )
     }
   </Form.Control>
@@ -295,13 +295,13 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
               >
                 {_.map(
                   controlledVocabFieldItems,
-                  ({ label, value }) => <option key={label} value={value}>{ label }</option>,
+                  ({ label, value }) => <option key={label} value={value}>{ gettext(label) }</option>,
                 )}
               </Form.Control>
             )
             : (
               <Form.Control
-                placeholder="Query string"
+                placeholder={gettext('Ingrese la consulta aquí')}
                 name={`form-${props.index}-query_string`}
                 onChange={(event): void => setQueryString(event.target.value)}
                 type="text"
