@@ -1,0 +1,73 @@
+{% load i18n %}
+
+{% trans "Chol" %}
+{% trans "Chuj" %}
+{% trans "Mixteco de Yoloxóchitl" %}
+{% trans "Mixteco de San Martín Duraznos" %}
+{% trans "Mixteco de Magdalena Peñascos" %}
+{% trans "La reconstrucción del mixteco" %}
+{% trans "Mixteco de Xochapan" %}
+{% trans "Triqui de San Martín Itunyoso" %}
+{% trans "Entrada" %}
+{% trans "Significado preciso" %}
+{% trans "Frase ilustrativas" %}
+{% trans "Triqui de Chicahuaxtla" %}
+{% trans "Náhuat de la Sierra Nororiental de Puebla" %}
+{% trans "Neutralizar cantidad vocálica" %}
+{% trans "Activar flexibilidad ortográfica" %}
+{% trans "Sólo mostrar entradas con sonidos" %}
+{% trans "Entrada" %}
+{% trans "Glosa" %}
+{% trans "Raiz" %}
+{% trans "Campo semántico" %}
+{% trans "Categoría gramatical" %}
+{% trans "Inflexión" %}
+{% trans "Significado preciso" %}
+{% trans "Significado extendido" %}
+{% trans "Frase ilustrativas" %}
+{% trans "Búsqueda exhaustiva" %}
+{% trans "Adjetivo" %}
+{% trans "Adverbio" %}
+{% trans "Auxiliar" %}
+{% trans "Habla-de-niños" %}
+{% trans "Clítico" %}
+{% trans "Conjunción" %}
+{% trans "Cópula" %}
+{% trans "Demostrativo" %}
+{% trans "Direccional" %}
+{% trans "Estativo" %}
+{% trans "Interjección" %}
+{% trans "Interrogativo" %}
+{% trans "Locativo" %}
+{% trans "Modal" %}
+{% trans "Muletilla" %}
+{% trans "Negación" %}
+{% trans "Prefijo" %}
+{% trans "Preposición" %}
+{% trans "Pronombre" %}
+{% trans "Saludo" %}
+{% trans "Subordinador" %}
+{% trans "Sufijo" %}
+{% trans "Sustantivo" %}
+{% trans "Terminación-aspectual" %}
+{% trans "Topónimo" %}
+{% trans "Verbo-impersonal" %}
+{% trans "Verbo-intransitivo" %}
+{% trans "Verbo-transitivo" %}
+{% trans "Verbo-bitransitivo" %}
+{% trans "Verbo-tritransitivo" %}
+{% trans "Vocativo" %}
+{% trans "Verbo clase 1 (kwa)" %}
+{% trans "Verbo clase 2a (pale:wia)" %}
+{% trans "Verbo clase 2b (polowa)" %}
+{% trans "Verbo clase 3 (kalaki)" %}
+{% trans "Verbo clase 4 (cho:ka)" %}
+{% trans "Verbo clase 4-3 (ki:sa)" %}
+{% trans "Verbo clase 4-3/3 (pata:ni)" %}
+{% trans "Solamente no posesionado" %}
+{% trans "Posesión enajenable y no enajenable" %}
+{% trans "Posesión enajenable y no enajenable (no cambio de raíz)" %}
+{% trans "Obligatoriamente posesionado" %}
+{% trans "Náhuatl de Mecayapan" %}
+{% trans "Pipil (Nawat)" %}
+{% trans "Totonaco de Zongozotla" %}

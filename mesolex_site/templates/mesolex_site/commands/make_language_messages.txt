@@ -1,0 +1,3 @@
+{% verbatim %}{% load i18n %}{% endverbatim %}
+{% for s in translation_strings %}
+{% templatetag openblock %} trans "{{ s }}" {% templatetag closeblock %}{% endfor %}
