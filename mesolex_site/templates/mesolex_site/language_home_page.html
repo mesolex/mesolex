@@ -24,11 +24,11 @@
       {{ page.sub_headline }}
     </p>
     
-    <nav class="navbar navbar-light navbar-expand-sm">
+    <nav class="navbar navbar-light navbar-expand-sm p-0">
       <div class="collapse navbar-collapse" id="languageNavLinks">
         <ul class="navbar-nav mr-auto w-100">
             <li class="nav-item">
-              <a href="{% firstof page.lexicons.url '#' %}" class="nav-link{% if not page.lexicons.url %} disabled{% endif %}">
+              <a href="{% firstof page.lexicons.url '#' %}" class="nav-link pl-0{% if not page.lexicons.url %} disabled{% endif %}">
                 Lexicons
               </a>
             </li>
