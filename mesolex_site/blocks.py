@@ -3,6 +3,7 @@ from wagtail.documents import blocks as document_blocks
 
 
 # Site homepage language family menu structural blocks
+
 class LanguageLinkBlock(blocks.StructBlock):
     name = blocks.CharBlock(required=False)
     language_page = blocks.PageChooserBlock(page_type='mesolex_site.LanguageHomePage')
@@ -32,6 +33,8 @@ class LanguageFamilyMenuBlock(blocks.StructBlock):
 
 # Language page resource menu structural blocks
 
+# NOTE: this block accepts _completely empty_ values for all fields,
+# meaning it can be used for placeholder links that go nowhere.
 class ResourceLinkBlock(blocks.StructBlock):
     name = blocks.CharBlock(required=False)
     resource_page = blocks.PageChooserBlock(
