@@ -24,7 +24,7 @@ from lexicon.forms import formset_for_lg
 from lexicon.models import LexicalEntry
 from mesolex.config import DEFAULT_LANGUAGE, LANGUAGES
 from mesolex.utils import ForceProxyEncoder, get_default_data_for_lg
-from mesolex_site.blocks import LanguageFamilyMenuBlock
+from mesolex_site.blocks import LanguageFamilyMenuBlock, ResourceLinkBlock
 
 
 class AbstractHomePage(TranslatablePage):
@@ -88,27 +88,19 @@ class LanguageHomePage(AbstractHomePage):
     ]
 
     # Dedicated links to the core language resource types.
-    lexicons = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
+    lexical_resources = StreamField(
+        [('lexical_resource_link', ResourceLinkBlock())],
         blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
     )
-    corpora = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
+    corpus_resources = StreamField(
+        [('corpus_resource_link', ResourceLinkBlock())],
         blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
     )
-    grammar = models.ForeignKey(
-        'wagtailcore.Page',
-        null=True,
+    grammatical_resources = StreamField(
+        [('grammatical_resource_link', ResourceLinkBlock())],
         blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
     )
+
     about = models.ForeignKey(
         'wagtailcore.Page',
         null=True,
@@ -126,9 +118,9 @@ class LanguageHomePage(AbstractHomePage):
         ]),
 
         MultiFieldPanel([
-            PageChooserPanel('lexicons', 'mesolex_site.SearchPage'),
-            PageChooserPanel('corpora', 'mesolex_site.LanguageResourcePage'),
-            PageChooserPanel('grammar', 'mesolex_site.LanguageResourcePage'),
+            StreamFieldPanel('lexical_resources'),
+            StreamFieldPanel('corpus_resources'),
+            StreamFieldPanel('grammatical_resources'),
             PageChooserPanel('about', 'mesolex_site.LanguageResourcePage'),
         ]),
 
