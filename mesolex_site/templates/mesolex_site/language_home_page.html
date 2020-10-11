@@ -23,39 +23,89 @@
     <p class="lead">
       {{ page.sub_headline }}
     </p>
-    
-    <nav class="navbar navbar-light navbar-expand-sm p-0">
-      <div class="collapse navbar-collapse" id="languageNavLinks">
-        <ul class="navbar-nav mr-auto w-100">
-            <li class="nav-item">
-              <a href="{% firstof page.lexicons.url '#' %}" class="nav-link pl-0{% if not page.lexicons.url %} disabled{% endif %}">
-                Lexicons
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{% firstof page.corpora.url '#' %}" class="nav-link{% if not page.corpora.url %} disabled{% endif %}">
-                Corpora
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{% firstof page.grammar.url '#' %}" class="nav-link{% if not page.grammar.url %} disabled{% endif %}">
-                Grammar
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{% firstof page.search.url '#' %}" class="nav-link{% if not page.search.url %} disabled{% endif %}">
-                Search
-              </a>
-            </li>
-            <div class="dropdown-divider"></div>
-            <li class="nav-item ml-auto">
-              <a href="{% firstof page.about.url '#' %}" class="nav-link{% if not page.about.url %} disabled{% endif %}">
-                About
-              </a>
-            </li>
-        </ul>
-      </div>
-    </nav>
+
+    <ul class="nav justify-content-between">
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          data-toggle="dropdown"
+          href="#"
+          role="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          {% trans 'Léxicos' %}
+        </a>
+
+        <div class="dropdown-menu">
+          {% for block in page.lexical_resources %}
+            {% include_block block %}
+          {% endfor %}
+
+          {% if page.lexical_resources|length == 0 %}
+            <span class="dropdown-item disabled">
+              {% trans '¡Próximamente!' %}
+            </span>
+          {% endif %}
+        </div>
+      </li>
+
+       <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          data-toggle="dropdown"
+          href="#"
+          role="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          {% trans 'Corpora' %}
+        </a>
+
+        <div class="dropdown-menu">
+          {% for block in page.corpus_resources %}
+            {% include_block block %}
+          {% endfor %}
+
+          {% if page.corpus_resources|length == 0 %}
+            <span class="dropdown-item disabled">
+              {% trans '¡Próximamente!' %}
+            </span>
+          {% endif %}
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          data-toggle="dropdown"
+          href="#"
+          role="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          {% trans 'Gramáticas' %}
+        </a>
+
+        <div class="dropdown-menu">
+          {% for block in page.grammatical_resources %}
+            {% include_block block %}
+          {% endfor %}
+
+          {% if page.grammatical_resources|length == 0 %}
+            <span class="dropdown-item disabled">
+              {% trans '¡Próximamente!' %}
+            </span>
+          {% endif %}
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a href="{% firstof page.about.url '#' %}" class="nav-link{% if not page.about.url %} disabled{% endif %}">
+          {% trans 'Acerca de esta página' %}
+        </a>
+      </li>
+    </ul>
   </div>
 </div>
 

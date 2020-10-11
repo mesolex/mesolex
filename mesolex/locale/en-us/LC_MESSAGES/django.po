@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-20 15:08+0000\n"
+"POT-Creation-Date: 2020-10-11 15:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,8 +44,12 @@ msgstr "English"
 msgid "Activar la navegación"
 msgstr "Toggle navigation"
 
+#: mesolex_site/management/commands/make_language_messages.py:35
+msgid "Genere mensajes de traducción para datos de idiomas."
+msgstr "Create translation messages for language data."
+
 #: mesolex_site/templates/mesolex_site/home_page.html:71
-#: mesolex_site/templates/mesolex_site/language_home_page.html:63
+#: mesolex_site/templates/mesolex_site/language_home_page.html:113
 msgid "Crédito: Ilustración por Inocencio Jiménez Chino"
 msgstr "Credit: Illustration by Inocencio Jiménez Chino"
 
@@ -56,6 +60,28 @@ msgstr "Languages"
 #: mesolex_site/templates/mesolex_site/includes/language_home_page_header.html:16
 msgid "Recursos"
 msgstr "Resources"
+
+#: mesolex_site/templates/mesolex_site/language_home_page.html:37
+msgid "Léxicos"
+msgstr "Lexicons"
+
+#: mesolex_site/templates/mesolex_site/language_home_page.html:47
+#: mesolex_site/templates/mesolex_site/language_home_page.html:72
+#: mesolex_site/templates/mesolex_site/language_home_page.html:97
+msgid "¡Próximamente!"
+msgstr "Coming soon!"
+
+#: mesolex_site/templates/mesolex_site/language_home_page.html:62
+msgid "Corpora"
+msgstr "Corpora"
+
+#: mesolex_site/templates/mesolex_site/language_home_page.html:87
+msgid "Gramáticas"
+msgstr "Grammars"
+
+#: mesolex_site/templates/mesolex_site/language_home_page.html:105
+msgid "Acerca de esta página"
+msgstr "About"
 
 #: mesolex_site/templates/mesolex_site/language_messages.txt:3
 msgid "Chol"

@@ -1,0 +1,8 @@
+{% load wagtailcore_tags %}
+
+<a
+  href="{% firstof value.resource_page.url value.document.url '#' %}"
+  class="dropdown-item{% if not value.resource_page and not value.document %} disabled{% endif %}"
+>
+  {% firstof value.name value.resource_page.title value.document.title '...' %}
+</a>
