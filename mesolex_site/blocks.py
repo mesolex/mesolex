@@ -1,6 +1,8 @@
 from wagtail.core import blocks
+from wagtail.documents import blocks as document_blocks
 
 
+# Site homepage language family menu structural blocks
 class LanguageLinkBlock(blocks.StructBlock):
     name = blocks.CharBlock(required=False)
     language_page = blocks.PageChooserBlock(page_type='mesolex_site.LanguageHomePage')
@@ -26,3 +28,21 @@ class LanguageFamilyMenuBlock(blocks.StructBlock):
     class Meta:
         icon = 'site'
         template = 'mesolex_site/blocks/language_family/menu.html'
+
+
+# Language page resource menu structural blocks
+
+class ResourceLinkBlock(blocks.StructBlock):
+    name = blocks.CharBlock(required=False)
+    resource_page = blocks.PageChooserBlock(
+        page_type=[
+            'mesolex_site.LanguageResourcePage',
+            'mesolex_site.SearchPage',
+        ],
+        required=False,
+    )
+    document = document_blocks.DocumentChooserBlock(required=False)
+
+    class Meta:
+        icon = 'doc-full'
+        template = 'mesolex_site/blocks/language_resources/resource_link_block.html'
