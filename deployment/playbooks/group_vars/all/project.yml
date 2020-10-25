@@ -2,10 +2,10 @@
 project_name: mesolex
 python_version: 3.7
 pg_version: 11
+
 es_version: 7.8.0
 es_use_repository: false
 es_custom_package_url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-oss-7.8.0-amd64.deb"
-
 es_instance_name: mesolex
 es_enable_xpack: false
 es_config:
@@ -19,6 +19,7 @@ root_dir: "/var/www/{{ project_name }}"
 source_dir: "{{ root_dir }}/src"
 venv_dir: "{{ root_dir }}/env"
 project_user: "{{ project_name }}"
+client_max_body_size: "50M"
 
 db_password: "{{ SECRET_DB_PASSWORD }}"
 app_minions: "{{ groups['web'] | union(groups['worker']) }}"
