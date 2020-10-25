@@ -2,8 +2,6 @@
 env_name: staging
 repo_branch: develop
 domain: staging.mesolex.org
-redirect_domains:
-  - mesolex.nmashton.work
 letsencrypt_domains:
   - staging.mesolex.org
 
