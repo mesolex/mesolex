@@ -2,7 +2,7 @@
 
 <a
   href="{% firstof value.resource_page.url value.document.url '#' %}"
-  class="dropdown-item{% if not value.resource_page and not value.document %} disabled{% endif %}"
+  class="dropdown-item dropdown-item--lg-resource{% if not value.resource_page and not value.document %} disabled{% endif %}"
 >
   {% firstof value.name value.resource_page.title value.document.title '...' %}
 </a>
