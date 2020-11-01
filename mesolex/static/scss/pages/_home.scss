@@ -13,22 +13,27 @@ main {
 }
 
 .lexicon-jumbotron {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
   background-size: cover;
   background-repeat: no-repeat;
   background-color: rgb(200, 220, 220);
   background-position: center 0;
-  padding: 18rem 0 0 0;
+  padding: 0;
+  min-height: 28rem;
 
   @include media-breakpoint-down(lg) {
-    padding-top: 16rem;
+    min-height: 26rem;
   }
 
   @include media-breakpoint-down(md) {
-    padding-top: 14rem;
+    min-height: 24rem;
   }
 
   @include media-breakpoint-down(sm) {
-    padding-top: 12rem;
+    min-height: 20rem;
   }
 }
 
