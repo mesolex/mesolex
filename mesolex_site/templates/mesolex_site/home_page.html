@@ -16,7 +16,7 @@
 {% block content %}
 
 <div class="language-links-container">
-  {% with language_links=page.language_links.all|slice:":5" %}
+  {% with language_links=page.language_links.all %}
     <div
       id="language-links-carousel"
       class="carousel slide carousel-fade"
