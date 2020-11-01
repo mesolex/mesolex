@@ -1,9 +1,17 @@
 {% load i18n %}
 {% load wagtailtrans_tags %}
+{% load mesolex_utils %}
 
 <header class="bg-dark">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top container">
         <a class="navbar-brand" href="/">Mesolex</a>
+
+        {% get_language_homepage as language_homepage %}
+        {% if language_homepage %}
+            <span class="navbar-text d-none d-md-inline">
+                {{ language_homepage.title }}
+            </span>
+        {% endif %}
 
         <button
             class="navbar-toggler"
