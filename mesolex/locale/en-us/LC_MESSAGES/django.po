@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-11 15:22+0000\n"
+"POT-Creation-Date: 2020-11-01 14:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -356,6 +356,10 @@ msgstr "Pipil (Nawat)"
 #: mesolex_site/templates/mesolex_site/language_messages.txt:73
 msgid "Totonaco de Zongozotla"
 msgstr "Zongozotla Totonac"
+
+#: mesolex_site/templates/mesolex_site/language_messages.txt:74
+msgid "Totonaco de Ozelonacaxtla"
+msgstr "Ozelonacaxtla Totonac"
 
 #: mesolex_site/templates/mesolex_site/search_page.html:24
 #, fuzzy, python-format

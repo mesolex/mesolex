@@ -71,3 +71,4 @@ gettext('Obligatoriamente posesionado');
 gettext('Náhuatl de Mecayapan');
 gettext('Pipil (Nawat)');
 gettext('Totonaco de Zongozotla');
+gettext('Totonaco de Ozelonacaxtla');

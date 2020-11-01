@@ -260,3 +260,10 @@ high1243:
     global_filters: []
     elasticsearch_fields: []
     controlled_vocab_fields: []
+ozln:
+    label: Totonaco de Ozelonacaxtla
+    code: ozln
+    filterable_fields: []
+    global_filters: []
+    elasticsearch_fields: []
+    controlled_vocab_fields: []

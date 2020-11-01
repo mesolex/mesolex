@@ -71,3 +71,4 @@
 {% trans "Náhuatl de Mecayapan" %}
 {% trans "Pipil (Nawat)" %}
 {% trans "Totonaco de Zongozotla" %}
+{% trans "Totonaco de Ozelonacaxtla" %}
