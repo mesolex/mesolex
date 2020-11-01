@@ -71,11 +71,16 @@ def _get_human_readable(language, category, item):
 
 @register.filter()
 def link_vnawa(text, base_url):
+    # NOTE: we're implicitly trusting our collaborators to not deliberately
+    # inject malicious content here.
+    #
+    # TODO: figure out a method of string substitution that doesn't have
+    # this weakness.
     return mark_safe(re.sub(
         r'<vnawa>(.+?)</vnawa>',
         r'<a href="%s%s" class="vnawa">\1</a>' % (
             base_url,
-            _get_querystring(urlquote(r'\1')),
+            _get_querystring(r'\1'),
         ),
         text,
     ))
