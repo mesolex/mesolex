@@ -13,7 +13,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import Octicon from 'react-component-octicons';
 
 import FilterSelector from './filter-selector';
 import {
@@ -328,7 +327,7 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
                 onClick={props.onDelete}
                 variant="outline-secondary"
               >
-                <Octicon name="x" />
+                <span aria-hidden="true">&times;</span>
               </Button>
             </InputGroup.Append>
           )
