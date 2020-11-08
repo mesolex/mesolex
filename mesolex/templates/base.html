@@ -21,7 +21,8 @@
     <meta property="og:site_name" content="Mesolex" />
     <meta property="og:image" content="{% block og-image %}{% static 'img/ATC.jpg' as og_image %}{% build_absolute_uri og_image %}{% endblock og-image %}" />
 
-    <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'dist/site.bundle.css' %}"/>
+
     {% block extra-head %}
     {% endblock extra-head %}
 </head>
@@ -35,9 +36,8 @@
     {% include 'includes/footer.html' %}
 
     <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
-    <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dist/vendors.bundle.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dist/site.bundle.js' %}"></script>
 
     <script id="js-init" type="text/json">
     {

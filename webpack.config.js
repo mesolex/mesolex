@@ -1,5 +1,6 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   devtool: 'eval-source-map',
@@ -43,7 +44,7 @@ module.exports = {
     ],
   },
   entry: {
-    site: path.join(__dirname, 'mesolex/static/scss/index.scss'),
+    site: path.join(__dirname, 'mesolex/static/ts/index.ts'),
     dataSearch: path.join(__dirname, 'mesolex_site/static/mesolex_site/ts/search.tsx'),
   },
   output: {
@@ -52,19 +53,14 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      cacheGroups: {
-        vendors: {
-          name: 'vendors',
-          chunks: 'initial',
-          minChunks: 2,
-          minSize: 0,
-        },
-      },
+      name: 'vendors',
+      chunks: 'all',
     },
   },
   resolve: {
     extensions: ['.js', '.jsx', '.scss', '.ts', '.tsx'],
     alias: {
+      mesolex: path.resolve(__dirname, 'mesolex/static/'),
       lexicon: path.resolve(__dirname, 'lexicon/static/jsx/search/'),
       'query-builder': path.resolve(__dirname, 'query_builder/static/ts/'),
     },
@@ -73,5 +69,6 @@ module.exports = {
     new ExtractTextPlugin({
       filename: '[name].bundle.css',
     }),
+    new BundleAnalyzerPlugin(),
   ],
 };
