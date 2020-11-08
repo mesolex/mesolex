@@ -67,7 +67,6 @@ module.exports = {
     alias: {
       lexicon: path.resolve(__dirname, 'lexicon/static/jsx/search/'),
       'query-builder': path.resolve(__dirname, 'query_builder/static/ts/'),
-      'plyr-src': path.resolve(__dirname, 'node_modules/plyr/src/'),
     },
   },
   plugins: [
