@@ -1,8 +1,12 @@
 import * as React from 'react';
 import { useState } from 'react';
 
-import * as _ from 'lodash';
-import * as uuid4 from 'uuid/v4';
+import concat from 'lodash-es/concat';
+import filter from 'lodash-es/filter';
+import find from 'lodash-es/find';
+import map from 'lodash-es/map';
+import reduce from 'lodash-es/reduce';
+import uniqueId from 'lodash-es/uniqueId';
 
 import Form from 'react-bootstrap/Form';
 
@@ -76,7 +80,7 @@ const makeDefaultInitialData = (filterableFields: Array<FilterableField>): FormD
 const labelForGlobalFilter = (
   globalFilters: Array<ExtraField>,
   key: string,
-): string => gettext(_.find(globalFilters, ({ field }) => field === key).label || '');
+): string => gettext(find(globalFilters, ({ field }) => field === key).label || '');
 
 const GlobalFilters = (props: {
   globalExtraFields: Array<ExtraField>;
@@ -84,7 +88,7 @@ const GlobalFilters = (props: {
   setGlobalFilters: React.Dispatch<React.SetStateAction<{ [fieldName: string]: boolean}>>;
 }): JSX.Element => (
   <Form.Group>
-    { _.map(props.globalFilters, (value, key) => (
+    { map(props.globalFilters, (value, key) => (
       <Form.Check
         key={key}
         checked={value}
@@ -102,18 +106,22 @@ const GlobalFilters = (props: {
 );
 
 const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
-  const filterableFields = _.concat(props.filterableFields, props.elasticsearchFields);
+  const filterableFields = concat(props.filterableFields, props.elasticsearchFields);
 
   const [
     formKeySeqState,
     setFormKeySeqState,
-  ] = useState(() => _.map(props.formsetData, () => uuid4()));
+  ] = useState(() => map(props.formsetData, () => uniqueId()));
 
   const [globalFilters, setGlobalFilters] = useState(
-    _.chain(props.globalExtraFields)
-      .map(({ field }) => ({ [field]: props.formsetGlobalFiltersData[field] || false }))
-      .reduce((acc, next) => ({ ...acc, ...next }), {})
-      .value(),
+    reduce(
+      map(
+        props.globalExtraFields,
+        ({ field }) => ({ [field]: props.formsetGlobalFiltersData[field] || false })
+      ),
+      (acc, next) => ({ ...acc, ...next }),
+      {},
+    ),
   );
 
   return (
@@ -130,7 +138,7 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
       />
 
       <Form.Group>
-        { _.map(formKeySeqState, (key, i) => (
+        { map(formKeySeqState, (key, i) => (
           <QueryBuilderForm
             controlledVocabFields={props.controlledVocabFields}
             elasticsearchFields={props.elasticsearchFields}
@@ -141,7 +149,7 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
             key={key}
             filterableFields={filterableFields}
             onDelete={(): void => setFormKeySeqState(
-              (prevState) => _.filter(prevState, (k) => k !== key),
+              (prevState) => filter(prevState, (k) => k !== key),
             )}
           />
         )) }
@@ -154,7 +162,7 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
       />
 
       <AddRemoveForms
-        onAddFilter={(): void => setFormKeySeqState((prevState) => prevState.concat(uuid4()))}
+        onAddFilter={(): void => setFormKeySeqState((prevState) => prevState.concat(uniqueId()))}
       />
     </>
   );

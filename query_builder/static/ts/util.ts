@@ -1,4 +1,6 @@
-import * as _ from 'lodash';
+import fromPairs from 'lodash-es/fromPairs';
+import map from 'lodash-es/map';
+import reduce from 'lodash-es/reduce';
 
 import { FilterableField } from './types';
 
@@ -45,12 +47,11 @@ export const humanReadableFilters = ({
     text_search: `${gettext('coincide con')}`,
   };
 
-  const filterableFieldsDict: { [fieldName: string]: string } = _.chain(filterableFields)
-    .map(({ field, label }) => [field, gettext(label)])
-    .fromPairs()
-    .value();
+  const filterableFieldsDict: { [fieldName: string]: string } = fromPairs(
+    map(filterableFields, ({ field, label }) => [field, gettext(label)]),
+  );
 
-  const modifiers: Array<string> = _.reduce(
+  const modifiers: Array<string> = reduce(
     [
       [vln, gettext('NCV')],
       [nahuatOrthography, gettext('flex. ort.')],

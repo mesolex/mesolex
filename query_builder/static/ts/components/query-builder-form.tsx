@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { useState } from 'react';
 
-import * as _ from 'lodash';
+import find from 'lodash-es/find';
+import includes from 'lodash-es/includes';
+import isEmpty from 'lodash-es/isEmpty';
+import map from 'lodash-es/map';
+import reduce from 'lodash-es/reduce';
+import some from 'lodash-es/some';
 
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -67,7 +72,7 @@ const FieldSelect = React.forwardRef((
     value={props.value}
   >
     {
-      _.map(
+      map(
         props.fields,
         ({ field, label }) => <option value={field} key={field}>{ gettext(label) }</option>,
       )
@@ -81,12 +86,12 @@ const FieldSelect = React.forwardRef((
 const isControlled = (
   fieldName: string,
   controlledVocabFields: Array<ControlledVocabField>,
-): boolean => _.some(controlledVocabFields, ({ field }) => field === fieldName);
+): boolean => some(controlledVocabFields, ({ field }) => field === fieldName);
 
 const isTextSearch = (
   fieldName: string,
   elasticsearchFields: Array<FilterableField>,
-): boolean => _.some(elasticsearchFields, ({ field }) => field === fieldName);
+): boolean => some(elasticsearchFields, ({ field }) => field === fieldName);
 
 /**
  * When "filter on" changes, it may be necessary to set the value of
@@ -126,15 +131,15 @@ const applyConstraints = ({
   extraFields: Array<ExtraField>;
   extraFieldKey: string;
 }): boolean => {
-  const config = _.find(extraFields, ({ field }) => field === extraFieldKey);
+  const config = find(extraFields, ({ field }) => field === extraFieldKey);
 
-  if (_.isEmpty(config)) {
+  if (isEmpty(config)) {
     return false;
   }
 
   const { constraints } = config;
 
-  if (_.includes(constraints, 'no_regex') && filter === 'regex') {
+  if (includes(constraints, 'no_regex') && filter === 'regex') {
     return true;
   }
 
@@ -165,7 +170,7 @@ const HiddenInputs = ({
     <input type="hidden" name={`form-${i}-filter`} value={filter} />
 
     {
-      _.map(extra, (value, fieldName) => (
+      map(extra, (value, fieldName) => (
         <input
           key={fieldName}
           type="checkbox"
@@ -182,7 +187,7 @@ const HiddenInputs = ({
 const labelForExtraField = (
   extraFields: Array<ExtraField>,
   key: string,
-): string => gettext(_.find(extraFields, ({ field }) => field === key).label || '');
+): string => gettext(find(extraFields, ({ field }) => field === key).label || '');
 
 const QueryBuilderForm = (props: FormProps): JSX.Element => {
   const [operator, setOperator] = useState(props.initialData.operator);
@@ -198,15 +203,19 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
    * TODO: figure out how to get `value` to typecheck better here!
    */
   const [extra, setExtra] = useState(
-    _.chain(props.extraFields)
-      .map(({ field }) => ({ [field]: props.initialData[field] || false }))
-      .reduce((acc, next) => ({ ...acc, ...next }), {})
-      .value(),
+    reduce(
+      map(
+        props.extraFields,
+        ({ field }) => ({ [field]: props.initialData[field] || false }),
+      ),
+      (acc, next) => ({ ...acc, ...next }),
+      {},
+    ),
   );
   // const [errorState, setErrorState] = useState(props.initialErrors);
 
   const controlledVocabFieldItems = isControlled(filterOn, props.controlledVocabFields)
-    ? _.find(props.controlledVocabFields, ({ field }) => field === filterOn).items
+    ? find(props.controlledVocabFields, ({ field }) => field === filterOn).items
     : [];
 
   return (
@@ -260,7 +269,7 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
             value={filter}
           />
 
-          { _.map(extra, (value, key) => (
+          { map(extra, (value, key) => (
             <Dropdown.Item
               key={key}
               as={Form.Check}
@@ -289,13 +298,15 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
                 custom
                 name={`form-${props.index}-query_string`}
                 onChange={(event): void => setQueryString(event.target.value)}
-                value={_.some(controlledVocabFieldItems, ({ value }) => value === queryString)
+                value={some(controlledVocabFieldItems, ({ value }) => value === queryString)
                   ? queryString
                   : controlledVocabFieldItems[0].value}
               >
-                {_.map(
+                {map(
                   controlledVocabFieldItems,
-                  ({ label, value }) => <option key={label} value={value}>{ gettext(label) }</option>,
+                  ({ label, value }) => (
+                    <option key={label} value={value}>{ gettext(label) }</option>
+                  ),
                 )}
               </Form.Control>
             )
