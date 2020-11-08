@@ -1,6 +1,5 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   devtool: 'eval-source-map',
@@ -69,6 +68,5 @@ module.exports = {
     new ExtractTextPlugin({
       filename: '[name].bundle.css',
     }),
-    new BundleAnalyzerPlugin(),
   ],
 };
