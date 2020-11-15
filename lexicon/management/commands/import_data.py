@@ -1,8 +1,9 @@
 import logging
 import xml.etree.ElementTree as ET
 
-from dateutil.parser import parse
+from dateutil.parser import ParserError, parse
 from django.core.management.base import BaseCommand
+from django.db import transaction
 from django.utils.translation import gettext as _
 
 from lexicon import models
@@ -528,12 +529,208 @@ class TrqImporter(Importer):
         return (added_entries, updated_entries, total)
 
 
+class SimpleAzzImporter(Importer):
+    def create_searchable_strings(
+            self,
+            lx_group,
+            tag,
+            model_class,
+            type_tag,
+            entry,
+            other_data={},
+    ):
+        elements = lx_group.findall(tag)
+        values = [element.text for element in elements]
+
+        model_class.objects.bulk_create([
+            model_class(
+                value=value,
+                entry=entry,
+                language='azz',
+                type_tag=type_tag,
+                other_data=other_data,
+            ) for value in values
+        ])
+
+        return values
+
+    @transaction.atomic
+    def process_lx_group(self, lx_group, i):
+        entry_data = {
+            'meta': {},
+            'roots': {}
+        }
+
+        # Find and fetch / create entry
+        identifier = lx_group.find('ref')
+        if identifier is None:
+            logger.error('No ref found for lxGroup at index %d', i)
+            return None
+
+        entry, created = models.Entry.objects.get_or_create(
+            identifier=identifier.text,
+        )
+
+        # Associate basic data and metadata
+        date = lx_group.find('dt')
+        try:
+            if date is not None:
+                parsed_date = parse(date.text)
+                entry_data['meta']['date'] = parsed_date.isoformat()
+        except ParserError:
+            logger.error('Invalid date for lxGroup at index %d', i)
+
+        lemma = lx_group.find('lx')
+        if lemma is None:
+            logger.error('No lx found for lxGroup at index %d', i)
+            return None
+        entry.value = lemma.text
+
+        # Clean up previously associated search data.
+        entry.searchablestring_set.all().delete()
+        entry.longsearchablestring_set.all().delete()
+
+        entry_data['meta']['variant_data'] = self.create_searchable_strings(
+            lx_group,
+            'lx_var',
+            models.SearchableString,
+            'variant_data',
+            entry,
+        )
+
+        entry_data['citation_forms'] = self.create_searchable_strings(
+            lx_group,
+            'lx_cita',
+            models.SearchableString,
+            'citation_form',
+            entry,
+        )
+
+        entry_data['variant_forms'] = self.create_searchable_strings(
+            lx_group,
+            'lx_alt',
+            models.SearchableString,
+            'variant_form',
+            entry,
+        )
+
+        entry_data['categories'] = self.create_searchable_strings(
+            lx_group,
+            'sem',
+            models.SearchableString,
+            'category',
+            entry,
+        )
+
+        entry_data['roots']['simple'] = self.create_searchable_strings(
+            lx_group,
+            'raiz',
+            models.SearchableString,
+            'root',
+            entry,
+            {
+                'root_type': 'simple',
+            },
+        )
+        entry_data['roots']['compound'] = self.create_searchable_strings(
+            lx_group,
+            'raiz2',
+            models.SearchableString,
+            'root',
+            entry,
+            {
+                'root_type': 'compound',
+            },
+        )
+
+        entry_data['glosses'] = self.create_searchable_strings(
+            lx_group,
+            'glosa',
+            models.SearchableString,
+            'gloss',
+            entry,
+        )
+
+        entry_data['notes'] = []
+
+        entry_data['notes'].extend([
+            {
+                'note_type': 'note',
+                'text': value,
+            } for value in self.create_searchable_strings(
+                lx_group,
+                'nota',
+                models.LongSearchableString,
+                'note',
+                entry,
+                {
+                    'note_type': 'note',
+                },
+            )
+        ])
+        entry_data['notes'].extend([
+            {
+                'note_type': 'semantics',
+                'text': value,
+            } for value in self.create_searchable_strings(
+                lx_group,
+                'nsem',
+                models.LongSearchableString,
+                'note',
+                entry,
+                {
+                    'note_type': 'semantics',
+                },
+            )
+        ])
+        entry_data['notes'].extend([
+            {
+                'note_type': 'morphology',
+                'text': value,
+            } for value in self.create_searchable_strings(
+                lx_group,
+                'nmorf',
+                models.LongSearchableString,
+                'note',
+                entry,
+                {
+                    'note_type': 'morphology',
+                },
+            )
+        ])
+
+        entry.other_data = entry_data
+        entry.save()
+
+        return created
+
+    def _handle_root(self, root):
+        lx_groups = root.findall('lxGroup')
+        created = 0
+        updated = 0
+
+        for i, lx_group in enumerate(lx_groups):
+            try:
+                created_entry = self.process_lx_group(lx_group, i)
+                if created_entry is None:
+                    pass
+                elif not created_entry:
+                    updated += 1
+                elif created_entry:
+                    created += 1
+            except Exception as e:
+                logger.error('Error: %s', e)
+                continue
+
+        return (created, updated, len(lx_groups))
+
 class Command(BaseCommand):
     help = _("Lee una fuente de datos en XML y actualiza la base de datos.")
 
     IMPORTERS_BY_CODE = {
         'azz': AzzImporter,
         'trq': TrqImporter,
+        'simple_azz': SimpleAzzImporter,
     }
 
     def add_arguments(self, parser):
