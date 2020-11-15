@@ -6,7 +6,7 @@ from django.utils.translation import gettext as _
 class Entry(models.Model):
     identifier = models.CharField(
         max_length=256,
-        db_index=True,
+        unique=True,
     )
     parent_entry = models.ForeignKey(
         'self',
