@@ -590,6 +590,7 @@ class SimpleAzzImporter(Importer):
         entry.searchablestring_set.all().delete()
         entry.longsearchablestring_set.all().delete()
 
+        # Simple cases of string data
         entry_data['meta']['variant_data'] = self.create_searchable_strings(
             lx_group,
             'lx_var',
@@ -651,8 +652,8 @@ class SimpleAzzImporter(Importer):
             entry,
         )
 
+        # More complex string data: notes
         entry_data['notes'] = []
-
         entry_data['notes'].extend([
             {
                 'note_type': 'note',
@@ -699,6 +700,12 @@ class SimpleAzzImporter(Importer):
             )
         ])
 
+        # Complex data: etymologies, grammar, definitions
+        entry_data['etymologies'] = []
+        pres_tipo_groups = lx_group.findall('pres_tipoGroup')
+        # TODO ...
+
+        # Save the result
         entry.other_data = entry_data
         entry.save()
 
