@@ -48,25 +48,5 @@
     }
     </script>
     {% block extra-js %}{% endblock extra-js %}
-
-    <script>
-    /**
-     Ensure that the language selector links redirect to the appropriate translation
-     for the active page.
-     */
-    jQuery(function($) {
-        $('#language-select button').one('click', function(e) {
-            e.preventDefault();
-
-            var $this = $(this);
-            var translationUrl = $this.data('translation-url');
-            var $form = $this.closest('form');
-            var $next = $form.find('input[name="next"]');
-
-            $next.val(translationUrl);
-            $this.click();
-        });
-    });
-    </script>
 </body>
 </html>
