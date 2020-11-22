@@ -701,6 +701,7 @@ class SimpleAzzImporter(Importer):
         ])
 
         # Complex data: etymologies, grammar, definitions
+        ## Etymologies
         pres_tipo_groups = lx_group.findall('pres_tipoGroup')
         pres_tipo_values = [
             {
@@ -724,6 +725,53 @@ class SimpleAzzImporter(Importer):
             ) for value in pres_tipo_values
         ])
         entry_data['non_native_etymologies'].extend(pres_tipo_values)
+
+        ## Grammar
+        catgr_groups = lx_group.findall('catgrGroup')
+        catgr_values = []
+        for catgr_group in catgr_groups:
+            catgr_value = {'other_data': {}}
+
+            catgr = catgr_group.find('catgr')
+            if catgr is not None:
+                catgr_value['part_of_speech'] = catgr.text
+
+            infl_group = catgr_group.find('inflGroup')
+            if infl_group is not None:
+                infl = infl_group.find('infl')
+                if infl is not None:
+                    catgr_value['inflectional_type'] = infl.text
+
+                plural = infl_group.find('plural')
+                if plural is not None:
+                    catgr_value['other_data']['plural'] = plural.text
+
+            diag = catgr_group.find('diag')
+            if diag is not None:
+                catgr_value['other_data']['diag'] = diag.text
+
+            catgr_values.append(catgr_value)
+
+        models.SearchableString.objects.bulk_create([
+            models.SearchableString(
+                value=value['part_of_speech'],
+                entry=entry,
+                language='azz',
+                type_tag='part_of_speech',
+            ) for value in catgr_values
+            if value.get('part_of_speech') is not None
+        ])
+        models.SearchableString.objects.bulk_create([
+            models.SearchableString(
+                value=value['inflectional_type'],
+                entry=entry,
+                language='azz',
+                type_tag='inflectional_type',
+            ) for value in catgr_values
+            if value.get('inflectional_type') is not None
+        ])
+        entry_data['grammar_groups'].extend(catgr_values)
+
 
         # Save the result
         entry.other_data = entry_data
