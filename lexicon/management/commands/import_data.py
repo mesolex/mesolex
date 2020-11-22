@@ -906,6 +906,33 @@ class SimpleAzzImporter(Importer):
 
         return (created, updated, len(lx_groups))
 
+
+class SimpleTrqImporter(Importer):
+    def process_entry(self, entry, i):
+        # TODO (22-11-2020): import the data!
+        pass
+
+    def _handle_root(self, root):
+        entries = root.findall('entry')
+        created = 0
+        updated = 0
+
+        for i, entry in enumerate(entries):
+            try:
+                created_entry = self.process_entry(entry, i)
+                if created_entry is None:
+                    pass
+                elif not created_entry:
+                    updated += 1
+                elif created_entry:
+                    created += 1
+            except Exception as e:
+                logger.error('Error: %s', e)
+                continue
+
+        return (created, updated, len(entries))
+
+
 class Command(BaseCommand):
     help = _("Lee una fuente de datos en XML y actualiza la base de datos.")
 
@@ -913,6 +940,7 @@ class Command(BaseCommand):
         'azz': AzzImporter,
         'trq': TrqImporter,
         'simple_azz': SimpleAzzImporter,
+        'simple_trq': SimpleTrqImporter,
     }
 
     def add_arguments(self, parser):
