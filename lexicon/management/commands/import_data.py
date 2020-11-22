@@ -555,8 +555,7 @@ class SimpleAzzImporter(Importer):
 
         return values
 
-    @transaction.atomic
-    def process_lx_group(self, lx_group, i):
+    def initialize_data(self, lx_group, i):
         entry_data = defaultdict(list)
 
         entry_data['meta'] = {}
@@ -566,13 +565,16 @@ class SimpleAzzImporter(Importer):
         identifier = lx_group.find('ref')
         if identifier is None:
             logger.error('No ref found for lxGroup at index %d', i)
-            return None
+            return (None, None, None)
 
         entry, created = models.Entry.objects.get_or_create(
             identifier=identifier.text,
         )
         entry.language = 'azz'
 
+        return (entry, entry_data, created)
+
+    def process_basic_data(self, lx_group, i, entry, entry_data):
         # Associate basic data and metadata
         date = lx_group.find('dt')
         try:
@@ -585,14 +587,16 @@ class SimpleAzzImporter(Importer):
         lemma = lx_group.find('lx')
         if lemma is None:
             logger.error('No lx found for lxGroup at index %d', i)
-            return None
-        entry.value = lemma.text
+            return (None, 'Not found')
 
-        # Clean up previously associated search data.
+        entry.value = lemma.text
+        return (entry, None)
+
+    def clean_up_associated_data(self, entry):
         entry.searchablestring_set.all().delete()
         entry.longsearchablestring_set.all().delete()
-
-        # Simple cases of string data
+    
+    def create_simple_string_data(self, lx_group, entry, entry_data):
         entry_data['meta']['variant_data'] = self.create_searchable_strings(
             lx_group,
             'lx_var',
@@ -654,7 +658,7 @@ class SimpleAzzImporter(Importer):
             entry,
         )
 
-        # More complex string data: notes
+    def create_notes(self, lx_group, entry, entry_data):
         entry_data['notes'].extend([
             {
                 'note_type': 'note',
@@ -701,8 +705,7 @@ class SimpleAzzImporter(Importer):
             )
         ])
 
-        # Complex data: etymologies, grammar, definitions
-        ## Etymologies
+    def create_etymologies(self, lx_group, entry, entry_data):
         pres_tipo_groups = lx_group.findall('pres_tipoGroup')
         pres_tipo_values = [
             {
@@ -727,7 +730,7 @@ class SimpleAzzImporter(Importer):
         ])
         entry_data['non_native_etymologies'].extend(pres_tipo_values)
 
-        ## Grammar
+    def create_grammars(self, lx_group, entry, entry_data):
         catgr_groups = lx_group.findall('catgrGroup')
         catgr_values = []
         for catgr_group in catgr_groups:
@@ -772,8 +775,8 @@ class SimpleAzzImporter(Importer):
             if value.get('inflectional_type') is not None
         ])
         entry_data['grammar_groups'].extend(catgr_values)
-
-        ## Definitions
+    
+    def create_definitions(self, lx_group, entry, entry_data):
         sig_groups = lx_group.findall('sigGroup')
         sig_values = []
         for sig_group in sig_groups:
@@ -853,6 +856,29 @@ class SimpleAzzImporter(Importer):
             ) for sig_value in sig_values
         ])
         entry_data['senses'].extend(sig_values)
+
+    @transaction.atomic
+    def process_lx_group(self, lx_group, i):
+        (entry, entry_data, created) = self.initialize_data(lx_group, i)
+        if any([x is None for x in [entry, entry_data, created]]):
+            return None
+
+        # Associate basic data and metadata
+        (_, err) = self.process_basic_data(lx_group, i, entry, entry_data)
+        if err is not None:
+            return err
+
+        # Clean up previously associated search data.
+        self.clean_up_associated_data(entry)
+
+        for method in [
+                self.create_simple_string_data,
+                self.create_notes,
+                self.create_etymologies,
+                self.create_grammars,
+                self.create_definitions,
+        ]:
+            method(lx_group, entry, entry_data)
 
         # Save the result
         entry.other_data = entry_data
