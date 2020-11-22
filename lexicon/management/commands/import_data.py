@@ -1,4 +1,5 @@
 import logging
+from collections import defaultdict
 import xml.etree.ElementTree as ET
 
 from dateutil.parser import ParserError, parse
@@ -556,10 +557,10 @@ class SimpleAzzImporter(Importer):
 
     @transaction.atomic
     def process_lx_group(self, lx_group, i):
-        entry_data = {
-            'meta': {},
-            'roots': {}
-        }
+        entry_data = defaultdict(list)
+
+        entry_data['meta'] = {}
+        entry_data['roots'] = {}
 
         # Find and fetch / create entry
         identifier = lx_group.find('ref')
@@ -653,7 +654,6 @@ class SimpleAzzImporter(Importer):
         )
 
         # More complex string data: notes
-        entry_data['notes'] = []
         entry_data['notes'].extend([
             {
                 'note_type': 'note',
@@ -701,9 +701,29 @@ class SimpleAzzImporter(Importer):
         ])
 
         # Complex data: etymologies, grammar, definitions
-        entry_data['etymologies'] = []
         pres_tipo_groups = lx_group.findall('pres_tipoGroup')
-        # TODO ...
+        pres_tipo_values = [
+            {
+                'type': group.find('pres_tipo').text,
+                'value': group.find('pres_el').text,
+            } for group in pres_tipo_groups
+            if (
+                group.find('pres_tipo') is not None
+                and group.find('pres_el') is not None
+            )
+        ]
+        models.SearchableString.objects.bulk_create([
+            models.SearchableString(
+                value=value['value'],
+                entry=entry,
+                language='azz',
+                type_tag='non_native_etymology',
+                other_data={
+                    'type': value['type'],
+                },
+            ) for value in pres_tipo_values
+        ])
+        entry_data['non_native_etymologies'].extend(pres_tipo_values)
 
         # Save the result
         entry.other_data = entry_data
