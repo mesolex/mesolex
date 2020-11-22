@@ -571,6 +571,7 @@ class SimpleAzzImporter(Importer):
         entry, created = models.Entry.objects.get_or_create(
             identifier=identifier.text,
         )
+        entry.language = 'azz'
 
         # Associate basic data and metadata
         date = lx_group.find('dt')
@@ -772,6 +773,86 @@ class SimpleAzzImporter(Importer):
         ])
         entry_data['grammar_groups'].extend(catgr_values)
 
+        ## Definitions
+        sig_groups = lx_group.findall('sigGroup')
+        sig_values = []
+        for sig_group in sig_groups:
+            sig_value = {}
+
+            sig = sig_group.find('sig')
+            if sig is not None:
+                sig_value['sense'] = sig.text
+
+            sig_var = sig_group.find('sig_var')
+            if sig_var is not None:
+                sig_value['geo'] = sig_var.text
+
+            ostens = sig_group.findall('osten')
+            if ostens is not None:
+                sig_value['ostentives'] = [
+                    osten.text for osten in ostens
+                ]
+
+            examples = []
+            fr_n_groups = sig_group.findall('fr_nGroup')
+            for fr_n_group in fr_n_groups:
+                example_value = {}
+
+                fr_var = fr_n_group.find('fr_var')
+                if fr_var is not None:
+                    example_value['geo'] = fr_var.text
+
+                fr_n = fr_n_group.find('fr_n')
+                if fr_n is not None:
+                    example_value['original'] = {
+                        'text': fr_n.text,
+                        'language': 'azz',
+                    }
+
+                fr_e = fr_n_group.find('fr_e')
+                if fr_e is not None:
+                    example_value['translation'] = {
+                        'text': fr_e.text,
+                        'language': 'es',
+                    }
+
+                examples.append(example_value)
+
+            models.LongSearchableString.objects.bulk_create([
+                models.LongSearchableString(
+                    value=example['original']['text'],
+                    entry=entry,
+                    language='azz',
+                    type_tag='quote_original',
+                ) for example in examples
+                if example.get('original') is not None
+            ])
+            models.LongSearchableString.objects.bulk_create([
+                models.LongSearchableString(
+                    value=example['translation']['text'],
+                    entry=entry,
+                    language='es',
+                    type_tag='quote_translation',
+                ) for example in examples
+                if example.get('translation') is not None
+            ])
+
+            sig_value['examples'] = examples
+            sig_values.append(sig_value)
+
+        models.LongSearchableString.objects.bulk_create([
+            models.LongSearchableString(
+                value=sig_value.get('sense', ''),
+                entry=entry,
+                language='es',
+                type_tag='sense',
+                other_data={
+                    'geo': sig_value.get('geo'),
+                    'ostentives': sig_value.get('ostentives', []),
+                },
+            ) for sig_value in sig_values
+        ])
+        entry_data['senses'].extend(sig_values)
 
         # Save the result
         entry.other_data = entry_data
