@@ -595,7 +595,7 @@ class SimpleAzzImporter(Importer):
     def clean_up_associated_data(self, entry):
         entry.searchablestring_set.all().delete()
         entry.longsearchablestring_set.all().delete()
-    
+
     def create_simple_string_data(self, lx_group, entry, entry_data):
         entry_data['meta']['variant_data'] = self.create_searchable_strings(
             lx_group,
@@ -908,6 +908,30 @@ class SimpleAzzImporter(Importer):
 
 
 class SimpleTrqImporter(Importer):
+    def create_searchable_strings(
+            self,
+            entry_el,
+            xpath,
+            model_class,
+            type_tag,
+            entry,
+            other_data={},
+    ):
+        elements = entry_el.findall(xpath)
+        values = [element.text for element in elements]
+
+        model_class.objects.bulk_create([
+            model_class(
+                value=value,
+                entry=entry,
+                language='trq',
+                type_tag=type_tag,
+                other_data=other_data,
+            ) for value in values
+        ])
+
+        return values
+
     def initialize_data(self, entry_el, i):
         entry_data = defaultdict(list)
         entry_data['meta'] = {}
@@ -945,19 +969,40 @@ class SimpleTrqImporter(Importer):
                 'Failed to find headword in entry with id',
                 entry.identifier,
             )
+            return (None, 'Not found')
 
         return (entry, None)
+
+    def clean_up_associated_data(self, entry):
+        entry.searchablestring_set.all().delete()
+        entry.longsearchablestring_set.all().delete()
+
+    def create_simple_string_data(self, entry_el, entry, entry_data):
+        entry_data['citation_forms'] = self.create_searchable_strings(
+            entry_el,
+            './citation/form/text',
+            models.SearchableString,
+            'citation_form',
+            entry,
+        )
 
     @transaction.atomic
     def process_entry(self, entry_el, i):
         (entry, entry_data, created) = self.initialize_data(entry_el, i)
         if any([x is None for x in [entry, entry_data, created]]):
             return None
-    
+
         (_, err) = self.process_basic_data(entry_el, i, entry, entry_data)
         if err is not None:
             return err
-        
+
+        self.clean_up_associated_data(entry)
+
+        for method in [
+                self.create_simple_string_data,
+        ]:
+            method(entry_el, entry, entry_data)
+
         entry.other_data = entry_data
         entry.save()
 
