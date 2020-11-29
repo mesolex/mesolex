@@ -63,7 +63,7 @@ trq:
         - field: lemma
           label: Entrada
           terms:
-            - lemma
+            - value
     global_filters: []
     elasticsearch_fields:
         - field: precise_meaning
@@ -105,28 +105,34 @@ azz:
         - field: lemma
           label: Entrada
           terms:
-            - lemma
-            - variant__value
+            - value
+            - tag: variant_data
+              length: short
         - field: gloss
           label: Glosa
           terms:
-            - gloss__value
+            - tag: gloss
+              length: short
         - field: root
           label: Raiz
           terms:
-            - root__value
+            - tag: root
+              length: short
         - field: category
           label: Campo semántico
           terms:
-            - category__value
+            - tag: category
+              length: short
         - field: part_of_speech
           label: Categoría gramatical
           terms:
-            - grammargroup__part_of_speech
+            - tag: part_of_speech
+              length: short
         - field: inflectional_type
           label: Inflexión
           terms:
-            - grammargroup__inflectional_type
+            - tag: inflectional_type
+              length: short
     elasticsearch_fields:
         - field: precise_meaning
           label: Significado preciso

@@ -198,7 +198,20 @@ class QueryBuilderForm(forms.Form):
         query_expression = Q()
 
         for filter_on_val in filter_on_vals:
-            query_expression |= Q(**{'%s%s' % (filter_on_val, filter_action): query_string})
+            # If the filter_on_val is a dict, it will have the form:
+            # { 'length': 'long', 'tag': 'definition' }
+            # { 'length': 'short', 'tag': 'root' }
+            if isinstance(filter_on_val, dict):
+                length_str = "long" if filter_on_val.get("length") == "long" else ""
+                model_str = f'{length_str}searchablestring'
+                query_expression |= Q(**{
+                    f'{model_str}__type_tag': filter_on_val.get('tag'),
+                    f'{model_str}__value{filter_action}': query_string,
+                })
+            # If it is a string, then it is just the name of a field on
+            # the model
+            else:
+                query_expression |= Q(**{'%s%s' % (filter_on_val, filter_action): query_string})
 
         return query_expression
 

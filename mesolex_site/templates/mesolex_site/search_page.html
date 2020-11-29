@@ -25,10 +25,10 @@
             </div>
 
             {% for lexical_entry in lexical_entries %}
-            {% with data=lexical_entry.data %}
+            {% with data=lexical_entry.other_data %}
             <div class="card mb-4">
                 <div class="card-header card-header--search">
-                    <span class="h5">{{ lexical_entry.lemma }}</span>
+                    <span class="h5">{{ lexical_entry.value }}</span>
 
                     {% if lexical_entry.media_set.exists %}
                         &nbsp;
@@ -39,85 +39,82 @@
                         {% endfor %}
                     {% endif %}
 
-                    {% if lexical_entry.citation_set.exists %}
+                    {% if data.citation_forms|length != 0 %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Citación' %}:</i> {% for citation in lexical_entry.citation_set.all %}{{ citation }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.variant_set.exists %}, <i>{% trans 'Formas alt.' %}:</i> {% for variant in lexical_entry.variant_set.all %}{{ variant }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if lexical_entry.gloss_set.exists %}, <i>{% trans 'Glosa' %}:</i> {% for gloss in lexical_entry.gloss_set.all %}{{ gloss }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Citación' %}:</i> {% for citation in data.citation_forms %}{{ citation }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if data.variant_forms|length != 0 %}, <i>{% trans 'Formas alt.' %}:</i> {% for variant in data.variant_forms %}{{ variant }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if data.glosses|length != 0 %}, <i>{% trans 'Glosa' %}:</i> {% for gloss in data.glosses %}{{ gloss }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
-                    {% if lexical_entry.grammargroup_set.exists %}
+                    {% if data.grammar_groups|length != 0 %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Categoría gramatical' %}:</i> {% for grammar_group in lexical_entry.grammargroup_set.all %}{% link_part_of_speech grammar_group.part_of_speech page.url language %}{% if grammar_group.inflectional_type %}; <i>{% trans 'Inflexión' %}:</i> {% link_inflectional_type grammar_group.inflectional_type page.url language %}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Categoría gramatical' %}:</i> {% for grammar_group in data.grammar_groups %}{% link_part_of_speech grammar_group.part_of_speech page.url language %}{% if grammar_group.inflectional_type %}; <i>{% trans 'Inflexión' %}:</i> {% link_inflectional_type grammar_group.inflectional_type page.url language %}{% endif %}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
-                    {% if lexical_entry.category_set.exists %}
+                    {% if data.categories %}
                     &nbsp;|&nbsp;
-                    <i>{% trans 'Campo semántico' %}:</i> {% for category in lexical_entry.category_set.all %}{{ category.value|link_category:page.url }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                    <i>{% trans 'Campo semántico' %}:</i> {% for category in data.categories %}{{ category|link_category:page.url }}{% if not forloop.last %}, {% endif %}{% endfor %}
                     {% endif %}
 
-                    {# {% if data.raiz or data.raiz2 %} #}
-                    {% if lexical_entry.simple_roots or lexical_entry.compound_roots %}
+                    {% if data.roots.simple|length != 0 or data.roots.complex|length != 0 %}
                         &nbsp;|&nbsp;
                         <strong>{% trans 'Etimología' %}:</strong>
 
-                        {% for root in lexical_entry.simple_roots %}
+                        {% for root in data.roots.simple %}
                         {% if forloop.first %}
-                        <i>{% blocktrans count counter=lexical_entry.simple_roots|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>{% endif %}
-                        {{ root.value|link_raiz:page.url }}{% if not forloop.last %}; {% endif %}
+                        <i>{% blocktrans count counter=data.roots.simple|length %}Raíz{% plural %}Raízes{% endblocktrans %}:</i>{% endif %}
+                        {{ root|link_raiz:page.url }}{% if not forloop.last %}; {% endif %}
                         {% endfor %}
 
-                        {% for root in lexical_entry.compound_roots %}
+                        {% for root in data.roots.complex %}
                         {% if forloop.first %}&nbsp;|&nbsp;
-                        <i>{% blocktrans count counter=lexical_entry.compound_roots|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% endif %}{{ root }}{% if not forloop.last %}; {% endif %}
+                        <i>{% blocktrans count counter=data.roots.complex|length %}Raíz compuesta{% plural %}Raízes compuestas{% endblocktrans %}:</i> {% endif %}{{ root }}{% if not forloop.last %}; {% endif %}
                         {% endfor %}
 
-                        {% for non_native_etymology in lexical_entry.nonnativeetymology_set.all %}
+                        {% for non_native_etymology in data.non_native_etymologies %}
                         {% if forloop.first %}&nbsp;|&nbsp;
-                        <i>{% blocktrans count counter=lexical_entry.nonnativeetymology_set.all|length %}Palabra con elementos no de náhuat{% plural %}Palabras con elementos no de náhuat{% endblocktrans %}:</i> {% endif %}{{ non_native_etymology.value|link_vnawa:page.url }}{% if not forloop.last %}; {% endif %}
+                        <i>{% blocktrans count counter=data.non_native_etymologies|length %}Palabra con elementos no de náhuat{% plural %}Palabras con elementos no de náhuat{% endblocktrans %}:</i> {% endif %}{{ non_native_etymology.value|link_vnawa:page.url }}{% if not forloop.last %}; {% endif %}
                         {% endfor %}
                     {% endif %}
                 </div>
                 <div class="card-body">
                     <ol class="search-results-list">
-                        {% for sense in lexical_entry.senses %}
+                        {% for sense in data.senses %}
                         <li>
                             <div class="card-text">
-                                <p>{{ sense.definition|link_vnawa:page.url }}{% if sense.ostentive %} ({{ sense.ostentive|link_vnawa:page.url }}){% endif %}</p>
+                                <p>{{ sense.sense|link_vnawa:page.url }}{% if sense.ostentives|length != 0 %} ({% for ostentive in sense.ostentives %}{{ ostentive|link_vnawa:page.url }}{% endfor %}){% endif %}</p>
                             </div>
                             {% for example in sense.examples %}
-                                {% for quote in example.original_quotes %}
-                                    <blockquote class="card-text example font-weight-light">
-                                        <p>
-                                            {{ quote.text|safe }}
-                                            {% if quote.translations.exists %}
-                                                <i>({{ quote.translations.first.text|link_vnawa:page.url }})</i>
-                                            {% endif %}
-                                        </p>
-                                    </blockquote>
-                                {% endfor %}
+                                <blockquote class="card-text example font-weight-light">
+                                    <p>
+                                        {{ example.original.text|safe }}
+                                        {% if example.translation %}
+                                            <i>({{ example.translation.text|link_vnawa:page.url }})</i>
+                                        {% endif %}
+                                    </p>
+                                </blockquote>
                             {% endfor %}
                         </li>
                         {% endfor %}
                     </ol>
                 </div>
 
-                {% if lexical_entry.note_set.exists %}
+                {% if data.notes|length != 0 %}
                 <div class="card-footer">
-                    {% for note in lexical_entry.notes_semantics %}
-                    <p class="notes nsem">
-                        <strong>{% trans 'Notas semánticas' %}:</strong> {{ note.value|link_vnawa:page.url }}
-                    </p>
+                    {% for note in data.notes %}
+                        {% if note.note_type == 'semantics' %}
+                            <strong>{% trans 'Notas semánticas' %}:</strong> {{ note.text|link_vnawa:page.url }}
+                        {% endif %}
                     {% endfor %}
 
-                    {% for note in lexical_entry.notes_morphology %}
-                    <p class="notes nmorf">
-                        <strong>{% trans 'Notas morfológicas' %}:</strong> {{ note.value|link_vnawa:page.url }}
-                    </p>
+                    {% for note in data.notes %}
+                        {% if note.note_type == 'morphology' %}
+                            <strong>{% trans 'Notas morfológicas' %}:</strong> {{ note.text|link_vnawa:page.url }}
+                        {% endif %}
                     {% endfor %}
 
-                    {% for note in lexical_entry.notes_general %}
-                    <p class="notes ngram">
-                        <strong>{% trans 'Notas gramaticales' %}:</strong> {{ note.value|link_vnawa:page.url }}
-                    </p>
+                    {% for note in data.notes %}
+                        {% if note.note_type == 'note' %}
+                            <strong>{% trans 'Notas gramaticales' %}:</strong> {{ note.text|link_vnawa:page.url }}
+                        {% endif %}
                     {% endfor %}
                 </div>
                 {% endif %}

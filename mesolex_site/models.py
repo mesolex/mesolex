@@ -21,7 +21,7 @@ from wagtail.snippets.models import register_snippet
 from wagtailtrans.models import TranslatablePage
 
 from lexicon.forms import formset_for_lg
-from lexicon.models import LexicalEntry
+from lexicon.models import Entry
 from mesolex.config import DEFAULT_LANGUAGE, LANGUAGES
 from mesolex.utils import ForceProxyEncoder, get_default_data_for_lg
 from mesolex_site.blocks import LanguageFamilyMenuBlock, ResourceLinkBlock
@@ -219,11 +219,8 @@ class SearchPage(TranslatablePage):
             # TODO: make this nicer.
             return {**context, **self._search_query_data(formset_class())}
 
-        lexical_entries = (
-            LexicalEntry.valid_entries
-            .filter(query)
-            .order_by('lemma')
-        )
+        lexical_entries = Entry.objects.filter(query).distinct().order_by('value')
+
         paginator = Paginator(lexical_entries, 25)
         result_page = request.GET.get('page', 1)
 
