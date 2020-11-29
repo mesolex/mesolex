@@ -775,7 +775,7 @@ class SimpleAzzImporter(Importer):
             if value.get('inflectional_type') is not None
         ])
         entry_data['grammar_groups'].extend(catgr_values)
-    
+
     def create_definitions(self, lx_group, entry, entry_data):
         sig_groups = lx_group.findall('sigGroup')
         sig_values = []
@@ -940,7 +940,7 @@ class SimpleTrqImporter(Importer):
         if identifier is None:
             logger.error('No guid found for entry at index %d', i)
             return (None, None, None)
-        
+
         entry, created = models.Entry.objects.get_or_create(
             identifier=identifier,
         )
@@ -986,6 +986,83 @@ class SimpleTrqImporter(Importer):
             entry,
         )
 
+    def create_definitions(self, entry_el, entry, entry_data):
+        senses = entry_el.findall('./sense')
+        senses.sort(key=lambda sense: sense.attrib.get('order', 0))
+
+        # data to return
+        sense_values = []
+
+        for sense_element in senses:
+            sense_value = {}
+
+            # NOTE: disjunction on etree elements isn't short-circuiting!
+            # TODO: find a properly short-circuiting method to go here
+            # to prevent some unnecessary queries
+            definition_element = (
+                sense_element.find('./gloss/text')
+                or sense_element.find('./definition/form/text')
+            )
+
+            if definition_element is not None:
+                sense_value['sense'] = definition_element.text
+            else:
+                continue
+
+            examples = []
+            example_els = sense_element.findall('example')
+            for example_el in example_els:
+                example_value = {}
+
+                ex_text = example_el.find('./form[@lang="es-MX-fonipa-x-emic"]/text/span')
+                if ex_text is not None:
+                    example_value['original'] = {
+                        'text': ex_text.text,
+                        'language': 'trq',
+                    }
+
+                ex_translation = example_el.find('./translation/form[@lang="es"]/text')
+                if ex_translation is not None:
+                    example_value['translation'] = {
+                        'text': ex_translation.text,
+                        'language': 'es',
+                    }
+
+                examples.append(example_value)
+
+            models.LongSearchableString.objects.bulk_create([
+                models.LongSearchableString(
+                    value=example['original']['text'],
+                    entry=entry,
+                    language='trq',
+                    type_tag='quote_original',
+                ) for example in examples
+                if example.get('original') is not None
+            ])
+            models.LongSearchableString.objects.bulk_create([
+                models.LongSearchableString(
+                    value=example['translation']['text'],
+                    entry=entry,
+                    language='es',
+                    type_tag='quote_translation',
+                ) for example in examples
+                if example.get('translation') is not None
+            ])
+
+            sense_value['examples'] = examples
+            sense_values.append(sense_value)
+
+        models.LongSearchableString.objects.bulk_create([
+            models.LongSearchableString(
+                value=sense_value.get('sense', ''),
+                entry=entry,
+                language='es',
+                type_tag='sense',
+                other_data={},
+            ) for sense_value in sense_values
+        ])
+        entry_data['senses'].extend(sense_values)
+
     @transaction.atomic
     def process_entry(self, entry_el, i):
         (entry, entry_data, created) = self.initialize_data(entry_el, i)
@@ -1000,6 +1077,7 @@ class SimpleTrqImporter(Importer):
 
         for method in [
                 self.create_simple_string_data,
+                self.create_definitions,
         ]:
             method(entry_el, entry, entry_data)
 
@@ -1049,7 +1127,11 @@ class Command(BaseCommand):
 
         importer = self._importer_for(language)
 
-        (added_entries, updated_entries, total) = importer(input).run() if importer is not None else (0, 0, 0)
+        (added_entries, updated_entries, total) = (
+            importer(input).run()
+            if importer is not None
+            else (0, 0, 0)
+        )
 
         self.stdout.write('\n\nTOTAL: {add} added, {up} updated, {miss} missed'.format(
             add=added_entries,
