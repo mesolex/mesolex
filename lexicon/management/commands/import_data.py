@@ -908,18 +908,69 @@ class SimpleAzzImporter(Importer):
 
 
 class SimpleTrqImporter(Importer):
-    def process_entry(self, entry, i):
-        # TODO (22-11-2020): import the data!
-        pass
+    def initialize_data(self, entry_el, i):
+        entry_data = defaultdict(list)
+        entry_data['meta'] = {}
+
+        identifier = entry_el.attrib.get('guid')
+        if identifier is None:
+            logger.error('No guid found for entry at index %d', i)
+            return (None, None, None)
+        
+        entry, created = models.Entry.objects.get_or_create(
+            identifier=identifier,
+        )
+        entry.language = 'trq'
+
+        return (entry, entry_data, created)
+
+    def process_basic_data(self, entry_el, i, entry, entry_data):
+        try:
+            entry_data['meta']['date'] = parse(
+                entry_el.attrib.get('dateModified')
+                or entry_el.attrib.get('dateCreated')
+            ).isoformat()
+        except Exception:
+            logger.exception(
+                'Failed to parse date in entry with id %s',
+                entry.identifier,
+            )
+
+        try:
+            entry.value = entry_el.find(
+                './lexical-unit/form[@lang="trq"]/text',
+            ).text
+        except Exception:
+            logger.exception(
+                'Failed to find headword in entry with id',
+                entry.identifier,
+            )
+
+        return (entry, None)
+
+    @transaction.atomic
+    def process_entry(self, entry_el, i):
+        (entry, entry_data, created) = self.initialize_data(entry_el, i)
+        if any([x is None for x in [entry, entry_data, created]]):
+            return None
+    
+        (_, err) = self.process_basic_data(entry_el, i, entry, entry_data)
+        if err is not None:
+            return err
+        
+        entry.other_data = entry_data
+        entry.save()
+
+        return created
 
     def _handle_root(self, root):
         entries = root.findall('entry')
         created = 0
         updated = 0
 
-        for i, entry in enumerate(entries):
+        for i, entry_el in enumerate(entries):
             try:
-                created_entry = self.process_entry(entry, i)
+                created_entry = self.process_entry(entry_el, i)
                 if created_entry is None:
                     pass
                 elif not created_entry:
