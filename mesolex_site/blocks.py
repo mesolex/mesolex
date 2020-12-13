@@ -1,3 +1,6 @@
+from django.core.exceptions import ValidationError
+from django.forms.utils import ErrorList
+
 from wagtail.core import blocks
 from wagtail.documents import blocks as document_blocks
 
@@ -6,11 +9,54 @@ from wagtail.documents import blocks as document_blocks
 
 class LanguageLinkBlock(blocks.StructBlock):
     name = blocks.CharBlock(required=False)
-    language_page = blocks.PageChooserBlock(page_type='mesolex_site.LanguageHomePage')
+    language_page = blocks.PageChooserBlock(
+        page_type='mesolex_site.LanguageHomePage',
+        required=False,
+    )
+    external_url = blocks.URLBlock(required=False)
 
     class Meta:
         icon = 'user'
         template = 'mesolex_site/blocks/language_family/link.html'
+
+    def clean(self, value):
+        name = value.get('name')
+        page = value.get('language_page')
+        url = value.get('external_url')
+
+        if page is None and url == '':
+            raise ValidationError(
+                'Validation error in Language Link Block',
+                params={
+                    'language_page': ErrorList([
+                        ValidationError('You must either choose a language page or enter a URL.'),
+                    ]),
+                },
+            )
+
+        if page is not None and url != '':
+            raise ValidationError(
+                'Validation error in Language Link Block',
+                params={
+                    'external_url': ErrorList([
+                        ValidationError('You cannot both choose a page and enter a URL.'),
+                    ]),
+                },
+            )
+
+        if url != '' and name == '':
+            raise ValidationError(
+                'Validation error in Language Link Block',
+                params={
+                    'name': ErrorList([
+                        ValidationError(
+                            'If you choose an external URL, you must enter a link name.',
+                        ),
+                    ]),
+                },
+            )
+
+        return super().clean(value)
 
 
 class LanguageFamilyBlock(blocks.StructBlock):
