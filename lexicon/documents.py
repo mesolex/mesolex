@@ -1,22 +1,24 @@
+import itertools
+
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
 
-from .models import LexicalEntry, Note, Quote, Sense
+from .models import Entry
 
 
 @registry.register_document
-class LexicalEntryDocument(Document):
+class EntryDocument(Document):
     class Index:
-        name = 'lexical_entry'
+        name = 'entry'
         settings = {
             'number_of_shards': 1,
             'number_of_replicas': 0,
         }
 
     class Django:
-        model = LexicalEntry
+        model = Entry
         fields = [
-            'lemma',
+            'value',
         ]
 
     quotations_es = fields.TextField(
@@ -43,41 +45,45 @@ class LexicalEntryDocument(Document):
     )
 
     def prepare_definitions_es(self, instance):
-        return list(
-            Sense.objects.filter(entry__id=instance.id)
-            .values_list('definition', flat=True)
-        )
+        return [sense_dict['sense'] for sense_dict in instance.other_data.get('senses', [])]
 
     def prepare_ostentives_es(self, instance):
         return list(
-            Sense.objects.filter(entry__id=instance.id)
-            .values_list('ostentive', flat=True)
+            itertools.chain(
+                *[sense.get('ostentives', []) for sense in instance.other_data.get('senses', [])],
+            ),
         )
 
     def prepare_quotations_es(self, instance):
-        return list(
-            Quote.objects.filter(example__sense__entry__id=instance.id)
-            .filter(language='es')
-            .values_list('text', flat=True)
-        )
+        return list([
+            example['translation'].get('text', '')
+            for example in itertools.chain(
+                *[sense.get('examples', []) for sense in instance.other_data.get('senses', [])],
+            )
+            if example.get('translation') is not None and example['translation']['language'] == 'es'
+        ])
 
     def prepare_quotations_azz(self, instance):
-        return list(
-            Quote.objects.filter(example__sense__entry__id=instance.id)
-            .filter(language='azz')
-            .values_list('text', flat=True)
-        )
+        return list([
+            example['original'].get('text', '')
+            for example in itertools.chain(
+                *[sense.get('examples', []) for sense in instance.other_data.get('senses', [])],
+            )
+            if example.get('original') is not None and example['original']['language'] == 'azz'
+        ])
 
     def prepare_quotations_trq(self, instance):
-        return list(
-            Quote.objects.filter(example__sense__entry__id=instance.id)
-            .filter(language='trq')
-            .values_list('text', flat=True)
-        )
+        return list([
+            example['original'].get('text', '')
+            for example in itertools.chain(
+                *[sense.get('examples', []) for sense in instance.other_data.get('senses', [])],
+            )
+            if example.get('original') is not None and example['original']['language'] == 'trq'
+        ])
 
     def prepare_nsem_es(self, instance):
-        return list(
-            Note.objects.filter(entry__id=instance.id)
-            .filter(type='semantics')
-            .values_list('value', flat=True)
-        )
+        return [
+            note['text']
+            for note in instance.other_data.get('notes', [])
+            if note['note_type'] == 'semantics'
+        ]

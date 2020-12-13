@@ -1,6 +1,6 @@
 from django import forms
 
-from lexicon.documents import LexicalEntryDocument
+from lexicon.documents import EntryDocument
 from lexicon.forms.base import LexiconQueryBuilderGlobalFiltersForm
 from lexicon.transformations.nahuat_orthography import nahuat_orthography
 from mesolex.config import LANGUAGES
@@ -16,7 +16,7 @@ class AzzLexicalSearchFilterForm(QueryBuilderForm):
     ELASTICSEARCH_FIELDS = AZZ.elasticsearch_fields
     ELASTICSEARCH_FIELDS_DICT = AZZ.elasticsearch_fields_dict
 
-    DocumentClass = LexicalEntryDocument
+    DocumentClass = EntryDocument
 
     vln = forms.BooleanField(required=False)
     nahuat_orthography = forms.BooleanField(required=False)

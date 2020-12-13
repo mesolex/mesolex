@@ -1,6 +1,6 @@
 from django import forms
 
-from lexicon.documents import LexicalEntryDocument
+from lexicon.documents import EntryDocument
 from lexicon.forms.base import LexiconQueryBuilderGlobalFiltersForm
 from mesolex.config import LANGUAGES
 from mesolex.utils import Language
@@ -15,7 +15,7 @@ class TrqLexicalSearchFilterForm(QueryBuilderForm):
     ELASTICSEARCH_FIELDS = TRQ.elasticsearch_fields
     ELASTICSEARCH_FIELDS_DICT = TRQ.elasticsearch_fields_dict
 
-    DocumentClass = LexicalEntryDocument
+    DocumentClass = EntryDocument
 
 
 class BaseTrqLexiconQueryComposerFormset(QueryBuilderBaseFormset):
