@@ -29,10 +29,11 @@ class MediaCSVUploadForm(forms.Form):
     csv_file.label = 'CSV File'
 
     def clean_csv_file(self):
+        # TODO: figure out how to not fully read the file & realize
+        # it in memory before processing it (e.g. grab only first line?)
         csv_file = self.cleaned_data['csv_file']
         decoded = io.StringIO(csv_file.read().decode('utf-8'))
         reader = csv.DictReader(decoded)
-        rows = [row for row in reader]
 
         if not set(CSV_FIELDS).issubset(set(reader.fieldnames)):
             raise forms.ValidationError((
@@ -40,7 +41,7 @@ class MediaCSVUploadForm(forms.Form):
                 '"{fields}". Check the format of your CSV and try again.'
             ).format(fields=('", "'.join(CSV_FIELDS))))
 
-        return rows
+        return list(reader)
 
 
 class MediaAdmin(admin.ModelAdmin):
@@ -61,14 +62,14 @@ class MediaAdmin(admin.ModelAdmin):
                 updated = 0
                 created = 0
                 for item in form.cleaned_data['csv_file']:
-                    path = '/'.join(item['Path'].split('/') + [item['Filename']])
+                    item_path = '/'.join(item['Path'].split('/') + [item['Filename']])
                     try:
-                        entry = models.LexicalEntry.objects.get(_id=item['UID'])
+                        lexical_entry = models.Entry.objects.get(identifier=item['UID'])
                         (_, _created) = models.Media.objects.update_or_create(
-                            entry=entry,
+                            lexical_entry=lexical_entry,
                             defaults={
                                 'mime_type': 'audio/mpeg',
-                                'url': path,
+                                'url': item_path,
                             },
                         )
                         if _created:
@@ -76,7 +77,7 @@ class MediaAdmin(admin.ModelAdmin):
                         else:
                             updated += 1
                     except:
-                        logger.exception("Error adding media file with UID {uid}".format(uid=item['UID']))
+                        logger.exception('Error adding media file with UID %s.', item['UID'])
                         errors += 1
 
                 messages.add_message(
@@ -100,12 +101,12 @@ class MediaAdmin(admin.ModelAdmin):
         })
 
 
-class LexicalEntryAdmin(admin.ModelAdmin):
-    list_display = ('lemma', 'language', 'date', '_id', )
+class EntryAdmin(admin.ModelAdmin):
+    list_display = ('value', 'language', 'identifier', )
     formfield_overrides = {
         JSONField: {'widget': PrettyJSONWidget(attrs={'initial': 'parsed'})}
     }
 
 
 admin.site.register(models.Media, MediaAdmin)
-admin.site.register(models.LexicalEntry, LexicalEntryAdmin)
+admin.site.register(models.Entry, EntryAdmin)

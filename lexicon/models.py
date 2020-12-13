@@ -150,8 +150,8 @@ class Citation(AbstractSimpleStringValue):
 
 
 class Media(models.Model):
-    entry = models.ForeignKey(
-        LexicalEntry,
+    lexical_entry = models.ForeignKey(
+        Entry,
         on_delete=models.CASCADE,
         null=True,
     )
