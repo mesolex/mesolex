@@ -45,7 +45,6 @@ INSTALLED_APPS = [
 
     'django_elasticsearch_dsl',
     'prettyjson',
-    'rest_framework',
     'robots',
 
     'lexicon',
@@ -148,14 +147,6 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-    ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10,
-}
 
 LANGUAGE_CODE = 'es'
 

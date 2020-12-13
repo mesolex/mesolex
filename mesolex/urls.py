@@ -25,7 +25,6 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 urlpatterns = [
     path('robots.txt', include('robots.urls')),
-    path('api/', include('lexicon.api_urls'), name='api'),
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),

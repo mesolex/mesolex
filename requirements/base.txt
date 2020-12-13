@@ -7,7 +7,6 @@ django-robots==4.0
 psycopg2-binary==2.8.5
 xmljson==0.2.1
 django-prettyjson==0.4.1
-djangorestframework==3.11.0
 python-dateutil==2.8.1
 django-debug-toolbar==2.2
 elasticsearch-dsl==7.2.1
