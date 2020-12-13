@@ -1,6 +1,10 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
-from django.utils.translation import gettext as _
+
+
+class EntryManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().prefetch_related('media_set')
 
 
 class Entry(models.Model):
@@ -23,6 +27,8 @@ class Entry(models.Model):
         blank=True,
         null=True,
     )
+
+    objects = EntryManager()
 
 
 class Searchable(models.Model):

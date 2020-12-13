@@ -177,16 +177,14 @@ class SearchPage(TranslatablePage):
     def _search_query_data(
             self,
             formset,
-            lexical_entries=None,
             display_entries=None,
-            query=None,
             paginator=None,
             result_page=1,
     ):
         return {
             'lexical_entries': display_entries,
             'num_pages': paginator.num_pages if paginator else 0,
-            'num_entries': lexical_entries.count() if lexical_entries else 0,
+            'num_entries': paginator.count if paginator else 0,
             'result_page': result_page,
             'query': True,
             'languages': json.dumps(
@@ -236,9 +234,7 @@ class SearchPage(TranslatablePage):
             **context,
             **self._search_query_data(
                 formset,
-                lexical_entries=lexical_entries,
                 display_entries=display_entries,
-                query=query,
                 paginator=paginator,
                 result_page=result_page,
             ),
