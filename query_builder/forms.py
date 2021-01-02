@@ -26,8 +26,7 @@ class CombiningQuery(namedtuple(
 class QueryGrouper(object):
     """
     Helper class to compose together queries in a way that
-    respects operator precedence. Add queries to the sequence
-    to be composed together by calling 
+    respects operator precedence.
     """
 
     def __init__(self, queries=None):
@@ -37,7 +36,7 @@ class QueryGrouper(object):
         self._queries.append(val)
 
     @staticmethod
-    def _handle_next_and(accumulator, next: CombiningQuery):
+    def _handle_next_and(accumulator, next_cq: CombiningQuery):
         """
         Reducer function to multiply together all queries
         tagged with the "and" operator. This ensures that "and"
@@ -45,11 +44,11 @@ class QueryGrouper(object):
         reduction.
         """
         (queries, and_tree) = accumulator
-        if next.operator == 'and':
-            and_tree &= next.query
+        if next_cq.operator == 'and':
+            and_tree &= next_cq.query
         else:
             queries = queries + [and_tree]
-            and_tree = next.query
+            and_tree = next_cq.query
         return (queries, and_tree)
 
     @staticmethod
@@ -305,17 +304,17 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
         for form in self.forms:
             if form.is_valid():
                 form_q = form.get_query()
-                operator = form.cleaned_data['operator']
-                if operator == 'and_n' or operator == 'or_n':
+                form_operator = form.cleaned_data['operator']
+                if form_operator in ('and_n', 'or_n'):
                     form_q = ~form_q
-                    operator = operator.replace('_n', '')
+                    form_operator = form_operator.replace('_n', '')
 
                 if self.global_filters_form.is_valid() and form_q:
                     for (_name, global_filter,) in self.global_filters_form.cleaned_data.items():
                         form_q &= global_filter
 
                 queries.append(CombiningQuery(
-                    operator=operator,
+                    operator=form_operator,
                     query=form_q,
                 ))
 
