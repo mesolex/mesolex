@@ -45,12 +45,12 @@ class EntryDocument(Document):
     )
 
     def prepare_definitions_es(self, instance):
-        return [sense_dict['sense'] for sense_dict in instance.other_data.get('senses', [])]
+        return [sense_dict['sense'] for sense_dict in instance.data.get('senses', [])]
 
     def prepare_ostentives_es(self, instance):
         return list(
             itertools.chain(
-                *[sense.get('ostentives', []) for sense in instance.other_data.get('senses', [])],
+                *[sense.get('ostentives', []) for sense in instance.data.get('senses', [])],
             ),
         )
 
@@ -58,7 +58,7 @@ class EntryDocument(Document):
         return list([
             example['translation'].get('text', '')
             for example in itertools.chain(
-                *[sense.get('examples', []) for sense in instance.other_data.get('senses', [])],
+                *[sense.get('examples', []) for sense in instance.data.get('senses', [])],
             )
             if example.get('translation') is not None and example['translation']['language'] == 'es'
         ])
@@ -67,7 +67,7 @@ class EntryDocument(Document):
         return list([
             example['original'].get('text', '')
             for example in itertools.chain(
-                *[sense.get('examples', []) for sense in instance.other_data.get('senses', [])],
+                *[sense.get('examples', []) for sense in instance.data.get('senses', [])],
             )
             if example.get('original') is not None and example['original']['language'] == 'azz'
         ])
@@ -76,7 +76,7 @@ class EntryDocument(Document):
         return list([
             example['original'].get('text', '')
             for example in itertools.chain(
-                *[sense.get('examples', []) for sense in instance.other_data.get('senses', [])],
+                *[sense.get('examples', []) for sense in instance.data.get('senses', [])],
             )
             if example.get('original') is not None and example['original']['language'] == 'trq'
         ])
@@ -84,6 +84,6 @@ class EntryDocument(Document):
     def prepare_nsem_es(self, instance):
         return [
             note['text']
-            for note in instance.other_data.get('notes', [])
+            for note in instance.data.get('notes', [])
             if note['note_type'] == 'semantics'
         ]
