@@ -69,6 +69,8 @@ class AzzImporter(Importer):
             identifier=identifier.text,
         )
         entry.language = 'azz'
+        entry_data['headword'] = identifier.text
+        entry_data['language'] = 'azz'
 
         return (entry, entry_data, created)
 
@@ -379,7 +381,7 @@ class AzzImporter(Importer):
             method(lx_group, entry, entry_data)
 
         # Save the result
-        entry.other_data = entry_data
+        entry.data = entry_data
         entry.save()
 
         return created
@@ -582,7 +584,7 @@ class TrqImporter(Importer):
         ]:
             method(entry_el, entry, entry_data)
 
-        entry.other_data = entry_data
+        entry.data = entry_data
         entry.save()
 
         return created

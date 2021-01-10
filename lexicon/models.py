@@ -23,7 +23,7 @@ class Entry(models.Model):
         db_index=True,
     )
     language = models.CharField(max_length=64)
-    other_data = JSONField(
+    data = JSONField(
         blank=True,
         null=True,
     )
