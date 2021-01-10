@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mesolex.nyc3.digitaloceanspaces.com/schema/entry.sanm1298.v1.json",
+  "title": " San Martín Itunyoso Triqui lexical entry data",
+  "description": "Lexical entry data for  San Martín Itunyoso Triqui",
+  "type": "object",
+  "properties": {
+    "headword": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        }
+      }
+    },
+    "citation_forms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "senses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sense": {
+            "type": "string"
+          },
+          "examples": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "original": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string"
+                    },
+                    "language": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "translation": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "language": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

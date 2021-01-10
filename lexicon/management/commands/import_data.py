@@ -69,7 +69,6 @@ class AzzImporter(Importer):
             identifier=identifier.text,
         )
         entry.language = 'azz'
-        entry_data['headword'] = identifier.text
         entry_data['language'] = 'azz'
 
         return (entry, entry_data, created)
@@ -90,6 +89,7 @@ class AzzImporter(Importer):
             return (None, 'Not found')
 
         entry.value = lemma.text
+        entry_data['headword'] = lemma.text
         return (entry, None)
 
     def clean_up_associated_data(self, entry):
@@ -448,6 +448,7 @@ class TrqImporter(Importer):
             identifier=identifier,
         )
         entry.language = 'trq'
+        entry_data['language'] = 'trq'
 
         return (entry, entry_data, created)
 
@@ -464,9 +465,11 @@ class TrqImporter(Importer):
             )
 
         try:
-            entry.value = entry_el.find(
+            headword = entry_el.find(
                 './lexical-unit/form[@lang="trq"]/text',
             ).text
+            entry.value = headword
+            entry_data['headword'] = headword
         except Exception:
             logger.exception(
                 'Failed to find headword in entry with id %s',
