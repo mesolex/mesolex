@@ -8,6 +8,9 @@ class EntryManager(models.Manager):
 
 
 class Entry(models.Model):
+    class Meta:
+        verbose_name_plural = 'Entries'
+
     identifier = models.CharField(
         max_length=256,
         unique=True,
@@ -34,6 +37,7 @@ class Entry(models.Model):
 class Searchable(models.Model):
     class Meta:
         abstract = True
+        verbose_name = 'Searchable String'
 
     entry = models.ForeignKey(
         Entry,
@@ -62,6 +66,9 @@ class LongSearchableString(Searchable):
 
 
 class Media(models.Model):
+    class Meta:
+        verbose_name = 'Media File Link'
+
     lexical_entry = models.ForeignKey(
         Entry,
         on_delete=models.CASCADE,
