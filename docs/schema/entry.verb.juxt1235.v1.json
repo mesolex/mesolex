@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "San Martín Duraznos Mixtec verb lexical entry data",
+  "description": "Verb lexical entry data for SMD Mixtec",
+  "type": "object",
+  "properties": {
+    "headword": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "impf": {
+      "type": "string"
+    },
+    "pfv": {
+      "type": "string"
+    },
+    "irr": {
+      "type": "string"
+    },
+    "valence": {
+      "type": "string"
+    },
+    "class_verbal": {
+      "type": "string"
+    },
+    "spanish": {
+      "type": "string"
+    },
+    "english": {
+      "type": "string"
+    },
+    "morphemes": {
+      "type": "string"
+    },
+    "gloss_english": {
+      "type": "string"
+    },
+    "gloss_spanish": {
+      "type": "string"
+    },
+    "impf_tone_mel_sp": {
+      "type": "string"
+    },
+    "pfv_tone_mel_sp": {
+      "type": "string"
+    },
+    "irr_tone_mel_sp": {
+      "type": "string"
+    },
+    "impf_tone_mel_en": {
+      "type": "string"
+    },
+    "pfv_tone_mel_en": {
+      "type": "string"
+    },
+    "irr_tone_mel_en": {
+      "type": "string"
+    },
+    "neg_impf": {
+      "type": "string"
+    },
+    "neg_pfv": {
+      "type": "string"
+    },
+    "neg_irr_1": {
+      "type": "string"
+    },
+    "neg_irr_2": {
+      "type": "string"
+    },
+    "p_mx": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}
