@@ -1,5 +1,6 @@
 import logging
 from collections import defaultdict
+from typing import Tuple
 import xml.etree.ElementTree as ET
 
 from dateutil.parser import ParserError, parse
@@ -13,6 +14,13 @@ logger = logging.getLogger(__name__)
 
 
 class Importer():
+    # meaning of returned tuple:
+    # (created, updated, total)
+    def __call__(self) -> Tuple[int, int, int]:
+        raise NotImplementedError()
+
+
+class XmlImporter(Importer):
     def __init__(self, input_file):
         self.input = input_file
 
@@ -25,15 +33,15 @@ class Importer():
         return self._handle_root(root)
 
 
-class CsvImporter():
+class CsvImporter(Importer):
     def __init__(self, input_file):
         self.input = input_file
-    
+
     def __call__(self):
         pass
 
 
-class AzzImporter(Importer):
+class AzzImporter(XmlImporter):
     def create_searchable_strings(
             self,
             lx_group,
@@ -415,7 +423,7 @@ class AzzImporter(Importer):
         return (created, updated, len(lx_groups))
 
 
-class TrqImporter(Importer):
+class TrqImporter(XmlImporter):
     def create_searchable_strings(
             self,
             entry_el,
