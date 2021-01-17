@@ -1,3 +1,4 @@
+import csv
 import logging
 from collections import defaultdict
 from typing import Tuple
@@ -37,8 +38,31 @@ class CsvImporter(Importer):
     def __init__(self, input_file):
         self.input = input_file
 
+    def process_row(self, row, i):
+        raise NotImplementedError()
+
     def __call__(self):
-        pass
+        (total, created, updated, i) = (0, 0, 0, 0)
+
+        with open(self.input) as input_file:
+            reader = csv.DictReader(input_file)
+
+            for row in reader:
+                total += 1
+                try:
+                    created_entry = self.process_row(row, i)
+                    if created_entry is None:
+                        pass
+                    elif not created_entry:
+                        updated += 1
+                    elif created_entry:
+                        created += 1
+                except Exception as err:
+                    logger.error('Error: %s', err)
+                finally:
+                    i += 1
+
+        return (created, updated, total)
 
 
 class AzzImporter(XmlImporter):
@@ -630,7 +654,81 @@ class TrqImporter(XmlImporter):
 
 
 class Juxt1235Importer(CsvImporter):
-    pass
+    HEADER_TO_FIELD_NAME = {
+        'IRR_TL': 'headword',
+        'IMPF': 'impf',
+        'PFV': 'pfv',
+        'IRR': 'irr',
+        'Valence': 'valence',
+        'Class verbal': 'class_verbal',
+        'Spanish': 'spanish',
+        'English': 'english',
+        'Morphemes': 'morphemes',
+        'GlossEnglish': 'gloss_english',
+        'GlossSpanish': 'gloss_spanish',
+        'IMPF_TONE_MEL (SP)': 'impf_tone_mel_sp',
+        'PFV_TONE_MEL (SP)': 'pfv_tone_mel_sp',
+        'IRR_TONE_MEL (SP)': 'irr_tone_mel_sp',
+        'IMPF_TONE_MEL (ENG)': 'impf_tone_mel_en',
+        'PFV_TONE_MEL (ENG)': 'pfv_tone_mel_en',
+        'IRR_TONE_MEL (ENG)': 'irr_tone_mel_en',
+        'NEG.IMPF': 'neg_impf',
+        'NEG.PFV': 'neg_pfv',
+        'NEG.IRR1': 'neg_irr_1',
+        'NEG.IRR2': 'neg_irr_2',
+        'pMx': 'p_mx',
+        'Source': 'source',
+        'Note': 'notes',
+    }
+
+    def initialize_data(self, row):
+        entry_data = {'language': 'juxt1235', 'meta': {}}
+        identifier = row['ID']
+        entry_data['meta']['id'] = identifier
+
+        entry, created = models.Entry.objects.get_or_create(
+            identifier=identifier,
+            language='juxt1235',
+        )
+
+        return (entry, entry_data, created)
+
+    def clean_up_associated_data(self, entry):
+        entry.searchablestring_set.all().delete()
+        entry.longsearchablestring_set.all().delete()
+
+    def create_simple_string_data(self, row, entry, entry_data):
+        new_searchable_strings = []
+
+        for item_key, item_value in row.items():
+            field_name = self.HEADER_TO_FIELD_NAME.get(item_key)
+            if field_name is None:
+                continue
+
+            if item_value != '':
+                new_searchable_strings.append(models.SearchableString(
+                    entry=entry,
+                    value=item_value,
+                    language='juxt1235',
+                    type_tag=field_name,
+                ))
+
+            entry_data[field_name] = item_value
+
+        models.SearchableString.objects.bulk_create(new_searchable_strings)
+
+    @transaction.atomic
+    def process_row(self, row, i):
+        (entry, entry_data, created) = self.initialize_data(row)
+
+        self.clean_up_associated_data(entry)
+
+        self.create_simple_string_data(row, entry, entry_data)
+
+        entry.data = entry_data
+        entry.save()
+
+        return created
 
 
 class Command(BaseCommand):
@@ -639,6 +737,7 @@ class Command(BaseCommand):
     IMPORTERS_BY_CODE = {
         'azz': AzzImporter,
         'trq': TrqImporter,
+        'juxt1235': Juxt1235Importer,
     }
 
     def add_arguments(self, parser):
