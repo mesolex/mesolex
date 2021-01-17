@@ -12,17 +12,25 @@ from lexicon import models
 logger = logging.getLogger(__name__)
 
 
-class Importer(object):
+class Importer():
     def __init__(self, input_file):
         self.input = input_file
 
     def _handle_root(self, root):
         raise NotImplementedError()
 
-    def run(self):
+    def __call__(self):
         tree = ET.parse(self.input)
         root = tree.getroot()
         return self._handle_root(root)
+
+
+class CsvImporter():
+    def __init__(self, input_file):
+        self.input = input_file
+    
+    def __call__(self):
+        pass
 
 
 class AzzImporter(Importer):
@@ -613,6 +621,10 @@ class TrqImporter(Importer):
         return (created, updated, len(entries))
 
 
+class Juxt1235Importer(CsvImporter):
+    pass
+
+
 class Command(BaseCommand):
     help = _("Lee una fuente de datos en XML y actualiza la base de datos.")
 
@@ -629,10 +641,10 @@ class Command(BaseCommand):
         input_file = options['input']
         language = options['language']
 
-        importer = self._importer_for(language)
+        importer = self._importer_for(language, input_file)
 
         (added_entries, updated_entries, total) = (
-            importer(input_file).run()
+            importer()
             if importer is not None
             else (0, 0, 0)
         )
@@ -643,5 +655,10 @@ class Command(BaseCommand):
             miss=(total - added_entries - updated_entries),
         ))
 
-    def _importer_for(self, language_code):
-        return self.IMPORTERS_BY_CODE.get(language_code, None)
+    def _importer_for(self, language_code, input_file):
+        importer_class = self.IMPORTERS_BY_CODE.get(language_code, None)
+
+        if importer_class is None:
+            raise ValueError(f'Importer for language code {language_code} not found')
+
+        return importer_class(input_file)
