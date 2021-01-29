@@ -26,10 +26,15 @@ yolo1241:
     global_filters: []
     elasticsearch_fields: []
     controlled_vocab_fields: []
-juxt1241:
+juxt1235:
     label: Mixteco de San Martín Duraznos
-    code: juxt1241
-    filterable_fields: []
+    code: juxt1235
+    filterable_fields:
+      - field: lemma
+        label: Entrada
+        terms:
+          - tag: headword
+            length: short
     global_filters: []
     elasticsearch_fields: []
     controlled_vocab_fields: []
