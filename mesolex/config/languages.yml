@@ -29,6 +29,11 @@ yolo1241:
 juxt1235:
     label: Mixteco de San Martín Duraznos
     code: juxt1235
+    extra_fields:
+      - field: neutralize_glottal_stop
+        label: Neutralizar la oclusión glotal
+        constraints:
+          - no_regex
     filterable_fields:
       - field: lemma
         label: Entrada

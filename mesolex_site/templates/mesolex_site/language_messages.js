@@ -79,3 +79,4 @@ gettext('Incompletivo Neg.');
 gettext('Completivo Neg.');
 gettext('Potential Neg.');
 gettext('Valencia');
+gettext('Neutralizar la oclusión glotal');
