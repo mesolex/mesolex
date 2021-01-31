@@ -35,9 +35,54 @@ juxt1235:
         terms:
           - tag: headword
             length: short
+      - field: impf
+        label: Incompletivo
+        terms:
+          - tag: impf
+            length: short
+      - field: pfv
+        label: Completivo
+        terms:
+          - tag: pfv
+            length: short
+      - field: irr
+        label: Potential
+        terms:
+          - tag: irr
+            length: short
+      - field: neg_impf
+        label: Incompletivo Neg.
+        terms:
+          - tag: neg_impf
+            length: short
+      - field: neg_pfv
+        label: Completivo Neg.
+        terms:
+          - tag: neg_pfv
+            length: short
+      - field: neg_irr
+        label: Potential Neg.
+        terms:
+          - tag: neg_irr_1
+            length: short
+          - tag: neg_irr_2
+            length: short
+      - field: valence
+        label: Valencia
+        terms:
+          - tag: valence
+            length: short
     global_filters: []
     elasticsearch_fields: []
-    controlled_vocab_fields: []
+    controlled_vocab_fields:
+      - field: valence
+        items:
+          - value: intr
+            label: intr
+          - value: trans
+            label: trans
+          - value: ambi
+            label: ambi
 magd1235:
     label: Mixteco de Magdalena Peñascos
     code: magd1235
