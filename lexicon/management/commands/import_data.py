@@ -7,6 +7,7 @@ import xml.etree.ElementTree as ET
 from dateutil.parser import ParserError, parse
 from django.core.management.base import BaseCommand
 from django.db import transaction
+from django.db.models import Func, Value
 from django.utils.translation import gettext as _
 
 from lexicon import models
@@ -680,6 +681,17 @@ class Juxt1235Importer(CsvImporter):
         'Source': 'source',
         'Note': 'notes',
     }
+    NORMALIZED_FIELDS = [
+        'headword',
+        'impf',
+        'pfv',
+        'irr',
+        'neg_impf',
+        'neg_pfv',
+        'neg_irr_1',
+        'neg_irr_2',
+        'p_mx',
+    ]
 
     def initialize_data(self, row):
         entry_data = {'language': 'juxt1235', 'meta': {}}
@@ -712,6 +724,13 @@ class Juxt1235Importer(CsvImporter):
                     language='juxt1235',
                     type_tag=field_name,
                 ))
+                if field_name in self.NORMALIZED_FIELDS:
+                    new_searchable_strings.append(models.SearchableString(
+                        entry=entry,
+                        value=Func(Value(item_value), function='unaccent'),
+                        language='juxt1235',
+                        type_tag=f'{field_name}_normalized',
+                    ))
 
             entry_data[field_name] = item_value
 
