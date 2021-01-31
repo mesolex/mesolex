@@ -79,3 +79,4 @@
 {% trans "Completivo Neg." %}
 {% trans "Potential Neg." %}
 {% trans "Valencia" %}
+{% trans "Neutralizar la oclusión glotal" %}

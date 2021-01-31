@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-31 14:17+0000\n"
+"POT-Creation-Date: 2021-01-31 15:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,18 +52,16 @@ msgid "Triqui de San Martín Itunyoso"
 msgstr "San Martín Itunyoso Triqui"
 
 #: mesolex_site/templates/mesolex_site/language_messages.js:11
-#: mesolex_site/templates/mesolex_site/language_messages.js:19
-#: mesolex_site/templates/mesolex_site/language_messages.js:76
 msgid "Entrada"
 msgstr "headword"
 
 #: mesolex_site/templates/mesolex_site/language_messages.js:12
-#: mesolex_site/templates/mesolex_site/language_messages.js:25
+#: mesolex_site/templates/mesolex_site/language_messages.js:24
 msgid "Significado preciso"
 msgstr "Exact meaning"
 
 #: mesolex_site/templates/mesolex_site/language_messages.js:13
-#: mesolex_site/templates/mesolex_site/language_messages.js:27
+#: mesolex_site/templates/mesolex_site/language_messages.js:26
 msgid "Frase ilustrativas"
 msgstr "Illustrative phrases"
 
@@ -87,245 +85,249 @@ msgstr "Activate flexible orthography"
 msgid "Sólo mostrar entradas con sonidos"
 msgstr "Only show entries with accompanying sounds"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:20
+#: mesolex_site/templates/mesolex_site/language_messages.js:19
 msgid "Glosa"
 msgstr "Gloss"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:21
+#: mesolex_site/templates/mesolex_site/language_messages.js:20
 msgid "Raiz"
 msgstr "Root"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:22
+#: mesolex_site/templates/mesolex_site/language_messages.js:21
 msgid "Campo semántico"
 msgstr "semantic field"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:23
+#: mesolex_site/templates/mesolex_site/language_messages.js:22
 msgid "Categoría gramatical"
 msgstr "grammatical category"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:24
+#: mesolex_site/templates/mesolex_site/language_messages.js:23
 msgid "Inflexión"
 msgstr "inflection"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:26
+#: mesolex_site/templates/mesolex_site/language_messages.js:25
 msgid "Significado extendido"
 msgstr "Extended meaning"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:28
+#: mesolex_site/templates/mesolex_site/language_messages.js:27
 msgid "Búsqueda exhaustiva"
 msgstr "Full search"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:29
+#: mesolex_site/templates/mesolex_site/language_messages.js:28
 msgid "Adjetivo"
 msgstr "Adjective"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:30
+#: mesolex_site/templates/mesolex_site/language_messages.js:29
 msgid "Adverbio"
 msgstr "Adverb"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:31
+#: mesolex_site/templates/mesolex_site/language_messages.js:30
 msgid "Auxiliar"
 msgstr "Auxiliary"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:32
+#: mesolex_site/templates/mesolex_site/language_messages.js:31
 msgid "Habla-de-niños"
 msgstr "Baby talk"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:33
+#: mesolex_site/templates/mesolex_site/language_messages.js:32
 msgid "Clítico"
 msgstr "Clitic"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:34
+#: mesolex_site/templates/mesolex_site/language_messages.js:33
 msgid "Conjunción"
 msgstr "Conjunction"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:35
+#: mesolex_site/templates/mesolex_site/language_messages.js:34
 msgid "Cópula"
 msgstr "Copula"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:36
+#: mesolex_site/templates/mesolex_site/language_messages.js:35
 msgid "Demostrativo"
 msgstr "Demonstrative"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:37
+#: mesolex_site/templates/mesolex_site/language_messages.js:36
 msgid "Direccional"
 msgstr "Directional"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:38
+#: mesolex_site/templates/mesolex_site/language_messages.js:37
 msgid "Estativo"
 msgstr "Stative"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:39
+#: mesolex_site/templates/mesolex_site/language_messages.js:38
 msgid "Interjección"
 msgstr "Interjection"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:40
+#: mesolex_site/templates/mesolex_site/language_messages.js:39
 msgid "Interrogativo"
 msgstr "Interrogative"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:41
+#: mesolex_site/templates/mesolex_site/language_messages.js:40
 msgid "Locativo"
 msgstr "Locative"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:42
+#: mesolex_site/templates/mesolex_site/language_messages.js:41
 msgid "Modal"
 msgstr "Modal"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:43
+#: mesolex_site/templates/mesolex_site/language_messages.js:42
 msgid "Muletilla"
 msgstr "Tag"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:44
+#: mesolex_site/templates/mesolex_site/language_messages.js:43
 msgid "Negación"
 msgstr "Negation"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:45
+#: mesolex_site/templates/mesolex_site/language_messages.js:44
 msgid "Prefijo"
 msgstr "Prefix"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:46
+#: mesolex_site/templates/mesolex_site/language_messages.js:45
 msgid "Preposición"
 msgstr "Preposition"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:47
+#: mesolex_site/templates/mesolex_site/language_messages.js:46
 msgid "Pronombre"
 msgstr "Pronoun"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:48
+#: mesolex_site/templates/mesolex_site/language_messages.js:47
 msgid "Saludo"
 msgstr "Greeting"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:49
+#: mesolex_site/templates/mesolex_site/language_messages.js:48
 msgid "Subordinador"
 msgstr "Subordinator"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:50
+#: mesolex_site/templates/mesolex_site/language_messages.js:49
 msgid "Sufijo"
 msgstr "Suffix"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:51
+#: mesolex_site/templates/mesolex_site/language_messages.js:50
 msgid "Sustantivo"
 msgstr "Substantive"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:52
+#: mesolex_site/templates/mesolex_site/language_messages.js:51
 msgid "Terminación-aspectual"
 msgstr "Aspectual ending"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:53
+#: mesolex_site/templates/mesolex_site/language_messages.js:52
 msgid "Topónimo"
 msgstr "Toponym"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:54
+#: mesolex_site/templates/mesolex_site/language_messages.js:53
 msgid "Verbo-impersonal"
 msgstr "Impersonal verb"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:55
+#: mesolex_site/templates/mesolex_site/language_messages.js:54
 msgid "Verbo-intransitivo"
 msgstr "Intransitive verb"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:56
+#: mesolex_site/templates/mesolex_site/language_messages.js:55
 msgid "Verbo-transitivo"
 msgstr "Transitive verb"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:57
+#: mesolex_site/templates/mesolex_site/language_messages.js:56
 msgid "Verbo-bitransitivo"
 msgstr "Bitransitive verb"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:58
+#: mesolex_site/templates/mesolex_site/language_messages.js:57
 msgid "Verbo-tritransitivo"
 msgstr "Tritransitive verb"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:59
+#: mesolex_site/templates/mesolex_site/language_messages.js:58
 msgid "Vocativo"
 msgstr "Vocative"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:60
+#: mesolex_site/templates/mesolex_site/language_messages.js:59
 msgid "Verbo clase 1 (kwa)"
 msgstr "Class 1 verb (kwa)"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:61
+#: mesolex_site/templates/mesolex_site/language_messages.js:60
 msgid "Verbo clase 2a (pale:wia)"
 msgstr "Class 2a verb (pale:wia)"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:62
+#: mesolex_site/templates/mesolex_site/language_messages.js:61
 msgid "Verbo clase 2b (polowa)"
 msgstr "Class 2b verb (polowa)"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:63
+#: mesolex_site/templates/mesolex_site/language_messages.js:62
 msgid "Verbo clase 3 (kalaki)"
 msgstr "Class 3 verb (kalaki)"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:64
+#: mesolex_site/templates/mesolex_site/language_messages.js:63
 msgid "Verbo clase 4 (cho:ka)"
 msgstr "Class 4 verb (cho:ka)"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:65
+#: mesolex_site/templates/mesolex_site/language_messages.js:64
 msgid "Verbo clase 4-3 (ki:sa)"
 msgstr "Class 4-3 verb (ki:sa)"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:66
+#: mesolex_site/templates/mesolex_site/language_messages.js:65
 msgid "Verbo clase 4-3/3 (pata:ni)"
 msgstr "Class 4-3/3 verb (pata:ni)"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:67
+#: mesolex_site/templates/mesolex_site/language_messages.js:66
 msgid "Solamente no posesionado"
 msgstr "Only unpossessed"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:68
+#: mesolex_site/templates/mesolex_site/language_messages.js:67
 msgid "Posesión enajenable y no enajenable"
 msgstr "Alienable and non-alienable possession"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:69
+#: mesolex_site/templates/mesolex_site/language_messages.js:68
 msgid "Posesión enajenable y no enajenable (no cambio de raíz)"
 msgstr "Alienable and non-alienable possession (no change of root)"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:70
+#: mesolex_site/templates/mesolex_site/language_messages.js:69
 msgid "Obligatoriamente posesionado"
 msgstr "Intrinsically possessed"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:71
+#: mesolex_site/templates/mesolex_site/language_messages.js:70
 msgid "Náhuatl de Mecayapan"
 msgstr "Mecayapan Nahuatl"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:72
+#: mesolex_site/templates/mesolex_site/language_messages.js:71
 msgid "Pipil (Nawat)"
 msgstr "Pipil (Nawat)"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:73
+#: mesolex_site/templates/mesolex_site/language_messages.js:72
 msgid "Totonaco de Zongozotla"
 msgstr "Zongozotla Totonac"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:74
+#: mesolex_site/templates/mesolex_site/language_messages.js:73
 msgid "Totonaco de Ozelonacaxtla"
 msgstr "Ozelonacaxtla Totonac"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:77
+#: mesolex_site/templates/mesolex_site/language_messages.js:75
 msgid "Incompletivo"
 msgstr "Incompletive"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:78
+#: mesolex_site/templates/mesolex_site/language_messages.js:76
 msgid "Completivo"
 msgstr "Completive"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:79
+#: mesolex_site/templates/mesolex_site/language_messages.js:77
 msgid "Potential"
 msgstr "Potential"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:80
+#: mesolex_site/templates/mesolex_site/language_messages.js:78
 msgid "Incompletivo Neg."
 msgstr "Neg. Incompletive"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:81
+#: mesolex_site/templates/mesolex_site/language_messages.js:79
 msgid "Completivo Neg."
 msgstr "Neg. Completive"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:82
+#: mesolex_site/templates/mesolex_site/language_messages.js:80
 msgid "Potential Neg."
 msgstr "Neg. Potential"
 
-#: mesolex_site/templates/mesolex_site/language_messages.js:83
+#: mesolex_site/templates/mesolex_site/language_messages.js:81
 msgid "Valencia"
 msgstr "Valence"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:82
+msgid "Neutralizar la oclusión glotal"
+msgstr "Neutralize glottal stop"
 
 #: query_builder/static/ts/components/add-remove-forms.tsx:16
 msgid "Agregar filtro"

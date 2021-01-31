@@ -1,6 +1,8 @@
 from django import forms
 
 from lexicon.documents import EntryDocument
+from lexicon.transformations.juxt1235 import neutralize_glottal_stop
+from mesolex.config import LANGUAGES
 from mesolex.utils import Language
 from query_builder.forms import QueryBuilderBaseFormset, QueryBuilderForm
 
@@ -14,9 +16,22 @@ class Juxt1235LexicalSearchFilterForm(QueryBuilderForm):
 
     DocumentClass = EntryDocument
 
+    neutralize_glottal_stop = forms.BooleanField(required=False)
+
+    @property
+    def transformations(self):
+        return super().transformations + [
+            neutralize_glottal_stop,
+        ]
+
 
 class BaseJuxt1235LexiconQueryComposerFormset(QueryBuilderBaseFormset):
     FILTERABLE_FIELDS = JUXT1235.filterable_fields
+
+    CONTROLLED_VOCAB_FIELDS = {
+        field['field']: [(item['value'], item['label']) for item in field['items']]
+        for field in LANGUAGES['juxt1235']['controlled_vocab_fields']
+    }
 
 
 Juxt1235LexicalSearchFilterFormset = forms.formset_factory(
