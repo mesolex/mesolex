@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-01 14:01+0000\n"
+"POT-Creation-Date: 2021-01-31 14:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,30 +17,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lexicon/management/commands/import_data.py:532
+#: lexicon/management/commands/import_data.py:754
 msgid "Lee una fuente de datos en XML y actualiza la base de datos."
 msgstr "Reads an XML data source file and updates the database."
 
-#: lexicon/models.py:18
-msgid "Identificación única"
-msgstr "Unique ID"
-
-#: lexicon/models.py:23
-#: mesolex_site/templates/mesolex_site/language_messages.txt:11
-#: mesolex_site/templates/mesolex_site/language_messages.txt:19
-msgid "Entrada"
-msgstr "Headword"
-
-#: mesolex/settings/base.py:164
+#: mesolex/settings/base.py:154
 msgid "español"
 msgstr "Spanish"
 
-#: mesolex/settings/base.py:165
+#: mesolex/settings/base.py:155
 msgid "inglés"
 msgstr "English"
 
 #: mesolex/templates/includes/header.html:14
-#: mesolex_site/templates/mesolex_site/includes/header.html:15
+#: mesolex_site/templates/mesolex_site/includes/header.html:23
 msgid "Activar la navegación"
 msgstr "Toggle navigation"
 
@@ -60,6 +50,103 @@ msgstr "Languages"
 #: mesolex_site/templates/mesolex_site/includes/language_home_page_header.html:16
 msgid "Recursos"
 msgstr "Resources"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/default.html:19
+msgid "Citación"
+msgstr "Citation"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/default.html:19
+msgid "Formas alt."
+msgstr "Alt. forms"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/default.html:19
+#: mesolex_site/templates/mesolex_site/language_messages.txt:20
+msgid "Glosa"
+msgstr "Gloss"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/default.html:24
+#: mesolex_site/templates/mesolex_site/language_messages.txt:23
+msgid "Categoría gramatical"
+msgstr "Grammatical category"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/default.html:24
+#: mesolex_site/templates/mesolex_site/language_messages.txt:24
+msgid "Inflexión"
+msgstr "Inflection"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/default.html:29
+#: mesolex_site/templates/mesolex_site/language_messages.txt:22
+msgid "Campo semántico"
+msgstr "Semantic field"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/default.html:34
+msgid "Etimología"
+msgstr "Etymology"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/default.html:38
+msgid "Raíz"
+msgid_plural "Raízes"
+msgstr[0] "Root"
+msgstr[1] "Roots"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/default.html:44
+#, fuzzy
+#| msgid "Raíz compuesta"
+msgid "Raíz compuesta"
+msgid_plural "Raízes compuestas"
+msgstr[0] "Compound stem"
+msgstr[1] "Compound stems"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/default.html:49
+msgid "Palabra con elementos no de náhuat"
+msgid_plural "Palabras con elementos no de náhuat"
+msgstr[0] "Word with non-Nahuat elements"
+msgstr[1] "Words with non-Nahuat elements"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/default.html:79
+msgid "Notas semánticas"
+msgstr "Semantic notes"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/default.html:85
+msgid "Notas morfológicas"
+msgstr "Morphological notes"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/default.html:91
+msgid "Notas gramaticales"
+msgstr "Grammatical notes"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:24
+msgid "Proto-Mixteco"
+msgstr "Proto-Mixtec"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:26
+msgid "Fuente"
+msgstr "Source"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:28
+msgid "Notas"
+msgstr "Notes"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:32
+#: mesolex_site/templates/mesolex_site/language_messages.txt:77
+msgid "Incompletivo"
+msgstr "Incompletive"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:32
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:35
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:38
+msgid "Neg."
+msgstr "Neg."
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:35
+#: mesolex_site/templates/mesolex_site/language_messages.txt:78
+msgid "Completivo"
+msgstr "Completive"
+
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:38
+#: mesolex_site/templates/mesolex_site/language_messages.txt:79
+msgid "Potential"
+msgstr "Potential"
 
 #: mesolex_site/templates/mesolex_site/language_home_page.html:37
 msgid "Léxicos"
@@ -115,6 +202,12 @@ msgstr "Xochapan Mixtec"
 msgid "Triqui de San Martín Itunyoso"
 msgstr "San Martín Itunyoso Triqui"
 
+#: mesolex_site/templates/mesolex_site/language_messages.txt:11
+#: mesolex_site/templates/mesolex_site/language_messages.txt:19
+#: mesolex_site/templates/mesolex_site/language_messages.txt:76
+msgid "Entrada"
+msgstr "Headword"
+
 #: mesolex_site/templates/mesolex_site/language_messages.txt:12
 #: mesolex_site/templates/mesolex_site/language_messages.txt:25
 msgid "Significado preciso"
@@ -145,29 +238,9 @@ msgstr "Activate flexible orthography"
 msgid "Sólo mostrar entradas con sonidos"
 msgstr "Only show entries with audio"
 
-#: mesolex_site/templates/mesolex_site/language_messages.txt:20
-#: mesolex_site/templates/mesolex_site/search_page.html:44
-msgid "Glosa"
-msgstr "Gloss"
-
 #: mesolex_site/templates/mesolex_site/language_messages.txt:21
 msgid "Raiz"
 msgstr "Root"
-
-#: mesolex_site/templates/mesolex_site/language_messages.txt:22
-#: mesolex_site/templates/mesolex_site/search_page.html:54
-msgid "Campo semántico"
-msgstr "Semantic field"
-
-#: mesolex_site/templates/mesolex_site/language_messages.txt:23
-#: mesolex_site/templates/mesolex_site/search_page.html:49
-msgid "Categoría gramatical"
-msgstr "Grammatical category"
-
-#: mesolex_site/templates/mesolex_site/language_messages.txt:24
-#: mesolex_site/templates/mesolex_site/search_page.html:49
-msgid "Inflexión"
-msgstr "Inflection"
 
 #: mesolex_site/templates/mesolex_site/language_messages.txt:26
 msgid "Significado extendido"
@@ -361,96 +434,71 @@ msgstr "Zongozotla Totonac"
 msgid "Totonaco de Ozelonacaxtla"
 msgstr "Ozelonacaxtla Totonac"
 
+#: mesolex_site/templates/mesolex_site/language_messages.txt:80
+msgid "Incompletivo Neg."
+msgstr "Neg. Incompletive"
+
+#: mesolex_site/templates/mesolex_site/language_messages.txt:81
+msgid "Completivo Neg."
+msgstr "Neg. Completive"
+
+#: mesolex_site/templates/mesolex_site/language_messages.txt:82
+msgid "Potential Neg."
+msgstr "Neg. Potential"
+
+#: mesolex_site/templates/mesolex_site/language_messages.txt:83
+msgid "Valencia"
+msgstr "Valence"
+
 #: mesolex_site/templates/mesolex_site/search_page.html:24
 #, fuzzy, python-format
 #| msgid "%(num_entries)s resultados (página %(page)s de %(num_pages)s)"
 msgid "%(num_entries)s resultados (página %(result_page)s de %(num_pages)s)"
 msgstr "%(num_entries)s results (page %(page)s of %(num_pages)s)"
 
-#: mesolex_site/templates/mesolex_site/search_page.html:44
-msgid "Citación"
-msgstr "Citation"
-
-#: mesolex_site/templates/mesolex_site/search_page.html:44
-msgid "Formas alt."
-msgstr "Alt. forms"
-
-#: mesolex_site/templates/mesolex_site/search_page.html:60
-msgid "Etimología"
-msgstr "Etymology"
-
-#: mesolex_site/templates/mesolex_site/search_page.html:64
-msgid "Raíz"
-msgid_plural "Raízes"
-msgstr[0] "Root"
-msgstr[1] "Roots"
-
-#: mesolex_site/templates/mesolex_site/search_page.html:70
-#, fuzzy
-#| msgid "Raíz compuesta"
-msgid "Raíz compuesta"
-msgid_plural "Raízes compuestas"
-msgstr[0] "Compound stem"
-msgstr[1] "Compound stems"
-
-#: mesolex_site/templates/mesolex_site/search_page.html:75
-msgid "Palabra con elementos no de náhuat"
-msgid_plural "Palabras con elementos no de náhuat"
-msgstr[0] "Word with non-Nahuat elements"
-msgstr[1] "Words with non-Nahuat elements"
-
-#: mesolex_site/templates/mesolex_site/search_page.html:107
-msgid "Notas semánticas"
-msgstr "Semantic notes"
-
-#: mesolex_site/templates/mesolex_site/search_page.html:113
-msgid "Notas morfológicas"
-msgstr "Morphological notes"
-
-#: mesolex_site/templates/mesolex_site/search_page.html:119
-msgid "Notas gramaticales"
-msgstr "Grammatical notes"
-
-#: mesolex_site/templates/mesolex_site/search_page.html:136
+#: mesolex_site/templates/mesolex_site/search_page.html:43
 msgid "Anterior"
 msgstr "Previous"
 
-#: mesolex_site/templates/mesolex_site/search_page.html:149
+#: mesolex_site/templates/mesolex_site/search_page.html:56
 msgid "Siguiente"
 msgstr "Next"
 
-#: mesolex_site/templates/mesolex_site/search_page.html:161
+#: mesolex_site/templates/mesolex_site/search_page.html:68
 msgid "Resultado no encontrado."
 msgstr "No results found."
 
-#: query_builder/forms.py:83
+#: query_builder/forms.py:82
 msgid "Empieza con"
 msgstr "Begins with"
 
-#: query_builder/forms.py:84
+#: query_builder/forms.py:83
 msgid "Termina con"
 msgstr "Ends with"
 
-#: query_builder/forms.py:85
+#: query_builder/forms.py:84
 msgid "Contiene secuencia"
 msgstr "Contains sequence"
 
-#: query_builder/forms.py:86
+#: query_builder/forms.py:85
 msgid "Contiene palabra"
 msgstr "Contains word"
 
-#: query_builder/forms.py:87
+#: query_builder/forms.py:86
 msgid "Es exactamente igual a"
 msgstr "Equal to"
 
-#: query_builder/forms.py:88
+#: query_builder/forms.py:87
 msgid "Expresión regular"
 msgstr "Regular expression"
 
-#: query_builder/forms.py:89
+#: query_builder/forms.py:88
 msgid "Coincide con"
 msgstr "Matches"
 
-#: query_builder/forms.py:230
+#: query_builder/forms.py:242
 msgid "Expresión regular no válida."
 msgstr "Invalid regular expression."
+
+#~ msgid "Identificación única"
+#~ msgstr "Unique ID"

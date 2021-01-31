@@ -15,7 +15,6 @@ class Juxt1235LexicalSearchFilterForm(QueryBuilderForm):
     DocumentClass = EntryDocument
 
 
-
 class BaseJuxt1235LexiconQueryComposerFormset(QueryBuilderBaseFormset):
     FILTERABLE_FIELDS = JUXT1235.filterable_fields
 
