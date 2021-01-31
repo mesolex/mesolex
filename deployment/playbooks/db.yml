@@ -10,3 +10,9 @@
       postgresql_ext:
         name: fuzzystrmatch
         db: "{{ db_name }}"
+    - name: enable unaccent
+      become_user: postgres
+      become: yes
+      postgresql_ext:
+        name: unaccent
+        db: "{{ db_name }}"
