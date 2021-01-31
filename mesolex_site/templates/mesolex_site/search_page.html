@@ -26,9 +26,9 @@
 
             {% for lexical_entry in lexical_entries %}
                 {% if language == "juxt1235" %}
-                    {% include "mesolex_site/includes/search_result/juxt1235.html" with data=lexical_entry.data %}
+                    {% include "mesolex_site/includes/search_result/juxt1235.html" with lexical_entry=lexical_entry data=lexical_entry.data %}
                 {% else %}
-                    {% include "mesolex_site/includes/search_result/default.html" with data=lexical_entry.data %}
+                    {% include "mesolex_site/includes/search_result/default.html" with lexical_entry=lexical_entry data=lexical_entry.data %}
                 {% endif %}
             {% endfor %}
 
