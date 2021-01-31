@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#: query_builder/static/ts/components/query-builder-form.tsx:185
-#: query_builder/static/ts/components/query-builder-formset.tsx:79
+#: query_builder/static/ts/components/query-builder-form.tsx:189
+#: query_builder/static/ts/components/query-builder-formset.tsx:83
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-01 14:02+0000\n"
+"POT-Creation-Date: 2021-01-31 14:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,6 +53,7 @@ msgstr "San Martín Itunyoso Triqui"
 
 #: mesolex_site/templates/mesolex_site/language_messages.js:11
 #: mesolex_site/templates/mesolex_site/language_messages.js:19
+#: mesolex_site/templates/mesolex_site/language_messages.js:76
 msgid "Entrada"
 msgstr "headword"
 
@@ -298,109 +299,107 @@ msgstr "Zongozotla Totonac"
 msgid "Totonaco de Ozelonacaxtla"
 msgstr "Ozelonacaxtla Totonac"
 
-#: query_builder/static/jsx/components/filter-selector.jsx:30
-#: query_builder/static/jsx/util.jsx:43
-#: query_builder/static/ts/components/filter-selector.tsx:26
-msgid "empieza con"
-msgstr "begins with"
+#: mesolex_site/templates/mesolex_site/language_messages.js:77
+msgid "Incompletivo"
+msgstr "Incompletive"
 
-#: query_builder/static/jsx/components/filter-selector.jsx:31
-#: query_builder/static/jsx/util.jsx:44
-#: query_builder/static/ts/components/filter-selector.tsx:27
-msgid "termina con"
-msgstr "ends with"
+#: mesolex_site/templates/mesolex_site/language_messages.js:78
+msgid "Completivo"
+msgstr "Completive"
 
-#: query_builder/static/jsx/components/filter-selector.jsx:32
-#: query_builder/static/jsx/util.jsx:45
-#: query_builder/static/ts/components/filter-selector.tsx:28
-msgid "contiene secuencia"
-msgstr "contains sequence"
+#: mesolex_site/templates/mesolex_site/language_messages.js:79
+msgid "Potential"
+msgstr "Potential"
 
-#: query_builder/static/jsx/components/filter-selector.jsx:33
-#: query_builder/static/jsx/util.jsx:46
-#: query_builder/static/ts/components/filter-selector.tsx:29
-msgid "contiene palabra"
-msgstr "contains word"
+#: mesolex_site/templates/mesolex_site/language_messages.js:80
+msgid "Incompletivo Neg."
+msgstr "Neg. Incompletive"
 
-#: query_builder/static/jsx/components/filter-selector.jsx:34
-#: query_builder/static/jsx/util.jsx:47
-#: query_builder/static/ts/components/filter-selector.tsx:30
-msgid "es exactamente igual a"
-msgstr "exactly equals"
+#: mesolex_site/templates/mesolex_site/language_messages.js:81
+msgid "Completivo Neg."
+msgstr "Neg. Completive"
 
-#: query_builder/static/jsx/components/filter-selector.jsx:35
-#: query_builder/static/ts/components/filter-selector.tsx:31
-msgid "expresión regular"
-msgstr "regular expression"
+#: mesolex_site/templates/mesolex_site/language_messages.js:82
+msgid "Potential Neg."
+msgstr "Neg. Potential"
 
-#: query_builder/static/jsx/components/filter-selector.jsx:36
-#: query_builder/static/jsx/util.jsx:49
-#: query_builder/static/ts/components/filter-selector.tsx:32
-msgid "coincide con"
-msgstr "matches"
+#: mesolex_site/templates/mesolex_site/language_messages.js:83
+msgid "Valencia"
+msgstr "Valence"
 
-#: query_builder/static/jsx/components/query-builder-form.jsx:133
-msgid "si"
-msgstr "does"
-
-#: query_builder/static/jsx/components/query-builder-form.jsx:133
-#: query_builder/static/jsx/util.jsx:37
-#: query_builder/static/ts/components/query-builder-form.tsx:50
-msgid "y"
-msgstr "and"
-
-#: query_builder/static/jsx/components/query-builder-form.jsx:134
-#: query_builder/static/jsx/util.jsx:38
-#: query_builder/static/ts/components/query-builder-form.tsx:51
-msgid "o"
-msgstr "or"
-
-#: query_builder/static/jsx/components/query-builder-form.jsx:135
-#: query_builder/static/jsx/util.jsx:32 query_builder/static/jsx/util.jsx:34
-msgid "no"
-msgstr "does not"
-
-#: query_builder/static/jsx/components/query-builder-form.jsx:135
-#: query_builder/static/jsx/util.jsx:39
-#: query_builder/static/ts/components/query-builder-form.tsx:52
-msgid "y no"
-msgstr "and not"
-
-#: query_builder/static/jsx/components/query-builder-form.jsx:136
-#: query_builder/static/jsx/util.jsx:40
-#: query_builder/static/ts/components/query-builder-form.tsx:53
-msgid "o no"
-msgstr "or not"
-
-#: query_builder/static/jsx/components/query-builder-formset.jsx:412
-#: query_builder/static/ts/components/add-remove-forms.tsx:24
-msgid "Buscar"
-msgstr "Search"
-
-#: query_builder/static/jsx/components/query-builder-formset.jsx:419
 #: query_builder/static/ts/components/add-remove-forms.tsx:16
 msgid "Agregar filtro"
 msgstr "Add filter"
 
-#: query_builder/static/jsx/util.jsx:48
-msgid "coincide con expresión regular"
-msgstr "matches regular expression"
+#: query_builder/static/ts/components/add-remove-forms.tsx:24
+msgid "Buscar"
+msgstr "Search"
 
-#: query_builder/static/jsx/util.jsx:54
-msgid "NCV"
-msgstr "VLN"
+#: query_builder/static/ts/components/filter-selector.tsx:26
+msgid "empieza con"
+msgstr "begins with"
 
-#: query_builder/static/jsx/util.jsx:55
-msgid "flex. ort."
-msgstr "flex. orth."
+#: query_builder/static/ts/components/filter-selector.tsx:27
+msgid "termina con"
+msgstr "ends with"
 
-#: query_builder/static/jsx/util.jsx:60
-msgid "ítem"
-msgstr "item"
+#: query_builder/static/ts/components/filter-selector.tsx:28
+msgid "contiene secuencia"
+msgstr "contains sequence"
 
-#: query_builder/static/ts/components/query-builder-form.tsx:304
+#: query_builder/static/ts/components/filter-selector.tsx:29
+msgid "contiene palabra"
+msgstr "contains word"
+
+#: query_builder/static/ts/components/filter-selector.tsx:30
+msgid "es exactamente igual a"
+msgstr "exactly equals"
+
+#: query_builder/static/ts/components/filter-selector.tsx:31
+msgid "expresión regular"
+msgstr "regular expression"
+
+#: query_builder/static/ts/components/filter-selector.tsx:32
+msgid "coincide con"
+msgstr "matches"
+
+#: query_builder/static/ts/components/query-builder-form.tsx:54
+msgid "y"
+msgstr "and"
+
+#: query_builder/static/ts/components/query-builder-form.tsx:55
+msgid "o"
+msgstr "or"
+
+#: query_builder/static/ts/components/query-builder-form.tsx:56
+msgid "y no"
+msgstr "and not"
+
+#: query_builder/static/ts/components/query-builder-form.tsx:57
+msgid "o no"
+msgstr "or not"
+
+#: query_builder/static/ts/components/query-builder-form.tsx:314
 msgid "Ingrese la consulta aquí"
 msgstr "Enter query here"
+
+#~ msgid "si"
+#~ msgstr "does"
+
+#~ msgid "no"
+#~ msgstr "does not"
+
+#~ msgid "coincide con expresión regular"
+#~ msgstr "matches regular expression"
+
+#~ msgid "NCV"
+#~ msgstr "VLN"
+
+#~ msgid "flex. ort."
+#~ msgstr "flex. orth."
+
+#~ msgid "ítem"
+#~ msgstr "item"
 
 #~ msgid "raiz"
 #~ msgstr "root"

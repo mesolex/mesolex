@@ -1,0 +1,41 @@
+{% load i18n %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+<div class="card mb-4">
+    <div class="card-header card-header--search">
+        <span class="h5">{{ data.headword }}</span>
+
+        {% if lexical_entry.media_set.exists %}
+            &nbsp;
+            {% for media in lexical_entry.media_set.all %}
+                <audio controls preload="none" class="lexical-entry-audio">
+                    <source src="{{ media.url }}" type="{{ media.mime_type }}" />
+                </audio>
+            {% endfor %}
+        {% endif %}
+
+        &nbsp;|&nbsp;
+
+        <span>{% if LANGUAGE_CODE == "es" %}{{ data.spanish }}{% else %}{{ data.english }}{% endif %}{% if data.valence %} [{{ data.valence }}]{% endif %}</span>
+
+        &nbsp;|&nbsp;
+
+        <span>{% trans "Proto-Mixteco" %}: {% firstof data.p_mx "—" %};</span>
+
+        <span>{% trans "Fuente" %}: {% firstof data.source "—" %};</span>
+
+        <span>{% trans "Notas" %}: {% firstof data.notes "—" %}
+    </div>
+    <div class="card-body">
+        <div>
+            <strong>{% trans "Incompletivo" %}</strong> {{ data.impf }} ({% if LANGUAGE_CODE == "es" %}{{ data.impf_tone_mel_sp }}{% else %}{{ data.impf_tone_mel_en }}{% endif %}) | <strong>{% trans "Neg." %}</strong> {% firstof data.neg_impf "—" %}
+        </div>
+        <div>
+            <strong>{% trans "Completivo" %}</strong> {{ data.pfv }} ({% if LANGUAGE_CODE == "es" %}{{ data.pfv_tone_mel_sp }}{% else %}{{ data.pfv_tone_mel_en }}{% endif %}) | <strong>{% trans "Neg." %}</strong> {% firstof data.neg_pfv "—" %}
+        </div>
+        <div>
+            <strong>{% trans "Potential" %}</strong> {{ data.irr }} ({% if LANGUAGE_CODE == "es" %}{{ data.irr_tone_mel_sp }}{% else %}{{ data.irr_tone_mel_en }}{% endif %}) | <strong>{% trans "Neg." %}</strong> {% firstof data.neg_irr_1 "—" %}, {% firstof data.neg_irr_2 "—" %}
+        </div>
+    </div>
+</div>

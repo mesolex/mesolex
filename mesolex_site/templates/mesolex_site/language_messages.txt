@@ -16,7 +16,6 @@
 {% trans "Neutralizar cantidad vocálica" %}
 {% trans "Activar flexibilidad ortográfica" %}
 {% trans "Sólo mostrar entradas con sonidos" %}
-{% trans "Entrada" %}
 {% trans "Glosa" %}
 {% trans "Raiz" %}
 {% trans "Campo semántico" %}
@@ -72,3 +71,11 @@
 {% trans "Pipil (Nawat)" %}
 {% trans "Totonaco de Zongozotla" %}
 {% trans "Totonaco de Ozelonacaxtla" %}
+
+{% trans "Incompletivo" %}
+{% trans "Completivo" %}
+{% trans "Potential" %}
+{% trans "Incompletivo Neg." %}
+{% trans "Completivo Neg." %}
+{% trans "Potential Neg." %}
+{% trans "Valencia" %}
