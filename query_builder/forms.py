@@ -9,6 +9,7 @@ from django import forms
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
+from lexicon.models import SearchableString, LongSearchableString
 from mesolex.utils import ForceProxyEncoder, contains_word_to_regex
 
 
@@ -201,12 +202,23 @@ class QueryBuilderForm(forms.Form):
             # { 'length': 'long', 'tag': 'definition' }
             # { 'length': 'short', 'tag': 'root' }
             if isinstance(filter_on_val, dict):
-                length_str = "long" if filter_on_val.get("length") == "long" else ""
-                model_str = f'{length_str}searchablestring'
-                query_expression |= Q(**{
-                    f'{model_str}__type_tag': filter_on_val.get('tag'),
-                    f'{model_str}__value{filter_action}': query_string,
+                if filter_on_val.get("length") == "long":
+                    string_class = LongSearchableString
+                else:
+                    string_class = SearchableString
+                string_query_expression = Q(**{
+                    f'type_tag': filter_on_val.get('tag'),
+                    f'value{filter_action}': query_string,
                 })
+                matching_strings = (
+                    string_class.objects
+                    .filter(string_query_expression)
+                    .values("entry")
+                    .distinct()
+                )
+                query_expression |= Q(pk__in=[
+                    matching_string['entry'] for matching_string in matching_strings
+                ])
             # If it is a string, then it is just the name of a field on
             # the model
             else:
