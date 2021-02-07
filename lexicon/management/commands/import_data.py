@@ -656,10 +656,10 @@ class TrqImporter(XmlImporter):
 
 class Juxt1235Importer(CsvImporter):
     HEADER_TO_FIELD_NAME = {
-        'IRR_TL': 'headword',
+        'IRR_TL': 'irr_tl',
         'IMPF': 'impf',
         'PFV': 'pfv',
-        'IRR': 'irr',
+        'IRR': ['irr', 'headword'],
         'Valence': 'valence',
         'Class verbal': 'class_verbal',
         'Spanish': 'spanish',
@@ -703,6 +703,8 @@ class Juxt1235Importer(CsvImporter):
             language='juxt1235',
         )
 
+        entry.value = row['IRR']
+
         return (entry, entry_data, created)
 
     def clean_up_associated_data(self, entry):
@@ -713,26 +715,29 @@ class Juxt1235Importer(CsvImporter):
         new_searchable_strings = []
 
         for item_key, item_value in row.items():
-            field_name = self.HEADER_TO_FIELD_NAME.get(item_key)
-            if field_name is None:
+            field_names = self.HEADER_TO_FIELD_NAME.get(item_key)
+            if field_names is None:
                 continue
+            if not isinstance(field_names, list):
+                field_names = [field_names]
 
-            if item_value != '':
-                new_searchable_strings.append(models.SearchableString(
-                    entry=entry,
-                    value=item_value,
-                    language='juxt1235',
-                    type_tag=field_name,
-                ))
-                if field_name in self.NORMALIZED_FIELDS:
+            for field_name in field_names:
+                if item_value != '':
                     new_searchable_strings.append(models.SearchableString(
                         entry=entry,
-                        value=Func(Value(item_value), function='unaccent'),
+                        value=item_value,
                         language='juxt1235',
-                        type_tag=f'{field_name}_normalized',
+                        type_tag=field_name,
                     ))
+                    if field_name in self.NORMALIZED_FIELDS:
+                        new_searchable_strings.append(models.SearchableString(
+                            entry=entry,
+                            value=Func(Value(item_value), function='unaccent'),
+                            language='juxt1235',
+                            type_tag=f'{field_name}_normalized',
+                        ))
 
-            entry_data[field_name] = item_value
+                entry_data[field_name] = item_value
 
         models.SearchableString.objects.bulk_create(new_searchable_strings)
 
