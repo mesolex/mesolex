@@ -46,6 +46,7 @@ class MediaCSVUploadForm(forms.Form):
 
 class MediaAdmin(admin.ModelAdmin):
     change_list_template = 'admin/lexicon_media_change_list.html'
+    raw_id_fields = ['lexical_entry']
 
     def get_urls(self):
         urls = super().get_urls()
@@ -62,7 +63,14 @@ class MediaAdmin(admin.ModelAdmin):
                 updated = 0
                 created = 0
                 for item in form.cleaned_data['csv_file']:
-                    item_path = '/'.join(item['Path'].split('/') + [item['Filename']])
+                    split_path = item['Path'].split('/')
+                    
+                    # If the path has been specified with a trailing slash,
+                    # remove the resulting empty string in the split path.
+                    if split_path[-1] == '':
+                        split_path = split_path[:-1]
+
+                    item_path = '/'.join(split_path + [item['Filename']])
                     try:
                         lexical_entry = models.Entry.objects.get(identifier=item['UID'])
                         (_, _created) = models.Media.objects.update_or_create(
