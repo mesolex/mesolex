@@ -15,27 +15,57 @@
             {% endfor %}
         {% endif %}
 
-        &nbsp;|&nbsp;
+        &nbsp;|&nbsp; 
 
-        <span>{% if LANGUAGE_CODE == "es" %}{{ data.spanish }}{% else %}{{ data.english }}{% endif %}{% if data.valence %} [{{ data.valence }}]{% endif %}</span>
+        {% if LANGUAGE_CODE == "es" and data.spanish %}
+            {{ data.spanish }}
+        {% elif data.english %}
+            {{ data.english }}
+        {% endif %}
+        {% if data.valence %}
+            [{{ data.valence }}]
+        {% endif %}
 
-        &nbsp;|&nbsp;
+        {% if data.p_mx or data.source or data.notes %}
+            &nbsp;|&nbsp;
+        {% endif %}
 
-        <span>{% trans "Proto-Mixteco" %}: {% firstof data.p_mx "—" %};</span>
-
-        <span>{% trans "Fuente" %}: {% firstof data.source "—" %};</span>
-
-        <span>{% trans "Notas" %}: {% firstof data.notes "—" %}
+        {% if data.p_mx %}
+            {% trans "Proto-Mixteco" %}: {{ data.p_mx }}{% if data.source or data.notes %};{% endif %}
+        {% endif %}
+        
+        {% if data.source %}
+            {% trans "Fuente" %}: {{ data.source }}{% if data.notes %}; {% endif %}
+        {% endif %}
+        
+        {% if data.notes %}
+            {% trans "Notas" %}: {{ data.notes }}
+        {% endif %}
     </div>
     <div class="card-body">
         <div>
-            <strong>{% trans "Incompletivo" %}</strong> {{ data.impf }} ({% if LANGUAGE_CODE == "es" %}{{ data.impf_tone_mel_sp }}{% else %}{{ data.impf_tone_mel_en }}{% endif %}) | <strong>{% trans "Neg." %}</strong> {% firstof data.neg_impf "—" %}
+            <strong>{% trans "Incompletivo" %}</strong> {{ data.impf }} ({% if LANGUAGE_CODE == "es" %}{{ data.impf_tone_mel_sp }}{% else %}{{ data.impf_tone_mel_en }}{% endif %})
+            {% if data.neg_impf %}
+                &nbsp;|&nbsp;
+                
+                <strong>{% trans "Neg." %}</strong> {{ data.neg_impf }}
+            {% endif %}
         </div>
         <div>
-            <strong>{% trans "Completivo" %}</strong> {{ data.pfv }} ({% if LANGUAGE_CODE == "es" %}{{ data.pfv_tone_mel_sp }}{% else %}{{ data.pfv_tone_mel_en }}{% endif %}) | <strong>{% trans "Neg." %}</strong> {% firstof data.neg_pfv "—" %}
+            <strong>{% trans "Completivo" %}</strong> {{ data.pfv }} ({% if LANGUAGE_CODE == "es" %}{{ data.pfv_tone_mel_sp }}{% else %}{{ data.pfv_tone_mel_en }}{% endif %})
+            {% if data.neg_pfv %}
+                &nbsp;|&nbsp;
+                
+                <strong>{% trans "Neg." %}</strong> {{ data.neg_pfv }}
+            {% endif %}
         </div>
         <div>
-            <strong>{% trans "Potential" %}</strong> {{ data.irr }} ({% if LANGUAGE_CODE == "es" %}{{ data.irr_tone_mel_sp }}{% else %}{{ data.irr_tone_mel_en }}{% endif %}) | <strong>{% trans "Neg." %}</strong> {% firstof data.neg_irr_1 "—" %}, {% firstof data.neg_irr_2 "—" %}
+            <strong>{% trans "Potential" %}</strong> {{ data.irr }} ({% if LANGUAGE_CODE == "es" %}{{ data.irr_tone_mel_sp }}{% else %}{{ data.irr_tone_mel_en }}{% endif %})
+            {% if data.neg_irr_1 %}
+                &nbsp;|&nbsp;
+                
+                <strong>{% trans "Neg." %}</strong> {{ data.neg_irr_1 }}{% if data.neg_irr_2 %}, {{ data.neg_irr_2 }}{% endif %}
+            {% endif %}
         </div>
     </div>
 </div>
