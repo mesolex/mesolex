@@ -461,8 +461,6 @@ msgid "Inglés"
 msgstr "English"
 
 #: mesolex_site/templates/mesolex_site/search_page.html:24
-#, fuzzy, python-format
-#| msgid "%(num_entries)s resultados (página %(page)s de %(num_pages)s)"
 msgid "%(num_entries)s resultados (página %(result_page)s de %(num_pages)s)"
 msgstr "%(num_entries)s results (page %(page)s of %(num_pages)s)"
 
