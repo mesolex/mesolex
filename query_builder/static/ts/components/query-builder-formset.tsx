@@ -4,6 +4,7 @@ import { useState } from 'react';
 import concat from 'lodash-es/concat';
 import filter from 'lodash-es/filter';
 import find from 'lodash-es/find';
+import isUndefined from 'lodash-es/isUndefined';
 import map from 'lodash-es/map';
 import reduce from 'lodash-es/reduce';
 import uniqueId from 'lodash-es/uniqueId';
@@ -23,6 +24,8 @@ import {
 declare const gettext: (messageId: string) => string;
 
 interface QueryBuilderFormSetProps {
+  userLanguage: string;
+
   formsetData: Array<FormDataset>;
   formsetErrors: Array<{ [fieldName: string]: Array<string> }>;
   formsetName: string;
@@ -80,7 +83,7 @@ const makeDefaultInitialData = (filterableFields: Array<FilterableField>): FormD
 const labelForGlobalFilter = (
   globalFilters: Array<ExtraField>,
   key: string,
-): string => gettext(find(globalFilters, ({ field }) => field === key).label || '');
+): string => gettext(find(globalFilters, ({ field }) => field === key).label) || '';
 
 const GlobalFilters = (props: {
   globalExtraFields: Array<ExtraField>;
@@ -106,7 +109,13 @@ const GlobalFilters = (props: {
 );
 
 const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
-  const filterableFields = concat(props.filterableFields, props.elasticsearchFields);
+  const filterableFields = filter(
+    concat(props.filterableFields, props.elasticsearchFields),
+    ({user_languages}) => (
+      isUndefined(user_languages)
+      || user_languages.indexOf(props.userLanguage) !== -1
+    ),
+  );
 
   const [
     formKeySeqState,

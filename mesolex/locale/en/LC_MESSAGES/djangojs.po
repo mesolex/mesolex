@@ -3,14 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#: query_builder/static/ts/components/query-builder-form.tsx:189
-#: query_builder/static/ts/components/query-builder-formset.tsx:83
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-31 15:29+0000\n"
+"POT-Creation-Date: 2021-02-07 15:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -328,6 +326,14 @@ msgstr "Valence"
 #: mesolex_site/templates/mesolex_site/language_messages.js:82
 msgid "Neutralizar la oclusión glotal"
 msgstr "Neutralize glottal stop"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:83
+msgid "Español"
+msgstr "Spanish"
+
+#: mesolex_site/templates/mesolex_site/language_messages.js:84
+msgid "Inglés"
+msgstr "English"
 
 #: query_builder/static/ts/components/add-remove-forms.tsx:16
 msgid "Agregar filtro"

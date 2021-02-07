@@ -12,6 +12,7 @@ export interface FilterableField {
   field: string;
   label: string;
   terms: Array<string>;
+  user_languages?: Array<string>;
 }
 
 export interface ExtraField {

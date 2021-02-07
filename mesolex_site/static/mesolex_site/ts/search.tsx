@@ -16,10 +16,11 @@ export const initFunction = (): void => {
     formset_global_filters_form_data: formsetGlobalFiltersData,
     formset_name: formsetName,
   } = init.search;
-  const { languages } = init;
+  const { languages, user_language: userLanguage } = init;
 
   ReactDOM.render(
     <QueryBuilderFormset
+      userLanguage={userLanguage}
       formsetName={formsetName}
 
       formsetData={formsetData}

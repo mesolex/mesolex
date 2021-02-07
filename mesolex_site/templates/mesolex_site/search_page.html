@@ -77,6 +77,7 @@
     {{ block.super }}
     "csrfToken": "{{ csrf_token }}",
     "languages": {{ languages|safe }},
+    "user_language": "{{ request.LANGUAGE_CODE }}",
     "search": {
         "formset_name": "{{ page.language_code }}",
         "formset_config": {{ search.formset.configuration_data_as_json|safe }},

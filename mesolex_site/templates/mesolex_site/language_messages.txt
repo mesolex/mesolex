@@ -80,3 +80,5 @@
 {% trans "Potential Neg." %}
 {% trans "Valencia" %}
 {% trans "Neutralizar la oclusión glotal" %}
+{% trans "Español" %}
+{% trans "Inglés" %}

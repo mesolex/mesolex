@@ -40,6 +40,20 @@ juxt1235:
         terms:
           - tag: headword
             length: short
+      - field: spanish
+        label: Español
+        terms:
+          - tag: spanish
+            length: short
+        user_languages:
+          - es
+      - field: english
+        label: Inglés
+        terms:
+          - tag: english
+            length: short
+        user_languages:
+          - en
       - field: impf
         label: Incompletivo
         terms:

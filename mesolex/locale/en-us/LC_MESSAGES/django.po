@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-31 15:28+0000\n"
+"POT-Creation-Date: 2021-02-07 15:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lexicon/management/commands/import_data.py:754
+#: lexicon/management/commands/import_data.py:759
 msgid "Lee una fuente de datos en XML y actualiza la base de datos."
 msgstr "Reads an XML data source file and updates the database."
 
@@ -115,35 +115,35 @@ msgstr "Morphological notes"
 msgid "Notas gramaticales"
 msgstr "Grammatical notes"
 
-#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:24
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:34
 msgid "Proto-Mixteco"
 msgstr "Proto-Mixtec"
 
-#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:26
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:38
 msgid "Fuente"
 msgstr "Source"
 
-#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:28
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:42
 msgid "Notas"
 msgstr "Notes"
 
-#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:32
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:47
 #: mesolex_site/templates/mesolex_site/language_messages.txt:75
 msgid "Incompletivo"
 msgstr "Incompletive"
 
-#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:32
-#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:35
-#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:38
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:51
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:59
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:67
 msgid "Neg."
 msgstr "Neg."
 
-#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:35
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:55
 #: mesolex_site/templates/mesolex_site/language_messages.txt:76
 msgid "Completivo"
 msgstr "Completive"
 
-#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:38
+#: mesolex_site/templates/mesolex_site/includes/search_result/juxt1235.html:63
 #: mesolex_site/templates/mesolex_site/language_messages.txt:77
 msgid "Potential"
 msgstr "Potential"
@@ -452,6 +452,14 @@ msgstr "Valence"
 msgid "Neutralizar la oclusión glotal"
 msgstr "Neutralize glottal stop"
 
+#: mesolex_site/templates/mesolex_site/language_messages.txt:83
+msgid "Español"
+msgstr "Spanish"
+
+#: mesolex_site/templates/mesolex_site/language_messages.txt:84
+msgid "Inglés"
+msgstr "English"
+
 #: mesolex_site/templates/mesolex_site/search_page.html:24
 #, fuzzy, python-format
 #| msgid "%(num_entries)s resultados (página %(page)s de %(num_pages)s)"
@@ -470,35 +478,35 @@ msgstr "Next"
 msgid "Resultado no encontrado."
 msgstr "No results found."
 
-#: query_builder/forms.py:82
+#: query_builder/forms.py:83
 msgid "Empieza con"
 msgstr "Begins with"
 
-#: query_builder/forms.py:83
+#: query_builder/forms.py:84
 msgid "Termina con"
 msgstr "Ends with"
 
-#: query_builder/forms.py:84
+#: query_builder/forms.py:85
 msgid "Contiene secuencia"
 msgstr "Contains sequence"
 
-#: query_builder/forms.py:85
+#: query_builder/forms.py:86
 msgid "Contiene palabra"
 msgstr "Contains word"
 
-#: query_builder/forms.py:86
+#: query_builder/forms.py:87
 msgid "Es exactamente igual a"
 msgstr "Equal to"
 
-#: query_builder/forms.py:87
+#: query_builder/forms.py:88
 msgid "Expresión regular"
 msgstr "Regular expression"
 
-#: query_builder/forms.py:88
+#: query_builder/forms.py:89
 msgid "Coincide con"
 msgstr "Matches"
 
-#: query_builder/forms.py:242
+#: query_builder/forms.py:254
 msgid "Expresión regular no válida."
 msgstr "Invalid regular expression."
 
