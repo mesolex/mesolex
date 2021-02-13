@@ -217,7 +217,7 @@ class SearchPage(TranslatablePage):
             # TODO: make this nicer.
             return {**context, **self._search_query_data(formset_class())}
 
-        lexical_entries = Entry.objects.filter(query).distinct().order_by('value')
+        lexical_entries = query.distinct().order_by('value')
 
         paginator = Paginator(lexical_entries, 25)
         result_page = request.GET.get('page', 1)

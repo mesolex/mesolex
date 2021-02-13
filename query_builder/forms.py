@@ -9,7 +9,7 @@ from django import forms
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
-from lexicon.models import SearchableString, LongSearchableString
+from lexicon.models import Entry, SearchableString, LongSearchableString
 from mesolex.utils import ForceProxyEncoder, contains_word_to_regex
 
 
@@ -63,8 +63,14 @@ class QueryGrouper(object):
 
     @staticmethod
     def _group_queries(queries: List[CombiningQuery]):
-        with_grouped_ands = QueryGrouper._group_ands(queries)
-        return reduce(operator.or_, with_grouped_ands)
+        with_grouped_ands = [
+            Entry.objects.filter(q)
+            for q in QueryGrouper._group_ands(queries)
+        ]
+        return reduce(
+            lambda acc, q: acc.union(q),
+            with_grouped_ands
+        )
 
     @property
     def combined_query(self):
@@ -90,12 +96,12 @@ class QueryBuilderForm(forms.Form):
     )
 
     FILTERS_DICT = {
-        'begins_with': '__istartswith',
-        'ends_with': '__iendswith',
-        'contains': '__icontains',
-        'contains_word': '__iregex',
+        'begins_with': '__startswith',
+        'ends_with': '__endswith',
+        'contains': '__contains',
+        'contains_word': '__regex',
         'exactly_equals': '',
-        'regex': '__iregex',
+        'regex': '__regex',
         'text_search': None,
     }
 
@@ -216,13 +222,13 @@ class QueryBuilderForm(forms.Form):
                     .values("entry")
                     .distinct()
                 )
-                query_expression |= Q(pk__in=[
+                query_expression = Q(pk__in=[
                     matching_string['entry'] for matching_string in matching_strings
                 ])
             # If it is a string, then it is just the name of a field on
             # the model
             else:
-                query_expression |= Q(**{'%s%s' % (filter_on_val, filter_action): query_string})
+                query_expression = Q(**{'%s%s' % (filter_on_val, filter_action): query_string})
 
         return query_expression
 
