@@ -15,7 +15,7 @@ class SearchContextBuilder:
         formset = formset_class(request.GET)
 
         try:
-            query = formset.get_full_query()
+            query = formset.get_full_queryset()
         except ValidationError:
             # The formset has been tampered with.
             # Django doesn't handle this very gracefully.

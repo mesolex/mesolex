@@ -1,17 +1,16 @@
 from unittest.mock import MagicMock
 
 import django.forms
-from django.db.models import Q
 from django.test import TestCase
 
 from lexicon.models import Entry
 from query_builder import forms
 
 
-class QueryGrouperTestCase(TestCase):
+class QuerysetGrouperTestCase(TestCase):
     def test_respects_operator_precedence(self):
         """
-        The QueryGrouper helper class should respect operator
+        The QuerysetGrouper helper class should respect operator
         precedence by binding "and" tighter than "or" when
         combining queries.
 
@@ -30,17 +29,17 @@ class QueryGrouperTestCase(TestCase):
             Entry.objects.create(value='cde', identifier='cde'),
             Entry.objects.create(value='de', identifier='de'),
         ]
-        grouper = forms.QueryGrouper([
-            forms.CombiningQuery('and', Q(value__startswith='abcd')),
-            forms.CombiningQuery('and', Q(value__startswith='abc')),
-            forms.CombiningQuery('or', Q(value__endswith='bcde')),
-            forms.CombiningQuery('and', Q(value__endswith='cde')),
+        grouper = forms.QuerysetGrouper([
+            forms.CombiningQueryset('and', Entry.objects.filter(value__startswith='abcd')),
+            forms.CombiningQueryset('and', Entry.objects.filter(value__startswith='abc')),
+            forms.CombiningQueryset('or', Entry.objects.filter(value__endswith='bcde')),
+            forms.CombiningQueryset('and', Entry.objects.filter(value__endswith='cde')),
         ])
-        query = grouper.combined_query
+        queryset = grouper.combined_queryset
 
         self.assertEqual(
             set(included),
-            set(query),
+            set(queryset),
         )
 
 
@@ -156,11 +155,11 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
 
         self.assertTrue(bound_formset.is_valid())
 
-        query = bound_formset.get_full_query()
+        queryset = bound_formset.get_full_queryset()
 
         # Expected bracketing: (foo1 & foo2) | (foo3 & foo4 & foo5)
         self.assertEqual(
-            {q.value for q in query},
+            {q.value for q in queryset},
             {e.value for e in included},
         )
 
@@ -195,11 +194,11 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
 
         self.assertTrue(bound_formset.is_valid())
 
-        query = bound_formset.get_full_query()
+        queryset = bound_formset.get_full_queryset()
 
         self.assertEqual(
             set(entries),
-            set(query),
+            set(queryset),
         )
 
     def test_applies_global_filters(self):
@@ -217,11 +216,11 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
 
             def clean_include_baz(self):
                 include_baz = self.cleaned_data['include_baz']
-                return Q(data__baz__isnull=(not include_baz))
+                return Entry.objects.filter(data__baz__isnull=(not include_baz))
 
             def clean_exclude_qux(self):
                 exclude_qux = self.cleaned_data['exclude_qux']
-                return Q(data__qux__isnull=(exclude_qux))
+                return Entry.objects.filter(data__qux__isnull=(exclude_qux))
 
         class TestFormset(forms.QueryBuilderBaseFormset):
             global_filters_class = TestGlobalFilter
@@ -258,9 +257,9 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
 
         self.assertTrue(bound_formset.is_valid())
 
-        query = bound_formset.get_full_query()
+        queryset = bound_formset.get_full_queryset()
 
         self.assertEqual(
             set(included),
-            set(query),
+            set(queryset),
         )
