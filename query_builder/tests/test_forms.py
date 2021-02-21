@@ -39,8 +39,8 @@ class QueryGrouperTestCase(TestCase):
         query = grouper.combined_query
 
         self.assertEqual(
-            {q.value for q in query},
-            {e.value for e in included},
+            set(included),
+            set(query),
         )
 
 
