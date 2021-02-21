@@ -9,66 +9,63 @@ from django import forms
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
-from lexicon.models import SearchableString, LongSearchableString
+from lexicon.models import Entry, SearchableString, LongSearchableString
 from mesolex.utils import ForceProxyEncoder, contains_word_to_regex
 
 
-class CombiningQuery(namedtuple(
-    'CombiningQuery',
-    ['operator', 'query'],
+class CombiningQueryset(namedtuple(
+        'CombiningQueryset',
+        ['operator', 'queryset'],
 )):
     """
-    Helper structure to hold query data as it is composed
+    Helper structure to hold queryset data as it is composed
     together into its final form.
     """
-    pass
 
 
-class QueryGrouper(object):
+class QuerysetGrouper:
     """
-    Helper class to compose together queries in a way that
+    Helper class to compose together querysets in a way that
     respects operator precedence.
     """
 
     def __init__(self, queries=None):
-        self._queries = [] if queries is None else queries
+        self._querysets = [] if queries is None else queries
 
-    def append(self, val: CombiningQuery):
-        self._queries.append(val)
+    def append(self, val: CombiningQueryset):
+        self._querysets.append(val)
 
     @staticmethod
-    def _handle_next_and(accumulator, next_cq: CombiningQuery):
+    def _handle_next_and(accumulator, next_cq: CombiningQueryset):
         """
-        Reducer function to multiply together all queries
+        Reducer function to multiply together all querysets
         tagged with the "and" operator. This ensures that "and"
         binds tighter; "or" can be handled in a second cleanup
         reduction.
         """
-        (queries, and_tree) = accumulator
+        (querysets, and_tree) = accumulator
         if next_cq.operator == 'and':
-            and_tree &= next_cq.query
+            and_tree = and_tree.intersection(next_cq.queryset)
         else:
-            queries = queries + [and_tree]
-            and_tree = next_cq.query
-        return (queries, and_tree)
+            querysets = [*querysets, and_tree]
+            and_tree = next_cq.queryset
+        return (querysets, and_tree)
 
     @staticmethod
-    def _group_ands(queries: List[CombiningQuery]):
-        (queries, and_tree) = reduce(
-            QueryGrouper._handle_next_and,
-            queries,
-            ([], Q()),
+    def _group_ands(querysets: List[CombiningQueryset]):
+        (querysets, and_tree) = reduce(
+            QuerysetGrouper._handle_next_and,
+            querysets,
+            ([], Entry.objects.all()),
         )
-        return queries + [and_tree]
-
-    @staticmethod
-    def _group_queries(queries: List[CombiningQuery]):
-        with_grouped_ands = QueryGrouper._group_ands(queries)
-        return reduce(operator.or_, with_grouped_ands)
+        return [*querysets, and_tree]
 
     @property
-    def combined_query(self):
-        return QueryGrouper._group_queries(self._queries)
+    def combined_queryset(self):
+        return reduce(
+            lambda acc, q: acc.union(q),
+            QuerysetGrouper._group_ands(self._querysets)
+        )
 
 
 class QueryBuilderForm(forms.Form):
@@ -90,12 +87,12 @@ class QueryBuilderForm(forms.Form):
     )
 
     FILTERS_DICT = {
-        'begins_with': '__istartswith',
-        'ends_with': '__iendswith',
-        'contains': '__icontains',
-        'contains_word': '__iregex',
+        'begins_with': '__startswith',
+        'ends_with': '__endswith',
+        'contains': '__contains',
+        'contains_word': '__regex',
         'exactly_equals': '',
-        'regex': '__iregex',
+        'regex': '__regex',
         'text_search': None,
     }
 
@@ -190,12 +187,12 @@ class QueryBuilderForm(forms.Form):
 
         return (filter_action, query_string)
 
-    def _get_db_query(self):
+    def _get_db_queryset(self, exclude=False):
         (filter_action, query_string) = self.get_filter_action_and_query()
         filter_on_str = self.cleaned_data['filter_on']
         filter_on_vals = self.FILTERABLE_FIELDS_DICT.get(filter_on_str, [])
 
-        query_expression = Q()
+        query_expressions = []
 
         for filter_on_val in filter_on_vals:
             # If the filter_on_val is a dict, it will have the form:
@@ -216,33 +213,46 @@ class QueryBuilderForm(forms.Form):
                     .values("entry")
                     .distinct()
                 )
-                query_expression |= Q(pk__in=[
+                query_expressions.append(Q(pk__in=[
                     matching_string['entry'] for matching_string in matching_strings
-                ])
+                ]))
             # If it is a string, then it is just the name of a field on
             # the model
             else:
-                query_expression |= Q(**{'%s%s' % (filter_on_val, filter_action): query_string})
+                query_expressions.append(Q(**{'%s%s' % (filter_on_val, filter_action): query_string}))
 
-        return query_expression
+        if exclude:
+            return reduce(
+                lambda acc, q: acc.intersection(q),
+                [Entry.objects.exclude(q) for q in query_expressions],
+            )
 
-    def _get_es_query(self):
+        return reduce(
+            lambda acc, q: acc.union(q),
+            [Entry.objects.filter(q) for q in query_expressions],
+        )
+
+    def _get_es_queryset(self, exclude=False):
         query_fields = self.ELASTICSEARCH_FIELDS_DICT.get(self.cleaned_data['filter_on'])
         results = self.DocumentClass.search().query(
             'multi_match',
             query=self.cleaned_data['query_string'],
             fields=query_fields,
         ).scan()
-        return Q(pk__in=[result.meta.id for result in results])
 
-    def get_query(self):
+        if exclude:
+            return Entry.objects.exclude(pk__in=[result.meta.id for result in results])
+
+        return Entry.objects.filter(pk__in=[result.meta.id for result in results])
+
+    def get_queryset(self, exclude=False):
         if not self.is_bound:
-            return
+            return Entry.objects.all()
 
         if self.cleaned_data['filter_on'] in [field[0] for field in self.ELASTICSEARCH_FIELDS]:
-            return self._get_es_query()
+            return self._get_es_queryset(exclude=exclude)
 
-        return self._get_db_query()
+        return self._get_db_queryset(exclude=exclude)
 
     def clean(self):
         cleaned_data = super().clean()
@@ -251,7 +261,10 @@ class QueryBuilderForm(forms.Form):
             try:
                 re.compile(qs)
             except Exception:
-                self.add_error('query_string', forms.ValidationError(_('Expresión regular no válida.')))
+                self.add_error(
+                    'query_string',
+                    forms.ValidationError(_('Expresión regular no válida.')),
+                )
 
 
 class QueryBuilderGlobalFiltersForm(forms.Form):
@@ -323,24 +336,35 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
         self.global_filters_form = self.global_filters_class(*args, **kwargs)
         self.datasets_form = self.datasets_class(*args, **kwargs)
 
-    def get_full_query(self):
-        queries = QueryGrouper()
+    def get_full_queryset(self):
+        """
+        Using a QuerysetGrouper, combine the querysets returned by each
+        individual form's `get_queryset` method.
+        """
+        queryset_group = QuerysetGrouper()
 
         for form in self.forms:
             if form.is_valid():
-                form_q = form.get_query()
                 form_operator = form.cleaned_data['operator']
-                if form_operator in ('and_n', 'or_n'):
-                    form_q = ~form_q
-                    form_operator = form_operator.replace('_n', '')
 
+                # If the form operator is a "not" variant ("and not", "or not"),
+                # get the queryset in its "exclude" form, then translate the
+                # operator into its positive variant so it can be combined normally.
+                if form_operator in ('and_n', 'or_n'):
+                    form_q = form.get_queryset(exclude=True)
+                    form_operator = form_operator.replace('_n', '')
+                else:
+                    form_q = form.get_queryset()
+
+                # Intersect the form's queryset with the queryset returned by
+                # any global filters.
                 if self.global_filters_form.is_valid() and form_q:
                     for (_name, global_filter,) in self.global_filters_form.cleaned_data.items():
-                        form_q &= global_filter
+                        form_q = form_q.intersection(global_filter)
 
-                queries.append(CombiningQuery(
+                queryset_group.append(CombiningQueryset(
                     operator=form_operator,
-                    query=form_q,
+                    queryset=form_q,
                 ))
 
-        return queries.combined_query
+        return queryset_group.combined_queryset
