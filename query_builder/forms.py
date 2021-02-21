@@ -241,9 +241,9 @@ class QueryBuilderForm(forms.Form):
         ).scan()
 
         if exclude:
-            return Q(pk__not__in=[result.meta.id for result in results])
+            return Entry.objects.exclude(pk__in=[result.meta.id for result in results])
 
-        return Q(pk__in=[result.meta.id for result in results])
+        return Entry.objects.filter(pk__in=[result.meta.id for result in results])
 
     def get_queryset(self, exclude=False):
         if not self.is_bound:
