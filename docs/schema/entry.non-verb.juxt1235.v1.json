@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "San Martín Duraznos Mixtec non-verbal lexical entry data",
+  "description": "Non-verbal lexical entry data for SMD Mixtec",
+  "type": "object",
+  "properties": {
+    "meta": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "language": {
+      "type": "string"
+    },
+    "loan": {
+      "type": "string"
+    },
+    "mixteco": {
+      "type": "string"
+    },
+    "mixteco_toneless": {
+      "type": "string"
+    },
+    "spanish": {
+      "type": "string"
+    },
+    "english": {
+      "type": "string"
+    },
+    "word_class_en": {
+      "type": "string"
+    },
+    "word_class_es": {
+      "type": "string"
+    },
+    "word_class": {
+      "type": "string"
+    },
+    "pronoun": {
+      "type": "string"
+    },
+    "morphemes": {
+      "type": "string"
+    },
+    "gloss_english": {
+      "type": "string"
+    },
+    "gloss_spanish": {
+      "type": "string"
+    },
+    "semantic_field_en": {
+      "type": "string"
+    },
+    "semantic_field_es": {
+      "type": "string"
+    },
+    "scientific_name": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "tone_melody_en": {
+      "type": "string"
+    },
+    "tone_melody_es": {
+      "type": "string"
+    },
+    "l_tone_change": {
+      "type": "string"
+    },
+    "p_mx": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "notes_form": {
+      "type": "string"
+    },
+    "notes_culture": {
+      "type": "string"
+    },
+    "notes_meta": {
+      "type": "string"
+    }
+  }
+}
