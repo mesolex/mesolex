@@ -1,4 +1,4 @@
-# Configuration for the languages supported by Mesolex.
+# Configuration for the datasets supported by Mesolex.
 # Used to set up Django forms and front-end components.
 ---
 # Mayan languages :: maya1287

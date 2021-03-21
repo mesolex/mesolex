@@ -76,7 +76,7 @@
 {% block js-init %}
     {{ block.super }}
     "csrfToken": "{{ csrf_token }}",
-    "languages": {{ languages|safe }},
+    "datasets": {{ datasets|safe }},
     "user_language": "{{ request.LANGUAGE_CODE }}",
     "search": {
         "formset_name": "{{ page.language_code }}",

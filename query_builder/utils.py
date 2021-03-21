@@ -4,8 +4,8 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 from lexicon.forms import formset_for_lg
-from mesolex.config import LANGUAGES
-from mesolex.utils import ForceProxyEncoder, get_default_data_for_lg
+from mesolex.config import DATASETS
+from mesolex.utils import ForceProxyEncoder, get_default_data_for_dataset
 
 
 class SearchContextBuilder:
@@ -59,8 +59,8 @@ class SearchContextBuilder:
             'num_entries': paginator.count if paginator else 0,
             'result_page': result_page,
             'query': True,
-            'languages': json.dumps(
-                LANGUAGES,
+            'datasets': json.dumps(
+                DATASETS,
                 ensure_ascii=False,
                 cls=ForceProxyEncoder,
             ),
@@ -80,8 +80,8 @@ class SearchContextBuilder:
     def default_context(request, context):
         formset = formset_for_lg(None)()
 
-        context['languages'] = json.dumps(
-            LANGUAGES,
+        context['datasets'] = json.dumps(
+            DATASETS,
             ensure_ascii=False,
             cls=ForceProxyEncoder,
         )
@@ -90,7 +90,7 @@ class SearchContextBuilder:
             'formset': formset,
             'formset_datasets_form_data': json.dumps([]),
             'formset_global_filters_form_data': json.dumps([]),
-            'formset_data': json.dumps(get_default_data_for_lg(None)),
+            'formset_data': json.dumps(get_default_data_for_dataset(None)),
             'formset_errors': json.dumps([]),
         }
 

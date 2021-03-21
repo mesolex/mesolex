@@ -1,28 +1,26 @@
 import re
 
 from django import template
-from django.conf import settings
-from django.urls import reverse
 from django.utils.http import urlquote
 from django.utils.safestring import mark_safe
 
-from mesolex.config import LANGUAGES
+from mesolex.config import DATASETS
 
 register = template.Library()
 
 
-# Translates the key-value pairs found within the LANGUAGES
+# Translates the key-value pairs found within the DATASETS
 # controlled vocab fields into a dictionary, allowing easy lookup
 # of human-readable forms for display.
 
-LANGUAGE_CATEGORIES_LOOKUPS = {
+DATASET_CATEGORIES_LOOKUPS = {
     language: {
         field['field']: {
             item['value']: item['label']
             for item in field['items']
         } for field in language_data['controlled_vocab_fields']
     }
-    for (language, language_data) in LANGUAGES.items()
+    for (language, language_data) in DATASETS.items()
 }
 
 
@@ -53,11 +51,11 @@ def _get_querystring(form, filter_on='lemma'):
 
 def _get_human_readable(language, category, item):
     """
-    Traverse LANGUAGE_CATEGORIES_LOOKUPS to find the human-readable
+    Traverse DATASET_CATEGORIES_LOOKUPS to find the human-readable
     equivalent of ``item``. If it's not found, default to returning
     ``item`` itself.
     """
-    return LANGUAGE_CATEGORIES_LOOKUPS.get(
+    return DATASET_CATEGORIES_LOOKUPS.get(
         language,
         {},
     ).get(
@@ -108,9 +106,9 @@ def link_part_of_speech(pos, base_url, language='azz'):
 
 
 @register.simple_tag
-def link_inflectional_type(it, base_url, language='azz'):
+def link_inflectional_type(inflectional_type, base_url, language='azz'):
     return mark_safe('<a href="%s%s" class="it">%s</a>' % (
         base_url,
-        _get_querystring(urlquote(it), filter_on='inflectional_type'),
-        _get_human_readable(language, 'inflectional_type', it),
+        _get_querystring(urlquote(inflectional_type), filter_on='inflectional_type'),
+        _get_human_readable(language, 'inflectional_type', inflectional_type),
     ))

@@ -25,7 +25,7 @@ class Entry(models.Model):
         max_length=256,
         db_index=True,
     )
-    language = models.CharField(max_length=64)
+    dataset = models.CharField(max_length=64)
     data = JSONField(
         blank=True,
         null=True,

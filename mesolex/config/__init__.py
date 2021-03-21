@@ -4,9 +4,9 @@ from copy import deepcopy
 import yaml
 from django.utils.translation import ugettext_lazy as _
 
-DEFAULT_LANGUAGE = 'azz'
-RAW_LANGUAGES = {}
-LANGUAGES = {}
+DEFAULT_DATASET = 'azz'
+RAW_DATASETS = {}
+DATASETS = {}
 
 
 def mark_label_leaves(tree):
@@ -33,8 +33,8 @@ def mark_label_leaves(tree):
 with open(
         os.path.join(
             os.path.dirname(os.path.abspath(__file__)),
-            'languages.yml',
-        ), 'r') as languages_yml:
-    RAW_LANGUAGES = yaml.safe_load(languages_yml)
-    LANGUAGES = deepcopy(RAW_LANGUAGES)
-    mark_label_leaves(LANGUAGES)
+            'datasets.yml',
+        ), 'r') as datasets_yml:
+    RAW_DATASETS = yaml.safe_load(datasets_yml)
+    DATASETS = deepcopy(RAW_DATASETS)
+    mark_label_leaves(DATASETS)

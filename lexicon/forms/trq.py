@@ -2,7 +2,7 @@ from django import forms
 
 from lexicon.documents import EntryDocument
 from lexicon.forms.base import LexiconQueryBuilderGlobalFiltersForm
-from mesolex.config import LANGUAGES
+from mesolex.config import DATASETS
 from mesolex.utils import Language
 from query_builder.forms import QueryBuilderBaseFormset, QueryBuilderForm
 
@@ -26,7 +26,7 @@ class BaseTrqLexiconQueryComposerFormset(QueryBuilderBaseFormset):
 
     CONTROLLED_VOCAB_FIELDS = {
         field['field']: [(item['value'], item['label']) for item in field['items']]
-        for field in LANGUAGES['trq']['controlled_vocab_fields']
+        for field in DATASETS['trq']['controlled_vocab_fields']
     }
 
 

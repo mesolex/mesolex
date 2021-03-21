@@ -2,7 +2,7 @@ from django import forms
 
 from lexicon.documents import EntryDocument
 from lexicon.transformations.juxt1235 import neutralize_glottal_stop
-from mesolex.config import LANGUAGES
+from mesolex.config import DATASETS
 from mesolex.utils import Language
 from query_builder.forms import QueryBuilderBaseFormset, QueryBuilderForm
 
@@ -30,7 +30,7 @@ class BaseJuxt1235LexiconQueryComposerFormset(QueryBuilderBaseFormset):
 
     CONTROLLED_VOCAB_FIELDS = {
         field['field']: [(item['value'], item['label']) for item in field['items']]
-        for field in LANGUAGES['juxt1235']['controlled_vocab_fields']
+        for field in DATASETS['juxt1235']['controlled_vocab_fields']
     }
 
 
