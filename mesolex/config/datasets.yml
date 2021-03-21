@@ -26,8 +26,8 @@ yolo1241:
     global_filters: []
     elasticsearch_fields: []
     controlled_vocab_fields: []
-juxt1235:
-    label: Mixteco de San Martín Duraznos
+juxt1235_verb:
+    label: Mixteco de San Martín Duraznos (verbos)
     code: juxt1235
     extra_fields:
       - field: neutralize_glottal_stop
