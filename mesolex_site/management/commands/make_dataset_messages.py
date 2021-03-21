@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
-from mesolex.config import RAW_LANGUAGES
+from mesolex.config import RAW_DATASETS
 
 
 def labels(tree):
@@ -41,16 +41,16 @@ class Command(BaseCommand):
             'templates',
             'mesolex_site',
         )
-        with open(os.path.join(base_tmpl_path, 'language_messages.txt'), 'w') as out:
+        with open(os.path.join(base_tmpl_path, 'dataset_messages.txt'), 'w') as out:
             out.write(
                 render_to_string('mesolex_site/commands/make_language_messages.txt', {
-                    'translation_strings': labels(RAW_LANGUAGES)
+                    'translation_strings': labels(RAW_DATASETS)
                 })
             )
         
-        with open(os.path.join(base_tmpl_path, 'language_messages.js'), 'w') as out:
+        with open(os.path.join(base_tmpl_path, 'dataset_messages.js'), 'w') as out:
             out.write(
                 render_to_string('mesolex_site/commands/make_language_messages.jst', {
-                    'translation_strings': labels(RAW_LANGUAGES)
+                    'translation_strings': labels(RAW_DATASETS)
                 })
             )

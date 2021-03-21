@@ -109,7 +109,7 @@ class AzzImporter(XmlImporter):
         entry, created = models.Entry.objects.get_or_create(
             identifier=identifier.text,
         )
-        entry.language = 'azz'
+        entry.dataset = 'azz'
         entry_data['language'] = 'azz'
 
         return (entry, entry_data, created)
@@ -488,7 +488,7 @@ class TrqImporter(XmlImporter):
         entry, created = models.Entry.objects.get_or_create(
             identifier=identifier,
         )
-        entry.language = 'trq'
+        entry.dataset = 'trq'
         entry_data['language'] = 'trq'
 
         return (entry, entry_data, created)
@@ -654,7 +654,7 @@ class TrqImporter(XmlImporter):
         return (created, updated, len(entries))
 
 
-class Juxt1235Importer(CsvImporter):
+class Juxt1235VerbImporter(CsvImporter):
     HEADER_TO_FIELD_NAME = {
         'IRR_TL': 'irr_tl',
         'IMPF': 'impf',
@@ -700,7 +700,7 @@ class Juxt1235Importer(CsvImporter):
 
         entry, created = models.Entry.objects.get_or_create(
             identifier=identifier,
-            language='juxt1235',
+            dataset='juxt1235_verb',
         )
 
         entry.value = row['IRR']
@@ -761,18 +761,18 @@ class Command(BaseCommand):
     IMPORTERS_BY_CODE = {
         'azz': AzzImporter,
         'trq': TrqImporter,
-        'juxt1235': Juxt1235Importer,
+        'juxt1235_verb': Juxt1235VerbImporter,
     }
 
     def add_arguments(self, parser):
-        parser.add_argument('language', type=str)
+        parser.add_argument('dataset', type=str)
         parser.add_argument('input', type=str)
 
     def handle(self, *args, **options):
         input_file = options['input']
-        language = options['language']
+        dataset = options['dataset']
 
-        importer = self._importer_for(language, input_file)
+        importer = self._importer_for(dataset, input_file)
 
         (added_entries, updated_entries, total) = (
             importer()
@@ -786,10 +786,10 @@ class Command(BaseCommand):
             miss=(total - added_entries - updated_entries),
         ))
 
-    def _importer_for(self, language_code, input_file):
-        importer_class = self.IMPORTERS_BY_CODE.get(language_code, None)
+    def _importer_for(self, dataset, input_file):
+        importer_class = self.IMPORTERS_BY_CODE.get(dataset, None)
 
         if importer_class is None:
-            raise ValueError(f'Importer for language code {language_code} not found')
+            raise ValueError(f'Importer for dataset code {dataset} not found')
 
         return importer_class(input_file)

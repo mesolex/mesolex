@@ -16,7 +16,7 @@ export const initFunction = (): void => {
     formset_global_filters_form_data: formsetGlobalFiltersData,
     formset_name: formsetName,
   } = init.search;
-  const { languages, user_language: userLanguage } = init;
+  const { datasets, user_language: userLanguage } = init;
 
   ReactDOM.render(
     <QueryBuilderFormset
@@ -26,12 +26,12 @@ export const initFunction = (): void => {
       formsetData={formsetData}
       formsetErrors={formsetErrors}
 
-      controlledVocabFields={languages[formsetName].controlled_vocab_fields}
-      extraFields={languages[formsetName].extra_fields}
-      filterableFields={languages[formsetName].filterable_fields}
-      elasticsearchFields={languages[formsetName].elasticsearch_fields}
+      controlledVocabFields={datasets[formsetName].controlled_vocab_fields}
+      extraFields={datasets[formsetName].extra_fields}
+      filterableFields={datasets[formsetName].filterable_fields}
+      elasticsearchFields={datasets[formsetName].elasticsearch_fields}
 
-      globalExtraFields={languages[formsetName].global_filters}
+      globalExtraFields={datasets[formsetName].global_filters}
       formsetGlobalFiltersData={formsetGlobalFiltersData}
     />,
     document.querySelector('#search-form'),

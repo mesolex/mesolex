@@ -4,7 +4,7 @@ from django.test import TestCase
 
 from lexicon.templatetags import lexeme_tags
 
-DUMMY_LANGUAGE_CONFIG = {
+DUMMY_DATASET_CONFIG = {
     'foo': {
         'part_of_speech': {
             'bar': 'baz',
@@ -51,7 +51,7 @@ class LinkVnawaTestCase(TestCase):
         )
 
 
-@patch('lexicon.templatetags.lexeme_tags.LANGUAGE_CATEGORIES_LOOKUPS', new=DUMMY_LANGUAGE_CONFIG)
+@patch('lexicon.templatetags.lexeme_tags.DATASET_CATEGORIES_LOOKUPS', new=DUMMY_DATASET_CONFIG)
 class LinkPartOfSpeechTestCase(TestCase):
     def test_gets_human_readable_value_where_present(self):
         input = 'bar'
@@ -82,7 +82,7 @@ class LinkPartOfSpeechTestCase(TestCase):
         )
 
 
-@patch('lexicon.templatetags.lexeme_tags.LANGUAGE_CATEGORIES_LOOKUPS', new=DUMMY_LANGUAGE_CONFIG)
+@patch('lexicon.templatetags.lexeme_tags.DATASET_CATEGORIES_LOOKUPS', new=DUMMY_DATASET_CONFIG)
 class LinkInflectionalTypeTestCase(TestCase):
     def test_gets_human_readable_value_where_present(self):
         input = 'qux'

@@ -1,4 +1,4 @@
-# Configuration for the languages supported by Mesolex.
+# Configuration for the datasets supported by Mesolex.
 # Used to set up Django forms and front-end components.
 ---
 # Mayan languages :: maya1287
@@ -26,9 +26,9 @@ yolo1241:
     global_filters: []
     elasticsearch_fields: []
     controlled_vocab_fields: []
-juxt1235:
-    label: Mixteco de San Martín Duraznos
-    code: juxt1235
+juxt1235_verb:
+    label: Mixteco de San Martín Duraznos (verbos)
+    code: juxt1235_verb
     extra_fields:
       - field: neutralize_glottal_stop
         label: Neutralizar la oclusión glotal

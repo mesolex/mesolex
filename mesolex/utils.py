@@ -5,16 +5,16 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.encoding import force_text
 from django.utils.functional import Promise
 
-from mesolex.config import DEFAULT_LANGUAGE, LANGUAGES
+from mesolex.config import DEFAULT_DATASET, DATASETS
 
 
-def get_default_data_for_lg(language):
-    if language is None:
-        language = LANGUAGES[DEFAULT_LANGUAGE]
+def get_default_data_for_dataset(dataset):
+    if dataset is None:
+        dataset = DATASETS[DEFAULT_DATASET]
 
     return [{
         'filter': 'begins_with',
-        'filter_on': language['filterable_fields'][0]['field'],
+        'filter_on': dataset['filterable_fields'][0]['field'],
         'operator': 'and',
         'query_string': '',
     }]
@@ -85,7 +85,7 @@ class ForceProxyEncoder(DjangoJSONEncoder):
     """
     Special JSON encoder to allow us to serialize nested values
     containing strings wrapped by ugettext_lazy. This is necessary
-    when, for example, passing over language configuration from
+    when, for example, passing over dataset configuration from
     settings, since human-readable equivalents of grammatical
     and inflectional categories will be wrapped by _().
     """
@@ -96,33 +96,33 @@ class ForceProxyEncoder(DjangoJSONEncoder):
         return super().default(obj)
 
 
-class Language(object):
+class Dataset(object):
     """
-    Wrapper for the contents of the language configuration data (mesolex.config.LANGUAGES).
-    Provides accessors to the language configuration data in the format expected by
+    Wrapper for the contents of the dataset configuration data (mesolex.config.DATASETS).
+    Provides accessors to the dataset configuration data in the format expected by
     the QueryBuilderForm et al.
 
-    Instantiated by providing the language code where the language's data can be
-    found in the configuration data. Raises a KeyError if that language is not
+    Instantiated by providing the dataset code where the dataset's data can be
+    found in the configuration data. Raises a KeyError if that dataset is not
     actually in the data.
     """
 
-    def __init__(self, language_key):
-        if language_key not in LANGUAGES:
-            raise KeyError(f'Language key "{language_key} not found in languages config.')
+    def __init__(self, dataset):
+        if dataset not in DATASETS:
+            raise KeyError(f'Dataset key "{dataset} not found in datasets config.')
 
-        self.language_key = language_key
+        self.dataset = dataset
 
     def _fields(self, key):
         return [
             (field['field'], field['label'])
-            for field in LANGUAGES[self.language_key][key]
+            for field in DATASETS[self.dataset][key]
         ]
 
     def _dict(self, key):
         return {
             field['field']: field['terms']
-            for field in LANGUAGES[self.language_key][key]
+            for field in DATASETS[self.dataset][key]
         }
 
     @property

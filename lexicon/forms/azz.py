@@ -3,11 +3,11 @@ from django import forms
 from lexicon.documents import EntryDocument
 from lexicon.forms.base import LexiconQueryBuilderGlobalFiltersForm
 from lexicon.transformations.nahuat_orthography import nahuat_orthography
-from mesolex.config import LANGUAGES
-from mesolex.utils import Language, to_vln
+from mesolex.config import DATASETS
+from mesolex.utils import Dataset, to_vln
 from query_builder.forms import QueryBuilderBaseFormset, QueryBuilderForm
 
-AZZ = Language('azz')
+AZZ = Dataset('azz')
 
 
 class AzzLexicalSearchFilterForm(QueryBuilderForm):
@@ -37,7 +37,7 @@ class BaseAzzLexiconQueryComposerFormset(QueryBuilderBaseFormset):
 
     CONTROLLED_VOCAB_FIELDS = {
         field['field']: [(item['value'], item['label']) for item in field['items']]
-        for field in LANGUAGES['azz']['controlled_vocab_fields']
+        for field in DATASETS['azz']['controlled_vocab_fields']
     }
 
 

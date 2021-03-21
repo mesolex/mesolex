@@ -20,10 +20,10 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 from wagtailtrans.models import TranslatablePage
 
-from lexicon.forms import formset_for_lg
+from lexicon.forms import formset_for_dataset
 from lexicon.models import Entry
-from mesolex.config import DEFAULT_LANGUAGE, LANGUAGES
-from mesolex.utils import ForceProxyEncoder, get_default_data_for_lg
+from mesolex.config import DEFAULT_DATASET, DATASETS
+from mesolex.utils import ForceProxyEncoder, get_default_data_for_dataset
 from mesolex_site.blocks import LanguageFamilyMenuBlock, ResourceLinkBlock
 from query_builder.utils import SearchContextBuilder
 
@@ -158,18 +158,18 @@ class LanguageResourcePage(TranslatablePage):
 class SearchPage(TranslatablePage):
     body = RichTextField(blank=True, null=True)
 
-    language_code = models.CharField(
+    dataset_code = models.CharField(
         max_length=255,
-        default=DEFAULT_LANGUAGE,
+        default=DEFAULT_DATASET,
     )
 
     content_panels = Page.content_panels + [
         FieldPanel(
-            'language_code',
+            'dataset_code',
             widget=forms.Select(
                 choices=[
                     (val['code'], val['label'])
-                    for val in LANGUAGES.values()
+                    for val in DATASETS.values()
                 ],
             ),
         ),

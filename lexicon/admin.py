@@ -110,8 +110,8 @@ class MediaAdmin(admin.ModelAdmin):
 
 
 class EntryAdmin(admin.ModelAdmin):
-    list_display = ('value', 'language', 'identifier', )
-    fields = ('value', 'language', 'data')
+    list_display = ('value', 'dataset', 'identifier', )
+    fields = ('value', 'dataset', 'data')
     formfield_overrides = {
         JSONField: {'widget': PrettyJSONWidget(attrs={'initial': 'parsed'})}
     }
