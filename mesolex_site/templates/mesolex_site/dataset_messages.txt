@@ -3,7 +3,21 @@
 {% trans "Chol" %}
 {% trans "Chuj" %}
 {% trans "Mixteco de Yoloxóchitl" %}
-{% trans "Mixteco de San Martín Duraznos" %}
+{% trans "Mixteco de San Martín Duraznos (verbos)" %}
+{% trans "Neutralizar la oclusión glotal" %}
+{% trans "Entrada" %}
+{% trans "Español" %}
+{% trans "Inglés" %}
+{% trans "Incompletivo" %}
+{% trans "Completivo" %}
+{% trans "Potential" %}
+{% trans "Incompletivo Neg." %}
+{% trans "Completivo Neg." %}
+{% trans "Potential Neg." %}
+{% trans "Valencia" %}
+{% trans "intr" %}
+{% trans "trans" %}
+{% trans "ambi" %}
 {% trans "Mixteco de Magdalena Peñascos" %}
 {% trans "La reconstrucción del mixteco" %}
 {% trans "Mixteco de Xochapan" %}
@@ -16,6 +30,7 @@
 {% trans "Neutralizar cantidad vocálica" %}
 {% trans "Activar flexibilidad ortográfica" %}
 {% trans "Sólo mostrar entradas con sonidos" %}
+{% trans "Entrada" %}
 {% trans "Glosa" %}
 {% trans "Raiz" %}
 {% trans "Campo semántico" %}
@@ -71,14 +86,3 @@
 {% trans "Pipil (Nawat)" %}
 {% trans "Totonaco de Zongozotla" %}
 {% trans "Totonaco de Ozelonacaxtla" %}
-
-{% trans "Incompletivo" %}
-{% trans "Completivo" %}
-{% trans "Potential" %}
-{% trans "Incompletivo Neg." %}
-{% trans "Completivo Neg." %}
-{% trans "Potential Neg." %}
-{% trans "Valencia" %}
-{% trans "Neutralizar la oclusión glotal" %}
-{% trans "Español" %}
-{% trans "Inglés" %}
