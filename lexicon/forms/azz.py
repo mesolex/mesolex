@@ -4,10 +4,10 @@ from lexicon.documents import EntryDocument
 from lexicon.forms.base import LexiconQueryBuilderGlobalFiltersForm
 from lexicon.transformations.nahuat_orthography import nahuat_orthography
 from mesolex.config import DATASETS
-from mesolex.utils import Language, to_vln
+from mesolex.utils import Dataset, to_vln
 from query_builder.forms import QueryBuilderBaseFormset, QueryBuilderForm
 
-AZZ = Language('azz')
+AZZ = Dataset('azz')
 
 
 class AzzLexicalSearchFilterForm(QueryBuilderForm):

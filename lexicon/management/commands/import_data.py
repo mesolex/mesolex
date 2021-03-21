@@ -654,7 +654,7 @@ class TrqImporter(XmlImporter):
         return (created, updated, len(entries))
 
 
-class Juxt1235Importer(CsvImporter):
+class Juxt1235VerbImporter(CsvImporter):
     HEADER_TO_FIELD_NAME = {
         'IRR_TL': 'irr_tl',
         'IMPF': 'impf',
@@ -700,7 +700,7 @@ class Juxt1235Importer(CsvImporter):
 
         entry, created = models.Entry.objects.get_or_create(
             identifier=identifier,
-            dataset='juxt1235',
+            dataset='juxt1235_verb',
         )
 
         entry.value = row['IRR']
@@ -761,7 +761,7 @@ class Command(BaseCommand):
     IMPORTERS_BY_CODE = {
         'azz': AzzImporter,
         'trq': TrqImporter,
-        'juxt1235': Juxt1235Importer,
+        'juxt1235_verb': Juxt1235VerbImporter,
     }
 
     def add_arguments(self, parser):

@@ -3,7 +3,7 @@ import json
 from django.core.exceptions import ValidationError
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
-from lexicon.forms import formset_for_lg
+from lexicon.forms import formset_for_dataset
 from mesolex.config import DATASETS
 from mesolex.utils import ForceProxyEncoder, get_default_data_for_dataset
 
@@ -11,7 +11,7 @@ from mesolex.utils import ForceProxyEncoder, get_default_data_for_dataset
 class SearchContextBuilder:
     @staticmethod
     def search_context(request, context):
-        formset_class = formset_for_lg(request.GET.get('dataset'))
+        formset_class = formset_for_dataset(request.GET.get('dataset'))
         formset = formset_class(request.GET)
 
         try:
@@ -73,12 +73,12 @@ class SearchContextBuilder:
                 'formset_datasets_form_data': json.dumps(formset.datasets_form.data),
                 'formset_errors': json.dumps(formset.errors),
             },
-            'language': formset.data.get('dataset', 'azz'),
+            'dataset': formset.data.get('dataset', 'azz'),
         }
 
     @staticmethod
     def default_context(request, context):
-        formset = formset_for_lg(None)()
+        formset = formset_for_dataset(None)()
 
         context['datasets'] = json.dumps(
             DATASETS,

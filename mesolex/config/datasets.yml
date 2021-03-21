@@ -28,7 +28,7 @@ yolo1241:
     controlled_vocab_fields: []
 juxt1235_verb:
     label: Mixteco de San Martín Duraznos (verbos)
-    code: juxt1235
+    code: juxt1235_verb
     extra_fields:
       - field: neutralize_glottal_stop
         label: Neutralizar la oclusión glotal

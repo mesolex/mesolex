@@ -3,10 +3,10 @@ from django import forms
 from lexicon.documents import EntryDocument
 from lexicon.forms.base import LexiconQueryBuilderGlobalFiltersForm
 from mesolex.config import DATASETS
-from mesolex.utils import Language
+from mesolex.utils import Dataset
 from query_builder.forms import QueryBuilderBaseFormset, QueryBuilderForm
 
-TRQ = Language('trq')
+TRQ = Dataset('trq')
 
 
 class TrqLexicalSearchFilterForm(QueryBuilderForm):

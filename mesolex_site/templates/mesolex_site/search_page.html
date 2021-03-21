@@ -25,8 +25,8 @@
             </div>
 
             {% for lexical_entry in lexical_entries %}
-                {% if language == "juxt1235" %}
-                    {% include "mesolex_site/includes/search_result/juxt1235.html" with lexical_entry=lexical_entry data=lexical_entry.data %}
+                {% if dataset == "juxt1235_verb" %}
+                    {% include "mesolex_site/includes/search_result/juxt1235_verb.html" with lexical_entry=lexical_entry data=lexical_entry.data %}
                 {% else %}
                     {% include "mesolex_site/includes/search_result/default.html" with lexical_entry=lexical_entry data=lexical_entry.data %}
                 {% endif %}
@@ -79,7 +79,7 @@
     "datasets": {{ datasets|safe }},
     "user_language": "{{ request.LANGUAGE_CODE }}",
     "search": {
-        "formset_name": "{{ page.language_code }}",
+        "formset_name": "{{ page.dataset_code }}",
         "formset_config": {{ search.formset.configuration_data_as_json|safe }},
         "formset_data": {{ search.formset_data|safe }},
         "formset_datasets_form_data": {{ search.formset_datasets_form_data|safe }},

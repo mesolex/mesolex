@@ -96,7 +96,7 @@ class ForceProxyEncoder(DjangoJSONEncoder):
         return super().default(obj)
 
 
-class Language(object):
+class Dataset(object):
     """
     Wrapper for the contents of the dataset configuration data (mesolex.config.DATASETS).
     Provides accessors to the dataset configuration data in the format expected by
