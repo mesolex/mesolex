@@ -22,7 +22,7 @@
           {% endwith %}
         {% endif %}
 
-        [{% if LANGUAGE_CODE == "es" %}{{ data.tone_melody_es }}{% else %}{{ data.tone_melody_en }}{% endif %}{% if data.l_tone_change %} | {% trans 'Notas sobre el cambio de tono-melodía' %}: {{ data.l_tone_change }}{% endif %}]
+        {% if data.tone_melody_es and data.tone_melody_en %}[{% if LANGUAGE_CODE == "es" %}{{ data.tone_melody_es }}{% else %}{{ data.tone_melody_en }}{% endif %}{% if data.l_tone_change %} | {% trans 'Notas sobre el cambio de tono-melodía' %}: {{ data.l_tone_change }}{% endif %}]{% endif %}
 
         {% if data.morphemes and data.gloss_english and data.gloss_spanish %}
           {% trans 'Morfología' %}: {{ data.morphemes }} ({% if LANGUAGE_CODE == 'es' %}{{ data.gloss_spanish }}{% else%}{{ data.gloss_english }}{% endif %}){% if data.p_mx %};{% endif %}

@@ -8,12 +8,12 @@ from mesolex.utils import Dataset
 from query_builder.forms import QueryBuilderBaseFormset, QueryBuilderForm
 
 
-JUXT1235_VERB = Dataset('juxt1235_verb')
+JUXT1235_NON_VERB = Dataset('juxt1235_non_verb')
 
 
-class Juxt1235VerbLexicalSearchFilterForm(QueryBuilderForm):
-    FILTERABLE_FIELDS = JUXT1235_VERB.filterable_fields
-    FILTERABLE_FIELDS_DICT = JUXT1235_VERB.filterable_fields_dict
+class Juxt1235NonVerbLexicalSearchFilterForm(QueryBuilderForm):
+    FILTERABLE_FIELDS = JUXT1235_NON_VERB.filterable_fields
+    FILTERABLE_FIELDS_DICT = JUXT1235_NON_VERB.filterable_fields_dict
 
     DocumentClass = EntryDocument
 
@@ -26,18 +26,18 @@ class Juxt1235VerbLexicalSearchFilterForm(QueryBuilderForm):
         ]
 
 
-class BaseJuxt1235VerbLexiconQueryComposerFormset(QueryBuilderBaseFormset):
+class BaseJuxt1235NonVerbLexiconQueryComposerFormset(QueryBuilderBaseFormset):
     global_filters_class = LexiconQueryBuilderGlobalFiltersForm
 
-    FILTERABLE_FIELDS = JUXT1235_VERB.filterable_fields
+    FILTERABLE_FIELDS = JUXT1235_NON_VERB.filterable_fields
 
     CONTROLLED_VOCAB_FIELDS = {
         field['field']: [(item['value'], item['label']) for item in field['items']]
-        for field in DATASETS['juxt1235_verb']['controlled_vocab_fields']
+        for field in DATASETS['juxt1235_non_verb']['controlled_vocab_fields']
     }
 
 
-Juxt1235VerbLexicalSearchFilterFormset = forms.formset_factory(
-    Juxt1235VerbLexicalSearchFilterForm,
-    formset=BaseJuxt1235VerbLexiconQueryComposerFormset,
+Juxt1235NonVerbLexicalSearchFilterFormset = forms.formset_factory(
+    Juxt1235NonVerbLexicalSearchFilterForm,
+    formset=BaseJuxt1235NonVerbLexiconQueryComposerFormset,
 )

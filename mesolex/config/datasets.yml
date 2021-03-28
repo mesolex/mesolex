@@ -144,6 +144,39 @@ juxt1235_non_verb:
             length: short
         user_languages:
           - en
+      - field: p_mx
+        label: Protomixteco
+        terms:
+          - tag: p_mx
+            length: short
+      - field: word_class_es
+        label: Cat. gram.
+        terms:
+          - tag: word_class_es
+            length: short
+        user_languages:
+          - es
+      - field: word_class_en
+        label: Cat. gram.
+        terms:
+          - tag: word_class_en
+            length: short
+        user_languages:
+          - en
+      - field: semantic_field_es
+        label: Campo semántico
+        terms:
+          - tag: semantic_field_es
+            length: short
+        user_languages:
+          - es
+      - field: semantic_field_en
+        label: Campo semántico
+        terms:
+          - tag: semantic_field_en
+            length: short
+        user_languages:
+          - en
     global_filters: []
     elasticsearch_fields: []
     controlled_vocab_fields: []
