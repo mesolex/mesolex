@@ -59,7 +59,7 @@ class CsvImporter(Importer):
                     elif created_entry:
                         created += 1
                 except Exception as err:
-                    logger.error('Error: %s', err)
+                    logger.error('Error (row %d): %s', i, err)
                 finally:
                     i += 1
 
@@ -755,6 +755,115 @@ class Juxt1235VerbImporter(CsvImporter):
         return created
 
 
+class Juxt1235NonVerbImporter(CsvImporter):
+    HEADER_TO_FIELD_NAME = {
+        'Loan': 'loan',
+        'Mixteco': ['mixteco', 'headword'],
+        'MixtecoToneless': 'mixteco_toneless',
+        'Spanish': 'spanish',
+        'English': 'english',
+        'WordClass': 'word_class_en',
+        'ClasePalabra': 'word_class_es',
+        'Pronoun': 'pronoun',
+        'Morphemes': 'morphemes',
+        'GlossEnglish': 'gloss_english',
+        'GlossSpanish': 'gloss_spanish',
+        'SemanticField': 'semantic_field_en',
+        'CampoSemántico': 'semantic_field_es',
+        'ScientificName': 'scientific_name',
+        'Author etc': 'author',
+        'Tone-Melody': 'tone_melody_en',
+        'Tono-Melodia': 'tone_melody_es',
+        'LToneChange': 'l_tone_change',
+        'pMX': 'p_mx',
+        'Source': 'source',
+        'NotesForm': 'notes_form',
+        'NotesCulture': 'notes_culture',
+        'NotesMeta': 'notes_meta',
+    }
+    NORMALIZED_FIELDS = [
+        'headword',
+        'mixteco',
+        'p_mx',
+    ]
+    LONG_FIELDS = [
+        'l_tone_change',
+        'notes_form',
+        'notes_culture',
+        'notes_meta',
+    ]
+
+    def initialize_data(self, row):
+        entry_data = {'language': 'juxt1235', 'meta': {}}
+        identifier = row['ID']
+        entry_data['meta']['id'] = identifier
+
+        entry, created = models.Entry.objects.get_or_create(
+            identifier=identifier,
+            dataset='juxt1235_non_verb',
+        )
+
+        entry.value = row['Mixteco']
+
+        return (entry, entry_data, created)
+
+    def clean_up_associated_data(self, entry):
+        entry.searchablestring_set.all().delete()
+        entry.longsearchablestring_set.all().delete()
+
+    def create_simple_string_data(self, row, entry, entry_data):
+        new_searchable_strings = []
+        new_long_searchable_strings = []
+
+        for item_key, item_value in row.items():
+            field_names = self.HEADER_TO_FIELD_NAME.get(item_key)
+            if field_names is None:
+                continue
+            if not isinstance(field_names, list):
+                field_names = [field_names]
+
+            for field_name in field_names:
+                if field_name in self.LONG_FIELDS:
+                    searchable_string_class = models.LongSearchableString
+                    searchable_string_bucket = new_long_searchable_strings
+                else:
+                    searchable_string_class = models.SearchableString
+                    searchable_string_bucket = new_searchable_strings
+
+                if item_value != '':
+                    searchable_string_bucket.append(searchable_string_class(
+                        entry=entry,
+                        value=item_value,
+                        language='juxt1235',
+                        type_tag=field_name,
+                    ))
+                    if field_name in self.NORMALIZED_FIELDS:
+                        searchable_string_bucket.append(searchable_string_class(
+                            entry=entry,
+                            value=Func(Value(item_value), function='unaccent'),
+                            language='juxt1235',
+                            type_tag=f'{field_name}_normalized',
+                        ))
+
+                entry_data[field_name] = item_value
+
+        models.SearchableString.objects.bulk_create(new_searchable_strings)
+        models.LongSearchableString.objects.bulk_create(new_long_searchable_strings)
+
+    @transaction.atomic
+    def process_row(self, row, i):
+        (entry, entry_data, created) = self.initialize_data(row)
+
+        self.clean_up_associated_data(entry)
+
+        self.create_simple_string_data(row, entry, entry_data)
+
+        entry.data = entry_data
+        entry.save()
+
+        return created
+
+
 class Command(BaseCommand):
     help = _("Lee una fuente de datos en XML y actualiza la base de datos.")
 
@@ -762,6 +871,7 @@ class Command(BaseCommand):
         'azz': AzzImporter,
         'trq': TrqImporter,
         'juxt1235_verb': Juxt1235VerbImporter,
+        'juxt1235_non_verb': Juxt1235NonVerbImporter,
     }
 
     def add_arguments(self, parser):
