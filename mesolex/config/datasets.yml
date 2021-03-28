@@ -116,6 +116,37 @@ juxt1235_verb:
             label: trans
           - value: ambi
             label: ambi
+juxt1235_non_verb:
+    label: Mixteco de San Martín Duraznos (otros)
+    code: juxt1235_non_verb
+    extra_fields:
+      - field: neutralize_glottal_stop
+        label: Neutralizar la oclusión glotal
+        constraints:
+          - no_regex
+    filterable_fields:
+      - field: lemma
+        label: Entrada
+        terms:
+          - tag: headword
+            length: short
+      - field: spanish
+        label: Español
+        terms:
+          - tag: spanish
+            length: short
+        user_languages:
+          - es
+      - field: english
+        label: Inglés
+        terms:
+          - tag: english
+            length: short
+        user_languages:
+          - en
+    global_filters: []
+    elasticsearch_fields: []
+    controlled_vocab_fields: []
 magd1235:
     label: Mixteco de Magdalena Peñascos
     code: magd1235

@@ -27,6 +27,8 @@
             {% for lexical_entry in lexical_entries %}
                 {% if dataset == "juxt1235_verb" %}
                     {% include "mesolex_site/includes/search_result/juxt1235_verb.html" with lexical_entry=lexical_entry data=lexical_entry.data %}
+                {% elif dataset == "juxt1235_non_verb" %}
+                    {% include "mesolex_site/includes/search_result/juxt1235_non_verb.html" with lexical_entry=lexical_entry data=lexical_entry.data %}
                 {% else %}
                     {% include "mesolex_site/includes/search_result/default.html" with lexical_entry=lexical_entry data=lexical_entry.data %}
                 {% endif %}
