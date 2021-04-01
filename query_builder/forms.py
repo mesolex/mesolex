@@ -200,26 +200,20 @@ class QueryBuilderForm(forms.Form):
             # { 'length': 'short', 'tag': 'root' }
             if isinstance(filter_on_val, dict):
                 if filter_on_val.get("length") == "long":
-                    string_class = LongSearchableString
+                    string_selector = 'longsearchablestring'
                 else:
-                    string_class = SearchableString
-                string_query_expression = Q(**{
-                    f'type_tag': filter_on_val.get('tag'),
-                    f'value{filter_action}': query_string,
+                    string_selector = 'searchablestring'
+                join_expression = Q(**{
+                    f'{string_selector}__type_tag': filter_on_val.get('tag'),
+                    f'{string_selector}__value{filter_action}': query_string,
                 })
-                matching_strings = (
-                    string_class.objects
-                    .filter(string_query_expression)
-                    .values("entry")
-                    .distinct()
-                )
-                query_expressions.append(Q(pk__in=[
-                    matching_string['entry'] for matching_string in matching_strings
-                ]))
+                query_expressions.append(join_expression)
             # If it is a string, then it is just the name of a field on
             # the model
             else:
-                query_expressions.append(Q(**{'%s%s' % (filter_on_val, filter_action): query_string}))
+                query_expressions.append(
+                    Q(**{'%s%s' % (filter_on_val, filter_action): query_string}),
+                )
 
         if exclude:
             return reduce(
@@ -360,7 +354,8 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
                 # any global filters.
                 if self.global_filters_form.is_valid() and form_q:
                     for (_name, global_filter,) in self.global_filters_form.cleaned_data.items():
-                        form_q = form_q.intersection(global_filter)
+                        if global_filter:
+                            form_q = form_q.intersection(global_filter)
 
                 queryset_group.append(CombiningQueryset(
                     operator=form_operator,

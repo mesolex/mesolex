@@ -14,6 +14,7 @@ class Entry(models.Model):
     identifier = models.CharField(
         max_length=256,
         unique=True,
+        db_index=True,
     )
     parent_entry = models.ForeignKey(
         'self',

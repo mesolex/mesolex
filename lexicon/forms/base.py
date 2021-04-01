@@ -17,11 +17,11 @@ class LexiconQueryBuilderGlobalFiltersForm(QueryBuilderGlobalFiltersForm):
         if only_with_sound:
             return Entry.objects.filter(media__isnull=(not only_with_sound))
 
-        return Entry.objects.all()
+        return False
 
     def clean_dataset(self):
         dataset = self.cleaned_data['dataset']
         if dataset:
             return Entry.objects.filter(dataset=dataset)
 
-        return Entry.objects.all()
+        return False
