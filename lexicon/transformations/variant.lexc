@@ -1,0 +1,64 @@
+Multichar_Symbols
+
+%>
+
+LEXICON Root
+WordInitVow ;
+Cns ;
+Vow ;
+
+LEXICON Loop
+Cns ;
+Vow ;
+ #  ;
+
+LEXICON WordInitVow
+e:ye Loop ;
+
+
+LEXICON Vow
+oa:owa Loop ;
+owa:oa Loop ;
+oa:oa Loop ;
+oua:owa Loop ;
+oua:oa Loop ;
+iya:ia Loop ;
+ia:iya Loop ;
+eyi:ei Loop ;
+ei:eyi Loop ;
+a:a Loop ;
+a:aj Cns ;
+i:i Loop ;
+i:ij Loop ;
+e:e Loop ;
+e:i Loop ;
+e:ij Cns ;
+i:e Loop ;
+i:ej Cns ;
+e:ej Cns ;
+o:o Loop ;
+o:oj Cns ;
+u:u Loop ;
+
+LEXICON Cns
+cua:kwa Loop ;
+qua:kwa Loop ;
+ch:ch Loop ;
+tz:ts Loop ;
+tl:tl Loop ;
+tl:t Loop ;
+hu:w Vow ;
+uh:w Loop ;
+cu:ku Cns ;
+cu:kw Vow ;
+ca:ka Loop ;
+ca:ka Loop ;
+ç:s Vow ;
+z:s Loop ;
+s:s Loop ;
+t:tl Vow ;
+t:tl # ;
+t:t Loop ;
+n:n Loop ;
+p:p Loop ;
+h:j Cns ;
