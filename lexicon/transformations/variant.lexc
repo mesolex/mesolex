@@ -29,16 +29,29 @@ ei:eyi Loop ;
 a:a Loop ;
 a:aj Cns ;
 i:i Loop ;
-i:ij Loop ;
+i:ij Cns ;
 e:e Loop ;
-e:i Loop ;
+e:i Cns ;
 e:ij Cns ;
-i:e Loop ;
+i:e Cns ;
 i:ej Cns ;
 e:ej Cns ;
 o:o Loop ;
 o:oj Cns ;
 u:u Loop ;
+a%::a%: Loop;
+a%::a Loop;
+a:a%: Loop;
+e%::e%: Loop;
+e%::e Loop;
+e:e%: Loop;
+i%::i%: Loop;
+i%::i Loop;
+i:i%: Loop;
+o%::o%: Loop;
+o%::o Loop;
+o:o%: Loop;
+
 
 LEXICON Cns
 cua:kwa Loop ;
