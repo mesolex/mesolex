@@ -364,15 +364,6 @@ class AzzImporter(XmlImporter):
 
             models.LongSearchableString.objects.bulk_create([
                 models.LongSearchableString(
-                    value=example['original']['text'],
-                    entry=entry,
-                    language='azz',
-                    type_tag='quote_original',
-                ) for example in examples
-                if example.get('original') is not None
-            ])
-            models.LongSearchableString.objects.bulk_create([
-                models.LongSearchableString(
                     value=example['translation']['text'],
                     entry=entry,
                     language='es',

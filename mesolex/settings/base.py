@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'django.contrib.postgres',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -43,7 +44,6 @@ INSTALLED_APPS = [
     'modelcluster',
     'taggit',
 
-    'django_elasticsearch_dsl',
     'prettyjson',
     'robots',
 
@@ -162,16 +162,5 @@ LOCALE_PATHS = (
 SITE_ID = 1
 
 ROBOTS_USE_SITEMAP = False
-
-ELASTICSEARCH_DSL = {
-    'default': {
-        'hosts': 'localhost:9200',
-    },
-}
-
-# Data doesn't exactly change all the time, and leaving these True
-# does something bad to data import. Disable for now, reconsider later.
-ELASTICSEARCH_DSL_AUTOSYNC = False
-ELASTICSEARCH_DSL_AUTO_REFRESH = False
 
 WAGTAIL_SITE_NAME = 'Mesolex'

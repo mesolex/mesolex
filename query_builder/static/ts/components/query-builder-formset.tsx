@@ -34,7 +34,7 @@ interface QueryBuilderFormSetProps {
   controlledVocabFields: Array<ControlledVocabField>;
   extraFields: Array<ExtraField>;
   filterableFields: Array<FilterableField>;
-  elasticsearchFields: Array<FilterableField>;
+  searchFields: Array<FilterableField>;
 
   // from app initialization:
   formsetGlobalFiltersData: { [field: string]: boolean };
@@ -110,7 +110,7 @@ const GlobalFilters = (props: {
 
 const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
   const filterableFields = filter(
-    concat(props.filterableFields, props.elasticsearchFields),
+    concat(props.filterableFields, props.searchFields),
     ({user_languages}) => (
       isUndefined(user_languages)
       || user_languages.indexOf(props.userLanguage) !== -1
@@ -150,7 +150,7 @@ const QueryBuilderFormSet = (props: QueryBuilderFormSetProps): JSX.Element => {
         { map(formKeySeqState, (key, i) => (
           <QueryBuilderForm
             controlledVocabFields={props.controlledVocabFields}
-            elasticsearchFields={props.elasticsearchFields}
+            searchFields={props.searchFields}
             extraFields={props.extraFields}
             index={i}
             initialData={props.formsetData[i] || makeDefaultInitialData(filterableFields)}

@@ -1,6 +1,5 @@
 from django import forms
 
-from lexicon.documents import EntryDocument
 from lexicon.forms.base import LexiconQueryBuilderGlobalFiltersForm
 from lexicon.transformations.nahuat_orthography import nahuat_orthography
 from mesolex.config import DATASETS
@@ -13,10 +12,8 @@ AZZ = Dataset('azz')
 class AzzLexicalSearchFilterForm(QueryBuilderForm):
     FILTERABLE_FIELDS = AZZ.filterable_fields
     FILTERABLE_FIELDS_DICT = AZZ.filterable_fields_dict
-    ELASTICSEARCH_FIELDS = AZZ.elasticsearch_fields
-    ELASTICSEARCH_FIELDS_DICT = AZZ.elasticsearch_fields_dict
-
-    DocumentClass = EntryDocument
+    SEARCH_FIELDS = AZZ.search_fields
+    SEARCH_FIELDS_DICT = AZZ.search_fields_dict
 
     vln = forms.BooleanField(required=False)
     nahuat_orthography = forms.BooleanField(required=False)
@@ -32,8 +29,8 @@ class AzzLexicalSearchFilterForm(QueryBuilderForm):
 class BaseAzzLexiconQueryComposerFormset(QueryBuilderBaseFormset):
     global_filters_class = LexiconQueryBuilderGlobalFiltersForm
 
-    FILTERABLE_FIELDS = AZZ.filterable_fields + AZZ.elasticsearch_fields
-    TEXT_SEARCH_FIELDS = [field[0] for field in AZZ.elasticsearch_fields]
+    FILTERABLE_FIELDS = AZZ.filterable_fields + AZZ.search_fields
+    TEXT_SEARCH_FIELDS = [field[0] for field in AZZ.search_fields]
 
     CONTROLLED_VOCAB_FIELDS = {
         field['field']: [(item['value'], item['label']) for item in field['items']]

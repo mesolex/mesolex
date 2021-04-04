@@ -29,7 +29,7 @@ declare const gettext: (messageId: string) => string;
 
 interface FormProps {
   controlledVocabFields: Array<ControlledVocabField>;
-  elasticsearchFields: Array<FilterableField>;
+  searchFields: Array<FilterableField>;
   extraFields: Array<ExtraField>;
   index: number;
   initialData: FormDataset;
@@ -89,8 +89,8 @@ const isControlled = (
 
 const isTextSearch = (
   fieldName: string,
-  elasticsearchFields: Array<FilterableField>,
-): boolean => some(elasticsearchFields, ({ field }) => field === fieldName);
+  searchFields: Array<FilterableField>,
+): boolean => some(searchFields, ({ field }) => field === fieldName);
 
 /**
  * When "filter on" changes, it may be necessary to set the value of
@@ -101,14 +101,14 @@ const isTextSearch = (
 const propagateFilterOnConditions = (
   filterOn: string,
   controlledVocabFields: Array<ControlledVocabField>,
-  elasticsearchFields: Array<FilterableField>,
+  searchFields: Array<FilterableField>,
   setFilter: React.Dispatch<React.SetStateAction<string>>,
 ): void => {
   if (isControlled(filterOn, controlledVocabFields)) {
     setFilter('exactly_equals');
   }
 
-  if (isTextSearch(filterOn, elasticsearchFields)) {
+  if (isTextSearch(filterOn, searchFields)) {
     setFilter('text_search');
   }
 };
@@ -252,7 +252,7 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
               propagateFilterOnConditions(
                 event.target.value,
                 props.controlledVocabFields,
-                props.elasticsearchFields,
+                props.searchFields,
                 setFilter,
               );
             }}
@@ -264,7 +264,7 @@ const QueryBuilderForm = (props: FormProps): JSX.Element => {
             as={FilterSelector}
             controlled={isControlled(filterOn, props.controlledVocabFields)}
             onChange={(event): void => setFilter(event.target.value)}
-            textSearch={isTextSearch(filterOn, props.elasticsearchFields)}
+            textSearch={isTextSearch(filterOn, props.searchFields)}
             value={filter}
           />
 

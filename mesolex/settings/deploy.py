@@ -17,8 +17,3 @@ PUBLIC_ROOT = os.path.join(WEBSERVER_ROOT, 'public')
 STATIC_ROOT = os.path.join(PUBLIC_ROOT, 'static')
 MEDIA_ROOT = os.path.join(PUBLIC_ROOT, 'media')
 
-ELASTICSEARCH_DSL = {
-    'default': {
-        'hosts': '0.0.0.0:9200',
-    },
-}

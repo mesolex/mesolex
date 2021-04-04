@@ -1,15 +1,15 @@
 import json
-import operator
 import re
 from collections import namedtuple
 from functools import reduce
 from typing import List
 
 from django import forms
+from django.contrib.postgres.search import SearchQuery
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
-from lexicon.models import Entry, SearchableString, LongSearchableString
+from lexicon.models import Entry
 from mesolex.utils import ForceProxyEncoder, contains_word_to_regex
 
 
@@ -113,10 +113,10 @@ class QueryBuilderForm(forms.Form):
     FILTERABLE_FIELDS_DICT = {}
 
     # NOTE: abstract, must be filled in with dictionary
-    # matching elasticsearch quasi-filters and lists
+    # matching full text search filters and lists
     # of index fields
-    ELASTICSEARCH_FIELDS = []
-    ELASTICSEARCH_FIELDS_DICT = {}
+    SEARCH_FIELDS = []
+    SEARCH_FIELDS_DICT = {}
 
     query_string = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control'})
@@ -133,7 +133,7 @@ class QueryBuilderForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['filter_on'] = forms.ChoiceField(
-            choices=self.FILTERABLE_FIELDS + self.ELASTICSEARCH_FIELDS,
+            choices=self.FILTERABLE_FIELDS + self.SEARCH_FIELDS,
             widget=forms.Select(attrs={'class': 'custom-select'})
         )
 
@@ -194,10 +194,14 @@ class QueryBuilderForm(forms.Form):
 
         return (filter_action, query_string)
 
-    def _get_db_queryset(self, exclude=False):
+    def _get_queryset(self, exclude=False, full_text=False):
         (filter_action, query_string) = self.get_filter_action_and_query()
         filter_on_str = self.cleaned_data['filter_on']
-        filter_on_vals = self.FILTERABLE_FIELDS_DICT.get(filter_on_str, [])
+
+        if full_text:
+            filter_on_vals = self.SEARCH_FIELDS_DICT.get(filter_on_str, [])
+        else:
+            filter_on_vals = self.FILTERABLE_FIELDS_DICT.get(filter_on_str, [])
 
         query_expressions = []
 
@@ -210,10 +214,19 @@ class QueryBuilderForm(forms.Form):
                     string_selector = 'longsearchablestring'
                 else:
                     string_selector = 'searchablestring'
-                join_expression = Q(**{
-                    f'{string_selector}__type_tag': filter_on_val.get('tag'),
-                    f'{string_selector}__value{filter_action}': query_string,
-                })
+                if full_text:
+                    join_expression = Q(**{
+                        f'{string_selector}__type_tag': filter_on_val.get('tag'),
+                        'longsearchablestring__searchable_value': SearchQuery(
+                            query_string,
+                            config='spanish',
+                        )
+                    })
+                else:
+                    join_expression = Q(**{
+                        f'{string_selector}__type_tag': filter_on_val.get('tag'),
+                        f'{string_selector}__value{filter_action}': query_string,
+                    })
                 query_expressions.append(join_expression)
             # If it is a string, then it is just the name of a field on
             # the model
@@ -233,27 +246,14 @@ class QueryBuilderForm(forms.Form):
             [Entry.objects.filter(q) for q in query_expressions],
         )
 
-    def _get_es_queryset(self, exclude=False):
-        query_fields = self.ELASTICSEARCH_FIELDS_DICT.get(self.cleaned_data['filter_on'])
-        results = self.DocumentClass.search().query(
-            'multi_match',
-            query=self.cleaned_data['query_string'],
-            fields=query_fields,
-        ).scan()
-
-        if exclude:
-            return Entry.objects.exclude(pk__in=[result.meta.id for result in results])
-
-        return Entry.objects.filter(pk__in=[result.meta.id for result in results])
-
     def get_queryset(self, exclude=False):
         if not self.is_bound:
             return Entry.objects.all()
 
-        if self.cleaned_data['filter_on'] in [field[0] for field in self.ELASTICSEARCH_FIELDS]:
-            return self._get_es_queryset(exclude=exclude)
+        if self.cleaned_data['filter_on'] in [field[0] for field in self.SEARCH_FIELDS]:
+            return self._get_queryset(exclude=exclude, full_text=True)
 
-        return self._get_db_queryset(exclude=exclude)
+        return self._get_queryset(exclude=exclude)
 
     def clean(self):
         cleaned_data = super().clean()

@@ -1,4 +1,5 @@
 from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.search import SearchVectorField, SearchVector
 from django.contrib.postgres.indexes import GinIndex
 from django.db import models
 
@@ -79,6 +80,15 @@ class SearchableString(Searchable):
 
 class LongSearchableString(Searchable):
     value = models.TextField()
+    searchable_value = SearchVectorField(null=True)
+
+    class Meta:
+        indexes = [
+            GinIndex(
+                name='lss_searchable_value_gin_idx',
+                fields=['searchable_value'],
+            ),
+        ]
 
 
 class Media(models.Model):
