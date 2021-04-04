@@ -280,34 +280,33 @@ azz:
           terms:
             - tag: inflectional_type
               length: short
-        - field: precise_meaning
-          label: Significado preciso
-          terms:
-            - tag: sense
-              length: long
     search_fields:
         - field: precise_meaning
           label: Significado preciso
           terms:
             - tag: sense
               length: long
-        # - field: extended_meaning
-        #   label: Significado extendido
-        #   terms:
-        #     - sense
-        #     - ostentive
+        - field: extended_meaning
+          label: Significado extendido
+          terms:
+            - tag: sense
+              length: long
+            - tag: ostentive
+              length: long
         - field: illustrative_phrases
           label: Frase ilustrativas
           terms:
-            # - quotations_azz
             - tag: quote_translation
               length: long
-        # - field: complete_search
-        #   label: Búsqueda exhaustiva
-        #   terms:
-        #     - definitions_es
-        #     - quotations_es
-        #     - ostentives_es
+        - field: complete_search
+          label: Búsqueda exhaustiva
+          terms:
+            - tag: sense
+              length: long
+            - tag: ostentive
+              length: long
+            - tag: quote_translation
+              length: long
     controlled_vocab_fields:
         - field: part_of_speech
           items:

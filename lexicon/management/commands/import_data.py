@@ -1,4 +1,5 @@
 import csv
+import itertools
 import logging
 from collections import defaultdict
 from typing import Tuple
@@ -386,6 +387,16 @@ class AzzImporter(XmlImporter):
                     'ostentives': sig_value.get('ostentives', []),
                 },
             ) for sig_value in sig_values
+        ])
+        models.LongSearchableString.objects.bulk_create([
+            models.LongSearchableString(
+                value=osten_value,
+                entry=entry,
+                language='es',
+                type_tag='ostentive',
+            ) for osten_value in list(itertools.chain(
+                *[sig_value.get('ostentives', []) for sig_value in sig_values],
+            ))
         ])
         entry_data['senses'].extend(sig_values)
 
