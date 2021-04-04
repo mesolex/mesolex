@@ -216,12 +216,13 @@ trq:
         - field: precise_meaning
           label: Significado preciso
           terms:
-            - definitions_es
+            - tag: sense
+              length: long
         - field: illustrative_phrases
           label: Frase ilustrativas
           terms:
-            - quotations_trq
-            - quotations_es
+            - tag: quote_translation
+              length: long
     controlled_vocab_fields: []
 chic1273:
     label: Triqui de Chicahuaxtla
