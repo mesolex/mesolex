@@ -53,11 +53,18 @@ class QuerysetGrouper:
 
     @staticmethod
     def _group_ands(querysets: List[CombiningQueryset]):
-        (querysets, and_tree) = reduce(
-            QuerysetGrouper._handle_next_and,
-            querysets,
-            ([], Entry.objects.all()),
-        )
+        # TODO: replace intersections with simple .filter chaining
+        # (and replace querysets with Q expressions)
+        if querysets:
+            first = querysets[0]
+            rest = querysets[1:]
+            (querysets, and_tree) = reduce(
+                QuerysetGrouper._handle_next_and,
+                rest,
+                ([], first.queryset),
+            )
+        else:
+            and_tree = Entry.objects.all()
         return [*querysets, and_tree]
 
     @property
