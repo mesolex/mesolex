@@ -3,9 +3,9 @@ Multichar_Symbols
 %>
 
 LEXICON Root
-WordInitVow ;
 Cns ;
 Vow ;
+
 
 LEXICON Loop
 Cns ;
@@ -15,40 +15,45 @@ Vow ;
 
 LEXICON Vow
 FrontVow ;
-BackVow ;
+LowBackVow ;
+HighBackVow ;
 
 
 LEXICON FrontVow
 i:i Loop ;
 e:e Loop ;
-e%::ē NonGlottalCns;
-i%::ī NonGlottalCns;
+e%::ē Loop;
+i%::ī Loop;
+ee:ē Loop;
+ii:ī Loop;
 
-LEXICON BackVow
-oa:owa Loop ;
-owa:oa Loop ;
-oa:oa Loop ;
-oua:owa Loop ;
-oua:oa Loop ;
-a:a Loop ;
-o:o Loop ;
+
+LEXICON HighBackVow
 u:u Loop ;
-a%::ā Loop;
-o%::ō Loop ;
 uh:w Cns ;
 uh:w # ;
 u:w Vow ;
 
 
-LEXICON Cns
+LEXICON LowBackVow
+a:a Loop ;
+o:o Loop ;
+a%::ā Loop;
+o%::ō Loop ;
+aa:ā Loop;
+oo:ō Loop ;
+
+LEXICON Lateral
+l:l Loop ;
+
+LEXICON CnsNonLateral
 b:b Loop ;
 c:s FrontVow ;
-c:k BackVow ;
+c:k LowBackVow ;
 cu:kʷ Vow ;
 c:k Cns ;
 c:k # ;
 ç:s Vow ;
-cua:kʷa Loop ;
 ch:t͡ʃ Loop ;
 d:d Loop ;
 f:f Loop ;
@@ -57,15 +62,16 @@ h:j Cns ;
 hu:w Vow ;
 j:j Loop ;
 k:k Loop ;
-l:l Loop ;
 m:m Loop ;
 n:n Loop ;
 p:p Loop ;
-qu:kʷ BackVow ;
+qu:kʷ LowBackVow ;
 qu:k FrontVow ;
 r:r Loop ;
 s:s Loop ;
-t:t Loop ;
+t:t CnsNonLateral ;
+t:t Vow ;
+t:t # ;
 tl:ɬ Vow ;
 tl:ɬ # ;
 w:w Loop ;
@@ -74,3 +80,8 @@ y:y Vow ;
 y:i Cns ;
 y:i # ;
 z:s Loop ;
+
+
+LEXICON Cns
+Lateral ;
+CnsNonLateral ;
