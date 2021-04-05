@@ -12,84 +12,65 @@ Cns ;
 Vow ;
  #  ;
 
-LEXICON WordInitVow
-e:ye Loop ;
-
 
 LEXICON Vow
+FrontVow ;
+BackVow ;
+
+
+LEXICON FrontVow
+i:i Loop ;
+e:e Loop ;
+e%::ē NonGlottalCns;
+i%::ī NonGlottalCns;
+
+LEXICON BackVow
 oa:owa Loop ;
 owa:oa Loop ;
 oa:oa Loop ;
 oua:owa Loop ;
 oua:oa Loop ;
-iya:ia Loop ;
-ia:iya Loop ;
-eyi:ei Loop ;
-ei:eyi Loop ;
 a:a Loop ;
-a:aj NonGlottalCns ;
-i:i Loop ;
-i:ij NonGlottalCns ;
-e:e Loop ;
-e:i Cns ;
-e:ij NonGlottalCns ;
-i:e Cns ;
-i:ej NonGlottalCns ;
-e:ej NonGlottalCns ;
 o:o Loop ;
-o:oj Cns ;
 u:u Loop ;
-a%::a%: Loop;
-a%::a Loop;
-a:a%: NonGlottalCns;
-e%::e%: NonGlottalCns;
-e%::e Loop;
-e:e%: NonGlottalCns;
-i%::i%: NonGlottalCns;
-i%::i Loop;
-i:i%: NonGlottalCns;
-o%::o%: NonGlottalCns;
-o%::o Loop;
-o:o%: NonGlottalCns;
+a%::ā Loop;
+o%::ō Loop ;
+uh:w Cns ;
+uh:w # ;
+u:w Vow ;
 
-
-LEXICON GlottalCns
-h:j NonGlottalCns ;
-j:j NonGlottalCns ;
-
-
-LEXICON NonGlottalCns
-cua:kwa Loop ;
-qua:kwa Loop ;
-ch:ch Loop ;
-tz:ts Loop ;
-tl:tl Loop ;
-tl:t Loop ;
-l:l Loop ;
-hu:w Vow ;
-uh:w Loop ;
-cu:ku Cns ;
-cu:kw Vow ;
-ca:ka Loop ;
-ca:ka Loop ;
-ç:s Vow    ;
-c:k Vow    ;
-c:k #      ;
-k:k Loop ;
-z:s Loop ;
-s:s Loop ;
-t:tl Vow ;
-t:tl # ;
-t:t Loop ;
-n:n Loop ;
-y:y Loop ;
-yn:in Loop ;
-n:n Loop ;
-x:x Loop ;
-p:p Loop ;
-h:0 NonGlottalCns ;
-j:0 NonGlottalCns ;
 
 LEXICON Cns
-GlottalCns     ;
-NonGlottalCns ;
+b:b Loop ;
+c:s FrontVow ;
+c:k BackVow ;
+cu:kʷ Vow ;
+c:k Cns ;
+c:k # ;
+ç:s Vow ;
+cua:kʷa Loop ;
+ch:t͡ʃ Loop ;
+d:d Loop ;
+f:f Loop ;
+g:g Loop ;
+h:j Cns ;
+hu:w Vow ;
+j:j Loop ;
+k:k Loop ;
+l:l Loop ;
+m:m Loop ;
+n:n Loop ;
+p:p Loop ;
+qu:kʷ BackVow ;
+qu:k FrontVow ;
+r:r Loop ;
+s:s Loop ;
+t:t Loop ;
+tl:ɬ Vow ;
+tl:ɬ # ;
+w:w Loop ;
+x:ʃ Loop ;
+y:y Vow ;
+y:i Cns ;
+y:i # ;
+z:s Loop ;
