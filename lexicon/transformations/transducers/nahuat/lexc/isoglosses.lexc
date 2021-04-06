@@ -2,10 +2,6 @@ Multichar_Symbols
 
 %>
 
-@U.TL.ON@  ! "t"s realized as "tl"
-@P.TL.ON@
-@U.T.ON@
-@P.T.ON@
 
 LEXICON Root
 WordInitVow ;
@@ -60,10 +56,10 @@ w:w Loop ;
 !
 ! t-tl alternation
 !
-@U.TL.ON@ɬ:@U.TL.ON@tl Loop ;
-@U.TL.ON@t:@U.TL.ON@tl Loop ;
-@U.T.ON@t:@U.T.ON@t Loop ;
-@U.T.ON@ɬ:@U.T.ON@t Loop ;
+ɬ:tl Loop ;
+ɬ:t Loop ;
+t:tl Loop ;
+t:t Loop ;
 
 m:m Loop ;
 n:n Loop ;

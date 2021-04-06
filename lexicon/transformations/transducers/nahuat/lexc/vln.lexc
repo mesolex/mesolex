@@ -2,7 +2,6 @@ Multichar_Symbols
 
 %>
 
-
 LEXICON Root
 Cns ;
 Vow ;
@@ -14,18 +13,49 @@ Vow ;
  #  ;
 
 
+
 LEXICON Vow
 i:i Loop ;
 e:e Loop ;
 a:a Loop ;
 o:o Loop ;
 u:u Loop ;
-ī:i%: Loop ;
+
 ē:e%: Loop ;
+ī:i%: Loop ;
 ā:a%: Loop ;
 ō:o%: Loop ;
 
+i:i%: NonGlottalCns ;
+e:e%: NonGlottalCns ;
+a:a%: NonGlottalCns ;
+o:o%: NonGlottalCns ;
 
+ē:e Loop ;
+ī:i Loop ;
+ā:a Loop ;
+ō:o Loop ;
+
+LEXICON NonGlottalCns
+b:b Loop ;
+s:s Loop ;
+k:k Loop ;
+kʷ:kw Vow ;
+kʷ: wk Cns ;
+kʷ:wk # ;
+t͡ʃ:ch Loop ;
+d:d Loop ;
+f:f Loop ;
+g:g Loop ;
+ɬ:tl Loop ;
+t:t Loop ;
+m:m Loop ;
+n:n Loop ;
+p:p Loop ;
+r:r Loop ;
+ʃ:x Loop ;
+y:y Vow ;
+l:l Loop ;
 
 LEXICON Cns
 b:b Loop ;

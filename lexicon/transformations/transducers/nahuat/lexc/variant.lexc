@@ -53,7 +53,7 @@ b:b Loop ;
 c:s FrontVow ;
 c:k LowBackVow ;
 cu:kʷ Vow ;
-c:k Cns ;
+c:k CnsNonGlottal ;
 c:k # ;
 ç:s Vow ;
 ch:t͡ʃ Loop ;
@@ -61,6 +61,7 @@ d:d Loop ;
 f:f Loop ;
 g:g Loop ;
 h:j Cns ;
+h:j # ;
 hu:w Vow ;
 j:j Loop ;
 k:k Loop ;
@@ -79,6 +80,40 @@ tl:ɬ # ;
 w:w Loop ;
 x:ʃ Loop ;
 z:s Loop ;
+
+
+
+LEXICON CnsNonGlottal
+b:b Loop ;
+c:s FrontVow ;
+c:k LowBackVow ;
+cu:kʷ Vow ;
+c:k CnsNonGlottal ;
+c:k # ;
+ç:s Vow ;
+ch:t͡ʃ Loop "weight: 2.0";
+d:d Loop ;
+f:f Loop ;
+g:g Loop ;
+j:j Loop ;
+k:k Loop ;
+m:m Loop ;
+n:n Loop ;
+p:p Loop ;
+qu:kʷ LowBackVow ;
+qu:k FrontVow ;
+r:r Loop ;
+s:s Loop ;
+t:t CnsNonLateral ;
+t:t Vow ;
+t:t # ;
+tl:ɬ Vow ;
+tl:ɬ # ;
+w:w Loop ;
+x:ʃ Loop ;
+z:s Loop ;
+l:l Loop ;
+
 
 
 LEXICON Cns
