@@ -60,10 +60,10 @@ w:w Loop ;
 !
 ! t-tl alternation
 !
-ɬ:tl Loop ;
-t:tl Loop ;
-t:t Loop ;
-ɬ:t Loop ;
+@U.TL.ON@ɬ:@U.TL.ON@tl Loop ;
+@U.TL.ON@t:@U.TL.ON@tl Loop ;
+@U.T.ON@t:@U.T.ON@t Loop ;
+@U.T.ON@ɬ:@U.T.ON@t Loop ;
 
 m:m Loop ;
 n:n Loop ;
