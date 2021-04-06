@@ -26,10 +26,12 @@ e%::ē Loop;
 i%::ī Loop;
 ee:ē Loop;
 ii:ī Loop;
-
+y:y Vow ;
+y:i Cns ;
+y:i # ;
 
 LEXICON HighBackVow
-u:u Loop ;
+u:u Cns ;
 uh:w Cns ;
 uh:w # ;
 u:w Vow ;
@@ -76,9 +78,6 @@ tl:ɬ Vow ;
 tl:ɬ # ;
 w:w Loop ;
 x:ʃ Loop ;
-y:y Vow ;
-y:i Cns ;
-y:i # ;
 z:s Loop ;
 
 

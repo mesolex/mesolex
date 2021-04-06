@@ -1,0 +1,75 @@
+Multichar_Symbols
+
+%>
+
+@U.TL.ON@  ! "t"s realized as "tl"
+@P.TL.ON@
+@U.T.ON@
+@P.T.ON@
+
+LEXICON Root
+WordInitVow ;
+Cns ;
+Vow ;
+
+
+LEXICON Loop
+Cns ;
+Vow ;
+ #  ;
+
+
+LEXICON WordInitVow
+e:ye Loop ;
+
+
+LEXICON Vow
+i:i Loop ;
+e:e Loop ;
+
+!
+! e/i alternation
+!
+e:i Loop ;
+i:e Loop ;
+
+a:a Loop ;
+o:o Loop ;
+u:u Loop ;
+
+ē:e%: Loop ;
+ī:i%: Loop ;
+ā:a%: Loop ;
+ō:o%: Loop ;
+
+
+LEXICON Cns
+b:b Loop ;
+s:s Loop ;
+k:k Loop ;
+kʷ:kw Vow ;
+kʷ: wk Cns ;
+kʷ:wk # ;
+t͡ʃ:ch Loop ;
+d:d Loop ;
+f:f Loop ;
+g:g Loop ;
+j:j Loop ;
+w:w Loop ;
+
+!
+! t-tl alternation
+!
+ɬ:tl Loop ;
+t:tl Loop ;
+t:t Loop ;
+ɬ:t Loop ;
+
+m:m Loop ;
+n:n Loop ;
+n:0 # ;
+p:p Loop ;
+r:r Loop ;
+ʃ:x Loop ;
+y:y Vow ;
+l:l Loop ;
