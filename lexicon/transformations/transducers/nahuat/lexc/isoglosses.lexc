@@ -1,7 +1,7 @@
 Multichar_Symbols
 
 %>
-
+@U.TL.TL@
 
 LEXICON Root
 WordInitVow ;
@@ -56,8 +56,8 @@ w:w Loop ;
 !
 ! t-tl alternation
 !
-ɬ:tl Loop ;
-ɬ:t Loop ;
+@U.TL.TL@ɬ:@U.TL.TL@tl Loop ;
+@U.TL.T@ɬ:@U.TL.T@t Loop ;
 t:tl Loop ;
 t:t Loop ;
 
