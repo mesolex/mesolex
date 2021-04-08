@@ -1,8 +1,14 @@
 all:
 	hfst-lexc nahuat/lexc/variant.lexc -o nahuat/fst/input.hfst
+
 	hfst-lexc nahuat/lexc/dico.lexc -o nahuat/fst/to_dico.hfst
+
 	hfst-lexc nahuat/lexc/flex_orth.lexc -o nahuat/fst/flex.hfst
+	hfst-twolc nahuat/lexc/flex_orth.twol -o nahuat/fst/flex_orth.twol.hfst
+	hfst-compose-intersect -1 nahuat/fst/flex.hfst -2 nahuat/fst/flex_orth.twol.hfst -o nahuat/fst/flex_w_rules.hfst
+
 	hfst-lexc nahuat/lexc/vln.lexc -o nahuat/fst/vln.hfst
+
 	hfst-lexc nahuat/lexc/isoglosses.lexc -o nahuat/fst/isoglosses.hfst
 
 	#####################
@@ -10,7 +16,7 @@ all:
 	#####################
 
 	# in2flex = input.hfst .o. flex.hfst
-	hfst-compose -1 nahuat/fst/input.hfst -2 nahuat/fst/flex.hfst -o nahuat/fst/in2flex.hfst
+	hfst-compose -1 nahuat/fst/input.hfst -2 nahuat/fst/flex_w_rules.hfst -o nahuat/fst/in2flex.hfst
 
 	# in2vln = input.hfst .o. vln.hfst
 	hfst-compose -1 nahuat/fst/input.hfst -2 nahuat/fst/vln.hfst -o nahuat/fst/in2vln.hfst
@@ -19,10 +25,10 @@ all:
 	hfst-compose -1 nahuat/fst/input.hfst -2 nahuat/fst/isoglosses.hfst -o nahuat/fst/in2iso.hfst
 
 	# in2flex_iso = in2flex.hfst .o. isoglosses.hfst
-	hfst-compose -1 nahuat/fst/in2iso.hfst -2 nahuat/fst/flex.hfst -o nahuat/fst/in2flex_iso.hfst
+	hfst-compose -1 nahuat/fst/in2iso.hfst -2 nahuat/fst/flex_w_rules.hfst -o nahuat/fst/in2flex_iso.hfst
 
 	# in2flex_vln = vln.hfst .o. in2flex.hfst
-	hfst-compose -1 nahuat/fst/in2vln.hfst -2 nahuat/fst/flex.hfst -o nahuat/fst/in2flex_vln.hfst
+	hfst-compose -1 nahuat/fst/in2vln.hfst -2 nahuat/fst/flex_w_rules.hfst -o nahuat/fst/in2flex_vln.hfst
 
 	# in2vln_iso = in2vln.hfst .o. isoglosses.hfst
 	hfst-compose -1 nahuat/fst/in2vln.hfst -2 nahuat/fst/isoglosses.hfst -o nahuat/fst/in2vln_iso.hfst

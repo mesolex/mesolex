@@ -25,6 +25,11 @@ a:a Loop ;
 o:o Loop ;
 u:u Loop ;
 
+i:iʔ NonGlottalCns ;
+e:eʔ NonGlottalCns ;
+a:aʔ NonGlottalCns ;
+o:oʔ NonGlottalCns ;
+
 ē:ē Loop ;
 ī:ī Loop ;
 ā:ā Loop ;
@@ -48,12 +53,45 @@ j:j Loop ;
 ɬ:ɬ Loop ;
 t:t Loop ;
 m:m Loop ;
+
 n:n Loop ;
+n:0 # ;
+m:0 # ;
+
 p:p Loop ;
 r:r Loop ;
 ʃ:ʃ Loop ;
 
 y:y Vow ;
 
+l:l Loop ;
+w:w Loop ;
+w:0 # ;
+
+LEXICON NonGlottalCns
+b:b Loop ;
+s:s Loop ;
+k:k Loop ;
+kʷ:kʷ Loop ;
+t͡ʃ:t͡ʃ Loop ;
+d:d Loop ;
+f:f Loop ;
+g:g Loop ;
+j:j Loop ;
+ɬ:ɬ Loop ;
+t:t Loop ;
+m:m Loop ;
+n:n Loop ;
+!
+! Word-ending lenitions
+!
+n:0 # ;
+m:0 # ;
+w:0 # ;
+
+p:p Loop ;
+r:r Loop ;
+ʃ:ʃ Loop ;
+y:y Vow ;
 l:l Loop ;
 w:w Loop ;

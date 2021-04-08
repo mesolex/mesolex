@@ -25,8 +25,8 @@ e:e Loop ;
 !
 ! e/i alternation
 !
-e:i Loop ;
-i:e Loop ;
+e:i Cns ;
+i:e Cns ;
 
 a:a Loop ;
 o:o Loop ;
@@ -88,15 +88,12 @@ t:ɬ Loop ;
 t:t Loop ;
 
 !
-! Word-ending lenitions
+! Word-ending nasals as glottal consonants
 !
 m:m Loop ;
 n:n Loop ;
-n:0 # ;
-m:0 # ;
 n:ʔ # ;
 m:ʔ # ;
-w:0 # ;
 
 p:p Loop ;
 r:r Loop ;
