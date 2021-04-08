@@ -26,9 +26,6 @@ e%::ē Loop;
 i%::ī Loop;
 ee:ē Loop;
 ii:ī Loop;
-y:y Vow ;
-y:i Cns ;
-y:i # ;
 
 LEXICON HighBackVow
 u:u Cns ;
@@ -49,6 +46,12 @@ LEXICON Lateral
 l:l Loop ;
 
 LEXICON CnsNonLateral
+
+h:ʔ Cns ;
+h:ʔ # ;
+j:ʔ Cns ;
+j:j Vow ;
+
 b:b Loop ;
 c:s FrontVow ;
 c:k LowBackVow ;
@@ -60,10 +63,7 @@ ch:t͡ʃ Loop ;
 d:d Loop ;
 f:f Loop ;
 g:g Loop ;
-h:j Cns ;
-h:j # ;
 hu:w Vow ;
-j:j Loop ;
 k:k Loop ;
 m:m Loop ;
 n:n Loop ;
@@ -80,7 +80,7 @@ tl:ɬ # ;
 w:w Loop ;
 x:ʃ Loop ;
 z:s Loop ;
-
+y:y Loop ;
 
 
 LEXICON CnsNonGlottal
@@ -95,7 +95,6 @@ ch:t͡ʃ Loop "weight: 2.0";
 d:d Loop ;
 f:f Loop ;
 g:g Loop ;
-j:j Loop ;
 k:k Loop ;
 m:m Loop ;
 n:n Loop ;

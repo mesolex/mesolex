@@ -1,7 +1,6 @@
 Multichar_Symbols
 
 %>
-@U.TL.TL@
 
 LEXICON Root
 WordInitVow ;
@@ -33,39 +32,74 @@ a:a Loop ;
 o:o Loop ;
 u:u Loop ;
 
-ē:e%: Loop ;
-ī:i%: Loop ;
-ā:a%: Loop ;
-ō:o%: Loop ;
+ē:ē NonGlottalCns ;
+ī:ī NonGlottalCns ;
+ā:ā NonGlottalCns ;
+ō:ō NonGlottalCns ;
 
+y:y Cns ;
+y:y # ;
 
-LEXICON Cns
+LEXICON NonGlottalCns
 b:b Loop ;
 s:s Loop ;
 k:k Loop ;
-kʷ:kw Vow ;
-kʷ: wk Cns ;
-kʷ:wk # ;
-t͡ʃ:ch Loop ;
+kʷ:kʷ Loop ;
+t͡ʃ:t͡ʃ Loop ;
 d:d Loop ;
 f:f Loop ;
 g:g Loop ;
-j:j Loop ;
 w:w Loop ;
 
 !
 ! t-tl alternation
 !
-@U.TL.TL@ɬ:@U.TL.TL@tl Loop ;
-@U.TL.T@ɬ:@U.TL.T@t Loop ;
-t:tl Loop ;
+ɬ:ɬ Loop ;
+ɬ:t Loop ;
+t:ɬ Loop ;
 t:t Loop ;
 
+p:p Loop ;
+r:r Loop ;
+ʃ:ʃ Loop ;
+y:y Vow ;
+l:l Loop ;
+
+LEXICON Cns
+ʔ:ʔ Cns ;
+
+b:b Loop ;
+s:s Loop ;
+k:k Loop ;
+kʷ:kʷ Loop ;
+t͡ʃ:t͡ʃ Loop ;
+d:d Loop ;
+f:f Loop ;
+g:g Loop ;
+w:w Loop ;
+j:j Loop ;
+
+!
+! t-tl alternation
+!
+ɬ:ɬ Loop ;
+ɬ:t Loop ;
+t:ɬ Loop ;
+t:t Loop ;
+
+!
+! Word-ending lenitions
+!
 m:m Loop ;
 n:n Loop ;
 n:0 # ;
+m:0 # ;
+n:ʔ # ;
+m:ʔ # ;
+w:0 # ;
+
 p:p Loop ;
 r:r Loop ;
-ʃ:x Loop ;
+ʃ:ʃ Loop ;
 y:y Vow ;
 l:l Loop ;

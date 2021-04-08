@@ -26,7 +26,6 @@ u:u Loop ;
 ō:o%: Loop ;
 
 
-
 LEXICON Cns
 b:b Loop ;
 s:s Loop ;
@@ -39,7 +38,9 @@ d:d Loop ;
 f:f Loop ;
 g:g Loop ;
 j:j Loop ;
-ɬ:tl Loop ;
+ʔ:h Cns ;
+ɬ:tl Vow ;
+ɬ:tl # ;
 t:t Loop ;
 m:m Loop ;
 n:n Loop ;
