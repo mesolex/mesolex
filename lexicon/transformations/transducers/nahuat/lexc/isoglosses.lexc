@@ -16,6 +16,7 @@ Vow ;
 
 LEXICON WordInitVow
 e:ye Loop ;
+ye:e Loop ;
 
 
 LEXICON Vow
