@@ -9,4 +9,4 @@ xmljson==0.2.1
 django-prettyjson==0.4.1
 python-dateutil==2.8.1
 django-debug-toolbar==2.2
-pyyaml==5.3
+pyyaml==5.4
