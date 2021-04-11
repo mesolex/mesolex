@@ -16,7 +16,7 @@ app_minions: "{{ groups['web'] | union(groups['worker']) }}"
 
 repo:
   url: "{{ repo_url|default('git@github.com:nmashton/mesolex.git') }}"
-  branch: "{{ repo_branch|default('master') }}"
+  branch: "{{ repo_branch|default('develop') }}"
 
 github_deploy_key: "{{ SECRET_GITHUB_DEPLOY_KEY|default('') }}"
 
@@ -25,3 +25,6 @@ nodejs_install_npm_user: "{{ project_name }}"
 nodejs_package_json_path: "{{ source_dir }}"
 nodejs_config_unsafe_perm: true
 ignore_devdependencies: true
+
+certbot_admin_email: nmashton@protonmail.com
+certbot_create_method: standalone

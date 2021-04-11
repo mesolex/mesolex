@@ -6,7 +6,4 @@ mesolex_staging
 [db]
 mesolex_staging
 
-[search]
-mesolex_staging
-
 [worker]

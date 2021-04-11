@@ -7,12 +7,12 @@
   version: ansible-3-updates
   name: tequila-postgresql
 
-- src: https://github.com/caktus/tequila-nginx
-  version: v0.8.12
+- src: https://github.com/nmashton/tequila-nginx
+  version: ansible-3-updates
   name: tequila-nginx
 
-- src: https://github.com/caktus/tequila-django
-  version: v0.9.28
+- src: https://github.com/nmashton/tequila-django
+  version: ansible-3-updates
   name: tequila-django
 
 - src: geerlingguy.nodejs
@@ -22,3 +22,7 @@
 - src: https://github.com/caktus/tequila-nodejs
   version: v0.8.2
   name: tequila-nodejs
+
+- src: geerlingguy.certbot
+  version: 4.0.0
+  name: certbot
