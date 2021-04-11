@@ -22,6 +22,9 @@ HighBackVow ;
 LEXICON FrontVow
 i:i Loop ;
 e:e Loop ;
+é:é Loop ;
+í:í Loop ;
+
 e%::ē Loop;
 i%::ī Loop;
 ee:ē Loop;
@@ -66,6 +69,7 @@ f:f Loop ;
 g:g Loop ;
 hu:w Vow ;
 k:k Loop ;
+kw:kʷ Vow ;
 m:m Loop ;
 n:n Loop ;
 p:p Loop ;

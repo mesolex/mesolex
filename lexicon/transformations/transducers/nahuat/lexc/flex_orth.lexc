@@ -38,6 +38,17 @@ o:oʔ NonGlottalCns ;
 y:i Cns ;
 y:i # ;
 
+!
+! Word-ending lenitions
+!
+iw:i # ;
+aw:a # ;
+ow:o # ;
+ew:e # ;
+
+in:i # ;
+an:a # ;
+
 
 LEXICON Cns
 ʔ:ʔ Cns ;
@@ -55,8 +66,9 @@ t:t Loop ;
 m:m Loop ;
 
 n:n Loop ;
-n:0 # ;
-m:0 # ;
+
+!n:0 # ;
+!m:0 # ;
 
 p:p Loop ;
 r:r Loop ;
@@ -66,7 +78,7 @@ y:y Vow ;
 
 l:l Loop ;
 w:w Loop ;
-w:0 # ;
+
 
 LEXICON NonGlottalCns
 b:b Loop ;
@@ -81,13 +93,6 @@ g:g Loop ;
 t:t Loop ;
 m:m Loop ;
 n:n Loop ;
-!
-! Word-ending lenitions
-!
-n:0 # ;
-m:0 # ;
-w:0 # ;
-
 p:p Loop ;
 r:r Loop ;
 ʃ:ʃ Loop ;
