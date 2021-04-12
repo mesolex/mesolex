@@ -7,14 +7,14 @@ chol1282:
     code: chol1282
     filterable_fields: []
     global_filters: []
-    elasticsearch_fields: []
+    search_fields: []
     controlled_vocab_fields: []
 chuj1250:
     label: Chuj
     code: chuj1250
     filterable_fields: []
     global_filters: []
-    elasticsearch_fields: []
+    search_fields: []
     controlled_vocab_fields: []
 
 # Amuzgo-Mixtecan languages :: amuz1253
@@ -24,7 +24,7 @@ yolo1241:
     code: yolo1241
     filterable_fields: []
     global_filters: []
-    elasticsearch_fields: []
+    search_fields: []
     controlled_vocab_fields: []
 juxt1235_verb:
     label: Mixteco de San Martín Duraznos (verbos)
@@ -106,7 +106,7 @@ juxt1235_verb:
           - tag: valence
             length: short
     global_filters: []
-    elasticsearch_fields: []
+    search_fields: []
     controlled_vocab_fields:
       - field: valence
         items:
@@ -178,28 +178,28 @@ juxt1235_non_verb:
         user_languages:
           - en
     global_filters: []
-    elasticsearch_fields: []
+    search_fields: []
     controlled_vocab_fields: []
 magd1235:
     label: Mixteco de Magdalena Peñascos
     code: magd1235
     filterable_fields: []
     global_filters: []
-    elasticsearch_fields: []
+    search_fields: []
     controlled_vocab_fields: []
 mixt1247:
     label: La reconstrucción del mixteco
     code: mixt1247
     filterable_fields: []
     global_filters: []
-    elasticsearch_fields: []
+    search_fields: []
     controlled_vocab_fields: []
 xoch1238:
     label: Mixteco de Xochapan
     code: xoch1238
     filterable_fields: []
     global_filters: []
-    elasticsearch_fields: []
+    search_fields: []
     controlled_vocab_fields: []
 
 ## Triqui
@@ -212,23 +212,24 @@ trq:
           terms:
             - value
     global_filters: []
-    elasticsearch_fields:
+    search_fields:
         - field: precise_meaning
           label: Significado preciso
           terms:
-            - definitions_es
+            - tag: sense
+              length: long
         - field: illustrative_phrases
           label: Frase ilustrativas
           terms:
-            - quotations_trq
-            - quotations_es
+            - tag: quote_translation
+              length: long
     controlled_vocab_fields: []
 chic1273:
     label: Triqui de Chicahuaxtla
     code: chic1273
     filterable_fields: []
     global_filters: []
-    elasticsearch_fields: []
+    search_fields: []
     controlled_vocab_fields: []
 
 # Uto-Aztecan :: utoa1244
@@ -280,27 +281,33 @@ azz:
           terms:
             - tag: inflectional_type
               length: short
-    elasticsearch_fields:
+    search_fields:
         - field: precise_meaning
           label: Significado preciso
           terms:
-            - definitions_es
+            - tag: sense
+              length: long
         - field: extended_meaning
           label: Significado extendido
           terms:
-            - definitions_es
-            - ostentives_es
+            - tag: sense
+              length: long
+            - tag: ostentive
+              length: long
         - field: illustrative_phrases
           label: Frase ilustrativas
           terms:
-            - quotations_azz
-            - quotations_es
+            - tag: quote_translation
+              length: long
         - field: complete_search
           label: Búsqueda exhaustiva
           terms:
-            - definitions_es
-            - quotations_es
-            - ostentives_es
+            - tag: sense
+              length: long
+            - tag: ostentive
+              length: long
+            - tag: quote_translation
+              length: long
     controlled_vocab_fields:
         - field: part_of_speech
           items:
@@ -395,14 +402,14 @@ isth1242:
     code: isth1242
     filterable_fields: []
     global_filters: []
-    elasticsearch_fields: []
+    search_fields: []
     controlled_vocab_fields: []
 pipi1250:
     label: Pipil (Nawat)
     code: pipi1250
     filterable_fields: []
     global_filters: []
-    elasticsearch_fields: []
+    search_fields: []
     controlled_vocab_fields: []
 
 # Totonacan
@@ -411,12 +418,12 @@ high1243:
     code: high1243
     filterable_fields: []
     global_filters: []
-    elasticsearch_fields: []
+    search_fields: []
     controlled_vocab_fields: []
 ozln:
     label: Totonaco de Ozelonacaxtla
     code: ozln
     filterable_fields: []
     global_filters: []
-    elasticsearch_fields: []
+    search_fields: []
     controlled_vocab_fields: []

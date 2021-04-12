@@ -19,7 +19,6 @@ Before installing, make sure you have the following prerequisites installed:
 - Python 3.7
 - Node 12.x
 - Postgres >= 11
-- Elasticsearch 6.x
 
 ### Getting started
 

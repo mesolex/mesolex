@@ -1,10 +1,12 @@
 from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.search import SearchVectorField, SearchVector
+from django.contrib.postgres.indexes import GinIndex
 from django.db import models
 
 
 class EntryManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().prefetch_related('media_set')
+        return super().get_queryset()
 
 
 class Entry(models.Model):
@@ -61,9 +63,32 @@ class SearchableString(Searchable):
         db_index=True,
     )
 
+    class Meta:
+        indexes = [
+            GinIndex(
+                name='ss_value_gin_idx',
+                fields=['value'],
+                opclasses=['gin_trgm_ops'],
+            ),
+            GinIndex(
+                name='ss_type_tag_gin_idx',
+                fields=['type_tag'],
+                opclasses=['gin_trgm_ops'],
+            ),
+        ]
+
 
 class LongSearchableString(Searchable):
     value = models.TextField()
+    searchable_value = SearchVectorField(null=True)
+
+    class Meta:
+        indexes = [
+            GinIndex(
+                name='lss_searchable_value_gin_idx',
+                fields=['searchable_value'],
+            ),
+        ]
 
 
 class Media(models.Model):

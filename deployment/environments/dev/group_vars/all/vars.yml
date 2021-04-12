@@ -1,13 +1,13 @@
 ---
-env_name: staging
+env_name: dev
 repo_branch: develop
-domain: staging.mesolex.org
+domain: dev.mesolex.org
 
 certbot_create_if_missing: true
 certbot_certs:
   - email: "{{ admin_email }}"
     domains:
-      - staging.mesolex.org
+      - dev.mesolex.org
 
 cert_source: letsencrypt
 force_ssl: true

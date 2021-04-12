@@ -1,0 +1,9 @@
+mesolex_dev ansible_host=161.35.6.76
+
+[web]
+mesolex_dev
+
+[db]
+mesolex_dev
+
+[worker]

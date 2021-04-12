@@ -1,6 +1,5 @@
 from django import forms
 
-from lexicon.documents import EntryDocument
 from lexicon.forms.base import LexiconQueryBuilderGlobalFiltersForm
 from lexicon.transformations.juxt1235 import neutralize_glottal_stop
 from mesolex.config import DATASETS
@@ -14,8 +13,6 @@ JUXT1235_VERB = Dataset('juxt1235_verb')
 class Juxt1235VerbLexicalSearchFilterForm(QueryBuilderForm):
     FILTERABLE_FIELDS = JUXT1235_VERB.filterable_fields
     FILTERABLE_FIELDS_DICT = JUXT1235_VERB.filterable_fields_dict
-
-    DocumentClass = EntryDocument
 
     neutralize_glottal_stop = forms.BooleanField(required=False)
 

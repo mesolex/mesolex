@@ -4,16 +4,6 @@ services:
     image: mdillon/postgis:11-alpine
     ports:
       - "5432:5432"
-  
-  search:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
-    ports:
-      - "9200:9200"
-    environment:
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - "discovery.type=single-node"
-    volumes:
-    - searchdata:/usr/share/elasticsearch/data
 
   web:
     build: .
@@ -26,7 +16,6 @@ services:
       - "8000:8000"
     depends_on:
       - db
-      - search
     volumes:
       - .:/code
 
