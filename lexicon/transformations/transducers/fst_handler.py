@@ -1,21 +1,29 @@
-import attapply
-from retrie.trie import Trie
+import os
 from typing import List
+from retrie.trie import Trie
+from lexicon.transformations.transducers import attapply
 
 
 def get_nahuat_att_file(flex=True, isoglosses=False, vln=False):
-    att_fn = 'nahuat/att/in2dic'
-    if flex is True:
+    att_fn = 'in2dic'
+
+    if flex:
         att_fn += '_flex'
-    if vln is True:
+    if vln:
         att_fn += '_vln'
-    if isoglosses is True:
+    if isoglosses:
         att_fn += '_iso'
 
     att_fn += '.att'
 
-    return att_fn
+    att_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        'nahuat',
+        'att',
+        att_fn,
+    )
 
+    return att_path
 
 class FSTHandler(object):
     def __init__(self, path_to_att):
