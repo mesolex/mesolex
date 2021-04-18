@@ -1,0 +1,113 @@
+Multichar_Symbols
+
+%>
+
+LEXICON Root
+WordInitVow ;
+Cns ;
+Vow ;
+
+
+LEXICON Loop
+Cns ;
+Vow ;
+ #  ;
+
+
+LEXICON WordInitVow
+e:ye Loop ;
+ye:e Loop ;
+
+
+LEXICON Vow
+i:i Loop ;
+e:e Loop ;
+
+!
+! e/i alternation
+!
+e:i Cns ;
+i:e Cns ;
+
+a:a Loop ;
+o:o Loop ;
+u:u Loop ;
+
+ē:ē NonGlottalCns ;
+ī:ī NonGlottalCns ;
+ā:ā NonGlottalCns ;
+ō:ō NonGlottalCns ;
+
+y:y Cns ;
+y:y # ;
+
+LEXICON NonGlottalCns
+b:b Loop ;
+s:s Loop ;
+k:k Loop ;
+kʷ:kʷ Loop ;
+t͡ʃ:t͡ʃ Loop ;
+d:d Loop ;
+f:f Loop ;
+g:g Loop ;
+w:w Loop ;
+
+!
+! t-tl alternation
+!
+ɬ:ɬ Loop ;
+ɬ:t Loop ;
+t:ɬ Loop ;
+t:t Loop ;
+ɬi:ɬ # ;
+
+m:m Loop ;
+n:n Loop ;
+p:p Loop ;
+r:r Loop ;
+ʃ:ʃ Loop ;
+y:y Vow ;
+l:l Loop ;
+lli:l # ;
+
+
+LEXICON Cns
+ʔ:ʔ Cns ;
+
+b:b Loop ;
+s:s Loop ;
+k:k Loop ;
+kʷ:kʷ Loop ;
+t͡ʃ:t͡ʃ Loop ;
+d:d Loop ;
+f:f Loop ;
+g:g Loop ;
+w:w Loop ;
+j:j Loop ;
+
+!
+! t-tl alternation
+!
+ɬ:ɬ Loop ;
+ɬ:t Loop ;
+t:ɬ Loop ;
+t:t Loop ;
+ɬi:ɬ # ;
+ɬ:ɬi # ;
+
+!
+! Word-ending nasals as glottal consonants
+!
+m:m Loop ;
+n:n Loop ;
+n:ʔ # ;
+m:ʔ # ;
+
+p:p Loop ;
+r:r Loop ;
+ʃ:ʃ Loop ;
+y:y Vow ;
+l:l Loop ;
+lli:l # ;
+l:lli # ;
+l:li # ;
