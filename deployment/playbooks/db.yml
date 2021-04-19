@@ -16,3 +16,15 @@
       postgresql_ext:
         name: unaccent
         db: "{{ db_name }}"
+    - name: enable btree_gin
+      become_user: postgres
+      become: yes
+      postgresql_ext:
+        name: btree_gin
+        db: "{{ db_name }}"
+    - name: enable trigrams
+      become_user: postgres
+      become: yes
+      postgresql_ext:
+        name: pg_trgm
+        db: "{{ db_name }}"

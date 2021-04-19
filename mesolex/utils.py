@@ -134,9 +134,9 @@ class Dataset(object):
         return self._dict('filterable_fields')
 
     @property
-    def elasticsearch_fields(self):
-        return self._fields('elasticsearch_fields')
+    def search_fields(self):
+        return self._fields('search_fields')
 
     @property
-    def elasticsearch_fields_dict(self):
-        return self._dict('elasticsearch_fields')
+    def search_fields_dict(self):
+        return self._dict('search_fields')

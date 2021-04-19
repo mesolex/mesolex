@@ -29,7 +29,7 @@ export const initFunction = (): void => {
       controlledVocabFields={datasets[formsetName].controlled_vocab_fields}
       extraFields={datasets[formsetName].extra_fields}
       filterableFields={datasets[formsetName].filterable_fields}
-      elasticsearchFields={datasets[formsetName].elasticsearch_fields}
+      searchFields={datasets[formsetName].search_fields}
 
       globalExtraFields={datasets[formsetName].global_filters}
       formsetGlobalFiltersData={formsetGlobalFiltersData}

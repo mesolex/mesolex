@@ -1,4 +1,5 @@
 import csv
+import itertools
 import logging
 from collections import defaultdict
 from typing import Tuple
@@ -364,15 +365,6 @@ class AzzImporter(XmlImporter):
 
             models.LongSearchableString.objects.bulk_create([
                 models.LongSearchableString(
-                    value=example['original']['text'],
-                    entry=entry,
-                    language='azz',
-                    type_tag='quote_original',
-                ) for example in examples
-                if example.get('original') is not None
-            ])
-            models.LongSearchableString.objects.bulk_create([
-                models.LongSearchableString(
                     value=example['translation']['text'],
                     entry=entry,
                     language='es',
@@ -395,6 +387,16 @@ class AzzImporter(XmlImporter):
                     'ostentives': sig_value.get('ostentives', []),
                 },
             ) for sig_value in sig_values
+        ])
+        models.LongSearchableString.objects.bulk_create([
+            models.LongSearchableString(
+                value=osten_value,
+                entry=entry,
+                language='es',
+                type_tag='ostentive',
+            ) for osten_value in list(itertools.chain(
+                *[sig_value.get('ostentives', []) for sig_value in sig_values],
+            ))
         ])
         entry_data['senses'].extend(sig_values)
 
