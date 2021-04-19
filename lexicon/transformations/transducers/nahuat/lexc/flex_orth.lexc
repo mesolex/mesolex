@@ -52,6 +52,7 @@ an:a # ;
 
 LEXICON Cns
 ʔ:ʔ Cns ;
+ʔ:ʔ # ;
 b:b Loop ;
 s:s Loop ;
 k:k Loop ;
@@ -89,6 +90,7 @@ t͡ʃ:t͡ʃ Loop ;
 d:d Loop ;
 f:f Loop ;
 g:g Loop ;
+j:j Loop ;
 ɬ:ɬ Loop ;
 t:t Loop ;
 m:m Loop ;
