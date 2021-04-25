@@ -25,7 +25,7 @@ Before installing, make sure you have the following prerequisites installed:
 First, clone the repository and switch to the new directory:
 
 ```
-$ git clone git@github.com:nmashton/mesolex.git
+$ git clone git@github.com:mesolex/mesolex.git
 $ cd mesolex
 ```
 
