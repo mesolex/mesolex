@@ -6,9 +6,9 @@
     - media
     - fetch
   vars:
-    media_archive_filename: "media_archive-{{ ansible_date_time.date }}.tgz"
+    media_archive_filename: "media_archive-{{ inventory_hostname }}-{{ ansible_date_time.date }}.tgz"
   tasks:
-    - name: create temp dir for archive
+    - name: create temp dir for media archive
       tempfile:
         state: directory
         suffix: media_archive
