@@ -26,3 +26,32 @@
       file:
         path: "{{ media_archive_temp_dir.path }}/"
         state: absent
+- name: create and fetch database dump
+  hosts: db
+  become: yes
+  tags:
+    - db
+    - fetch
+  vars:
+    db_dump_filename: "db_dump-{{ inventory_hostname }}-{{ ansible_date_time.date }}.sql.gz"
+  tasks:
+    - name: create temp dir for db dump
+      tempfile:
+        state: directory
+        suffix: db_dump
+      register: db_dump_temp_dir
+    - name: create db dump
+      postgresql_db:
+        login_user: "{{ project_name }}_{{ env_name }}"
+        db: "{{ project_name }}_{{ env_name }}"
+        state: dump
+        target: "{{ db_dump_temp_dir.path }}/{{ db_dump_filename }}"
+    - name: fetch db dump into ./backup/
+      fetch:
+        src: "{{ db_dump_temp_dir.path }}/{{ db_dump_filename }}"
+        dest: "{{ lookup('env', 'PWD') }}/backup/"
+        flat: yes
+    - name: clean up temp dir
+      file:
+        path: "{{ db_dump_temp_dir.path }}/"
+        state: absent
