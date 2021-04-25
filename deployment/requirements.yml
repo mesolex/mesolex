@@ -1,28 +1,32 @@
 ---
-- src: https://github.com/caktus/tequila-common
-  version: v0.9.2
-  name: tequila-common
+roles:
+  - src: https://github.com/caktus/tequila-common
+    version: v0.9.2
+    name: tequila-common
 
-- src: https://github.com/nmashton/tequila-postgresql
-  version: ansible-3-updates
-  name: tequila-postgresql
+  - src: https://github.com/nmashton/tequila-postgresql
+    version: ansible-3-updates
+    name: tequila-postgresql
 
-- src: https://github.com/nmashton/tequila-nginx
-  version: ansible-3-updates
-  name: tequila-nginx
+  - src: https://github.com/nmashton/tequila-nginx
+    version: ansible-3-updates
+    name: tequila-nginx
 
-- src: https://github.com/nmashton/tequila-django
-  version: ansible-3-updates
-  name: tequila-django
+  - src: https://github.com/nmashton/tequila-django
+    version: ansible-3-updates
+    name: tequila-django
 
-- src: geerlingguy.nodejs
-  version: 4.2.2
-  name: nodejs
+  - src: geerlingguy.nodejs
+    version: 4.2.2
+    name: nodejs
 
-- src: https://github.com/caktus/tequila-nodejs
-  version: v0.8.2
-  name: tequila-nodejs
+  - src: https://github.com/caktus/tequila-nodejs
+    version: v0.8.2
+    name: tequila-nodejs
 
-- src: geerlingguy.certbot
-  version: 4.0.0
-  name: certbot
+  - src: geerlingguy.certbot
+    version: 4.0.0
+    name: certbot
+
+collections:
+  - name: community.postgresql
