@@ -1,7 +1,6 @@
 ---
 - name: create and fetch media backup
   hosts: web
-  become: yes
   tags:
     - media
     - fetch
@@ -28,7 +27,6 @@
         state: absent
 - name: create and fetch database dump
   hosts: db
-  become: yes
   tags:
     - db
     - fetch
