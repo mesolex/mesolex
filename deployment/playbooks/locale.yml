@@ -4,10 +4,10 @@
   become: yes
   tasks:
     - name: install app packages
-      apt: pkg={{ item }} state=present update_cache=yes cache_valid_time=3600
-      with_items:
-        - gettext
-        - libgettextpo-dev
+      apt:
+        pkg:
+          - gettext
+          - libgettextpo-dev
     - name: Compile messages
       django_manage:
         command: compilemessages
