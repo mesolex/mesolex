@@ -1,0 +1,28 @@
+---
+- name: create and fetch media backup
+  hosts: web
+  become: yes
+  tags:
+    - media
+    - fetch
+  vars:
+    media_archive_filename: "media_archive-{{ ansible_date_time.date }}.tgz"
+  tasks:
+    - name: create temp dir for archive
+      tempfile:
+        state: directory
+        suffix: media_archive
+      register: media_archive_temp_dir
+    - name: archive media files
+      archive:
+        path: "/var/www/{{ project_name }}/public/media"
+        dest: "{{ media_archive_temp_dir.path }}/{{ media_archive_filename }}"
+    - name: fetch media archive into ./backup/
+      fetch:
+        src: "{{ media_archive_temp_dir.path }}/{{ media_archive_filename }}"
+        dest: "{{ lookup('env', 'PWD') }}/backup/"
+        flat: yes
+    - name: clean up temp dir
+      file:
+        path: "{{ media_archive_temp_dir.path }}/"
+        state: absent
