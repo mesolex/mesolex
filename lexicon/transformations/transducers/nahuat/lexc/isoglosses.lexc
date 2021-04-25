@@ -73,6 +73,7 @@ lli:l # ;
 
 LEXICON Cns
 ʔ:ʔ Cns ;
+ʔ:ʔ # ;
 
 b:b Loop ;
 s:s Loop ;
@@ -102,6 +103,11 @@ m:m Loop ;
 n:n Loop ;
 n:ʔ # ;
 m:ʔ # ;
+ʔ:0 # ;
+ʔ:w # ;
+ʔ:n # ;
+
+
 
 p:p Loop ;
 r:r Loop ;
