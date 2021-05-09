@@ -203,8 +203,6 @@ class QueryBuilderForm(forms.Form):
         else:
             filter_on_val = self.FILTERABLE_FIELDS_DICT.get(filter_on_str, [])
 
-        query_expressions = []
-
         if filter_on_val.get("length") == "long":
             string_selector = 'longsearchablestring'
         else:
@@ -223,18 +221,11 @@ class QueryBuilderForm(forms.Form):
                 f'{string_selector}__type_tag': filter_on_val.get('tag'),
                 f'{string_selector}__value{filter_action}': query_string,
             })
-        query_expressions.append(join_expression)
 
         if exclude:
-            return reduce(
-                lambda acc, q: acc.intersection(q),
-                [Entry.objects.exclude(q) for q in query_expressions],
-            )
+            return Entry.objects.exclude(join_expression)
 
-        return reduce(
-            lambda acc, q: acc.union(q),
-            [Entry.objects.filter(q) for q in query_expressions],
-        )
+        return Entry.objects.filter(join_expression)
 
     def get_queryset(self, exclude=False):
         if not self.is_bound:
