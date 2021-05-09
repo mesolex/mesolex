@@ -2,6 +2,7 @@ import json
 import re
 from collections import namedtuple
 from functools import reduce
+from operator import not_, and_
 from typing import List
 
 from django import forms
@@ -13,12 +14,12 @@ from lexicon.models import Entry
 from mesolex.utils import ForceProxyEncoder, contains_word_to_regex
 
 
-class CombiningQueryset(namedtuple(
-        'CombiningQueryset',
-        ['operator', 'queryset'],
+class CombiningQuery(namedtuple(
+        'CombiningQuery',
+        ['operator', 'query'],
 )):
     """
-    Helper structure to hold queryset data as it is composed
+    Helper structure to hold query data as it is composed
     together into its final form.
     """
 
@@ -30,48 +31,46 @@ class QuerysetGrouper:
     """
 
     def __init__(self, queries=None):
-        self._querysets = [] if queries is None else queries
+        self._queries = [] if queries is None else queries
 
-    def append(self, val: CombiningQueryset):
-        self._querysets.append(val)
+    def append(self, val: CombiningQuery):
+        self._queries.append(val)
 
     @staticmethod
-    def _handle_next_and(accumulator, next_cq: CombiningQueryset):
+    def _handle_next_and(accumulator, next_cq: CombiningQuery):
         """
         Reducer function to multiply together all querysets
         tagged with the "and" operator. This ensures that "and"
         binds tighter; "or" can be handled in a second cleanup
         reduction.
         """
-        (querysets, and_tree) = accumulator
+        (queries, and_tree) = accumulator
         if next_cq.operator == 'and':
-            and_tree = and_tree.intersection(next_cq.queryset)
+            and_tree = and_(and_tree, next_cq.query)
         else:
-            querysets = [*querysets, and_tree]
-            and_tree = next_cq.queryset
-        return (querysets, and_tree)
+            queries = [*queries, and_tree]
+            and_tree = next_cq.query
+        return (queries, and_tree)
 
     @staticmethod
-    def _group_ands(querysets: List[CombiningQueryset]):
-        # TODO: replace intersections with simple .filter chaining
-        # (and replace querysets with Q expressions)
-        if querysets:
-            first = querysets[0]
-            rest = querysets[1:]
-            (querysets, and_tree) = reduce(
+    def _group_ands(queries: List[CombiningQuery]):
+        if queries:
+            first = queries[0]
+            rest = queries[1:]
+            (queries, and_tree) = reduce(
                 QuerysetGrouper._handle_next_and,
                 rest,
-                ([], first.queryset),
+                ([], first.query),
             )
         else:
-            and_tree = Entry.objects.all()
-        return [*querysets, and_tree]
+            and_tree = Q()
+        return [*queries, and_tree]
 
     @property
     def combined_queryset(self):
         return reduce(
             lambda acc, q: acc.union(q),
-            QuerysetGrouper._group_ands(self._querysets)
+            [Entry.objects.filter(q) for q in QuerysetGrouper._group_ands(self._queries)]
         )
 
 
@@ -194,7 +193,7 @@ class QueryBuilderForm(forms.Form):
 
         return (filter_action, query_string)
 
-    def _get_queryset(self, exclude=False, full_text=False):
+    def _get_query(self, exclude=False, full_text=False):
         (filter_action, query_string) = self.get_filter_action_and_query()
         filter_on_str = self.cleaned_data['filter_on']
 
@@ -223,18 +222,18 @@ class QueryBuilderForm(forms.Form):
             })
 
         if exclude:
-            return Entry.objects.exclude(join_expression)
+            return ~join_expression
 
-        return Entry.objects.filter(join_expression)
+        return join_expression
 
-    def get_queryset(self, exclude=False):
+    def get_query(self, exclude=False):
         if not self.is_bound:
-            return Entry.objects.all()
+            return Q()
 
         if self.cleaned_data['filter_on'] in [field[0] for field in self.SEARCH_FIELDS]:
-            return self._get_queryset(exclude=exclude, full_text=True)
+            return self._get_query(exclude=exclude, full_text=True)
 
-        return self._get_queryset(exclude=exclude)
+        return self._get_query(exclude=exclude)
 
     def clean(self):
         cleaned_data = super().clean()
@@ -321,7 +320,7 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
     def get_full_queryset(self):
         """
         Using a QuerysetGrouper, combine the querysets returned by each
-        individual form's `get_queryset` method.
+        individual form's `get_query` method.
         """
         queryset_group = QuerysetGrouper()
 
@@ -333,21 +332,21 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
                 # get the queryset in its "exclude" form, then translate the
                 # operator into its positive variant so it can be combined normally.
                 if form_operator in ('and_n', 'or_n'):
-                    form_q = form.get_queryset(exclude=True)
+                    form_q = form.get_query(exclude=True)
                     form_operator = form_operator.replace('_n', '')
                 else:
-                    form_q = form.get_queryset()
+                    form_q = form.get_query()
 
                 # Intersect the form's queryset with the queryset returned by
                 # any global filters.
                 if self.global_filters_form.is_valid() and form_q:
                     for (_name, global_filter,) in self.global_filters_form.cleaned_data.items():
                         if global_filter:
-                            form_q = form_q.intersection(global_filter)
+                            form_q &= global_filter
 
-                queryset_group.append(CombiningQueryset(
+                queryset_group.append(CombiningQuery(
                     operator=form_operator,
-                    queryset=form_q,
+                    query=form_q,
                 ))
 
         return queryset_group.combined_queryset
