@@ -638,6 +638,13 @@ class TrqImporter(XmlImporter):
 
         self.clean_up_associated_data(entry)
 
+        models.SearchableString.objects.create(
+            value=entry_data['headword'],
+            entry=entry,
+            language='trq',
+            type_tag='lemma',
+        )
+
         for method in [
                 self.create_simple_string_data,
                 self.create_definitions,
