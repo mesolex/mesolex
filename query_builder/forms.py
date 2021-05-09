@@ -199,41 +199,31 @@ class QueryBuilderForm(forms.Form):
         filter_on_str = self.cleaned_data['filter_on']
 
         if full_text:
-            filter_on_vals = self.SEARCH_FIELDS_DICT.get(filter_on_str, [])
+            filter_on_val = self.SEARCH_FIELDS_DICT.get(filter_on_str, [])
         else:
-            filter_on_vals = self.FILTERABLE_FIELDS_DICT.get(filter_on_str, [])
+            filter_on_val = self.FILTERABLE_FIELDS_DICT.get(filter_on_str, [])
 
         query_expressions = []
 
-        for filter_on_val in filter_on_vals:
-            # If the filter_on_val is a dict, it will have the form:
-            # { 'length': 'long', 'tag': 'definition' }
-            # { 'length': 'short', 'tag': 'root' }
-            if isinstance(filter_on_val, dict):
-                if filter_on_val.get("length") == "long":
-                    string_selector = 'longsearchablestring'
-                else:
-                    string_selector = 'searchablestring'
-                if full_text:
-                    join_expression = Q(**{
-                        f'{string_selector}__type_tag': filter_on_val.get('tag'),
-                        'longsearchablestring__searchable_value': SearchQuery(
-                            query_string,
-                            config='spanish',
-                        )
-                    })
-                else:
-                    join_expression = Q(**{
-                        f'{string_selector}__type_tag': filter_on_val.get('tag'),
-                        f'{string_selector}__value{filter_action}': query_string,
-                    })
-                query_expressions.append(join_expression)
-            # If it is a string, then it is just the name of a field on
-            # the model
-            else:
-                query_expressions.append(
-                    Q(**{'%s%s' % (filter_on_val, filter_action): query_string}),
+        if filter_on_val.get("length") == "long":
+            string_selector = 'longsearchablestring'
+        else:
+            string_selector = 'searchablestring'
+
+        if full_text:
+            join_expression = Q(**{
+                f'{string_selector}__type_tag': filter_on_val.get('tag'),
+                f'{string_selector}__searchable_value': SearchQuery(
+                    query_string,
+                    config='spanish',
                 )
+            })
+        else:
+            join_expression = Q(**{
+                f'{string_selector}__type_tag': filter_on_val.get('tag'),
+                f'{string_selector}__value{filter_action}': query_string,
+            })
+        query_expressions.append(join_expression)
 
         if exclude:
             return reduce(
