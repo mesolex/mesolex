@@ -46,10 +46,10 @@ class QuerysetGrouper:
         """
         (queries, and_tree) = accumulator
         if next_cq.operator == 'and':
-            and_tree = and_(and_tree, next_cq.query)
+            and_tree = and_tree.filter(next_cq.query)
         else:
             queries = [*queries, and_tree]
-            and_tree = next_cq.query
+            and_tree = Entry.objects.filter(next_cq.query)
         return (queries, and_tree)
 
     @staticmethod
@@ -60,17 +60,17 @@ class QuerysetGrouper:
             (queries, and_tree) = reduce(
                 QuerysetGrouper._handle_next_and,
                 rest,
-                ([], first.query),
+                ([], Entry.objects.filter(first.query)),
             )
         else:
-            and_tree = Q()
+            and_tree = Entry.objects.none()
         return [*queries, and_tree]
 
     @property
     def combined_queryset(self):
         return reduce(
             lambda acc, q: acc.union(q),
-            [Entry.objects.filter(q) for q in QuerysetGrouper._group_ands(self._queries)]
+            QuerysetGrouper._group_ands(self._queries)
         )
 
 
