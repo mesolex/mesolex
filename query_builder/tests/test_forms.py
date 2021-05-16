@@ -115,6 +115,7 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
             Entry.objects.create(data={'bar': 'abcde'}, identifier='abcde'),
             Entry.objects.create(data={'bar': 'abcd'}, identifier='abcd'),
             Entry.objects.create(data={'bar': 'bcde'}, identifier='bcde'),
+            Entry.objects.create(data={'bar': 'zyx'}, identifier='zyx'),
         ]
         not_included = [
             Entry.objects.create(data={'bar': 'abc'}, identifier='abc'),
@@ -162,10 +163,25 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
             "form-3-filter": "begins_with",
             "form-3-filter_on": "bar",
 
+            "form-4-query_string": "a",
+            "form-4-operator": "or_n",
+            "form-4-filter": "begins_with",
+            "form-4-filter_on": "bar",
+
+            "form-5-query_string": "b",
+            "form-5-operator": "and_n",
+            "form-5-filter": "begins_with",
+            "form-5-filter_on": "bar",
+
+            "form-6-query_string": "c",
+            "form-6-operator": "and_n",
+            "form-6-filter": "begins_with",
+            "form-6-filter_on": "bar",
+
             "form-INITIAL_FORMS": "0",
             "form-MAX_NUM_FORMS": "1000",
             "form-MIN_NUM_FORMS": "0",
-            "form-TOTAL_FORMS": "4",
+            "form-TOTAL_FORMS": "7",
         }
 
         bound_formset = test_formset(formset_data)
