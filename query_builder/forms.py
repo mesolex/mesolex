@@ -324,6 +324,16 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
         """
         queryset_group = QuerysetGrouper()
 
+        # Intersect the form's queryset with the queryset returned by
+        # any global filters.
+        if self.global_filters_form.is_valid():
+            for (_name, global_filter,) in self.global_filters_form.cleaned_data.items():
+                if global_filter:
+                    queryset_group.append(CombiningQuery(
+                        operator='and',
+                        query=global_filter,
+                    ))
+
         for form in self.forms:
             if form.is_valid():
                 form_operator = form.cleaned_data['operator']
@@ -336,13 +346,6 @@ class QueryBuilderBaseFormset(forms.BaseFormSet):
                     form_operator = form_operator.replace('_n', '')
                 else:
                     form_q = form.get_query()
-
-                # Intersect the form's queryset with the queryset returned by
-                # any global filters.
-                if self.global_filters_form.is_valid() and form_q:
-                    for (_name, global_filter,) in self.global_filters_form.cleaned_data.items():
-                        if global_filter:
-                            form_q &= global_filter
 
                 queryset_group.append(CombiningQuery(
                     operator=form_operator,

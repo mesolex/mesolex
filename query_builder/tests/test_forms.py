@@ -245,13 +245,13 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
             def clean_include_baz(self):
                 include_baz = self.cleaned_data['include_baz']
                 if include_baz:
-                    return Q(data__baz='present')
+                    return Q(data__baz=True)
                 return None
 
             def clean_exclude_qux(self):
                 exclude_qux = self.cleaned_data['exclude_qux']
                 if exclude_qux:
-                    return ~Q(data__qux='present')
+                    return ~Q(data__qux=True)
                 return None
 
         class TestFormset(forms.QueryBuilderBaseFormset):
@@ -276,7 +276,7 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
         }
 
         included = [
-            Entry.objects.create(data={'bar': 'foo', 'baz': 'present'}, identifier='entry1'),
+            Entry.objects.create(data={'bar': 'foo', 'baz': True, 'qux': False}, identifier='entry1'),
         ]
         SearchableString.objects.create(
             entry=included[0],
@@ -285,9 +285,9 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
         )
 
         excluded = [
-            Entry.objects.create(data={'bar': 'foo', 'baz': 'present', 'qux': 'present'}, identifier='entry2'),
-            Entry.objects.create(data={'bar': 'foo', 'qux': 'present'}, identifier='entry3'),
-            Entry.objects.create(data={'bar': 'foo'}, identifier='entry4'),
+            Entry.objects.create(data={'bar': 'foo', 'baz': True, 'qux': True}, identifier='entry2'),
+            Entry.objects.create(data={'bar': 'foo', 'qux': True}, identifier='entry3'),
+            Entry.objects.create(data={'bar': 'foo', 'qux': False}, identifier='entry4'),
         ]
         SearchableString.objects.create(
             entry=excluded[0],
@@ -311,7 +311,6 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
 
         queryset = bound_formset.get_full_queryset()
 
-        import ipdb; ipdb.set_trace()
         self.assertEqual(
             set(included),
             set(queryset),
