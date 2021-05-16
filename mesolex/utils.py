@@ -121,7 +121,10 @@ class Dataset(object):
 
     def _dict(self, key):
         return {
-            field['field']: field['terms']
+            field['field']: {
+                'tag': field['tag'],
+                'length': field['length'],
+            }
             for field in DATASETS[self.dataset][key]
         }
 

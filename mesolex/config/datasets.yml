@@ -37,74 +37,48 @@ juxt1235_verb:
     filterable_fields:
       - field: lemma
         label: Entrada
-        terms:
-          - tag: headword
-            length: short
+        tag: headword
+        length: short
       - field: spanish
         label: Español
-        terms:
-          - tag: spanish
-            length: short
+        tag: spanish
+        length: short
         user_languages:
           - es
       - field: english
         label: Inglés
-        terms:
-          - tag: english
-            length: short
+        tag: english
+        length: short
         user_languages:
           - en
       - field: impf
         label: Incompletivo
-        terms:
-          - tag: impf
-            length: short
-          - tag: impf_normalized
-            length: short
+        tag: impf_normalized
+        length: short
       - field: pfv
         label: Completivo
-        terms:
-          - tag: pfv
-            length: short
-          - tag: pfv_normalized
-            length: short
+        tag: pfv_normalized
+        length: short
       - field: irr
         label: Potential
-        terms:
-          - tag: irr
-            length: short
-          - tag: irr_normalized
-            length: short
+        tag: irr_normalized
+        length: short
       - field: neg_impf
         label: Incompletivo Neg.
-        terms:
-          - tag: neg_impf
-            length: short
-          - tag: neg_impf_normalized
-            length: short
+        tag: neg_impf_normalized
+        length: short
       - field: neg_pfv
         label: Completivo Neg.
-        terms:
-          - tag: neg_pfv
-            length: short
-          - tag: neg_pfv_normalized
-            length: short
+        tag: neg_pfv_normalized
+        length: short
       - field: neg_irr
         label: Potential Neg.
-        terms:
-          - tag: neg_irr_1
-            length: short
-          - tag: neg_irr_1_normalized
-            length: short
-          - tag: neg_irr_2
-            length: short
-          - tag: neg_irr_2_normalized
-            length: short
+        tag: neg_irr_normalized
+        length: short
       - field: valence
         label: Valencia
-        terms:
-          - tag: valence
-            length: short
+        tag: valence
+        length: short
     global_filters: []
     search_fields: []
     controlled_vocab_fields:
@@ -127,54 +101,46 @@ juxt1235_non_verb:
     filterable_fields:
       - field: lemma
         label: Entrada
-        terms:
-          - tag: headword
-            length: short
+        tag: headword
+        length: short
       - field: spanish
         label: Español
-        terms:
-          - tag: spanish
-            length: short
+        tag: spanish
+        length: short
         user_languages:
           - es
       - field: english
         label: Inglés
-        terms:
-          - tag: english
-            length: short
+        tag: english
+        length: short
         user_languages:
           - en
       - field: p_mx
         label: Protomixteco
-        terms:
-          - tag: p_mx
-            length: short
+        tag: p_mx
+        length: short
       - field: word_class_es
         label: Cat. gram.
-        terms:
-          - tag: word_class_es
-            length: short
+        tag: word_class_es
+        length: short
         user_languages:
           - es
       - field: word_class_en
         label: Cat. gram.
-        terms:
-          - tag: word_class_en
-            length: short
+        tag: word_class_en
+        length: short
         user_languages:
           - en
       - field: semantic_field_es
         label: Campo semántico
-        terms:
-          - tag: semantic_field_es
-            length: short
+        tag: semantic_field_es
+        length: short
         user_languages:
           - es
       - field: semantic_field_en
         label: Campo semántico
-        terms:
-          - tag: semantic_field_en
-            length: short
+        tag: semantic_field_en
+        length: short
         user_languages:
           - en
     global_filters: []
@@ -209,20 +175,18 @@ trq:
     filterable_fields:
         - field: lemma
           label: Entrada
-          terms:
-            - value
+          tag: lemma
+          length: short
     global_filters: []
     search_fields:
         - field: precise_meaning
           label: Significado preciso
-          terms:
-            - tag: sense
-              length: long
+          tag: sense
+          length: long
         - field: illustrative_phrases
           label: Frase ilustrativas
-          terms:
-            - tag: quote_translation
-              length: long
+          tag: quote_translation
+          length: long
     controlled_vocab_fields: []
 chic1273:
     label: Triqui de Chicahuaxtla
@@ -252,62 +216,45 @@ azz:
     filterable_fields:
         - field: lemma
           label: Entrada
-          terms:
-            - value
-            - tag: variant_data
-              length: short
+          tag: lemma
+          length: short
         - field: gloss
           label: Glosa
-          terms:
-            - tag: gloss
-              length: short
+          tag: gloss
+          length: short
         - field: root
           label: Raiz
-          terms:
-            - tag: root
-              length: short
+          tag: root
+          length: short
         - field: category
           label: Campo semántico
-          terms:
-            - tag: category
-              length: short
+          tag: category
+          length: short
         - field: part_of_speech
           label: Categoría gramatical
-          terms:
-            - tag: part_of_speech
-              length: short
+          tag: part_of_speech
+          length: short
         - field: inflectional_type
           label: Inflexión
-          terms:
-            - tag: inflectional_type
-              length: short
+          tag: inflectional_type
+          length: short
     search_fields:
         - field: precise_meaning
           label: Significado preciso
-          terms:
-            - tag: sense
-              length: long
+          tag: sense
+          length: long
         - field: extended_meaning
           label: Significado extendido
-          terms:
-            - tag: sense
-              length: long
-            - tag: ostentive
-              length: long
+          tag: extended_meaning
+          length: long
         - field: illustrative_phrases
           label: Frase ilustrativas
-          terms:
-            - tag: quote_translation
-              length: long
+          tag: quote_translation
+          length: long
         - field: complete_search
           label: Búsqueda exhaustiva
-          terms:
-            - tag: sense
-              length: long
-            - tag: ostentive
-              length: long
-            - tag: quote_translation
-              length: long
+          tag: complete_search
+          length: long
     controlled_vocab_fields:
         - field: part_of_speech
           items:

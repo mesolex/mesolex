@@ -1,9 +1,10 @@
 from unittest.mock import MagicMock
 
 import django.forms
+from django.db.models import Q
 from django.test import TestCase
 
-from lexicon.models import Entry
+from lexicon.models import Entry, SearchableString
 from query_builder import forms
 
 
@@ -30,10 +31,10 @@ class QuerysetGrouperTestCase(TestCase):
             Entry.objects.create(value='de', identifier='de'),
         ]
         grouper = forms.QuerysetGrouper([
-            forms.CombiningQueryset('and', Entry.objects.filter(value__startswith='abcd')),
-            forms.CombiningQueryset('and', Entry.objects.filter(value__startswith='abc')),
-            forms.CombiningQueryset('or', Entry.objects.filter(value__endswith='bcde')),
-            forms.CombiningQueryset('and', Entry.objects.filter(value__endswith='cde')),
+            forms.CombiningQuery('and', Q(value__startswith='abcd')),
+            forms.CombiningQuery('and', Q(value__startswith='abc')),
+            forms.CombiningQuery('or', Q(value__endswith='bcde')),
+            forms.CombiningQuery('and', Q(value__endswith='cde')),
         ])
         queryset = grouper.combined_queryset
 
@@ -101,23 +102,40 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
         """
         class TestForm(forms.QueryBuilderForm):
             FILTERABLE_FIELDS = [
-                ('data__bar', 'Bar',),
+                ('bar', 'Bar',),
             ]
             FILTERABLE_FIELDS_DICT = {
-                'data__bar': ('data__bar', ),
+                'bar': {
+                    'tag': 'bar',
+                    'length': 'short',
+                },
             }
 
         included = [
             Entry.objects.create(data={'bar': 'abcde'}, identifier='abcde'),
             Entry.objects.create(data={'bar': 'abcd'}, identifier='abcd'),
             Entry.objects.create(data={'bar': 'bcde'}, identifier='bcde'),
+            Entry.objects.create(data={'bar': 'zyx'}, identifier='zyx'),
         ]
-        _not_included = [
+        not_included = [
             Entry.objects.create(data={'bar': 'abc'}, identifier='abc'),
             Entry.objects.create(data={'bar': 'ab'}, identifier='ab'),
             Entry.objects.create(data={'bar': 'cde'}, identifier='cde'),
             Entry.objects.create(data={'bar': 'de'}, identifier='de'),
         ]
+
+        for entry in included:
+            SearchableString.objects.create(
+                entry=entry,
+                type_tag='bar',
+                value=entry.data['bar'],
+            )
+        for entry in not_included:
+            SearchableString.objects.create(
+                entry=entry,
+                type_tag='bar',
+                value=entry.data['bar'],
+            )
 
         test_formset = django.forms.formset_factory(
             TestForm,
@@ -128,27 +146,42 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
             "form-0-query_string": "abcd",
             "form-0-operator": "and",
             "form-0-filter": "begins_with",
-            "form-0-filter_on": "data__bar",
+            "form-0-filter_on": "bar",
 
             "form-1-query_string": "abc",
             "form-1-operator": "and",
             "form-1-filter": "begins_with",
-            "form-1-filter_on": "data__bar",
+            "form-1-filter_on": "bar",
 
             "form-2-query_string": "bcde",
             "form-2-operator": "or",
             "form-2-filter": "begins_with",
-            "form-2-filter_on": "data__bar",
+            "form-2-filter_on": "bar",
 
             "form-3-query_string": "cde",
             "form-3-operator": "and",
             "form-3-filter": "begins_with",
-            "form-3-filter_on": "data__bar",
+            "form-3-filter_on": "bar",
+
+            "form-4-query_string": "a",
+            "form-4-operator": "or_n",
+            "form-4-filter": "begins_with",
+            "form-4-filter_on": "bar",
+
+            "form-5-query_string": "b",
+            "form-5-operator": "and_n",
+            "form-5-filter": "begins_with",
+            "form-5-filter_on": "bar",
+
+            "form-6-query_string": "c",
+            "form-6-operator": "and_n",
+            "form-6-filter": "begins_with",
+            "form-6-filter_on": "bar",
 
             "form-INITIAL_FORMS": "0",
             "form-MAX_NUM_FORMS": "1000",
             "form-MIN_NUM_FORMS": "0",
-            "form-TOTAL_FORMS": "4",
+            "form-TOTAL_FORMS": "7",
         }
 
         bound_formset = test_formset(formset_data)
@@ -166,13 +199,21 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
     def test_works_without_global_filters(self):
         class TestForm(forms.QueryBuilderForm):
             FILTERABLE_FIELDS = [
-                ('data__bar', 'Bar',),
+                ('bar', 'Bar',),
             ]
             FILTERABLE_FIELDS_DICT = {
-                'data__bar': ('data__bar', ),
+                'bar': {
+                    'tag': 'bar',
+                    'length': 'short',
+                },
             }
 
         entries = [Entry.objects.create(data={'bar': 'foo'}, identifier='entry1')]
+        SearchableString.objects.create(
+            entry=entries[0],
+            type_tag='bar',
+            value='foo',
+        )
 
         test_formset = django.forms.formset_factory(
             TestForm,
@@ -183,7 +224,7 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
             "form-0-query_string": "foo",
             "form-0-operator": "and",
             "form-0-filter": "begins_with",
-            "form-0-filter_on": "data__bar",
+            "form-0-filter_on": "bar",
             "form-INITIAL_FORMS": "0",
             "form-MAX_NUM_FORMS": "1000",
             "form-MIN_NUM_FORMS": "0",
@@ -204,10 +245,13 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
     def test_applies_global_filters(self):
         class TestForm(forms.QueryBuilderForm):
             FILTERABLE_FIELDS = [
-                ('data__bar', 'Bar',),
+                ('bar', 'Bar',),
             ]
             FILTERABLE_FIELDS_DICT = {
-                'data__bar': ('data__bar', ),
+                'bar': {
+                    'tag': 'bar',
+                    'length': 'short',
+                },
             }
 
         class TestGlobalFilter(forms.QueryBuilderGlobalFiltersForm):
@@ -216,11 +260,15 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
 
             def clean_include_baz(self):
                 include_baz = self.cleaned_data['include_baz']
-                return Entry.objects.filter(data__baz__isnull=(not include_baz))
+                if include_baz:
+                    return Q(data__baz=True)
+                return None
 
             def clean_exclude_qux(self):
                 exclude_qux = self.cleaned_data['exclude_qux']
-                return Entry.objects.filter(data__qux__isnull=(exclude_qux))
+                if exclude_qux:
+                    return ~Q(data__qux=True)
+                return None
 
         class TestFormset(forms.QueryBuilderBaseFormset):
             global_filters_class = TestGlobalFilter
@@ -234,7 +282,7 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
             "form-0-query_string": "foo",
             "form-0-operator": "and",
             "form-0-filter": "begins_with",
-            "form-0-filter_on": "data__bar",
+            "form-0-filter_on": "bar",
             "form-INITIAL_FORMS": "0",
             "form-MAX_NUM_FORMS": "1000",
             "form-MIN_NUM_FORMS": "0",
@@ -244,14 +292,34 @@ class QueryBuilderBaseFormsetTestCase(TestCase):
         }
 
         included = [
-            Entry.objects.create(data={'bar': 'foo', 'baz': True}, identifier='entry1'),
+            Entry.objects.create(data={'bar': 'foo', 'baz': True, 'qux': False}, identifier='entry1'),
         ]
+        SearchableString.objects.create(
+            entry=included[0],
+            type_tag='bar',
+            value='foo',
+        )
 
-        _excluded = [
+        excluded = [
             Entry.objects.create(data={'bar': 'foo', 'baz': True, 'qux': True}, identifier='entry2'),
             Entry.objects.create(data={'bar': 'foo', 'qux': True}, identifier='entry3'),
-            Entry.objects.create(data={'bar': 'foo'}, identifier='entry4'),
+            Entry.objects.create(data={'bar': 'foo', 'qux': False}, identifier='entry4'),
         ]
+        SearchableString.objects.create(
+            entry=excluded[0],
+            type_tag='bar',
+            value='foo',
+        )
+        SearchableString.objects.create(
+            entry=excluded[1],
+            type_tag='bar',
+            value='foo',
+        )
+        SearchableString.objects.create(
+            entry=excluded[2],
+            type_tag='bar',
+            value='foo',
+        )
 
         bound_formset = test_formset(formset_data)
 

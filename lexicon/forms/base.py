@@ -1,6 +1,6 @@
 from django import forms
+from django.db.models import Q
 
-from lexicon.models import Entry
 from mesolex.config import DATASETS
 from query_builder.forms import QueryBuilderGlobalFiltersForm
 
@@ -15,13 +15,13 @@ class LexiconQueryBuilderGlobalFiltersForm(QueryBuilderGlobalFiltersForm):
     def clean_only_with_sound(self):
         only_with_sound = self.cleaned_data['only_with_sound']
         if only_with_sound:
-            return Entry.objects.filter(media__isnull=(not only_with_sound))
+            return Q(media__isnull=(not only_with_sound))
 
         return False
 
     def clean_dataset(self):
         dataset = self.cleaned_data['dataset']
         if dataset:
-            return Entry.objects.filter(dataset=dataset)
+            return Q(dataset=dataset)
 
         return False

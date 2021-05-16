@@ -78,7 +78,9 @@ class AzzImporter(XmlImporter):
             other_data=None,
     ):
         elements = lx_group.findall(tag)
-        values = [element.text for element in elements]
+        values = [
+            element.text for element in elements
+        ]
 
         if other_data is None:
             other_data = {}
@@ -155,13 +157,14 @@ class AzzImporter(XmlImporter):
             entry,
         )
 
-        entry_data['variant_forms'] = self.create_searchable_strings(
-            lx_group,
-            'lx_alt',
-            models.SearchableString,
-            'variant_form',
-            entry,
-        )
+        for type_tag in ['variant_form', 'lemma']:
+            entry_data['variant_forms'] = self.create_searchable_strings(
+                lx_group,
+                'lx_alt',
+                models.SearchableString,
+                type_tag,
+                entry,
+            )
 
         entry_data['categories'] = self.create_searchable_strings(
             lx_group,
@@ -363,41 +366,45 @@ class AzzImporter(XmlImporter):
 
                 examples.append(example_value)
 
-            models.LongSearchableString.objects.bulk_create([
-                models.LongSearchableString(
-                    value=example['translation']['text'],
-                    entry=entry,
-                    language='es',
-                    type_tag='quote_translation',
-                ) for example in examples
-                if example.get('translation') is not None
-            ])
+            for type_tag in ['quote_translation', 'complete_search']:
+                models.LongSearchableString.objects.bulk_create([
+                    models.LongSearchableString(
+                        value=example['translation']['text'],
+                        entry=entry,
+                        language='es',
+                        type_tag=type_tag,
+                    ) for example in examples
+                    if example.get('translation') is not None
+                ])
 
             sig_value['examples'] = examples
             sig_values.append(sig_value)
 
-        models.LongSearchableString.objects.bulk_create([
-            models.LongSearchableString(
-                value=sig_value.get('sense', ''),
-                entry=entry,
-                language='es',
-                type_tag='sense',
-                other_data={
-                    'geo': sig_value.get('geo'),
-                    'ostentives': sig_value.get('ostentives', []),
-                },
-            ) for sig_value in sig_values
-        ])
-        models.LongSearchableString.objects.bulk_create([
-            models.LongSearchableString(
-                value=osten_value,
-                entry=entry,
-                language='es',
-                type_tag='ostentive',
-            ) for osten_value in list(itertools.chain(
-                *[sig_value.get('ostentives', []) for sig_value in sig_values],
-            ))
-        ])
+        for type_tag in ['sense', 'extended_meaning', 'complete_search']:
+            models.LongSearchableString.objects.bulk_create([
+                models.LongSearchableString(
+                    value=sig_value.get('sense', ''),
+                    entry=entry,
+                    language='es',
+                    type_tag=type_tag,
+                    other_data={
+                        'geo': sig_value.get('geo'),
+                        'ostentives': sig_value.get('ostentives', []),
+                    },
+                ) for sig_value in sig_values
+            ])
+
+        for type_tag in ['ostentive', 'extended_meaning', 'complete_search']:
+            models.LongSearchableString.objects.bulk_create([
+                models.LongSearchableString(
+                    value=osten_value,
+                    entry=entry,
+                    language='es',
+                    type_tag=type_tag,
+                ) for osten_value in list(itertools.chain(
+                    *[sig_value.get('ostentives', []) for sig_value in sig_values],
+                ))
+            ])
         entry_data['senses'].extend(sig_values)
 
     @transaction.atomic
@@ -413,6 +420,13 @@ class AzzImporter(XmlImporter):
 
         # Clean up previously associated search data.
         self.clean_up_associated_data(entry)
+
+        models.SearchableString.objects.create(
+            value=entry_data['headword'],
+            entry=entry,
+            language='azz',
+            type_tag='lemma',
+        )
 
         for method in [
                 self.create_simple_string_data,
@@ -624,6 +638,13 @@ class TrqImporter(XmlImporter):
 
         self.clean_up_associated_data(entry)
 
+        models.SearchableString.objects.create(
+            value=entry_data['headword'],
+            entry=entry,
+            language='trq',
+            type_tag='lemma',
+        )
+
         for method in [
                 self.create_simple_string_data,
                 self.create_definitions,
@@ -694,6 +715,10 @@ class Juxt1235VerbImporter(CsvImporter):
         'neg_irr_2',
         'p_mx',
     ]
+    SPECIAL_NORMALIZED_FIELDS = {
+        'neg_irr_1': 'neg_irr_normalized',
+        'neg_irr_2': 'neg_irr_normalized',
+    }
 
     def initialize_data(self, row):
         entry_data = {'language': 'juxt1235', 'meta': {}}
@@ -733,10 +758,16 @@ class Juxt1235VerbImporter(CsvImporter):
                     ))
                     if field_name in self.NORMALIZED_FIELDS:
                         new_searchable_strings.append(models.SearchableString(
+                        entry=entry,
+                        value=item_value,
+                        language='juxt1235',
+                        type_tag=self.SPECIAL_NORMALIZED_FIELDS.get('field_name') or f'{field_name}_normalized',
+                    ))
+                        new_searchable_strings.append(models.SearchableString(
                             entry=entry,
                             value=Func(Value(item_value), function='unaccent'),
                             language='juxt1235',
-                            type_tag=f'{field_name}_normalized',
+                            type_tag=self.SPECIAL_NORMALIZED_FIELDS.get('field_name') or f'{field_name}_normalized',
                         ))
 
                 entry_data[field_name] = item_value
