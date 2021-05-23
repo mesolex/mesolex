@@ -1,5 +1,5 @@
 from django.contrib.postgres.fields import JSONField
-from django.contrib.postgres.search import SearchVectorField, SearchVector
+from django.contrib.postgres.search import SearchVectorField
 from django.contrib.postgres.indexes import GinIndex
 from django.db import models
 
