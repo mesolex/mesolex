@@ -9,7 +9,7 @@ services:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     environment:
-      PGDATABASE: mesolex
+      PGDATABASE: mesolex_local
       PGUSER: postgres
       PGHOST: db
     ports:
