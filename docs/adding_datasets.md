@@ -8,7 +8,7 @@ To add a new dataset to Mesolex and make it searchable, perform the following st
 - Add localization data to `mesolex_site/templates/mesolex_site/language_messages.js` and `mesolex_site/templates/mesolex_site/language_messages.txt`
 - Add new search form definitions to `lexicon/forms/juxt1235.py` and ` lexicon/forms/__init__.py`
 - Add new frontend templates in `mesolex_site/templates/mesolex_site/includes/search_result/`
-- Run the import and indexaction scripts on the server(s) where you want to deploy the dataset
+- Run the import and indexation scripts on the server(s) where you want to deploy the dataset
 
 These steps are broken down below, with reference to events in the Git history that provide a good
 illustration of the process.
@@ -64,7 +64,7 @@ The meaning of the different components:
 - `label`: the human-readable label of the field presented to the user in the UI.
 - `tag`: the "type tag" associated with this field when it's indexed via a `lexicon.models.SearchableString`
   or `lexicon.models.LongSearchableString` model instance.
-    - **NOTE:** this type tag is chosen when writing a data importer.
+    - **NOTE:** this type tag is [chosen when writing a data importer](#type_tag_importer). <a name="type_tag_dataset"></a>
 - `length`: one of either `short` or `long`, specifying whether this field gets indexed by `SearchableString`
   or `LongSearchableString`.
     - [Used within QueryBuilderForm](https://github.com/mesolex/mesolex/blob/dataset-docs/query_builder/forms.py#L205)
@@ -177,3 +177,73 @@ global_filters:
 
 Global filters are [intersected with subqueries](https://github.com/mesolex/mesolex/blob/dataset-docs/query_builder/forms.py#L332).
 They are presented in the UI [beneath subquery forms](https://github.com/mesolex/mesolex/blob/dataset-docs/query_builder/static/ts/components/query-builder-formset.tsx#L167).
+
+
+## Add an import script
+
+Actually importing data into the database has so far been done via Python scripts
+written as [custom Django management commands](https://docs.djangoproject.com/en/3.2/howto/custom-management-commands/),
+which are run by invoking `python manage.py import_data`. The main advantage of using
+management commands is that you can use the Django ORM to work with the database.
+
+**NOTE:** nothing forces you to import data using these management commands. Data
+could in principle be imported with raw SQL scripts. But we haven't done this yet
+(as of June 27, 2021).
+
+Import scripts live in [lexicon/management/commands/import_data.py](https://github.com/mesolex/mesolex/blob/dataset-docs/lexicon/management/commands/import_data.py).
+This module defines a bunch of helper classes for parsing XML and CSV documents,
+but you don't have to use those if you don't like them.
+
+### The basic importer API
+
+`import_data` assumes that you've defined some importer logic that is called
+by calling a callable thing on a string identifying the dataset and the string
+path of the dataset source file & then calling the return value of that.
+That second callable is expected to return a 3-tuple `(added_entries, updated_entries, total)`.
+
+```python
+importer = self._importer_for(dataset, input_file)
+
+(added_entries, updated_entries, total) = (
+    importer()
+    if importer is not None
+    else (0, 0, 0)
+)
+```
+
+Whatever your `importer` there does is good enough, provided it meets the following guidelines!
+
+### The basic import steps
+
+The anatomy of a data import is spelled out pretty well by the contents of [the `process_row` method](https://github.com/mesolex/mesolex/blob/dataset-docs/lexicon/management/commands/import_data.py#L778) of `Juxt1235VerbImporter`. We'll break these steps down further below.
+
+The steps followed in the existing import scripts look roughly like the following.
+
+- `initialize_data(row)`
+  - For each item in the dataset source (XML node, CSV row), either create an `Entry`
+    instance in the DB or find one by its uniquely identifying data if it already exists.
+    Hold onto it for the rest of the process.
+    - The `models.Entry.objects.get_or_create` function is used to [find or create
+    the entry entity.](https://github.com/mesolex/mesolex/blob/dataset-docs/lexicon/management/commands/import_data.py#L728)
+    - Entries are uniquely identifiable by their `identifier` and `dataset` values.
+  - Initialize the entry with some basic data.
+    - Set the entry instance's `value` to the headword for the entry.
+  - Create a dictionary that'll hold the JSON document for the entry as you construct
+    it. [Hold onto that dictionary](https://github.com/mesolex/mesolex/blob/dataset-docs/lexicon/management/commands/import_data.py#L735).
+- `clean_up_associated_data(entry)`
+  - **Erase existing `SearchableString` and `LongSearchableString` data
+    associated with the entry.** These are just search indexes; they don't need
+    to persist between updates and can just be tossed and re-created on each import.
+- `create_simple_string_data(row, entry, entry_data)`
+  - For each item in the dataset source, create a `(Long)SearchableString` to index
+  the searchable feature of the data and add some data to the entry's data dictionary.
+  - A searchable string instance contains the following ([see here](https://github.com/mesolex/mesolex/blob/dataset-docs/lexicon/management/commands/import_data.py#L753)):
+    - `value`: the searchable string itself
+    - `entry`: a reference to the entry instance you created
+    - `dataset`: the code of the dataset (e.g. `juxt1235`)
+    - `type_tag`: the tag used to query this search field; [see how this is used in the dataset definition](#type_tag_dataset) <a name="type_tag_importer"></a>
+  - If you want, you can put the searchable string model instances into a list and [bulk-create them](https://github.com/mesolex/mesolex/blob/dataset-docs/lexicon/management/commands/import_data.py#L775).
+- `entry.data = entry_data`
+  - Add the data dictionary you've constructed to the entry's `data` property.
+- `entry.save()`
+  - Save the entry.
