@@ -38,6 +38,9 @@ your_language_identifier:
 
 Each of those list fields represents a different feature of the imported dataset's search capabilities.
 
+**tl;dr:** the only required data is the `label`, `code`, and `filterable_fields` for your dataset.
+Add these and the dataset will be ready to support precise string queries.
+
 ### Filterable fields
 
 `filterable_fields` defines the basic queryable aspects of the dataset. Without specifying it, users won't
