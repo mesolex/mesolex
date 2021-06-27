@@ -4,11 +4,14 @@ To add a new dataset to Mesolex and make it searchable, perform the following st
 
 - Add definitions of the dataset's searchable data to `mesolex/config/datasets.yml`
 - Add a new script to the management command definition in `lexicon/management/commands/import_data.py` to import the data
-- Add a JSON schema to `docs/schema/` describing the shape of the imported data
-- Add localization data to `mesolex_site/templates/mesolex_site/language_messages.js` and `mesolex_site/templates/mesolex_site/language_messages.txt`
 - Add new search form definitions to `lexicon/forms/juxt1235.py` and ` lexicon/forms/__init__.py`
 - Add new frontend templates in `mesolex_site/templates/mesolex_site/includes/search_result/`
 - Run the import and indexation scripts on the server(s) where you want to deploy the dataset
+
+The above steps are *necessary*; "nice-to-have" steps that make the dataset fully user- and developer-friendly also include:
+
+- Add a JSON schema to `docs/schema/` describing the shape of the imported data
+- Add localization data to `mesolex_site/templates/mesolex_site/language_messages.js` and `mesolex_site/templates/mesolex_site/language_messages.txt`
 
 These steps are broken down below, with reference to events in the Git history that provide a good
 illustration of the process.
@@ -247,3 +250,13 @@ The steps followed in the existing import scripts look roughly like the followin
   - Add the data dictionary you've constructed to the entry's `data` property.
 - `entry.save()`
   - Save the entry.
+
+### Document your implicit schema
+
+You have total freedom to define the shape of your imported data documents however you think
+will be convenient for query or display. Go nuts!
+
+However, it would be nice if you documented your decisions for future maintainers (including
+yourself two weeks from now). We have been documenting the JSON document shapes with
+[JSON schema](https://json-schema.org/) definitions in `docs/schema/`. Right now, these
+docs are just documentation and are not used by the code in any way.
