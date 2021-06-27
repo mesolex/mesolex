@@ -142,6 +142,8 @@ This distinction is basically used only by the UI, which [chooses the type of fo
 
 ### Extra fields
 
+<a name="extra_fields"></a>
+
 The `extra_fields` data is used to specify yes/no options that can be added to search
 sub-component of a search query. For example, if your dataset supports glottal stop
 neutralization, this is where you declare that.
@@ -260,3 +262,93 @@ However, it would be nice if you documented your decisions for future maintainer
 yourself two weeks from now). We have been documenting the JSON document shapes with
 [JSON schema](https://json-schema.org/) definitions in `docs/schema/`. Right now, these
 docs are just documentation and are not used by the code in any way.
+
+
+## Search form definitions
+
+To actually search the data, the Django application needs to know how to use it. This
+is defined by instantiating some Form(Set) classes with some references to the dataset
+configuration and making them available to the search code.
+
+Once you've added a dataset, add a new module inside `lexicon/forms/`, e.g. [`lexicon/forms/azz.py`](https://github.com/mesolex/mesolex/blob/dataset-docs/lexicon/forms/azz.py).
+Fill it in adding dataset-specific subclasses of [`QueryBuilderBaseFormset`](https://github.com/mesolex/mesolex/blob/dataset-docs/query_builder/forms.py#L268)
+and [`QueryBuilderForm`](https://github.com/mesolex/mesolex/blob/dataset-docs/query_builder/forms.py#L77).
+Access your dataset definition by [instantiating `Dataset` on the code
+for your dataset](https://github.com/mesolex/mesolex/blob/dataset-docs/lexicon/forms/azz.py#L9), which
+will give you access to [`filterable_fields` etc](https://github.com/mesolex/mesolex/blob/dataset-docs/lexicon/forms/azz.py#L13)
+in a way the query builder classes understand.
+
+**NOTE:** [`controlled_vocab_fields`](https://github.com/mesolex/mesolex/blob/dataset-docs/lexicon/forms/azz.py#L35) hasn't
+been abstracted out yet, which is annoying.
+
+If your dataset supports any "transformations" [triggered by `extra_fields`](#extra_fields), add the functions
+that implement those transformations in [the `transformations` property](https://github.com/mesolex/mesolex/blob/dataset-docs/lexicon/forms/juxt1235_non_verb.py#L20).
+
+Make your new formset available [in the index module in that directory](https://github.com/mesolex/mesolex/blob/dataset-docs/lexicon/forms/__init__.py),
+specifically within the [`formset_for_dataset` function](https://github.com/mesolex/mesolex/blob/dataset-docs/lexicon/forms/__init__.py#L9).
+
+
+## Frontend templates
+
+To make it possible to display search result data specific to your dataset, you must add some new
+templates for rendering results.
+
+Add a new template fragment to represent an individual search result to `mesolex_site/templates/mesolex_site/includes/search_result/`.
+It should look [something like this](https://github.com/mesolex/mesolex/blob/dataset-docs/mesolex_site/templates/mesolex_site/includes/search_result/juxt1235_non_verb.html).
+
+Next, add a clause to [mesolex_site/templates/mesolex_site/search_page.html](https://github.com/mesolex/mesolex/blob/dataset-docs/mesolex_site/templates/mesolex_site/search_page.html)
+telling the frontend to [use that template fragment for a search result if it matches the right dataset code](https://github.com/mesolex/mesolex/blob/dataset-docs/mesolex_site/templates/mesolex_site/search_page.html#L28).
+
+
+## Run the scripts
+
+You are now ready to actually import data. Assuming you want to import it on a deployment, upload
+the source file onto the server somehow, `ssh` into that environment,
+and do something like the following:
+
+```
+$ sudo su - mesolex
+$ cd /var/www/mesolex
+$ ./manage.sh import_data juxt1235_non_verb /home/nmashton/SMD-Base_de_datos_lexica-2021-02-13.csv
+```
+
+If your dataset includes any "long" strings that you want to make searchable via
+full text search, also run (from that same directory, also as `mesolex`):
+
+```
+$ ./manage.sh update_search_vectors
+```
+
+
+## Localization
+
+The Mesolex interface uses [Django's internationalization and localization](https://docs.djangoproject.com/en/3.2/topics/i18n/)
+features to provide Spanish and English translations of its strings.
+
+By default, Django's translation string generation only picks up on strings used within
+basic Django source files (Python modules, HTML templates) and JavaScript / TypeScript files.
+This means that strings used within `datasets.yml` aren't detected by default. To work around
+this, we add strings manually to locations where Django can see them:
+
+- `mesolex_site/templates/mesolex_site/dataset_messages.txt` for Python translations
+- `mesolex_site/templates/mesolex_site/dataset_messages.js` for JavaScript translations
+
+For all "Label" values you've added to `datasets.yml` that you want to make translatable, add
+new entries to those files. Then in your local environment, run:
+
+```
+$ python manage.py makemessages --domain=django
+$ python manage.py makemessages --domain=djangojs --extension=js,jsx,tsx --ignore=node_modules
+```
+
+This should result in some changes to the `.po` translation string files in `mesolex/locale/en` and
+`mesolex/locale/en-us`. Find the additions to those files and fill in the English translations
+of your strings. **Be sure to commit those changes.**
+
+To see the changes locally, run:
+
+```sh
+$ python manage.py compilemessages
+```
+
+Note that this will take place automatically during deploys.
