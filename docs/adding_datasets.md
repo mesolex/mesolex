@@ -16,6 +16,10 @@ The above steps are *necessary*; "nice-to-have" steps that make the dataset full
 These steps are broken down below, with reference to events in the Git history that provide a good
 illustration of the process.
 
+For an example of what this all looks like, look at [the pull request for adding Duraznos verbs](https://github.com/mesolex/mesolex/pull/24/files).
+Note that some aspects of the import process have changed (e.g. "language" has become "dataset" in Mesolex's internal
+terminology), but it still works as a simple example of the total changes needed to add a new dataset.
+
 ## Add searchable data definitions
 
 Data imported into Mesolex is saved in the form of JSON documents attached to the `data` field of the `lexicon.models.Entry` model.
