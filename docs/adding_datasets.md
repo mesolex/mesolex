@@ -13,7 +13,7 @@ The above steps are *necessary*; "nice-to-have" steps that make the dataset full
 - Add a JSON schema to `docs/schema/` describing the shape of the imported data
 - Add localization data to `mesolex_site/templates/mesolex_site/language_messages.js` and `mesolex_site/templates/mesolex_site/language_messages.txt`
 
-These steps are broken down below, with reference to events in the Git history that provide a good
+These steps are broken down below, with reference to points in the code and events in the Git history that provide a good
 illustration of the process.
 
 For an example of what this all looks like, look at [the pull request for adding Duraznos verbs](https://github.com/mesolex/mesolex/pull/24/files).
