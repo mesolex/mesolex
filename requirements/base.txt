@@ -8,6 +8,6 @@ psycopg2-binary==2.8.5
 xmljson==0.2.1
 django-prettyjson==0.4.1
 python-dateutil==2.8.1
-django-debug-toolbar==2.2
+django-debug-toolbar==2.2.1
 pyyaml==5.4
 retrie==0.1.2
