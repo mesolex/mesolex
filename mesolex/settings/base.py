@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'wagtail.search',
     'wagtail.admin',
     'wagtail.core',
-    
+
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.settings',
     'wagtail.contrib.styleguide',
@@ -63,8 +63,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
-
-    'wagtail.core.middleware.SiteMiddleware',
     'wagtailtrans.middleware.TranslationMiddleware',
 ]
 
@@ -164,3 +162,5 @@ SITE_ID = 1
 ROBOTS_USE_SITEMAP = False
 
 WAGTAIL_SITE_NAME = 'Mesolex'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
