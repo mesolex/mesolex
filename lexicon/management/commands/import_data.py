@@ -676,6 +676,63 @@ class TrqImporter(XmlImporter):
 
         return (created, updated, len(entries))
 
+class MixtecPlantNamesImporter(CsvImporter):
+    field_name_map = {
+            "Family (roman)": "family",
+            "Genus (italics)": "genus",
+            "Species (italics)": "species",
+            "After genus (roman)": "after_genus",
+            "Author (roman)": "author", 
+            "Scientific name": "scientific_name",
+            "C1 village": "village",    
+            "Nombre 1": "nombre",
+            "Glosa nombre 1": "gloss"
+    }
+    def initialize_data(self, row):
+        entry_data = {'language': 'indigenous_plant_names_yolo', 'meta': {}}
+        identifier = row['ID']
+        entry_data['meta']['id']
+
+        entry, created = models.Entry.objects.get_or_create(
+                identifier=identifier,
+                dataset='plantnames_oax'
+        )
+
+        entry.value = row['Nombre 1']
+
+        return (entry, entry_data, created)
+
+    def clean_up_associated_data(self, entry):
+        entry.searchablestring_set.all().delete()
+        entry.longsearchablestring_set.all().delete()
+
+   def create_simple_string_data(self, row, entry, entry_data):
+       new_searchable_strings = []
+
+       for k, v in row.items():
+           if k in field_name_map:
+               new_searchable_strings.append(
+                       models.SearchableString(
+                           entry=entry,
+                           value=v,
+                           language="plantnames_oax",
+                           type=field_name_map[k]
+                       )
+               )
+               entry_data[field_name_map[k]] = v
+        models.SearchableString.objects.bulk_create(new_searchable_strings)
+
+    @transaction.atomic
+    def process_row(self, row, i):
+        (entry, entry_data, created) = self.initialize_data(row)
+        self.clean_up_associated_data(entry)
+        self.create_simple_string_data(row, entry, entry_data)
+
+        entry.data = entry_data
+        entry.save()
+
+        return created
+
 
 class Juxt1235VerbImporter(CsvImporter):
     HEADER_TO_FIELD_NAME = {
