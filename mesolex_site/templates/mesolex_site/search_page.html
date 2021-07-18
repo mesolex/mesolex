@@ -29,6 +29,8 @@
                     {% include "mesolex_site/includes/search_result/juxt1235_verb.html" with lexical_entry=lexical_entry data=lexical_entry.data %}
                 {% elif dataset == "juxt1235_non_verb" %}
                     {% include "mesolex_site/includes/search_result/juxt1235_non_verb.html" with lexical_entry=lexical_entry data=lexical_entry.data %}
+                {% elif dataset == "plantnames_oax" %}
+                    {% include "mesolex_site/includes/search_result/plantnames_oax.html" with lexical_entry=lexical_entry data=lexical_entry.data %}
                 {% else %}
                     {% include "mesolex_site/includes/search_result/default.html" with lexical_entry=lexical_entry data=lexical_entry.data %}
                 {% endif %}
