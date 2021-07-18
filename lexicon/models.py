@@ -1,6 +1,12 @@
+from django.contrib.postgres.fields import JSONField
 from django.contrib.postgres.search import SearchVectorField
 from django.contrib.postgres.indexes import GinIndex
 from django.db import models
+
+
+class EntryManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset()
 
 
 class Entry(models.Model):
@@ -23,10 +29,12 @@ class Entry(models.Model):
         db_index=True,
     )
     dataset = models.CharField(max_length=64)
-    data = models.JSONField(
+    data = JSONField(
         blank=True,
         null=True,
     )
+
+    objects = EntryManager()
 
 
 class Searchable(models.Model):
@@ -43,7 +51,7 @@ class Searchable(models.Model):
         max_length=256,
         db_index=True,
     )
-    other_data = models.JSONField(
+    other_data = JSONField(
         blank=True,
         null=True,
     )
