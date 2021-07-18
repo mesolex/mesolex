@@ -678,24 +678,25 @@ class TrqImporter(XmlImporter):
 
 class MixtecPlantNamesImporter(CsvImporter):
     field_name_map = {
-            "Family (roman)": "family",
-            "Genus (italics)": "genus",
-            "Species (italics)": "species",
-            "After genus (roman)": "after_genus",
-            "Author (roman)": "author", 
-            "Scientific name": "scientific_name",
-            "C1 village": "village",    
-            "Nombre 1": "nombre",
-            "Glosa nombre 1": "gloss"
+        "Family (roman)": "family",
+        "Genus (italics)": "genus",
+        "Species (italics)": "species",
+        "After genus (roman)": "after_genus",
+        "Author (roman)": "author", 
+        "Scientific name": "scientific_name",
+        "C1 village": "village",    
+        "Nombre 1": "nombre",
+        "Glosa nombre 1": "gloss",
     }
+
     def initialize_data(self, row):
         entry_data = {'language': 'indigenous_plant_names_yolo', 'meta': {}}
         identifier = row['ID']
-        entry_data['meta']['id']
+        entry_data['meta']['id'] = row['ID']
 
         entry, created = models.Entry.objects.get_or_create(
-                identifier=identifier,
-                dataset='plantnames_oax'
+            identifier=identifier,
+            dataset='plantnames_oax'
         )
 
         entry.value = row['Nombre 1']
@@ -706,20 +707,20 @@ class MixtecPlantNamesImporter(CsvImporter):
         entry.searchablestring_set.all().delete()
         entry.longsearchablestring_set.all().delete()
 
-   def create_simple_string_data(self, row, entry, entry_data):
-       new_searchable_strings = []
+    def create_simple_string_data(self, row, entry, entry_data):
+        new_searchable_strings = []
 
-       for k, v in row.items():
-           if k in field_name_map:
-               new_searchable_strings.append(
-                       models.SearchableString(
-                           entry=entry,
-                           value=v,
-                           language="plantnames_oax",
-                           type=field_name_map[k]
-                       )
-               )
-               entry_data[field_name_map[k]] = v
+        for k, v in row.items():
+            if k in self.field_name_map:
+                new_searchable_strings.append(
+                    models.SearchableString(
+                        entry=entry,
+                        value=v,
+                        language="plantnames_oax",
+                        type_tag=self.field_name_map[k],
+                    ),
+                )
+                entry_data[self.field_name_map[k]] = v
         models.SearchableString.objects.bulk_create(new_searchable_strings)
 
     @transaction.atomic
@@ -962,6 +963,7 @@ class Command(BaseCommand):
         'trq': TrqImporter,
         'juxt1235_verb': Juxt1235VerbImporter,
         'juxt1235_non_verb': Juxt1235NonVerbImporter,
+        'plantnames_oax': MixtecPlantNamesImporter,
     }
 
     def add_arguments(self, parser):

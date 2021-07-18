@@ -28,36 +28,36 @@ yolo1241:
     controlled_vocab_fields: []
 
 plantnames_oax:
-        label: Indigenous Plant Names: Oaxaca (Yoloxóchitl)
-        code: yolo1241
-        filterable_fields:
-                - field: nombre
-                  label: Nombre
-                  tag: nombre
-                  length: short
-                - field: gloss
-                  label: Glosa
-                  tag: gloss
-                  length: short
-                - field: scientific_name
-                  label: Nombre Científico
-                  tag: scientific_name
-                  length: short
-                - field: family
-                  label: Familia
-                  tag: family
-                  length: short
-                - field: genus
-                  label: Genus
-                  tag: genus
-                  length: short
-                - field: species
-                  label: Especie
-                  tag: species
-                  length: short
-        global_filters: []
-        search_fields: []
-        controlled_vocab_fields: []
+    label: "Indigenous Plant Names: Oaxaca (Yoloxóchitl)"
+    code: yolo1241
+    filterable_fields:
+      - field: nombre
+        label: Nombre
+        tag: nombre
+        length: short
+      - field: gloss
+        label: Glosa
+        tag: gloss
+        length: short
+      - field: scientific_name
+        label: Nombre Científico
+        tag: scientific_name
+        length: short
+      - field: family
+        label: Familia
+        tag: family
+        length: short
+      - field: genus
+        label: Genus
+        tag: genus
+        length: short
+      - field: species
+        label: Especie
+        tag: species
+        length: short
+    global_filters: []
+    search_fields: []
+    controlled_vocab_fields: []
 
 
 
