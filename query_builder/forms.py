@@ -99,7 +99,7 @@ class QueryBuilderForm(forms.Form):
         'contains_word': '__regex',
         'exactly_equals': '',
         'regex': '__regex',
-        'text_search': None,
+        'text_search': '',
     }
 
     # NOTE: abstract, must be filled in with sequence of pairs,
