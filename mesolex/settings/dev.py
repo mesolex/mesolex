@@ -31,3 +31,7 @@ LOGGING = {
         },
     },
 }
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:9000',
+]

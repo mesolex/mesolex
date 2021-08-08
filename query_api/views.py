@@ -3,9 +3,9 @@ from functools import reduce
 
 from django.contrib.postgres.search import SearchQuery
 from django.db.models import Q
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_http_methods
 from marshmallow import ValidationError
 
 from lexicon.models import Entry
@@ -100,8 +100,13 @@ def search_query_data_to_result_queryset(dataset, search_data_query):
 
 
 @csrf_exempt
-@require_POST
+@require_http_methods(['POST', 'OPTIONS'])
 def search(request):
+    if request.method == 'OPTIONS':
+        response = HttpResponse()
+        response['allow'] = 'POST,OPTIONS'
+        return response
+
     search_schema = SearchSchema()
 
     try:
