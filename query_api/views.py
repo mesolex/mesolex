@@ -137,7 +137,11 @@ def search(request):
         (page * page_size),
     )
 
+    total = result.count()
+
     return JsonResponse({
         'page': page,
         'data': [entry.data for entry in result][start:end],
+        'total': total,
+        'pageSize': page_size,
     })
