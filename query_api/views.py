@@ -28,24 +28,20 @@ def query_dict_to_q(query_dict):
     Given a dict validated by query_api.schema.QuerySchema, return a Q instance
     representing a single clause of the search to be composed.
     """
-    length, filter_type, type_tag, value, exclude = [
-        query_dict[k] for k in ['length', 'filter_type', 'type_tag', 'value', 'exclude']
+    filter_type, type_tag, value, exclude = [
+        query_dict[k] for k in ['filter_type', 'type_tag', 'value', 'exclude']
     ]
 
     query_data = {}
 
-    if length == 'short':
-        query_data['searchablestring__type_tag'] = type_tag
-
-    else:
-        query_data['longsearchablestring__type_tag'] = type_tag
-
     if filter_type == 'text_search':
+        query_data['longsearchablestring__type_tag'] = type_tag
         query_data['longsearchablestring__searchable_value'] = SearchQuery(
             value,
             config='spanish',
         )
     else:
+        query_data['searchablestring__type_tag'] = type_tag
         query_data[f'searchablestring__value{FILTERS_DICT[filter_type]}'] = value
 
     query = Q(**query_data)
@@ -129,6 +125,8 @@ def search(request):
         search_data['dataset'],
         search_data['query'],
     )
+
+    result = result.distinct().order_by('value')
 
     page = search_data['page']
     page_size = search_data['page_size']
