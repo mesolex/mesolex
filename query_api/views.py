@@ -32,6 +32,10 @@ TRANSFORMATIONS_DICT = {
 }
 DEFAULT_TRANSFORMATIONS = [contains_word_to_regex]
 
+GLOBAL_MODIFIERS_DICT = {
+    'only_with_sound': Q(data__media__isnull=False),
+}
+
 
 def query_dict_to_q(query_dict, dataset):
     """
@@ -87,7 +91,7 @@ def queries_to_subqueryset(queries):
     )
 
 
-def search_query_data_to_result_queryset(dataset, search_data_query):
+def search_query_data_to_result_queryset(dataset, search_data_query, global_modifiers):
     """
     Given a list of list of dicts validated by query_api.schema.QuerySchema,
     create a list of subqueries (each one consisting of a big JOIN expression
@@ -104,8 +108,17 @@ def search_query_data_to_result_queryset(dataset, search_data_query):
         if sub_clause
     ]
 
+    global_modifiers = [
+        GLOBAL_MODIFIERS_DICT[global_modifier['name']]
+        for global_modifier in global_modifiers
+        if global_modifier['name'] in GLOBAL_MODIFIERS_DICT
+    ]
+
     # Transform lists of Q instances into subqueries
-    list_of_subquerysets = [queries_to_subqueryset(queries) for queries in list_of_qs]
+    list_of_subquerysets = [
+        queries_to_subqueryset(queries + global_modifiers)
+        for queries in list_of_qs
+    ]
 
     # Combine subqueries with UNION
     return reduce(
@@ -143,6 +156,7 @@ def search(request):
     result = search_query_data_to_result_queryset(
         search_data['dataset'],
         search_data['query'],
+        search_data['global_modifiers'],
     )
 
     result = result.distinct().order_by('value')
