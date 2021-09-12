@@ -10,6 +10,7 @@ from marshmallow import ValidationError
 
 from lexicon.models import Entry
 from query_api.schema import SearchSchema
+from query_api.transformations.utils import apply_transformations
 
 
 FILTERS_DICT = {
@@ -31,6 +32,10 @@ def query_dict_to_q(query_dict):
     filter_type, type_tag, value, exclude = [
         query_dict[k] for k in ['filter_type', 'type_tag', 'value', 'exclude']
     ]
+
+    modifiers = [modifier['name'] for modifier in query_dict['modifiers']]
+
+    (filter_type, value) = apply_transformations(filter_type, value, modifiers, [])
 
     query_data = {}
 

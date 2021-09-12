@@ -1,0 +1,16 @@
+Alphabet
+
+ a b d e f g h i j k l m n o p r s t u w y
+ ā ē ō ī ʔ ɬ ʷ ;
+
+Sets
+
+ShortVow   = a e i o u ;
+LongVow    = ā ē ō ī ;
+
+Cns   = b c d f g h j k l m n p q r s t ɬ w x y z ;
+
+Rules
+
+"Remove inserted /ʔ/ when not in coda position (i.e. when followed by two cons or cons #)."
+ʔ:0 <=> ShortVow _ [Cns | k ʷ] [Cns | k ʷ | .#.];
