@@ -10,7 +10,9 @@ from marshmallow import ValidationError
 
 from lexicon.models import Entry
 from query_api.schema import SearchSchema
-from query_api.transformations.utils import apply_transformations
+from query_api.transformations.utils import apply_transformations, contains_word_to_regex, to_vln
+from query_api.transformations.azz import nahuat_orthography
+from query_api.transformations.juxt1235 import neutralize_glottal_stop
 
 
 FILTERS_DICT = {
@@ -23,8 +25,15 @@ FILTERS_DICT = {
     'text_search': None,
 }
 
+TRANSFORMATIONS_DICT = {
+    'azz': [contains_word_to_regex, to_vln, nahuat_orthography],
+    'juxt1235_verb': [contains_word_to_regex, neutralize_glottal_stop],
+    'juxt1235_non_verb': [contains_word_to_regex, neutralize_glottal_stop],
+}
+DEFAULT_TRANSFORMATIONS = [contains_word_to_regex]
 
-def query_dict_to_q(query_dict):
+
+def query_dict_to_q(query_dict, dataset):
     """
     Given a dict validated by query_api.schema.QuerySchema, return a Q instance
     representing a single clause of the search to be composed.
@@ -35,7 +44,12 @@ def query_dict_to_q(query_dict):
 
     modifiers = [modifier['name'] for modifier in query_dict['modifiers']]
 
-    (filter_type, value) = apply_transformations(filter_type, value, modifiers, [])
+    (filter_type, value) = apply_transformations(
+        filter_type,
+        value,
+        modifiers,
+        TRANSFORMATIONS_DICT.get(dataset, DEFAULT_TRANSFORMATIONS),
+    )
 
     query_data = {}
 
@@ -83,7 +97,7 @@ def search_query_data_to_result_queryset(dataset, search_data_query):
     # Create nested list of lists of Q instances
     list_of_qs = [
         [Q(dataset=dataset)] + [
-            query_dict_to_q(query_dict)
+            query_dict_to_q(query_dict, dataset)
             for query_dict in sub_clause
         ]
         for sub_clause in search_data_query
