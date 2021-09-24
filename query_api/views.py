@@ -46,7 +46,6 @@ def query_dict_to_q(query_dict, dataset):
     filter_type, type_tag, value, exclude = [
         query_dict[k] for k in ['filter_type', 'type_tag', 'value', 'exclude']
     ]
-    import pdb;pdb.set_trace()
 
     modifiers = [modifier['name'] for modifier in query_dict['modifiers']]
 
