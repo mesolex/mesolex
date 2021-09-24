@@ -12,6 +12,7 @@ from lexicon.models import Entry
 from query_api.schema import SearchSchema
 from query_api.transformations.utils import apply_transformations, contains_word_to_regex, to_vln
 from query_api.transformations.azz import nahuat_orthography
+from query_api.transformations.spanish_thesaurus import es_thesaurus_lookup
 from query_api.transformations.juxt1235 import neutralize_glottal_stop
 
 
@@ -26,9 +27,9 @@ FILTERS_DICT = {
 }
 
 TRANSFORMATIONS_DICT = {
-    'azz': [contains_word_to_regex, to_vln, nahuat_orthography],
-    'juxt1235_verb': [contains_word_to_regex, neutralize_glottal_stop],
-    'juxt1235_non_verb': [contains_word_to_regex, neutralize_glottal_stop],
+    'azz': [contains_word_to_regex, to_vln, nahuat_orthography, es_thesaurus_lookup],
+    'juxt1235_verb': [contains_word_to_regex, neutralize_glottal_stop, es_thesaurus_lookup],
+    'juxt1235_non_verb': [contains_word_to_regex, neutralize_glottal_stop, es_thesaurus_lookup],
 }
 DEFAULT_TRANSFORMATIONS = [contains_word_to_regex]
 
@@ -45,6 +46,7 @@ def query_dict_to_q(query_dict, dataset):
     filter_type, type_tag, value, exclude = [
         query_dict[k] for k in ['filter_type', 'type_tag', 'value', 'exclude']
     ]
+    import pdb;pdb.set_trace()
 
     modifiers = [modifier['name'] for modifier in query_dict['modifiers']]
 
@@ -54,7 +56,6 @@ def query_dict_to_q(query_dict, dataset):
         modifiers,
         TRANSFORMATIONS_DICT.get(dataset, DEFAULT_TRANSFORMATIONS),
     )
-
     query_data = {}
 
     if filter_type == 'text_search':
