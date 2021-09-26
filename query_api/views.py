@@ -26,10 +26,13 @@ FILTERS_DICT = {
     'text_search': None,
 }
 
+# NOTE: contains_word_to_regex must come last because it wraps the values
+# in regex boundary symbols.
+
 TRANSFORMATIONS_DICT = {
-    'azz': [contains_word_to_regex, to_vln, nahuat_orthography, es_thesaurus_lookup],
-    'juxt1235_verb': [contains_word_to_regex, neutralize_glottal_stop, es_thesaurus_lookup],
-    'juxt1235_non_verb': [contains_word_to_regex, neutralize_glottal_stop, es_thesaurus_lookup],
+    'azz': [to_vln, nahuat_orthography, es_thesaurus_lookup, contains_word_to_regex],
+    'juxt1235_verb': [neutralize_glottal_stop, es_thesaurus_lookup, contains_word_to_regex],
+    'juxt1235_non_verb': [neutralize_glottal_stop, es_thesaurus_lookup, contains_word_to_regex],
 }
 DEFAULT_TRANSFORMATIONS = [contains_word_to_regex]
 
