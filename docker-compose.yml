@@ -1,0 +1,23 @@
+version: '3'
+services:
+  db:
+    image: mdillon/postgis:11-alpine
+    ports:
+      - "5432:5432"
+
+  api:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      PGDATABASE: mesolex_api
+      PGUSER: postgres
+      PGHOST: db
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - .:/code
+
+volumes:
+  pgdata:

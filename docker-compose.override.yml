@@ -1,0 +1,7 @@
+version: '3'
+services:
+  api:
+    volumes:
+      # mount local repository into the container
+      - .:/code:delegated
+
