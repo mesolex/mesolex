@@ -46,16 +46,19 @@ INSTALLED_APPS = [
 
     'prettyjson',
     'robots',
+    'corsheaders',
 
     'lexicon',
     'mesolex_site',
     'query_builder',
+    'query_api',
     'util',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -164,3 +167,5 @@ SITE_ID = 1
 ROBOTS_USE_SITEMAP = False
 
 WAGTAIL_SITE_NAME = 'Mesolex'
+
+CORS_ALLOWED_ORIGINS = []

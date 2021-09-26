@@ -1,0 +1,126 @@
+Multichar_Symbols
+
+%>
+
+LEXICON Root
+Cns ;
+Vow ;
+
+
+LEXICON Loop
+Cns ;
+Vow ;
+ #  ;
+
+
+LEXICON Vow
+FrontVow ;
+LowBackVow ;
+HighBackVow ;
+
+
+LEXICON FrontVow
+i:i Loop ;
+e:e Loop ;
+é:é Loop ;
+í:í Loop ;
+
+e%::ē Loop;
+i%::ī Loop;
+ee:ē Loop;
+ii:ī Loop;
+
+LEXICON HighBackVow
+u:u Cns ;
+uh:w Cns ;
+uh:w # ;
+u:w Vow ;
+
+
+LEXICON LowBackVow
+a:a Loop ;
+o:o Loop ;
+a%::ā Loop;
+o%::ō Loop ;
+aa:ā Loop;
+oo:ō Loop ;
+
+LEXICON Lateral
+l:l Loop ;
+
+LEXICON CnsNonLateral
+
+h:ʔ Cns ;
+h:ʔ # ;
+h:j Vow ;
+j:ʔ Cns ;
+j:ʔ # ;
+j:j Vow ;
+
+b:b Loop ;
+c:s FrontVow ;
+c:k LowBackVow ;
+cu:kʷ Vow ;
+c:k CnsNonGlottal ;
+c:k # ;
+ç:s Vow ;
+ch:t͡ʃ Loop ;
+d:d Loop ;
+f:f Loop ;
+g:g Loop ;
+hu:w Vow ;
+k:k Loop ;
+kw:kʷ Vow ;
+m:m Loop ;
+n:n Loop ;
+p:p Loop ;
+qu:kʷ LowBackVow ;
+qu:k FrontVow ;
+r:r Loop ;
+s:s Loop ;
+t:t CnsNonLateral ;
+t:t Vow ;
+t:t # ;
+tl:ɬ Vow ;
+tl:ɬ # ;
+w:w Loop ;
+x:ʃ Loop ;
+z:s Loop ;
+y:y Loop ;
+
+
+LEXICON CnsNonGlottal
+b:b Loop ;
+c:s FrontVow ;
+c:k LowBackVow ;
+cu:kʷ Vow ;
+c:k CnsNonGlottal ;
+c:k # ;
+ç:s Vow ;
+ch:t͡ʃ Loop "weight: 2.0";
+d:d Loop ;
+f:f Loop ;
+g:g Loop ;
+k:k Loop ;
+m:m Loop ;
+n:n Loop ;
+p:p Loop ;
+qu:kʷ LowBackVow ;
+qu:k FrontVow ;
+r:r Loop ;
+s:s Loop ;
+t:t CnsNonLateral ;
+t:t Vow ;
+t:t # ;
+tl:ɬ Vow ;
+tl:ɬ # ;
+w:w Loop ;
+x:ʃ Loop ;
+z:s Loop ;
+l:l Loop ;
+
+
+
+LEXICON Cns
+Lateral ;
+CnsNonLateral ;

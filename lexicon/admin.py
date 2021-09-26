@@ -64,7 +64,7 @@ class MediaAdmin(admin.ModelAdmin):
                 created = 0
                 for item in form.cleaned_data['csv_file']:
                     split_path = item['Path'].split('/')
-                    
+
                     # If the path has been specified with a trailing slash,
                     # remove the resulting empty string in the split path.
                     if split_path[-1] == '':
@@ -73,6 +73,20 @@ class MediaAdmin(admin.ModelAdmin):
                     item_path = '/'.join(split_path + [item['Filename']])
                     try:
                         lexical_entry = models.Entry.objects.get(identifier=item['UID'])
+
+                        # TODO: make this better. In fact, probably just push
+                        # it into initial data import.
+                        media_dict = {
+                            'mime_type': 'audio/mpeg',
+                            'url': item_path,
+                        }
+                        if 'media' in lexical_entry.data and isinstance(lexical_entry.data['media'], list):
+                            lexical_entry.data['media'] += [media_dict]
+                        else:
+                            lexical_entry.data['media'] = [media_dict]
+
+                        lexical_entry.save()
+
                         (_, _created) = models.Media.objects.update_or_create(
                             lexical_entry=lexical_entry,
                             defaults={
