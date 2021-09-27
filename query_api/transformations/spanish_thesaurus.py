@@ -14,4 +14,4 @@ def es_thesaurus_lookup(query_string):
         )
     )
     synonyms.update(set([query_string]))
-    return "|".join(synonyms)
+    return "( |^)(" + "|".join(synonyms) + ")( |$)"
