@@ -17,6 +17,9 @@ PUBLIC_ROOT = os.path.join(WEBSERVER_ROOT, 'public')
 STATIC_ROOT = os.path.join(PUBLIC_ROOT, 'static')
 MEDIA_ROOT = os.path.join(PUBLIC_ROOT, 'media')
 
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^https://mesolex-frontend-.+\.ondigitalocean\.app$",
-]
+# CORS_ALLOWED_ORIGIN_REGEXES = [
+#     r"^https://mesolex-frontend-.+\.ondigitalocean\.app$",
+# ]
+
+## For ease of development of new frontend
+CORS_ALLOW_ALL_ORIGINS = True
