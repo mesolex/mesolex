@@ -24,7 +24,7 @@ def transformation(data_field=None):
                 # if the regex has surrounding word boundaries, replace the
                 # first word boundary symbol with the bos symbol.
                 #
-                if new_value.startswith("\\b"):
+                if new_value.startswith("\y"):
                     new_value = '^' + new_value[1:]
                 else:
                     new_value = '^' + new_value
@@ -34,7 +34,7 @@ def transformation(data_field=None):
                 # if the regex has surrounding word boundaries, replace the 
                 # last word boundary symbol with the eos symbol.
                 #
-                if new_value.endswith("\\b"):
+                if new_value.endswith("\y"):
                     new_value = new_value[:-1] + "$"
                 else:
                     new_value = new_value + '$'

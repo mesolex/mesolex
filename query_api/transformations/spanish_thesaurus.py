@@ -14,4 +14,5 @@ def es_thesaurus_lookup(query_string):
         )
     )
     synonyms.update(set([query_string]))
-    return "\\b(" + "|".join(synonyms) + ")\\b"
+    import pdb;pdb.set_trace
+    return "\y(" + "|".join(synonyms) + ")\y"
