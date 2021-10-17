@@ -33,6 +33,7 @@ TRANSFORMATIONS_DICT = {
     'azz': [to_vln, nahuat_orthography, es_thesaurus_lookup, contains_word_to_regex],
     'juxt1235_verb': [neutralize_glottal_stop, es_thesaurus_lookup, contains_word_to_regex],
     'juxt1235_non_verb': [neutralize_glottal_stop, es_thesaurus_lookup, contains_word_to_regex],
+    'yolo1241': [contains_word_to_regex]
 }
 DEFAULT_TRANSFORMATIONS = [contains_word_to_regex]
 
@@ -86,7 +87,6 @@ def queries_to_subqueryset(queries):
     nonempty_queries = [query for query in queries if query]
     if not nonempty_queries:
         return Entry.objects.none()
-
     return reduce(
         lambda acc, next_Q: acc.filter(next_Q),
         nonempty_queries,

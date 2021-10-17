@@ -66,6 +66,90 @@ class CsvImporter(Importer):
 
         return (created, updated, total)
 
+class MixtecPlantNamesImporter(CsvImporter):
+    DATASET = "yolo1241"
+
+    columns = ["col_num", "family", "genus", "species", "after_genus", 
+               "subspecies_etc", "author", "c1_village", 
+               "nombre_1", "glosa_nombre_1", "nombre_2", "glosa_nombre_2", 
+               "nombre_3", "glosa_nombre_3", "commentary", 
+               "field_recording_uid", "field_recording_summary", 
+               "genus_species"]
+
+    searchable_fields = [
+        "family", "genus", "nombre_1", "glosa_nombre_1", "nombre_2", 
+        "glosa_nombre_2", "nombre_3", "glosa_nombre_3", "genus_species"
+    ]
+
+    count = 1
+
+    def initialize_data(self, row):
+
+        entry_data = {
+            'language': 'yolo1241', 
+            'meta': {}
+        }
+
+        identifier = self.count
+        self.count += 1
+        entry_data['meta']['id'] = identifier
+        
+        entry_data["language"] = self.DATASET
+        for col, val in row.items():
+            if col not in self.searchable_fields:
+                entry_data[col] = row[col]
+
+        entry, created = models.Entry.objects.get_or_create(
+            identifier=identifier,
+            dataset=self.DATASET
+        )
+        return (entry, entry_data, created)
+
+    def clean_up_associated_data(self, entry):
+        entry.searchablestring_set.all().delete()
+        entry.longsearchablestring_set.all().delete()
+
+    def create_simple_string_data(self, row, entry, entry_data):
+        new_searchable_strings = []
+        for col, value in row.items():
+            if col not in self.searchable_fields:
+                continue
+            if not value:
+                entry_data[col] = value
+                continue
+
+            type_tag = col
+
+            if type_tag.startswith("nombre_"):
+                general_type_tag = "nombre"
+            elif type_tag.startswith("glosa_"):
+                general_type_tag = "glosa"
+            else:
+                general_type_tag = type_tag
+
+            new_searchable_strings.append(
+                models.SearchableString(
+                    entry=entry,
+                    value=value,
+                    language="yolo1241",
+                    type_tag=general_type_tag,
+                )
+            )
+            entry_data[type_tag] = value
+
+        models.SearchableString.objects.bulk_create(new_searchable_strings)
+
+    @transaction.atomic
+    def process_row(self, row, i):
+        (entry, entry_data, created) = self.initialize_data(row)
+        self.clean_up_associated_data(entry)
+        self.create_simple_string_data(row, entry, entry_data)
+
+        entry.data = entry_data
+        entry.save()
+
+        return created
+
 
 class AzzImporter(XmlImporter):
     def create_searchable_strings(
@@ -903,6 +987,7 @@ class Command(BaseCommand):
     IMPORTERS_BY_CODE = {
         'azz': AzzImporter,
         'trq': TrqImporter,
+        'yolo1241': MixtecPlantNamesImporter,
         'juxt1235_verb': Juxt1235VerbImporter,
         'juxt1235_non_verb': Juxt1235NonVerbImporter,
     }
